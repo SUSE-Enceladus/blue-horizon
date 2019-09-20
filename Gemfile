@@ -5,7 +5,6 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.1.7'
 # Use sqlite3 as the database for Active Record
@@ -14,12 +13,21 @@ gem 'sqlite3', '~> 1.3.6'
 gem 'puma', '3.11.0'
 # Use SCSS for stylesheets
 gem 'sassc-rails'
+# Use HAML for views
+gem "haml-rails", "~> 2.0"
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Collection of instance types
 gem 'cloud-instancetype'
+# Bootstrap web framework
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
+
+source 'https://rails-assets.org' do
+
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
