@@ -32,6 +32,12 @@ source 'https://rails-assets.org' do
 end
 
 group :development, :test do
+  # BDD with rspec
+  gem 'rspec-rails', '~> 3.9'
+  # fixture DSL
+  gem 'factory_bot_rails'
+  # fake data
+  gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
