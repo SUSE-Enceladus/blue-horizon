@@ -24,6 +24,8 @@ gem 'cloud-instancetype'
 # Bootstrap web framework
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+# identify 'active' links
+gem 'active_link_to'
 
 source 'https://rails-assets.org' do
 
