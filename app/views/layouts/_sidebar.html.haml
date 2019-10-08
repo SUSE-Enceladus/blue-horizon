@@ -4,6 +4,6 @@
     %i.eos-icons.inactive menu
 %div.list-group.list-group-flush
   - active = true
-  - sidebar_icons.each do |text, icon|
-    = sidebar_menu_item(text, icon, active)
+  - sidebar_icons.keys.each do |key|
+    = sidebar_menu_item(key, active)
     - active = false

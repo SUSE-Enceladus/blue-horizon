@@ -31,3 +31,12 @@
 
 en:
   hello: "Hello world"
+
+  sidebar:
+    welcome: "Welcome"
+    cluster: "Cluster size"
+    framework: "Additional data"
+    advanced: "Custom/Advanced"
+    plan: "Plan"
+    deploy: "Deploy"
+    download: "Download"
