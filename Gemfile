@@ -38,6 +38,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   # fake data
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
+  # report test coverage
+  gem 'simplecov', require: false
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
