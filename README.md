@@ -31,7 +31,7 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
   ```
 5. Start a development server on http://localhost:3000
    ```
-   rails -b localhost -p 3000
+   rails server -b localhost -p 3000
    ````
 ## License
 
