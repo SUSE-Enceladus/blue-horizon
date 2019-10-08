@@ -1,6 +1,8 @@
 # blue-horizon
 web-based user interface to terraforming the public cloud
 
+[![Build Status](https://travis-ci.org/SUSE-Enceladus/blue-horizon.svg?branch=master)](https://travis-ci.org/SUSE-Enceladus/blue-horizon)
+
 ## Requirements
 
 Requirements are based on supported versions from SUSE Linux Enterprise Server 15 SP1.
