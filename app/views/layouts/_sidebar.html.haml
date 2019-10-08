@@ -1,0 +1,9 @@
+%div.sidebar-header.d-flex.flex-row-reverse
+  %button.btn#sidebarCollapse{ type: 'button' }
+    %i.eos-icons.active close
+    %i.eos-icons.inactive menu
+%div.list-group.list-group-flush
+  - active = true
+  - sidebar_icons.each do |text, icon|
+    = sidebar_menu_item(text, icon, active)
+    - active = false

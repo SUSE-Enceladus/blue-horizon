@@ -1,10 +1,14 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
     %title BlueHorizon
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
   %body
-    = yield
+    %div.wrapper
+      %nav#sidebar
+        = render 'layouts/sidebar'
+      %div.container-fluid#content
+        = yield

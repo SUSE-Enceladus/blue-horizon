@@ -92,3 +92,15 @@ $eos-bc-gray-1000: #141823; //rgb(20, 24, 35);
 
 /* brand color - neutral */
 $eos-bc-white: #ffffff; //rgb(255, 255, 255);
+
+/* size variables */
+$eos-md-18: 18px;
+$eos-md-24: 24px;
+$eos-md-36: 36px;
+$eos-md-48: 48px;
+
+/* Rules for sizing the icon. */
+.md-18 { font-size: $eos-md-18; }
+.md-24 { font-size: $eos-md-24; }
+.md-36 { font-size: $eos-md-36; }
+.md-48 { font-size: $eos-md-48; }
