@@ -4,9 +4,9 @@ class KeyValue < ApplicationRecord
 
   def self.set(key, value)
     kv = begin
-      KeyValue.find(key)
+      self.find(key.to_s)
     rescue ActiveRecord::RecordNotFound
-      KeyValue.new(key: key)
+      self.new(key: key)
     end
     kv.value = value
     kv.save
@@ -14,7 +14,7 @@ class KeyValue < ApplicationRecord
 
   def self.get(key, default_value=nil)
     begin
-      KeyValue.find(key).value
+      self.find(key.to_s).value
     rescue ActiveRecord::RecordNotFound
       default_value
     end
