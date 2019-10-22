@@ -1,0 +1,4 @@
+# Cloud Framework
+# CLOUD_FRAMEWORK="aws"
+CLOUD_FRAMEWORK="azure"
+# CLOUD_FRAMEWORK="gcp"

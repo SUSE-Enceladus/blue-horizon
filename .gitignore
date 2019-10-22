@@ -22,6 +22,7 @@ config/master.key
 # dotenv
 # TODO Comment out this rule if environment variables can be committed
 .env
+.env.*
 
 ## Environment normalization:
 /.bundle
@@ -46,4 +47,3 @@ bower.json
 
 # Ignore node_modules
 node_modules/
-
