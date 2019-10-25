@@ -26,6 +26,8 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 # identify 'active' links
 gem 'active_link_to'
+# Ace editor
+gem 'ace-rails-ap'
 
 source 'https://rails-assets.org' do
 

@@ -18,6 +18,8 @@
 //= require bootstrap-sprockets
 // bootstrap-slider
 //= require bootstrap-slider.min
+// Ace editor
+//= require ace-rails-ap
 // BlueHorizon
 //= require utility.js
 //= require layout.js
