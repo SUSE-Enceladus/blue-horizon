@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   resource :cluster, only: [:show, :update]
+  resources :sources
 
   # mock routes
   get '/welcome', to: 'welcome#index'
   get '/framework', to: 'welcome#index'
-  get '/advanced', to: 'welcome#index'
   get '/plan', to: 'welcome#index'
   get '/deploy', to: 'welcome#index'
   get '/download', to: 'welcome#index'
