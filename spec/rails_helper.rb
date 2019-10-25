@@ -1,5 +1,9 @@
 # Load and launch SimpleCov at the very top
 require 'simplecov'
+if ENV['TRAVIS']
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
 SimpleCov.start 'rails'
 
 # Previous content of test helper now starts here
