@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/faker-ruby/faker.git
-  revision: 4555159b7da9813235395d271b1b65a32407086b
+  revision: 4ba30fb28072e942420ebf2d58da73969ae6159b
   branch: master
   specs:
-    faker (2.5.0)
+    faker (2.6.0)
       i18n (>= 1.6, < 1.8)
 
 GEM
@@ -53,7 +53,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (8.0.0)
-    autoprefixer-rails (9.6.1.1)
+    autoprefixer-rails (9.7.0)
       execjs
     bindex (0.8.1)
     bootstrap (4.3.1)
@@ -70,18 +70,21 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
-    childprocess (2.0.0)
-      rake (< 13.0)
+    childprocess (3.0.0)
     cloud-instancetype (0.0.2)
     codecov (0.1.15)
       json
       simplecov
       url
     concurrent-ruby (1.1.5)
-    crass (1.0.4)
+    crass (1.0.5)
     diff-lcs (1.3)
     docile (1.3.2)
-    erubi (1.8.0)
+    dotenv (2.7.5)
+    dotenv-rails (2.7.5)
+      dotenv (= 2.7.5)
+      railties (>= 3.2, < 6.1)
+    erubi (1.9.0)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_bot (5.1.1)
@@ -106,7 +109,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (1.6.0)
+    i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
@@ -119,7 +122,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.2.3)
+    loofah (2.3.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -127,8 +130,8 @@ GEM
     method_source (0.9.2)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.11.3)
-    nio4r (2.5.1)
+    minitest (5.12.2)
+    nio4r (2.5.2)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     popper_js (1.14.5)
@@ -152,15 +155,15 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.2.0)
-      loofah (~> 2.2, >= 2.2.2)
+    rails-html-sanitizer (1.3.0)
+      loofah (~> 2.3)
     railties (5.1.7)
       actionpack (= 5.1.7)
       activesupport (= 5.1.7)
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (12.3.3)
+    rake (13.0.0)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -183,9 +186,9 @@ GEM
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
     ruby_dep (1.5.0)
-    ruby_parser (3.13.1)
+    ruby_parser (3.14.0)
       sexp_processor (~> 4.9)
-    rubyzip (1.3.0)
+    rubyzip (2.0.0)
     sassc (2.2.1)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -194,10 +197,10 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (3.142.4)
-      childprocess (>= 0.5, < 3.0)
-      rubyzip (~> 1.2, >= 1.2.2)
-    sexp_processor (4.12.1)
+    selenium-webdriver (3.142.6)
+      childprocess (>= 0.5, < 4.0)
+      rubyzip (>= 1.2.2)
+    sexp_processor (4.13.0)
     simplecov (0.17.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -207,7 +210,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (3.7.2)
+    sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.2.1)
@@ -218,10 +221,10 @@ GEM
     temple (0.8.2)
     thor (0.20.3)
     thread_safe (0.3.6)
-    tilt (2.0.9)
+    tilt (2.0.10)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.20)
+    uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     url (0.3.2)
     web-console (3.7.0)
@@ -245,6 +248,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   cloud-instancetype
   codecov
+  dotenv-rails
   factory_bot_rails
   faker!
   haml-rails (~> 2.0)

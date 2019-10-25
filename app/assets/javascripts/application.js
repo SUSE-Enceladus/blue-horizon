@@ -16,5 +16,8 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+// bootstrap-slider
+//= require bootstrap-slider.min
 // BlueHorizon
-//= require_tree .
+//= require utility.js
+//= require layout.js

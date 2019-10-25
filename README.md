@@ -32,6 +32,11 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
   ```
   rails db:reset
   ```
+5. Create a dotenv file (e.g. `.env.development`) that defines:
+  * The cloud framework
+    ```
+    CLOUD_FRAMEWORK="aws"
+    ```
 5. Start a development server on http://localhost:3000
    ```
    rails server -b localhost -p 3000
