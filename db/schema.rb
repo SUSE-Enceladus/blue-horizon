@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191008022837) do
+ActiveRecord::Schema.define(version: 20191025213201) do
 
   create_table "key_values", force: :cascade do |t|
     t.string "key", null: false
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 20191008022837) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_key_values_on_key", unique: true
+  end
+
+  create_table "sources", force: :cascade do |t|
+    t.string "filename"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["filename"], name: "index_sources_on_filename"
   end
 
 end
