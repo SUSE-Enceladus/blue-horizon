@@ -1,0 +1,16 @@
+= form_for(@cluster, url: cluster_path , method: :put) do |form|
+  = form.hidden_field :cloud_framework
+  = render "instance_type_panel",
+    form: form,
+    list_url: "https://aws.amazon.com/ec2/instance-types/"
+  %p.clearfix
+  = render "cluster_size_panel", form: form
+  %p.clearfix
+  %div.float-right.btn-group.steps-container
+    = link_to root_path, class: "btn btn-secondary" do
+      &laquo;
+      = t('sidebar.welcome')
+    = form.submit (t('sidebar.framework') + ' &raquo;').html_safe, class: "btn btn-primary", id: 'submit-cluster'
+
+- content_for :page_javascript do
+  = javascript_include_tag 'cluster', defer: true

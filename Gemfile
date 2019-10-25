@@ -41,6 +41,8 @@ group :development, :test do
   # report test coverage
   gem 'simplecov', require: false
   gem 'codecov', require: false
+  # Shim to load environment variables from .env into ENV
+  gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
