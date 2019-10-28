@@ -37,7 +37,9 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
     ```
     CLOUD_FRAMEWORK="aws"
     ```
-5. Start a development server on http://localhost:3000
+6. Place original _terraform_ scripts in `/vendor/sources`
+
+7. Start a development server on http://localhost:3000
    ```
    rails server -b localhost -p 3000
    ````
