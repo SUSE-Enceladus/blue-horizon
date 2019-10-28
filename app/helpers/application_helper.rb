@@ -26,4 +26,23 @@ module ApplicationHelper
       data:  { toggle: 'tooltip', placement: 'right', original_title: text }
     )
   end
+
+  def bootstrap_flash()
+    flash.collect do |type, message|
+      # Skip empty messages, e.g. for devise messages set to nothing in a locale file.
+      next if message.blank?
+
+      context = case type.to_sym
+      when :notice
+        :success
+      when :alert
+        :warning
+      when :error
+        :danger
+      else
+        :secondary
+      end
+      render 'layouts/flash', context: context, message: message
+    end.join.html_safe
+  end
 end

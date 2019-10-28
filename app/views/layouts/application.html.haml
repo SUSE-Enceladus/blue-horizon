@@ -10,6 +10,7 @@
       %nav#sidebar
         = render 'layouts/sidebar'
       %div.container-fluid#content
+        = bootstrap_flash
         = yield
 
     = javascript_include_tag 'application'

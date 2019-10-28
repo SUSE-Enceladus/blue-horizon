@@ -11,7 +11,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   z-index: 999;
   transition: all 0.3s;
   padding: 0 0 1em;
