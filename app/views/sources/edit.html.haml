@@ -1,0 +1,30 @@
+= form_for @source do |f|
+  = render 'tabs', sources: @sources
+  - if @source.errors.any?
+    %div.form-group.p-2
+      #error_explanation
+        %h2= "#{pluralize(@source.errors.count, "error")} prohibited this source from being saved:"
+        %ul
+          - @source.errors.full_messages.each do |message|
+            %li= message
+  %div.form-group.p-2
+    = f.label :filename
+    = f.text_field :filename, class: 'form-control'
+  %div#editor.form-group.flex-grow-1{ style: 'display: none;'}= @source.content
+  = f.text_area :content, style: 'display: none;'
+  %div#actions.btn-toolbar.d-flex.flex-row.justify-content-end.w-100
+    %div.btn-group.ml-2
+      %button#submit-source{type: 'submit', class: 'btn btn-primary'}
+        %i.eos-icons.md-18 save
+        Save
+      - unless @source.new_record?
+        = link_to @source, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+          %i.eos-icons.md-18 delete
+          Delete
+
+- content_for :page_javascript do
+  :javascript
+    $(function(){
+      var editor = editor_for_form_field('#editor', 'textarea[name="source[content]"]');
+      editor.session.setMode(ace_highlighter_for("#{@source.filename}"));
+    });
