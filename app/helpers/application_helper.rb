@@ -11,7 +11,7 @@ module ApplicationHelper
     }
   end
 
-  def sidebar_menu_item(path_key, active=false)
+  def sidebar_menu_item(path_key)
     text = t("sidebar.#{path_key}")
     icon = sidebar_icons[path_key]
     url = "/#{path_key}"
