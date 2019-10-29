@@ -28,6 +28,8 @@ gem 'jquery-rails'
 gem 'active_link_to'
 # Ace editor
 gem 'ace-rails-ap'
+# HCL parser
+gem 'hcl-checker', '~> 1.2'
 
 source 'https://rails-assets.org' do
 
