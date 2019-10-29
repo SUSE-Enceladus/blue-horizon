@@ -36,7 +36,7 @@ en:
     welcome: "Welcome"
     cluster: "Cluster size"
     framework: "Additional data"
-    advanced: "Custom/Advanced"
+    sources: "Custom/Advanced"
     plan: "Plan"
     deploy: "Deploy"
     download: "Download"

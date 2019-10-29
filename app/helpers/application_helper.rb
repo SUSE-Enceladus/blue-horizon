@@ -4,7 +4,7 @@ module ApplicationHelper
       welcome: 'announcement',
       cluster: 'photo_size_select_small',
       framework: 'playlist_add',
-      advanced: 'configuration_file',
+      sources: 'configuration_file',
       plan: 'organization',
       deploy: 'play_arrow',
       download: 'file_download'

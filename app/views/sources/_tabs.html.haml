@@ -1,0 +1,7 @@
+%ul.nav.nav-tabs
+  - sources.each do |source|
+    %li.nav
+      = active_link_to source.filename, edit_source_path(source), class: 'nav-link'
+  = active_link_to new_source_path, class: 'nav-link' do
+    %i.eos-icons.md-18 add
+    New Source

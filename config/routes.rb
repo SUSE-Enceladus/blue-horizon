@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
+  # Welcome
   root to: 'welcome#index'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  get '/welcome', to: 'welcome#index'
+  # Cluster size
   resource :cluster, only: [:show, :update]
+  # Custom/Advanced
+  resources :sources, except: [:show]
 
   # mock routes
-  get '/welcome', to: 'welcome#index'
   get '/framework', to: 'welcome#index'
-  get '/advanced', to: 'welcome#index'
   get '/plan', to: 'welcome#index'
   get '/deploy', to: 'welcome#index'
   get '/download', to: 'welcome#index'
