@@ -10,7 +10,7 @@ class ClustersController < ApplicationController
       redirect_to framework_path
     else
       render :show, flash: {
-        error: @cluster.errors.full_messages.to_sentence
+        error: @cluster.errors.full_messages
       }
     end
   end
