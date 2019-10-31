@@ -8,7 +8,7 @@ resource "random_string" "cluster_name" {
 resource "azurerm_kubernetes_cluster" "k8s" {
     name                = "cap-${random_string.cluster_name.result}"
     location            = "${var.location}"
-    resource_group_name = "${var.az_resource_group}"
+    resource_group_name = "${var.resource_group}"
     dns_prefix          = "${var.dns_prefix}"
 
     linux_profile {
@@ -21,8 +21,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
     agent_pool_profile {
         name            = "agentpool"
-        count           = "${var.node_count}"
-        vm_size         = "${var.machine_type}"
+        count           = "${var.instance_count}"
+        vm_size         = "${var.instance_type}"
         os_type         = "Linux"
         os_disk_size_gb = "${var.disk_size_gb}"
     }
@@ -42,7 +42,7 @@ resource "null_resource" "post_processor" {
 
     environment = {
       AKSNAME = "${azurerm_kubernetes_cluster.k8s.name}"
-      RGNAME = "${var.az_resource_group}"
+      RGNAME = "${var.resource_group}"
       CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
       NODEPOOLNAME = "agentpool"
     }

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe 'cluster sizing', type: :feature do
+  let!(:sources) { populate_sources }
+
   describe 'in Azure' do
     let(:cloud_framework) { 'azure' }
     let(:instance_types) { Cloud::InstanceType.for(cloud_framework) }
