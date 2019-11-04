@@ -3,7 +3,7 @@ module ApplicationHelper
     {
       welcome: 'announcement',
       cluster: 'photo_size_select_small',
-      framework: 'playlist_add',
+      variables: 'playlist_add',
       sources: 'configuration_file',
       plan: 'organization',
       deploy: 'play_arrow',

@@ -7,7 +7,7 @@ class ClustersController < ApplicationController
   def update
     @cluster = Cluster.new(cluster_params)
     if @cluster.save
-      redirect_to framework_path
+      redirect_to variables_path
     else
       render :show, flash: {
         error: @cluster.errors.full_messages
