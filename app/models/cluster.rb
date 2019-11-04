@@ -33,6 +33,13 @@ class Cluster
     )
   end
 
+  def self.variable_handlers
+    [
+      'instance_type',
+      'instance_count'
+    ]
+  end
+
   def current_cluster_size
     0 # TODO: will we support resizing?
   end
