@@ -18,4 +18,7 @@ Layout/CaseIndentation:
 Layout/EndAlignment:
   EnforcedStyleAlignWith: start_of_line
 
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
 inherit_from: .rubocop_todo.yml

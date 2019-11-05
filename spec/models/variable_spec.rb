@@ -67,7 +67,7 @@ RSpec.describe Variable, type: :model do
       expect(subject.instance_count).to eq(random_number)
       expect(subject.empty_number).to eq(random_float)
       expect(subject.test_list.count).to eq(3)
-      expect(subject.cluster_labels.keys).to eq([ 'foo' ])
+      expect(subject.cluster_labels.keys).to eq(['foo'])
       expect(subject.instance_variable_names).not_to include('fake_key')
     end
 

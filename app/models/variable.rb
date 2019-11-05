@@ -66,9 +66,9 @@ class Variable
         when 'string'
           value.to_s
         when 'list'
-          value.collect{ |v| v.to_s }
+          value.collect { |v| v.to_s }
         when 'map'
-          Hash[ value.collect{ |k, v| [k.to_s, v.to_s] } ]
+          Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
         end
         instance_variable_set("@#{key}", value)
       else
