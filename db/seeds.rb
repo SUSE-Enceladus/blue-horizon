@@ -16,7 +16,7 @@ end
 # Populate editable sources from the static documents
 Dir.glob(Rails.root.join('vendor', 'sources', '*')).each do |filepath|
   filename = filepath.split('/').last
-  next if Source.find_by_filename(filename)
+  next if Source.find_by(filename: filename)
 
   Source.create(
     filename: filename,

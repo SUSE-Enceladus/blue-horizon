@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Variable, type: :model do
-  let(:source_content) { Source.find_by_filename('variables.tf').content }
+  let(:source_content) { Source.find_by(filename: 'variables.tf').content }
   let(:variables) { described_class.new(source_content) }
   let(:variable_names) { collect_variable_names }
 
