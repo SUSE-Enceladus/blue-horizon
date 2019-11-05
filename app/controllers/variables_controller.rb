@@ -4,9 +4,9 @@ class VariablesController < ApplicationController
   before_action :set_variables
 
   def show
-    if @variables.attributes.blank?
-      flash.now[:alert] = 'No variables are defined.'
-    end
+    return if @variables.attributes.present?
+
+    flash.now[:alert] = 'No variables are defined.'
   end
 
   def update
