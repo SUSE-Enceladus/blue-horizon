@@ -1,15 +1,7 @@
 require 'rails_helper'
 
 describe 'source editing', type: :feature do
-  let!(:sources) do
-    Dir.glob(Rails.root.join('spec', 'fixtures', 'sources', '*')).each do |filepath|
-      Source.create(
-        filename: filepath,
-        content:  File.read(filepath)
-      )
-    end
-    Source.all
-  end
+  let!(:sources) { populate_sources }
 
   it 'lists all sources' do
     visit('/sources')

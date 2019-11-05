@@ -35,7 +35,7 @@ en:
   sidebar:
     welcome: "Welcome"
     cluster: "Cluster size"
-    framework: "Additional data"
+    variables: "Additional data"
     sources: "Custom/Advanced"
     plan: "Plan"
     deploy: "Deploy"

@@ -105,6 +105,7 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
+    hcl-checker (1.2.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -254,6 +255,7 @@ DEPENDENCIES
   factory_bot_rails
   faker!
   haml-rails (~> 2.0)
+  hcl-checker (~> 1.2)
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)

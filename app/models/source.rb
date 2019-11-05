@@ -2,6 +2,8 @@ class Source < ApplicationRecord
   validates_uniqueness_of :filename
   before_validation :no_path_in_filename
 
+  scope :terraform, -> { where('filename LIKE ?', '%.tf') }
+
   def no_path_in_filename()
     self.filename = self.filename.split('/').last
   end

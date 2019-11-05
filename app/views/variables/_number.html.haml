@@ -1,0 +1,5 @@
+%div.form-group{ class: key }
+  %label{ for: "variables[#{key}]" }= key.titleize
+  %input.form-control{ type: 'number', name: "variables[#{key}]", value: value }
+  - if defined?(description)
+    %small.form-text.text-muted= description
