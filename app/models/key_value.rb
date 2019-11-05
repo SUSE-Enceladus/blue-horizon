@@ -3,11 +3,12 @@ class KeyValue < ApplicationRecord
   serialize :value
 
   def self.set(key, value)
-    kv = begin
-      self.find(key.to_s)
-    rescue ActiveRecord::RecordNotFound
-      self.new(key: key)
-    end
+    kv =
+      begin
+        self.find(key.to_s)
+      rescue ActiveRecord::RecordNotFound
+        self.new(key: key)
+      end
     kv.value = value
     kv.save
   end
