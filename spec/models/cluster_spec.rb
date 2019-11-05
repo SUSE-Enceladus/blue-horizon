@@ -28,11 +28,13 @@ RSpec.describe Cluster, type: :model do
   end
 
   it 'calculates the minimum number of nodes required for a cluster' do
-    expect(described_class.new.min_nodes_required).to eq(described_class::MIN_CLUSTER_SIZE)
+    expect(described_class.new.min_nodes_required)
+      .to eq(described_class::MIN_CLUSTER_SIZE)
   end
 
   it 'calculates maximum cluster growth' do
-    expect(described_class.new.max_nodes_allowed).to eq(described_class::MAX_CLUSTER_SIZE)
+    expect(described_class.new.max_nodes_allowed)
+      .to eq(described_class::MAX_CLUSTER_SIZE)
   end
 
   context 'when loading' do
@@ -57,7 +59,8 @@ RSpec.describe Cluster, type: :model do
     end
 
     it 'counts out the instances' do
-      substring = "a cluster of #{instance_count} #{custom_instance_type} instances"
+      substring =
+        "a cluster of #{instance_count} #{custom_instance_type} instances"
       expect(cluster.to_s).to match(substring)
     end
   end

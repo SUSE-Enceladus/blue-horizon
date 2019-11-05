@@ -54,7 +54,8 @@ describe 'source editing', type: :feature do
     click_on 'Delete'
     expect(page).to have_content('Source was successfully destroyed.')
 
-    expect { Source.find(source.id) }.to raise_exception(ActiveRecord::RecordNotFound)
+    expect { Source.find(source.id) }
+      .to raise_exception(ActiveRecord::RecordNotFound)
   end
 
   private

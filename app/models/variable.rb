@@ -13,7 +13,10 @@ class Variable
     @plan = HCL::Checker.parse(source_content)['variable'] || {}
     @plan.keys.each do |key|
       self.class.send(:attr_accessor, key)
-      instance_variable_set("@#{key}", KeyValue.get(storage_key(key), default(key)))
+      instance_variable_set(
+        "@#{key}",
+        KeyValue.get(storage_key(key), default(key))
+      )
     end
   end
 

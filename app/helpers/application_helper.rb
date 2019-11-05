@@ -31,7 +31,7 @@ module ApplicationHelper
 
   def bootstrap_flash
     flash.collect do |type, message|
-      # Skip empty messages, e.g. for devise messages set to nothing in a locale file.
+      # Skip empty messages
       next if message.blank?
 
       context = case type.to_sym

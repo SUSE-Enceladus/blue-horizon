@@ -44,7 +44,9 @@ RSpec.describe Source, type: :model do
 
     it 'writes to the config path unless otherwise specified' do
       source.export
-      expected_export_path = File.join(Rails.configuration.x.source_export_dir, source.filename)
+      expected_export_path = File.join(
+        Rails.configuration.x.source_export_dir, source.filename
+      )
       expect(File).to exist(expected_export_path)
     end
   end

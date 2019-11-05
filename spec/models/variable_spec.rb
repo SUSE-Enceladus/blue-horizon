@@ -77,7 +77,7 @@ RSpec.describe Variable, type: :model do
     end
 
     it 'presents descriptions' do
-      expect(variables.description('test_description')).to eq('test description')
+      expect(variables.description('test_description')).to eq('test desc')
     end
 
     context 'with form params' do
