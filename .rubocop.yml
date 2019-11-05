@@ -30,4 +30,32 @@ Style/SymbolArray:
 Style/WordArray:
   EnforcedStyle: brackets
 
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/features/*_spec.rb'
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
+<<<<<<< HEAD
+=======
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/application_helper.rb'
+
+>>>>>>> 452b562... rspec style
 inherit_from: .rubocop_todo.yml

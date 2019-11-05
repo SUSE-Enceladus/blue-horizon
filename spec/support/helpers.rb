@@ -9,7 +9,7 @@ module Helpers
     Source.all
   end
 
-  def get_variable_names
+  def collect_variable_names
     HCL::Checker.parse(
       File.read(Rails.root.join('spec', 'fixtures', 'sources', 'variables.tf'))
     )['variable'].keys

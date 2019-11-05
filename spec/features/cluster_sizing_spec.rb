@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe 'cluster sizing', type: :feature do
-  let!(:sources) { populate_sources }
+  before do
+    populate_sources
+  end
 
   describe 'in Azure' do
     let(:cloud_framework) { 'azure' }
@@ -13,7 +15,7 @@ describe 'cluster sizing', type: :feature do
       )
     end
 
-    before :each do
+    before do
       KeyValue.set(:cloud_framework, cloud_framework)
       visit '/cluster'
     end

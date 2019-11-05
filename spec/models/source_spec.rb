@@ -17,34 +17,33 @@ RSpec.describe Source, type: :model do
     expect(source.filename).not_to include(dir)
   end
 
-  context 'exporting' do
+  context 'when exporting' do
+    let(:source) { create(:source) }
     let(:random_path) do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end
 
-    before :each do
+    before do
       Rails.configuration.x.source_export_dir = random_path
       FileUtils.mkdir_p(random_path)
     end
 
-    after :each do
+    after do
       FileUtils.rm_rf(random_path)
     end
 
     it 'writes to a file' do
-      source = create(:source)
       source.export_into(random_path)
       expected_export_path = File.join(random_path, source.filename)
-      expect(File.exist?(expected_export_path)).to be_truthy
+      expect(File).to exist(expected_export_path)
       file_content = File.read(expected_export_path)
       expect(file_content).to eq(source.content)
     end
 
     it 'writes to the config path unless otherwise specified' do
-      source = create(:source)
       source.export
       expected_export_path = File.join(Rails.configuration.x.source_export_dir, source.filename)
-      expect(File.exist?(expected_export_path)).to be_truthy
+      expect(File).to exist(expected_export_path)
     end
   end
 end
