@@ -56,7 +56,7 @@ RSpec.describe Variable, type: :model do
         'instance_count' => random_number.to_s,
         'empty_number'   => random_float.to_s,
         'are_you_sure'   => 'true',
-        'test_list'      => %w(one two three),
+        'test_list'      => ['one', 'two', 'three'],
         'cluster_labels' => { foo: 'bar' },
         'fake_key'       => 'fake_value'
       }
@@ -98,7 +98,7 @@ RSpec.describe Variable, type: :model do
     let(:random_string) { Faker::Lorem.word }
     let(:handled_exceptions) do
       [
-        ActiveRecord::ActiveRecordError.new('Didn\'t work!'),
+        ActiveRecord::ActiveRecordError.new('Didn\'t work!')
       ]
     end
 

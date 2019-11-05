@@ -5,9 +5,9 @@ RSpec.describe Source, type: :model do
   it 'has unique filenames' do
     static_filename = 'static'
     create(:source, filename: static_filename)
-    expect {
+    expect do
       create(:source, filename: static_filename)
-    }.to raise_error(ActiveRecord::RecordInvalid)
+    end.to raise_error(ActiveRecord::RecordInvalid)
   end
 
   it 'stores the filename without any path' do

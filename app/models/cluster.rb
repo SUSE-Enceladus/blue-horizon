@@ -9,7 +9,7 @@ class Cluster
 
   def initialize(*args)
     super
-    if @instance_type.blank? || @instance_type == "CUSTOM"
+    if @instance_type.blank? || @instance_type == 'CUSTOM'
       @instance_type = @instance_type_custom
     end
     @instance_count = @instance_count.to_i
@@ -46,14 +46,14 @@ class Cluster
   def to_s
     parts = ["a cluster of #{@instance_count} #{@instance_type} instances"]
     case @cloud_framework
-    when "aws"
-      parts.push("in AWS")
-    when "azure"
-      parts.push("in Azure")
-    when "gcp"
-      parts.push("in GCP")
+    when 'aws'
+      parts.push('in AWS')
+    when 'azure'
+      parts.push('in Azure')
+    when 'gcp'
+      parts.push('in GCP')
     end
-    parts.compact.join(" ")
+    parts.compact.join(' ')
   end
 
   def save!

@@ -27,7 +27,7 @@ module ApplicationHelper
     )
   end
 
-  def bootstrap_flash()
+  def bootstrap_flash
     flash.collect do |type, message|
       # Skip empty messages, e.g. for devise messages set to nothing in a locale file.
       next if message.blank?

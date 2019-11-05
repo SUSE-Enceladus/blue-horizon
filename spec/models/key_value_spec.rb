@@ -4,9 +4,9 @@ RSpec.describe KeyValue, type: :model do
   it 'has unique keys' do
     static_key = 'static'
     create(:key_value, key: static_key)
-    expect {
+    expect do
       create(:key_value, key: static_key)
-    }.to raise_error(ActiveRecord::RecordNotUnique)
+    end.to raise_error(ActiveRecord::RecordNotUnique)
   end
 
   it 'is accessible by key' do

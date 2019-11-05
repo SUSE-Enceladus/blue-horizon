@@ -6,9 +6,9 @@ class ClusterSizeSliderDecorator < SimpleDelegator
     {
       slider_ticks:             slider_ticks,
       slider_value:             min_nodes_required,
-      slider_scale:             "logarithmic",
-      slider_tooltip:           "always",
-      slider_tooltip_position:  "bottom",
+      slider_scale:             'logarithmic',
+      slider_tooltip:           'always',
+      slider_tooltip_position:  'bottom',
       step:                     1,
       slider_ticks_snap_bounds: 0.5
     }

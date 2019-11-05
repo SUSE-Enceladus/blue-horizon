@@ -21,4 +21,13 @@ Layout/EndAlignment:
 Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
 
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: new_line
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
 inherit_from: .rubocop_todo.yml

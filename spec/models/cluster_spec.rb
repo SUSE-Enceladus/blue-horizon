@@ -64,7 +64,7 @@ RSpec.describe Cluster, type: :model do
     let(:cluster) { described_class.new }
     let(:handled_exceptions) do
       [
-        ActiveRecord::ActiveRecordError.new("Didn't work!"),
+        ActiveRecord::ActiveRecordError.new("Didn't work!")
       ]
     end
 
