@@ -2,13 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Cluster, type: :model do
   let(:custom_instance_type) { Faker::Lorem.word }
-  let(:subscription) { Faker::Internet.uuid }
-  let(:resource_group) { Faker::Lorem.word }
-  let(:network) { Faker::Lorem.word }
-  let(:subnet) { 'subnet-' + Faker::Number.hexadecimal(digits: 8) }
-  let(:security_group) { 'sg-' + Faker::Number.hexadecimal(digits: 8) }
   let(:instance_count) { Faker::Number.within(range: 1..100) }
-  let(:storage_account) { Faker::Lorem.word }
 
   it "can implicitly represent a custom instance type" do
     cluster = described_class.new(instance_type_custom: custom_instance_type)
@@ -41,27 +35,14 @@ RSpec.describe Cluster, type: :model do
 
   context 'loading' do
     before do
-      KeyValue.set(:subscription, subscription)
       KeyValue.set(:instance_type, custom_instance_type)
       KeyValue.set(:instance_count, instance_count)
-      KeyValue.set(:storage_account, storage_account)
-      KeyValue.set(:resource_group, resource_group)
-      KeyValue.set(:network, network)
-      KeyValue.set(:subnet, subnet)
-      KeyValue.set(:security_group, security_group)
     end
 
     it 'returns stored values' do
       cluster = described_class.load
-      expect(cluster.subscription).to eq(subscription)
       expect(cluster.instance_type).to eq(custom_instance_type)
       expect(cluster.instance_count).to eq(instance_count)
-      expect(cluster.storage_account).to eq(storage_account)
-      expect(cluster.storage_account).to eq(storage_account)
-      expect(cluster.resource_group).to eq(resource_group)
-      expect(cluster.network).to eq(network)
-      expect(cluster.subnet).to eq(subnet)
-      expect(cluster.security_group).to eq(security_group)
     end
   end
 
@@ -69,36 +50,12 @@ RSpec.describe Cluster, type: :model do
     let(:cluster) do
       described_class.new(
         instance_type:  custom_instance_type,
-        instance_count: instance_count,
-        resource_group: resource_group,
-        network:        network,
-        subnet:         subnet,
-        security_group: security_group
+        instance_count: instance_count
       )
     end
 
     it "counts out the instances" do
       substring = "a cluster of #{instance_count} #{custom_instance_type} instances"
-      expect(cluster.to_s).to match(substring)
-    end
-
-    it "describes the resource group" do
-      substring = "in the #{resource_group} resource group"
-      expect(cluster.to_s).to match(substring)
-    end
-
-    it "describes the network" do
-      substring = "in the #{network} network"
-      expect(cluster.to_s).to match(substring)
-    end
-
-    it "describes the subnet" do
-      substring = "in the #{subnet} subnet"
-      expect(cluster.to_s).to match(substring)
-    end
-
-    it "describes the security group" do
-      substring = "in the #{security_group} security group"
       expect(cluster.to_s).to match(substring)
     end
   end
@@ -137,25 +94,13 @@ RSpec.describe Cluster, type: :model do
     let(:cluster) do
       described_class.new(
         cloud_framework: framework,
-        instance_type:   custom_instance_type,
-        subnet:          subnet,
-        security_group:  security_group
+        instance_type:   custom_instance_type
       )
     end
 
     it "stores instance type as :instance_type KeyValue" do
       expect(cluster.save).to be(true)
       expect(KeyValue.get(:instance_type)).to eq(custom_instance_type)
-    end
-
-    it "stores subnet ID as :subnet KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:subnet)).to eq(subnet)
-    end
-
-    it "stores security group ID as :security_group KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:security_group)).to eq(security_group)
     end
 
     it "describes the framework in string representation" do
@@ -169,43 +114,8 @@ RSpec.describe Cluster, type: :model do
     let(:cluster) do
       described_class.new(
         cloud_framework: framework,
-        subscription:    subscription,
-        instance_type:   custom_instance_type,
-        resource_group:  resource_group,
-        network:         network,
-        subnet:          subnet,
-        storage_account: storage_account
+        instance_type:   custom_instance_type
       )
-    end
-
-    it "stores subscription id as :subscription_id KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:subscription)).to eq(subscription)
-    end
-
-    it "stores storage account as :storage_account KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:storage_account)).to eq(storage_account)
-    end
-
-    it "stores instance type as :instance_type KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:instance_type)).to eq(custom_instance_type)
-    end
-
-    it "stores resource group name as :resource_group KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:resource_group)).to eq(resource_group)
-    end
-
-    it "stores network name as :network KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:network)).to eq(network)
-    end
-
-    it "stores subnet name as :subnet KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:subnet)).to eq(subnet)
     end
 
     it "describes the framework in string representation" do
@@ -219,25 +129,8 @@ RSpec.describe Cluster, type: :model do
     let(:cluster) do
       described_class.new(
         cloud_framework: framework,
-        instance_type:   custom_instance_type,
-        network:         network,
-        subnet:          subnet
+        instance_type:   custom_instance_type
       )
-    end
-
-    it "stores instance type as :instance_type KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:instance_type)).to eq(custom_instance_type)
-    end
-
-    it "stores network name as :network KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:network)).to eq(network)
-    end
-
-    it "stores subnet name as :subnet KeyValue" do
-      expect(cluster.save).to be(true)
-      expect(KeyValue.get(:subnet)).to eq(subnet)
     end
 
     it "describes the framework in string representation" do
@@ -245,5 +138,4 @@ RSpec.describe Cluster, type: :model do
       expect(cluster.to_s).to match(substring)
     end
   end
-
 end
