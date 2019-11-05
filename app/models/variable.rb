@@ -8,7 +8,7 @@ class Variable
   KEY_PREFIX = 'tfvars.'
 
   def initialize(source_content)
-    @plan = HCL::Checker.parse(source_content)['variable']
+    @plan = HCL::Checker.parse(source_content)['variable'] || {}
     @plan.collect do |key, options|
       self.class.send(:attr_accessor, key)
       instance_variable_set("@#{key}", KeyValue.get(storage_key(key), default(key)))
@@ -47,7 +47,7 @@ class Variable
       @plan.keys.collect do |key|
         [key, instance_variable_get("@#{key}")]
       end
-    ]
+    ] || {}
   end
 
   def attributes=(hash)

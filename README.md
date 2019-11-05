@@ -28,16 +28,17 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
   ```
   sudo zypper in libxml2-devel libxslt-devel
   ```
-4. Initialize a development database
-  ```
-  rails db:reset
-  ```
-5. Create a dotenv file (e.g. `.env.development`) that defines:
+4. Create a dotenv file (e.g. `.env.development`) that defines:
   * The cloud framework
     ```
     CLOUD_FRAMEWORK="aws"
     ```
-6. Place original _terraform_ scripts in `/vendor/sources`
+5. Place original _terraform_ scripts in `/vendor/sources`
+
+6. Initialize a development database
+  ```
+  rails db:setup
+  ```
 
 7. Start a development server on http://localhost:3000
    ```

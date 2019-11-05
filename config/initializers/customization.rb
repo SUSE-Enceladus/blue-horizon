@@ -4,6 +4,9 @@ Rails.application.configure do
   # config.x.source_export_dir = Rails.root.join('tmp', 'terraform')
 end
 
+# The following performs required actions based on custom configuration above
+# PLEASE DO NOT EDIT BELOW THIS LINE
+
 require 'fileutils'
 
 if Rails.configuration.x.source_export_dir.blank?
