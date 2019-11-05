@@ -1,13 +1,13 @@
 module ApplicationHelper
   def sidebar_icons
     {
-      welcome: 'announcement',
-      cluster: 'photo_size_select_small',
+      welcome:   'announcement',
+      cluster:   'photo_size_select_small',
       variables: 'playlist_add',
-      sources: 'configuration_file',
-      plan: 'organization',
-      deploy: 'play_arrow',
-      download: 'file_download'
+      sources:   'configuration_file',
+      plan:      'organization',
+      deploy:    'play_arrow',
+      download:  'file_download'
     }
   end
 

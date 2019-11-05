@@ -5,4 +5,8 @@ require:
 Bundler/OrderedGems:
   TreatCommentsAsGroupSeparators: true
 
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
 inherit_from: .rubocop_todo.yml

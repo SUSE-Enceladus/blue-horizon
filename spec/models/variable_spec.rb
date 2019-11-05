@@ -51,13 +51,13 @@ RSpec.describe Variable, type: :model do
       random_number = Faker::Number.number(digits: 3)
       random_float = Faker::Number.decimal(l_digits: 3, r_digits: 3)
       attributes_hash = {
-        'location' => random_string,
+        'location'       => random_string,
         'instance_count' => random_number.to_s,
-        'empty_number' => random_float.to_s,
-        'are_you_sure' => 'true',
-        'test_list' => %w(one two three),
+        'empty_number'   => random_float.to_s,
+        'are_you_sure'   => 'true',
+        'test_list'      => %w(one two three),
         'cluster_labels' => { foo: 'bar' },
-        'fake_key' => 'fake_value'
+        'fake_key'       => 'fake_value'
       }
       expect(Rails.logger).to receive(:warn) # for fake_key
       subject.attributes = attributes_hash
