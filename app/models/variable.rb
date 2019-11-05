@@ -9,7 +9,7 @@ class Variable
 
   def initialize(source_content)
     @plan = HCL::Checker.parse(source_content)['variable'] || {}
-    @plan.collect do |key, options|
+    @plan.keys.each do |key|
       self.class.send(:attr_accessor, key)
       instance_variable_set("@#{key}", KeyValue.get(storage_key(key), default(key)))
     end
@@ -66,7 +66,7 @@ class Variable
         when 'string'
           value.to_s
         when 'list'
-          value.collect { |v| v.to_s }
+          value.collect(&:to_s)
         when 'map'
           Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
         end

@@ -35,7 +35,7 @@ RSpec.describe Source, type: :model do
       source = create(:source)
       source.export_into(random_path)
       expected_export_path = File.join(random_path, source.filename)
-      expect(File.exists?(expected_export_path)).to be_truthy
+      expect(File.exist?(expected_export_path)).to be_truthy
       file_content = File.read(expected_export_path)
       expect(file_content).to eq(source.content)
     end
@@ -44,7 +44,7 @@ RSpec.describe Source, type: :model do
       source = create(:source)
       source.export
       expected_export_path = File.join(Rails.configuration.x.source_export_dir, source.filename)
-      expect(File.exists?(expected_export_path)).to be_truthy
+      expect(File.exist?(expected_export_path)).to be_truthy
     end
   end
 end
