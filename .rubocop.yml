@@ -2,4 +2,7 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: true
+
 inherit_from: .rubocop_todo.yml
