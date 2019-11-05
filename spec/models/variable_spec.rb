@@ -12,6 +12,10 @@ RSpec.describe Variable, type: :model do
     end
   end
 
+  it 'can be initialized with an empty variable set' do
+    expect { Variable.new('') }.not_to raise_error
+  end
+
   it 'uses defaults for attributes' do
     variable_names.each do |key|
       expect(subject.send(key)).to eq subject.default(key)

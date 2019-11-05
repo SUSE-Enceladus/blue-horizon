@@ -2,6 +2,9 @@ class VariablesController < ApplicationController
   before_action :set_variables
 
   def show
+    if @variables.attributes.blank?
+      flash.now[:alert] = 'No variables are defined.'
+    end
   end
 
   def update
@@ -21,7 +24,7 @@ class VariablesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_variables
-    @variables = Variable.new(Source.terraform.pluck(:content).join)
+    @variables = Variable.new(Source.terraform.pluck(:content).join("\n"))
     # exclude variables handled by cluster sizing
     @excluded = Cluster.variable_handlers
   end
