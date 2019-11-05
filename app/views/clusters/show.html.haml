@@ -10,7 +10,7 @@
     = link_to root_path, class: "btn btn-secondary" do
       &laquo;
       = t('sidebar.welcome')
-    = form.submit (t('sidebar.framework') + ' &raquo;').html_safe, class: "btn btn-primary", id: 'submit-cluster'
+    = form.submit (t('sidebar.variables') + ' &raquo;').html_safe, class: "btn btn-primary", id: 'submit-cluster'
 
 - content_for :page_javascript do
   = javascript_include_tag 'cluster', defer: true
