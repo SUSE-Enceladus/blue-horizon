@@ -3,12 +3,10 @@ class SourcesController < ApplicationController
   before_action :set_source, only: [:show, :edit, :update, :destroy]
 
   # GET /sources
-  def index
-  end
+  def index; end
 
   # GET /sources/1
-  def show
-  end
+  def show; end
 
   # GET /sources/new
   def new
@@ -16,8 +14,7 @@ class SourcesController < ApplicationController
   end
 
   # GET /sources/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /sources
   def create
