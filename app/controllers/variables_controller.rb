@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VariablesController < ApplicationController
   before_action :set_variables
 

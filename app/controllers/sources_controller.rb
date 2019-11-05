@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SourcesController < ApplicationController
   before_action :set_sources, only: [:index, :show, :new, :edit]
   before_action :set_source, only: [:show, :edit, :update, :destroy]

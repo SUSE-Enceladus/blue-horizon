@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Export path for modified source files (where terraform will run)
   # defaults to tmp/terraform

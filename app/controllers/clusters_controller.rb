@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClustersController < ApplicationController
   def show
     @cluster = ClusterSizeSliderDecorator.new(Cluster.load)

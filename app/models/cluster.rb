@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # CloudCluster represents user-configured attributes of a cloud deployment.
 class Cluster
   include ActiveModel::Model

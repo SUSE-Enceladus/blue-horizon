@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class KeyValue < ApplicationRecord
   self.primary_key = 'key'
   serialize :value

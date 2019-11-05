@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Load and launch SimpleCov at the very top
 require 'simplecov'
 if ENV['TRAVIS']

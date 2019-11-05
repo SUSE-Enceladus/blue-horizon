@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Provide decorations for simplifying vew code around cluster size slider
 class ClusterSizeSliderDecorator < SimpleDelegator
   BASELINE_TICKS = [3, 5, 10, 20, 50, 100, 250].freeze

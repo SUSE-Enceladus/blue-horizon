@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Helpers
   def populate_sources
     Dir.glob(Rails.root.join('spec', 'fixtures', 'sources', '*')).each do |filepath|

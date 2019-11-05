@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateKeyValues < ActiveRecord::Migration[5.1]
   def change
     create_table :key_values do |t|

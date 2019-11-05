@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Source < ApplicationRecord
   validates :filename, uniqueness: true
   before_validation :no_path_in_filename
