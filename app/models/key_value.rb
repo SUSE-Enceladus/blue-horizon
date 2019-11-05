@@ -16,10 +16,8 @@ class KeyValue < ApplicationRecord
   end
 
   def self.get(key, default_value=nil)
-    begin
-      find(key.to_s).value
-    rescue ActiveRecord::RecordNotFound
-      default_value
-    end
+    find(key.to_s).value
+  rescue ActiveRecord::RecordNotFound
+    default_value
   end
 end

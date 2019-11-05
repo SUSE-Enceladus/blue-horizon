@@ -52,4 +52,7 @@ Metrics/BlockLength:
 Style/IfUnlessModifier:
   Enabled: false
 
+Style/RedundantReturn:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml
