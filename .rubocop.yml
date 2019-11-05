@@ -2,6 +2,10 @@ require:
   - rubocop-rails
   - rubocop-rspec
 
+AllCops:
+  Exclude:
+    - 'bin/*'
+
 Bundler/OrderedGems:
   TreatCommentsAsGroupSeparators: true
 
@@ -45,17 +49,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
 
-<<<<<<< HEAD
-=======
 Style/IfUnlessModifier:
   Enabled: false
 
-Style/RedundantReturn:
-  Enabled: false
-
-Rails/OutputSafety:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
->>>>>>> 452b562... rspec style
 inherit_from: .rubocop_todo.yml
