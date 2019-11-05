@@ -56,7 +56,7 @@ class Variable
     hash.to_hash.each do |key, value|
       key = key.to_s
       if @plan.keys.include?(key)
-        value = case self.type(key)
+        value = case type(key)
         when 'number'
           if value.to_i.to_s == value
             value.to_i
@@ -81,7 +81,7 @@ class Variable
 
   def strong_params
     @plan.keys.collect do |key|
-      case self.type(key)
+      case type(key)
       when 'list'
         { key => [] }
       when 'map'
@@ -99,7 +99,7 @@ class Variable
   end
 
   def save
-    self.save!
+    save!
     return true
   rescue ActiveRecord::ActiveRecordError => e
     errors[:base] << e.message

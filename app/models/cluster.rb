@@ -18,7 +18,7 @@ class Cluster
   end
 
   def self.load
-    self.new(
+    new(
       cloud_framework:      KeyValue.get(:cloud_framework),
       instance_count:       KeyValue.get(:instance_count),
       instance_type:        KeyValue.get(:instance_type),
