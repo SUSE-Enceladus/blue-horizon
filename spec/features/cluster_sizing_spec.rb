@@ -12,6 +12,7 @@ describe 'cluster sizing', type: :feature do
         range: Cluster::MIN_CLUSTER_SIZE..Cluster::MAX_CLUSTER_SIZE
       )
     }
+
     before :each do
       KeyValue.set(:cloud_framework, cloud_framework)
       visit '/cluster'

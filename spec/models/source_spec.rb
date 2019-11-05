@@ -21,10 +21,12 @@ RSpec.describe Source, type: :model do
     let(:random_path) do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end
+
     before :each do
       Rails.configuration.x.source_export_dir = random_path
       FileUtils.mkdir_p(random_path)
     end
+
     after :each do
       FileUtils.rm_rf(random_path)
     end

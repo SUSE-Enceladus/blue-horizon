@@ -24,6 +24,7 @@ RSpec.describe Variable, type: :model do
 
   context 'loading' do
     let(:fake_data) { Faker::Crypto.sha256 }
+
     before do
       KeyValue.set('tfvars.ssh_public_key', fake_data)
     end

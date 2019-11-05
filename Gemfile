@@ -32,7 +32,6 @@ gem 'ace-rails-ap'
 gem 'hcl-checker', '~> 1.2'
 
 source 'https://rails-assets.org' do
-
 end
 
 group :development, :test do

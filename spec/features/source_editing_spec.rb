@@ -55,7 +55,6 @@ describe 'source editing', type: :feature do
     expect { Source.find(source.id) }.to raise_exception(ActiveRecord::RecordNotFound)
   end
 
-
   private
 
   # the textarea is "hidden behind" the JS editor

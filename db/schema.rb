@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20191025213201) do
-
   create_table "key_values", force: :cascade do |t|
     t.string "key", null: false
     t.text "value"
@@ -27,5 +26,4 @@ ActiveRecord::Schema.define(version: 20191025213201) do
     t.datetime "updated_at", null: false
     t.index ["filename"], name: "index_sources_on_filename"
   end
-
 end
