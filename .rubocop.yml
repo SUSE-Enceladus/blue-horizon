@@ -55,4 +55,16 @@ Style/IfUnlessModifier:
 Style/RedundantReturn:
   Enabled: false
 
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/application_helper.rb'
+
+Metrics/LineLength:
+  Max: 80
+  Exclude:
+    - 'config/**/*'
+
+Style/NumericLiterals:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml
