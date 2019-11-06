@@ -21,14 +21,3 @@ function editor_for_form_field(editor_id, form_field_id) {
   });
 	return editor;
 }
-
-function ace_highlighter_for(filename) {
-	var re = /(?:\.([^.]+))?$/;
-	var ext = re.exec(filename)[1];
-	// assume terraform scripts unless we know otherwise
-	if (ext == 'sh') {
-		return "ace/mode/sh";
-	} else {
-		return "ace/mode/terraform";
-	}
-}

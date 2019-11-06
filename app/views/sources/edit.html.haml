@@ -26,5 +26,5 @@
   :javascript
     $(function(){
       var editor = editor_for_form_field('#editor', 'textarea[name="source[content]"]');
-      editor.session.setMode(ace_highlighter_for("#{@source.filename}"));
+      editor.session.setMode("#{ace_highlighter_for(@source.filename)}");
     });
