@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Imported content from terraform sources into an editable format
 class Source < ApplicationRecord
   validates :filename, uniqueness: true
   before_validation :no_path_in_filename

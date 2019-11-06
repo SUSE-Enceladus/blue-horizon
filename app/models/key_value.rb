@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Key/Value store on ActiveRecord
 class KeyValue < ApplicationRecord
   self.primary_key = 'key'
   serialize :value

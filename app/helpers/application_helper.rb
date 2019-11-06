@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# General view helpers
 module ApplicationHelper
   def sidebar_icons
     {

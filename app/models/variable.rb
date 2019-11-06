@@ -3,7 +3,6 @@
 # Terraform variable collection built dynamically from variables in a Source
 # Supported types: string, number, boolean, list, map.
 # Non-string lists, non-string maps, and objects are not supported at this time.
-
 class Variable
   include ActiveModel::Model
 

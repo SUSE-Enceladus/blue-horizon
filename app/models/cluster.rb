@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# CloudCluster represents user-configured attributes of a cloud deployment.
+# User-configured attributes for cluster size & instance type
 class Cluster
   include ActiveModel::Model
   attr_accessor :cloud_framework,

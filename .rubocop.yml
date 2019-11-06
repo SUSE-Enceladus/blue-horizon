@@ -44,6 +44,8 @@ RSpec/MultipleExpectations:
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
+    - 'db/migrate/*.rb'
+    - 'app/controllers/*_controller.rb'
 
 Metrics/BlockLength:
   Exclude:
