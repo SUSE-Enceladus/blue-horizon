@@ -30,8 +30,6 @@ class Variable
 
   def default(key)
     @plan[key]['default'] || case type(key)
-    when 'string'
-      ''
     when 'number'
       0
     when 'boolean'
@@ -40,6 +38,8 @@ class Variable
       []
     when 'map'
       {}
+    else
+      ''
     end
   end
 
@@ -59,23 +59,10 @@ class Variable
     hash.to_hash.each do |key, value|
       key = key.to_s
       if @plan.keys.include?(key)
-        value = case type(key)
-        when 'number'
-          if value.to_i.to_s == value
-            value.to_i
-          else
-            value.to_f
-          end
-        when 'boolean'
-          ActiveModel::Type::Boolean.new.cast(value)
-        when 'string'
-          value.to_s
-        when 'list'
-          value.collect(&:to_s)
-        when 'map'
-          Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
-        end
-        instance_variable_set("@#{key}", value)
+        instance_variable_set(
+          "@#{key}",
+          cast_value_for_key_type(key, value)
+        )
       else
         Rails.logger.warn("'#{key}' is not a valid variable name")
       end
@@ -107,5 +94,22 @@ class Variable
   rescue ActiveRecord::ActiveRecordError => e
     errors[:base] << e.message
     return false
+  end
+
+  private
+
+  def cast_value_for_key_type(key, value)
+    case type(key)
+    when 'number'
+      BigDecimal(value)
+    when 'boolean'
+      ActiveModel::Type::Boolean.new.cast(value)
+    when 'list'
+      value.collect(&:to_s)
+    when 'map'
+      Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
+    else
+      value.to_s
+    end
   end
 end
