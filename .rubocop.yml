@@ -5,6 +5,7 @@ require:
 AllCops:
   Exclude:
     - 'bin/*'
+    - 'vendor/**/*'
 
 Bundler/OrderedGems:
   TreatCommentsAsGroupSeparators: true
