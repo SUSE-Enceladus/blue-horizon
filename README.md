@@ -44,6 +44,14 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
    ```
    rails server -b localhost -p 3000
    ````
+
+Before submitting a change, please be sure it passes all existing tests and conforms with our coding style:
+
+```
+rspec
+rubocop
+```
+
 ## License
 
 Copyright © 2019 SUSE LLC.
