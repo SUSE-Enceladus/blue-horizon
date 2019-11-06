@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
+# Key/Value store on ActiveRecord
 class KeyValue < ApplicationRecord
   self.primary_key = 'key'
   serialize :value
 
   def self.set(key, value)
-    kv = begin
-      self.find(key.to_s)
-    rescue ActiveRecord::RecordNotFound
-      self.new(key: key)
-    end
+    kv =
+      begin
+        find(key.to_s)
+      rescue ActiveRecord::RecordNotFound
+        new(key: key)
+      end
     kv.value = value
     kv.save
   end
 
   def self.get(key, default_value=nil)
-    begin
-      self.find(key.to_s).value
-    rescue ActiveRecord::RecordNotFound
-      default_value
-    end
+    find(key.to_s).value
+  rescue ActiveRecord::RecordNotFound
+    default_value
   end
 end

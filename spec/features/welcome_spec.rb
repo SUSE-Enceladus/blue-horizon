@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'welcome', type: :feature do
-  it 'should exist' do
+  it 'exists' do
     expect { visit('/welcome') }.not_to raise_error
   end
 end

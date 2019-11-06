@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Load and launch SimpleCov at the very top
 require 'simplecov'
 if ENV['TRAVIS']
@@ -14,10 +16,11 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+if Rails.env.production?
+  abort('The Rails environment is running in production mode!')
+end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-
 
 require 'capybara/rails'
 require 'capybara/rspec'

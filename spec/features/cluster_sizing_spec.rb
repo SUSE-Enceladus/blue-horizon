@@ -1,18 +1,23 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'cluster sizing', type: :feature do
-  let!(:sources) { populate_sources }
+  before do
+    populate_sources
+  end
 
   describe 'in Azure' do
     let(:cloud_framework) { 'azure' }
     let(:instance_types) { Cloud::InstanceType.for(cloud_framework) }
     let(:random_instance_type_key) { instance_types.sample.key }
-    let(:random_cluster_size) {
+    let(:random_cluster_size) do
       Faker::Number.within(
         range: Cluster::MIN_CLUSTER_SIZE..Cluster::MAX_CLUSTER_SIZE
       )
-    }
-    before :each do
+    end
+
+    before do
       KeyValue.set(:cloud_framework, cloud_framework)
       visit '/cluster'
     end

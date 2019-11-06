@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 # Terraform variable collection built dynamically from variables in a Source
 # Supported types: string, number, boolean, list, map.
 # Non-string lists, non-string maps, and objects are not supported at this time.
-
 class Variable
   include ActiveModel::Model
 
@@ -9,9 +10,12 @@ class Variable
 
   def initialize(source_content)
     @plan = HCL::Checker.parse(source_content)['variable'] || {}
-    @plan.collect do |key, options|
+    @plan.keys.each do |key|
       self.class.send(:attr_accessor, key)
-      instance_variable_set("@#{key}", KeyValue.get(storage_key(key), default(key)))
+      instance_variable_set(
+        "@#{key}",
+        KeyValue.get(storage_key(key), default(key))
+      )
     end
   end
 
@@ -25,8 +29,6 @@ class Variable
 
   def default(key)
     @plan[key]['default'] || case type(key)
-    when 'string'
-      ''
     when 'number'
       0
     when 'boolean'
@@ -35,6 +37,8 @@ class Variable
       []
     when 'map'
       {}
+    else
+      ''
     end
   end
 
@@ -54,23 +58,10 @@ class Variable
     hash.to_hash.each do |key, value|
       key = key.to_s
       if @plan.keys.include?(key)
-        value = case self.type(key)
-        when 'number'
-          if value.to_i.to_s == value
-            value.to_i
-          else
-            value.to_f
-          end
-        when 'boolean'
-          ActiveModel::Type::Boolean.new.cast(value)
-        when 'string'
-          value.to_s
-        when 'list'
-          value.collect{ |v| v.to_s }
-        when 'map'
-          Hash[ value.collect{ |k, v| [k.to_s, v.to_s] } ]
-        end
-        instance_variable_set("@#{key}", value)
+        instance_variable_set(
+          "@#{key}",
+          cast_value_for_key_type(key, value)
+        )
       else
         Rails.logger.warn("'#{key}' is not a valid variable name")
       end
@@ -79,7 +70,7 @@ class Variable
 
   def strong_params
     @plan.keys.collect do |key|
-      case self.type(key)
+      case type(key)
       when 'list'
         { key => [] }
       when 'map'
@@ -97,10 +88,27 @@ class Variable
   end
 
   def save
-    self.save!
+    save!
     return true
   rescue ActiveRecord::ActiveRecordError => e
     errors[:base] << e.message
     return false
+  end
+
+  private
+
+  def cast_value_for_key_type(key, value)
+    case type(key)
+    when 'number'
+      BigDecimal(value)
+    when 'boolean'
+      ActiveModel::Type::Boolean.new.cast(value)
+    when 'list'
+      value.collect(&:to_s)
+    when 'map'
+      Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
+    else
+      value.to_s
+    end
   end
 end

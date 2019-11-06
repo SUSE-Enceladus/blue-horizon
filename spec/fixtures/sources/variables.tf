@@ -62,5 +62,5 @@ variable "empty_number" {
 }
 
 variable "test_description" {
-    description = "test description"
+    description = "test desc"
 }

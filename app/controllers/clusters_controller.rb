@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ClustersController < ApplicationController
   def show
     @cluster = ClusterSizeSliderDecorator.new(Cluster.load)
@@ -17,7 +19,7 @@ class ClustersController < ApplicationController
 
   def cluster_params
     safe_params = params.require(:cluster).permit(
-      :cloud_framework, :instance_type, :instance_type_custom, :instance_count,
+      :cloud_framework, :instance_type, :instance_type_custom, :instance_count
     )
     safe_params['cloud_framework'] = KeyValue.get(:cloud_framework)
     return safe_params

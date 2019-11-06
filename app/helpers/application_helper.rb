@@ -1,13 +1,16 @@
+# frozen_string_literal: true
+
+# General view helpers
 module ApplicationHelper
   def sidebar_icons
     {
-      welcome: 'announcement',
-      cluster: 'photo_size_select_small',
+      welcome:   'announcement',
+      cluster:   'photo_size_select_small',
       variables: 'playlist_add',
-      sources: 'configuration_file',
-      plan: 'organization',
-      deploy: 'play_arrow',
-      download: 'file_download'
+      sources:   'configuration_file',
+      plan:      'organization',
+      deploy:    'play_arrow',
+      download:  'file_download'
     }
   end
 
@@ -27,9 +30,9 @@ module ApplicationHelper
     )
   end
 
-  def bootstrap_flash()
+  def bootstrap_flash
     flash.collect do |type, message|
-      # Skip empty messages, e.g. for devise messages set to nothing in a locale file.
+      # Skip empty messages
       next if message.blank?
 
       context = case type.to_sym

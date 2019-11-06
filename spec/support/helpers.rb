@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Helpers
   def populate_sources
-    Dir.glob(Rails.root.join('spec', 'fixtures', 'sources', '*')).each do |filepath|
+    source_path = Rails.root.join('spec', 'fixtures', 'sources', '*')
+    Dir.glob(source_path).each do |filepath|
       Source.create(
         filename: filepath,
         content:  File.read(filepath)
@@ -9,10 +12,10 @@ module Helpers
     Source.all
   end
 
-  def get_variable_names
-    HCL::Checker.parse(
-      File.read(Rails.root.join('spec', 'fixtures', 'sources', 'variables.tf'))
-    )['variable'].keys
+  def collect_variable_names
+    variables_source =
+      Rails.root.join('spec', 'fixtures', 'sources', 'variables.tf')
+    HCL::Checker.parse(File.read(variables_source))['variable'].keys
   end
 end
 
