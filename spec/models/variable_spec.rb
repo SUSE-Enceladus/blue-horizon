@@ -103,8 +103,8 @@ RSpec.describe Variable, type: :model do
       end
 
       it 'casts number from string' do
-        expect(variables.instance_count).to eq(random_number)
-        expect(variables.empty_number).to eq(random_float)
+        expect(variables.instance_count).to be == random_number
+        expect(variables.empty_number).to be == random_float
       end
 
       it 'casts boolean from string' do
