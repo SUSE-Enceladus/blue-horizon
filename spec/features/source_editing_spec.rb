@@ -29,7 +29,7 @@ describe 'source editing', type: :feature do
 
   it 'creates new sources' do
     random_content = Faker::Lorem.paragraph
-    filename = Faker::File.file_name
+    filename = Faker::File.file_name(ext: 'sh')
     visit('/sources')
 
     click_on('New Source')
