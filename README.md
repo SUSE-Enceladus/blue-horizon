@@ -18,33 +18,37 @@ Requirements are based on supported versions from SUSE Linux Enterprise Server 1
 
 The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual environment for development.
 
-1. Clone this project
-2. RVM will prompt you to istall the required ruby version, if necessary, when entering the project directory.
-3. Install dependencies
-  ```
-  gem install bundler
-  bundle
-  ```
-  If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. On (open)SUSE:
-  ```
-  sudo zypper in libxml2-devel libxslt-devel
-  ```
-4. Create a dotenv file (e.g. `.env.development`) that defines:
-  * The cloud framework
-    ```
-    CLOUD_FRAMEWORK="aws"
-    ```
-5. Place original _terraform_ scripts in `/vendor/sources`
+1.  Clone this project
 
-6. Initialize a development database
-  ```
-  rails db:setup
-  ```
+2.  RVM will prompt you to install the required ruby version, if necessary, when entering the project directory.
 
-7. Start a development server on http://localhost:3000
-   ```
-   rails server -b localhost -p 3000
-   ````
+3.  Install dependencies
+    ```
+    gem install bundler
+    bundle
+    ```
+    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. On (open)SUSE:
+    ```
+    sudo zypper in libxml2-devel libxslt-devel
+    ```
+
+4.  Create a dotenv file (e.g. `.env.development`) that defines:
+    *   The cloud framework
+        ```
+        CLOUD_FRAMEWORK="aws"
+        ```
+
+5.  Place original _terraform_ scripts in `/vendor/sources`
+
+6.  Initialize a development database
+    ```
+    rails db:setup
+    ```
+
+7.  Start a development server on http://localhost:3000
+    ```
+    rails server -b localhost -p 3000
+    ````
 
 Before submitting a change, please be sure it passes all existing tests and conforms with our coding style:
 
