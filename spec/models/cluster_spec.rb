@@ -39,8 +39,8 @@ RSpec.describe Cluster, type: :model do
 
   context 'when loading' do
     before do
-      KeyValue.set(:instance_type, custom_instance_type)
-      KeyValue.set(:instance_count, instance_count)
+      described_class.prefixed_set(:instance_type, custom_instance_type)
+      described_class.prefixed_set(:instance_count, instance_count)
     end
 
     it 'returns stored values' do
@@ -103,9 +103,10 @@ RSpec.describe Cluster, type: :model do
       )
     end
 
-    it 'stores instance type as :instance_type KeyValue' do
+    it 'stores instance type as prefixed :instance_type KeyValue' do
       expect(cluster.save).to be(true)
-      expect(KeyValue.get(:instance_type)).to eq(custom_instance_type)
+      expect(KeyValue.get(KeyPrefixable::PREFIX + 'instance_type'))
+        .to eq(custom_instance_type)
     end
 
     it 'describes the framework in string representation' do
