@@ -29,6 +29,7 @@ RSpec.describe Variable, type: :model do
 
   context 'when loading' do
     let(:fake_data) { Faker::Crypto.sha256 }
+    let(:variables) { described_class.load }
 
     before do
       KeyValue.set('tfvars.ssh_public_key', fake_data)
@@ -42,7 +43,7 @@ RSpec.describe Variable, type: :model do
   context 'with form handling' do
     let(:random_string) { Faker::Lorem.word }
     let(:random_number) { Faker::Number.number(digits: 3) }
-    let(:random_float) { Faker::Number.decimal(l_digits: 3, r_digits: 3) }
+    let(:random_decimal) { Faker::Number.decimal(l_digits: 3, r_digits: 3) }
     let(:expected_params) do
       [
         'resource_group',
@@ -85,7 +86,7 @@ RSpec.describe Variable, type: :model do
         {
           'location'       => random_string,
           'instance_count' => random_number.to_s,
-          'empty_number'   => random_float.to_s,
+          'empty_number'   => random_decimal.to_s,
           'are_you_sure'   => 'true',
           'test_list'      => ['one', 'two', 'three'],
           'cluster_labels' => { foo: 'bar' },
@@ -104,7 +105,7 @@ RSpec.describe Variable, type: :model do
 
       it 'casts number from string' do
         expect(variables.instance_count).to be == random_number
-        expect(variables.empty_number).to be == random_float
+        expect(variables.empty_number).to be == random_decimal
       end
 
       it 'casts boolean from string' do
