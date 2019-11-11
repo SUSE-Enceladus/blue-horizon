@@ -32,6 +32,8 @@ gem 'active_link_to'
 gem 'ace-rails-ap'
 # HCL parser
 gem 'hcl-checker', '~> 1.2'
+# Terraform wrapper
+gem 'ruby-terraform'
 
 source 'https://rails-assets.org' do
 end
