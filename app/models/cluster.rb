@@ -4,6 +4,7 @@
 class Cluster
   include ActiveModel::Model
   include KeyPrefixable
+  include Saveable
   extend KeyPrefixable
 
   attr_accessor :cloud_framework,
@@ -71,13 +72,5 @@ class Cluster
     prefixed_set(:instance_type, @instance_type)
     prefixed_set(:instance_type_custom, @instance_type)
     prefixed_set(:instance_count, @instance_count)
-  end
-
-  def save
-    save!
-    return true
-  rescue ActiveRecord::ActiveRecordError => e
-    errors[:base] << e.message
-    return false
   end
 end
