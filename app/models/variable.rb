@@ -22,10 +22,6 @@ class Variable
     new(Source.terraform.pluck(:content).join("\n"))
   end
 
-  def storage_key(key)
-    KEY_PREFIX + key
-  end
-
   def type(key)
     @plan[key]['type'] || 'string'
   end
