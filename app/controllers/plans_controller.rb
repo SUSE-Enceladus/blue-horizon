@@ -12,7 +12,7 @@ class PlansController < ApplicationController
 
   def config_terraform
     RubyTerraform.configure do |config|
-      config.binary = '/usr/bin/terraform'
+      config.binary = find_default_binary
       config.logger = Logger.new(
         RubyTerraform::MultiIO.new(STDOUT),
         level: :debug
@@ -24,5 +24,9 @@ class PlansController < ApplicationController
 
   def init_terraform
     RubyTerraform.init(from_module: '', path: 'vendor/sources')
+  end
+
+  def find_default_binary
+    return `which terraform`.strip
   end
 end
