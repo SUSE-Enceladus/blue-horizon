@@ -6,6 +6,20 @@ RSpec.describe Variable, type: :model do
   let(:source_content) { Source.find_by(filename: 'variables.tf').content }
   let(:variables) { described_class.new(source_content) }
   let(:variable_names) { collect_variable_names }
+  let(:random_string) { Faker::Lorem.word }
+  let(:random_number) { Faker::Number.number(digits: 3) }
+  let(:random_decimal) { Faker::Number.decimal(l_digits: 3, r_digits: 3) }
+  let(:attributes_hash) do
+    {
+      'location'       => random_string,
+      'instance_count' => random_number.to_s,
+      'empty_number'   => random_decimal.to_s,
+      'are_you_sure'   => 'true',
+      'test_list'      => ['one', 'two', 'three'],
+      'cluster_labels' => { foo: 'bar' },
+      'fake_key'       => 'fake_value'
+    }
+  end
 
   before do
     populate_sources
@@ -29,6 +43,7 @@ RSpec.describe Variable, type: :model do
 
   context 'when loading' do
     let(:fake_data) { Faker::Crypto.sha256 }
+    let(:variables) { described_class.load }
 
     before do
       KeyValue.set('tfvars.ssh_public_key', fake_data)
@@ -40,9 +55,6 @@ RSpec.describe Variable, type: :model do
   end
 
   context 'with form handling' do
-    let(:random_string) { Faker::Lorem.word }
-    let(:random_number) { Faker::Number.number(digits: 3) }
-    let(:random_float) { Faker::Number.decimal(l_digits: 3, r_digits: 3) }
     let(:expected_params) do
       [
         'resource_group',
@@ -81,18 +93,6 @@ RSpec.describe Variable, type: :model do
     end
 
     context 'with form params' do
-      let(:attributes_hash) do
-        {
-          'location'       => random_string,
-          'instance_count' => random_number.to_s,
-          'empty_number'   => random_float.to_s,
-          'are_you_sure'   => 'true',
-          'test_list'      => ['one', 'two', 'three'],
-          'cluster_labels' => { foo: 'bar' },
-          'fake_key'       => 'fake_value'
-        }
-      end
-
       before do
         allow(Rails.logger).to receive(:warn)
         variables.attributes = attributes_hash
@@ -104,7 +104,7 @@ RSpec.describe Variable, type: :model do
 
       it 'casts number from string' do
         expect(variables.instance_count).to be == random_number
-        expect(variables.empty_number).to be == random_float
+        expect(variables.empty_number).to be == random_decimal
       end
 
       it 'casts boolean from string' do
@@ -158,6 +158,46 @@ RSpec.describe Variable, type: :model do
         variables.save
         expect(variables.errors[:base]).to include(exception.message)
       end
+    end
+  end
+
+  context 'when exporting' do
+    let(:export_filename) { 'variables.tfvars.json' }
+    let(:random_path) do
+      Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
+    end
+    let(:expected_random_export_path) do
+      File.join(random_path, export_filename)
+    end
+    let(:expected_config_export_path) do
+      File.join(Rails.configuration.x.source_export_dir, export_filename)
+    end
+    let(:json) { JSON.dump(variables.attributes) }
+
+    before do
+      Rails.configuration.x.source_export_dir = random_path
+      FileUtils.mkdir_p(random_path)
+      variables.attributes = attributes_hash
+    end
+
+    after do
+      FileUtils.rm_rf(random_path)
+    end
+
+    it 'writes to a file' do
+      variables.export_into(random_path)
+      expect(File).to exist(expected_random_export_path)
+    end
+
+    it 'writes variable values' do
+      variables.export
+      exported = File.read(expected_config_export_path)
+      expect(exported).to eq(json)
+    end
+
+    it 'writes to the config path unless otherwise specified' do
+      variables.export
+      expect(File).to exist(expected_config_export_path)
     end
   end
 end

@@ -5,8 +5,11 @@
 # Non-string lists, non-string maps, and objects are not supported at this time.
 class Variable
   include ActiveModel::Model
+  include Exportable
+  include KeyPrefixable
+  include Saveable
 
-  KEY_PREFIX = 'tfvars.'
+  DEFAULT_EXPORT_FILENAME = 'variables.tfvars.json'
 
   def initialize(source_content)
     @plan = HCL::Checker.parse(source_content)['variable'] || {}
@@ -14,13 +17,13 @@ class Variable
       self.class.send(:attr_accessor, key)
       instance_variable_set(
         "@#{key}",
-        KeyValue.get(storage_key(key), default(key))
+        prefixed_get(key, default(key))
       )
     end
   end
 
-  def storage_key(key)
-    KEY_PREFIX + key
+  def self.load
+    new(Source.terraform.pluck(:content).join("\n"))
   end
 
   def type(key)
@@ -83,16 +86,16 @@ class Variable
 
   def save!
     @plan.keys.each do |key|
-      KeyValue.set(storage_key(key), instance_variable_get("@#{key}"))
+      prefixed_set(key, instance_variable_get("@#{key}"))
     end
   end
 
-  def save
-    save!
-    return true
-  rescue ActiveRecord::ActiveRecordError => e
-    errors[:base] << e.message
-    return false
+  def content
+    attributes.to_json
+  end
+
+  def filename
+    DEFAULT_EXPORT_FILENAME
   end
 
   private

@@ -3,26 +3,28 @@
 # User-configured attributes for cluster size & instance type
 class Cluster
   include ActiveModel::Model
+  include KeyPrefixable
+  include Saveable
+  extend KeyPrefixable
+
   attr_accessor :cloud_framework,
-    :instance_count, :instance_type, :instance_type_custom
+    :instance_count, :instance_type_custom
+  attr_writer :instance_type
 
   MIN_CLUSTER_SIZE = 3
   MAX_CLUSTER_SIZE = 250
 
   def initialize(*args)
     super
-    if @instance_type.blank? || @instance_type == 'CUSTOM'
-      @instance_type = @instance_type_custom
-    end
     @instance_count = @instance_count.to_i
   end
 
   def self.load
     new(
       cloud_framework:      KeyValue.get(:cloud_framework),
-      instance_count:       KeyValue.get(:instance_count),
-      instance_type:        KeyValue.get(:instance_type),
-      instance_type_custom: KeyValue.get(:instance_type_custom)
+      instance_count:       prefixed_get(:instance_count),
+      instance_type:        prefixed_get(:instance_type),
+      instance_type_custom: prefixed_get(:instance_type_custom)
     )
   end
 
@@ -31,6 +33,14 @@ class Cluster
       'instance_type',
       'instance_count'
     ]
+  end
+
+  def instance_type
+    if @instance_type.blank? || @instance_type == 'CUSTOM'
+      @instance_type_custom
+    else
+      @instance_type
+    end
   end
 
   def current_cluster_size
@@ -59,15 +69,8 @@ class Cluster
   end
 
   def save!
-    KeyValue.set(:instance_type, @instance_type)
-    KeyValue.set(:instance_count, @instance_count)
-  end
-
-  def save
-    save!
-    return true
-  rescue ActiveRecord::ActiveRecordError => e
-    errors[:base] << e.message
-    return false
+    prefixed_set(:instance_type, @instance_type)
+    prefixed_set(:instance_type_custom, @instance_type)
+    prefixed_set(:instance_count, @instance_count)
   end
 end
