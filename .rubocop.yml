@@ -36,8 +36,7 @@ Style/WordArray:
   EnforcedStyle: brackets
 
 RSpec/ExampleLength:
-  Exclude:
-    - 'spec/features/*_spec.rb'
+  Enabled: false
 
 RSpec/MultipleExpectations:
   Enabled: false

@@ -4,6 +4,7 @@ class VariablesController < ApplicationController
   before_action :set_variables
 
   def show
+    @variables.export
     return if @variables.attributes.present?
 
     flash.now[:alert] = 'No variables are defined.'
@@ -12,6 +13,7 @@ class VariablesController < ApplicationController
   def update
     @variables.attributes = variables_params
     if @variables.save
+      @variables.export
       redirect_to variables_path, flash: {
         notice: 'Variables were successfully updated.'
       }
