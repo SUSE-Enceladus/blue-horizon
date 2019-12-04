@@ -5,13 +5,42 @@ module ApplicationHelper
   def sidebar_icons
     {
       welcome:   'announcement',
+      sources:   'configuration_file',
       cluster:   'photo_size_select_small',
       variables: 'playlist_add',
-      sources:   'configuration_file',
       plan:      'organization',
       deploy:    'play_arrow',
       download:  'file_download'
     }
+  end
+
+  def simple_sidebar_menu_items
+    [
+      :welcome,
+      :cluster,
+      :variables,
+      :plan,
+      :deploy,
+      :download
+    ]
+  end
+
+  def advanced_sidebar_menu_items
+    [
+      :welcome,
+      :sources,
+      :plan,
+      :deploy,
+      :download
+    ]
+  end
+
+  def sidebar_menu_items(advanced=Rails.configuration.x.advanced_mode)
+    if advanced
+      advanced_sidebar_menu_items
+    else
+      simple_sidebar_menu_items
+    end
   end
 
   def sidebar_menu_item(path_key)

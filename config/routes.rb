@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   # Welcome
   root to: 'welcome#index'
   get '/welcome', to: 'welcome#index'
+  # switch paths
+  get '/welcome/simple', to: 'welcome#simple', as: 'simple'
+  get '/welcome/advanced', to: 'welcome#advanced', as: 'advanced'
+
   # Cluster size
   resource :cluster, only: [:show, :update]
   # Additional data
