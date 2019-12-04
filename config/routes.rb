@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   resource :variables, only: [:show, :update]
   # Custom/Advanced
   resources :sources, except: [:show]
+  # Show plan
+  resource :plan, only: [:show]
 
   # mock routes
-  get '/plan', to: 'welcome#index'
   get '/deploy', to: 'welcome#index'
   get '/download', to: 'welcome#index'
 end
