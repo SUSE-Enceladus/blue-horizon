@@ -23,7 +23,6 @@ class SourcesController < ApplicationController
     @source = Source.new(source_params)
 
     if @source.save
-      @source.export
       redirect_to(
         edit_source_path(@source),
         notice: 'Source was successfully created.'
@@ -37,7 +36,6 @@ class SourcesController < ApplicationController
   # PATCH/PUT /sources/1
   def update
     if @source.update(source_params)
-      @source.export
       redirect_to(
         edit_source_path(@source),
         notice: 'Source was successfully updated.'
