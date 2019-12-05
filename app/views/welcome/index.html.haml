@@ -1,13 +1,9 @@
 %h1 Welcome#index
-%p Find me in app/views/welcome/index.html.erb
-%p
-  / This is an EOS icon
-  %i.eos-icons action_chains
-  / This is a Material Design icon
-  %i.eos-icons bluetooth_disabled
-  %button.btn.btn-primary Primary
-  %button.btn.btn-secondary Secondary
-  %button.btn.btn-info Info
-  %button.btn.btn-danger Danger
-  %button.btn.btn-success Success
-  %button.btn.btn-warning Warning
+
+%div.d-flex.flex-row.justify-content-around
+  %a.btn.btn-lg.btn-primary{ href: simple_path }
+    %i.eos-icons fast_forward
+    Simple
+  %a.btn.btn-lg.btn-secondary{ href: advanced_path }
+    %i.eos-icons edit
+    Advanced
