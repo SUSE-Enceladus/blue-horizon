@@ -25,3 +25,4 @@
 //= require layout.js
 //= require sources.js
 //= require variables.js
+//= require deploys.js

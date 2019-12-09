@@ -1,0 +1,10 @@
+%h1 This is the plan to be deployed
+%p
+  %div#editor.show_plan{ style: 'display: none;'}= @exported_vars
+
+- content_for :page_javascript do
+  :javascript
+    $(function(){
+      var editor = show_plan('#editor');
+      editor.session.setMode("ace/mode/json");
+    });

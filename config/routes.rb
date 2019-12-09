@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   resources :sources, except: [:show]
   # Show plan
   resource :plan, only: [:show]
+  # Deploy
+  resource :deploy, only: [:show]
 
   # mock routes
-  get '/deploy', to: 'welcome#index'
   get '/download', to: 'welcome#index'
 end
