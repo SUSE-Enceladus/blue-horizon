@@ -1,13 +1,11 @@
-%h1 Plan#show
-%p Find me in app/views/welcome/index.html.erb
+%h1 This is your current plan
+%h4 This plan will be used to deploy
 %p
-  / This is an EOS icon
-  %i.eos-icons action_chains
-  / This is a Material Design icon
-  %i.eos-icons bluetooth_disabled
-  %button.btn.btn-primary Primary
-  %button.btn.btn-secondary Secondary
-  %button.btn.btn-info Info
-  %button.btn.btn-danger Danger
-  %button.btn.btn-success Success
-  %button.btn.btn-warning Warning
+  %div#editor.show_plan{ style: 'display: none;'}= @show_output
+
+- content_for :page_javascript do
+  :javascript
+    $(function(){
+      var editor = show_plan('#editor');
+      editor.session.setMode("ace/mode/json");
+    });

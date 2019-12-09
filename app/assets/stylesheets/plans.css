@@ -1,0 +1,6 @@
+.show_plan {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
+}
