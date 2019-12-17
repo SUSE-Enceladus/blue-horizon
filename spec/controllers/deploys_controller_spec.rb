@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe DeploysController, type: :controller do
-  context 'when deplying terraform plan' do
+  context 'when deploying terraform plan' do
     let(:ruby_terraform) { RubyTerraform }
     let(:variable_instance) { Variable.new('') }
     let(:random_path) do
@@ -22,6 +22,7 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'deploys a plan' do
+      allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:read)
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
       allow(ruby_terraform).to receive(:apply)

@@ -4,13 +4,17 @@ require 'ruby_terraform'
 
 class DeploysController < ApplicationController
   def show
+    @apply_args = {
+      directory: Rails.configuration.x.source_export_dir, auto_approve: true
+    }
     variables_file = exported_vars_path
     render :show, flash: { error: 'No plan has been created.' } unless
       File.exist?(variables_file)
     read_exported_vars(variables_file)
 
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     terraform_apply
-    show_apply_output
+    Dir.chdir(Rails.root)
   end
 
   private
@@ -24,30 +28,26 @@ class DeploysController < ApplicationController
   def read_exported_vars(variables_file)
     logger.info(variables_file)
     @exported_vars = File.read(variables_file)
+    logger.info(@apply_args)
+    @apply_args[:vars] = JSON.parse(@exported_vars)
     logger.info(@exported_vars)
-    @terraform_tf_vars = 'terraform.tfvars'
+    @apply_args[:vars_files] = ['terraform.tfvars']
   end
 
   def terraform_apply
-    auto_approve = true
-    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.configuration.stdout = StringIO.new
-    RubyTerraform.apply(
-      directory:  Rails.configuration.x.source_export_dir, vars: JSON.parse(
-        @exported_vars
-      ),
-      vars_files: [@terraform_tf_vars],
-      auto_approve: auto_approve # change to TRUE to avoid interaction
-    )
+
+    RubyTerraform.apply(@apply_args)
+
     @apply_output = RubyTerraform.configuration.stdout.string
     # back to DEFAULT configuration
     RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
-    write_output('/tmp/ruby-terraform.log')
-    Dir.chdir(Rails.root)
-  rescue RubyTerraform::Errors::ExecutionError
-    raise if auto_approve
 
-    logger.warn 'Remember to auto approve the deploy.'
+    write_output('/tmp/ruby-terraform.log')
+
+    show_apply_output
+  rescue RubyTerraform::Errors::ExecutionError
+    render :show, flash: { error: 'Apply has failed.' }
   end
 
   def write_output(log_file)
@@ -58,12 +58,10 @@ class DeploysController < ApplicationController
   end
 
   def show_apply_output
-    Dir.chdir(Rails.configuration.x.source_export_dir)
     render :show, flash: { error: 'Apply did not execute correctly.' } unless
       File.exist?('terraform.tfstate')
 
     @terraform_tfstate = File.read('terraform.tfstate')
     logger.info(@terraform_tfstate)
-    Dir.chdir(Rails.root)
   end
 end

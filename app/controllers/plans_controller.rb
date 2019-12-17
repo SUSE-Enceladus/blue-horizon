@@ -12,7 +12,9 @@ class PlansController < ApplicationController
     return unless @exported_vars
 
     terraform_plan
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     terraform_show
+    Dir.chdir(Rails.root)
     # send show output to UI
   end
 
@@ -86,18 +88,13 @@ class PlansController < ApplicationController
   end
 
   def terraform_show
-    Dir.chdir(Rails.configuration.x.source_export_dir)
     # change stdout to capture the output
     RubyTerraform.configuration.stdout = StringIO.new
-    RubyTerraform.show(
-      path: saved_plan_path,
-      json: true
-    )
+    RubyTerraform.show(path: saved_plan_path, json: true)
     @show_output = RubyTerraform.configuration.stdout.string
     # back to DEFAULT configuration
     RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
     write_output
-    Dir.chdir(Rails.root)
   end
 
   def write_output
