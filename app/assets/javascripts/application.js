@@ -25,4 +25,5 @@
 //= require layout.js
 //= require sources.js
 //= require variables.js
+//= require plans.js
 //= require deploys.js
