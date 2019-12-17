@@ -11,7 +11,7 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
-    let(:terraform_tfvars) { Rails.root.join(sources_dir, 'terraform.tfvars') }
+    let(:terraform_tfvars) { 'terraform.tfvars' }
 
     before do
       FileUtils.mkdir_p(random_path)
@@ -33,7 +33,7 @@ RSpec.describe DeploysController, type: :controller do
           .with(
             directory: sources_dir, vars: { foo: 'bar' },
             vars_files: [terraform_tfvars],
-            auto_approve: false
+            auto_approve: true
           )
       )
     end

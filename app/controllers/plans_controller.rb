@@ -33,9 +33,11 @@ class PlansController < ApplicationController
   end
 
   def init_terraform
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.init(
       from_module: '', path: Rails.configuration.x.source_export_dir
     )
+    Dir.chdir(Rails.root)
   end
 
   def find_default_binary
@@ -75,25 +77,28 @@ class PlansController < ApplicationController
   end
 
   def terraform_plan
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.plan(
-      directory: 'tmp/terraform', vars: @exported_vars,
-      plan: 'tmp/terraform/current_plan'
+      directory: Rails.configuration.x.source_export_dir, vars: @exported_vars,
+      plan: saved_plan_path
     )
+    Dir.chdir(Rails.root)
   end
 
   def terraform_show
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     # change stdout to capture the output
     RubyTerraform.configuration.stdout = StringIO.new
-
-    RubyTerraform.show(
-      path: saved_plan_path,
-      json: true
-    )
+    RubyTerraform.show(path: saved_plan_path, json: true)
     @show_output = RubyTerraform.configuration.stdout.string
     # back to DEFAULT configuration
     RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
-    # write in STDOUT and file
-    # the output of terraform show
+    write_output
+    Dir.chdir(Rails.root)
+  end
+
+  def write_output
+    # write in STDOUT and file, the output of terraform show
     f = File.open(@log_file, 'a')
     f.write(@show_output)
     logger.info @show_output

@@ -12,13 +12,11 @@ function show_plan(editor_id, show_info) {
     editor.setOption('fontSize', '13pt');
     editor.setOption('vScrollBarAlwaysVisible', true);
     editor.getSession().setUseWrapMode(true);
-    editor.setValue(
-	JSON.stringify(
-	    JSON.parse(editor.getSession().getValue()),
-	    null,
-	    2
-	)
-    );
+    editor.setValue(JSON.stringify(
+    	JSON.parse(editor.getSession().getValue()),
+    	null,
+    	2
+    ));
     editor.session.setMode("ace/mode/json");
     $(editor_id).show();
     form_field.val(editor.getSession().getValue());
