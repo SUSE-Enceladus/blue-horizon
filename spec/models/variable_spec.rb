@@ -13,7 +13,9 @@ RSpec.describe Variable, type: :model do
     {
       'location'       => random_string,
       'instance_count' => random_number.to_s,
-      'empty_number'   => random_decimal.to_s,
+      'empty_number'   => format(
+        '%<decimal>7.3f', decimal: random_decimal
+      ),
       'are_you_sure'   => 'true',
       'test_list'      => ['one', 'two', 'three'],
       'cluster_labels' => { foo: 'bar' },

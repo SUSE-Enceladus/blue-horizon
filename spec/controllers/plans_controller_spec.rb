@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe PlansController, type: :controller do
   let(:json_instance) { JSON }
 
+  let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
+
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('') }
     let(:variables) { Variable.load }
@@ -63,7 +65,7 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:init)
           .with(
-            from_module: '', path: 'tmp/terraform'
+            from_module: '', path: sources_dir
           )
       )
     end
@@ -101,6 +103,7 @@ RSpec.describe PlansController, type: :controller do
     let(:ruby_terraform) { RubyTerraform }
     let(:file) { File }
     let(:file_write) { File }
+    let(:plan_file) { Rails.root.join(sources_dir, 'current_plan') }
 
     before do
       allow(controller).to receive(:config_terraform)
@@ -117,8 +120,8 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:plan)
           .with(
-            directory: 'tmp/terraform', vars: {},
-            plan: 'tmp/terraform/current_plan'
+            directory: sources_dir, vars: {},
+            plan: plan_file
           )
       )
     end
@@ -134,7 +137,7 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:show)
           .with(
-            json: true, path: 'tmp/terraform/current_plan'
+            json: true, path: plan_file
           )
       )
     end
