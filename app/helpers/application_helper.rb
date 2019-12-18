@@ -2,50 +2,13 @@
 
 # General view helpers
 module ApplicationHelper
-  def sidebar_icons
-    {
-      welcome:   'announcement',
-      sources:   'configuration_file',
-      cluster:   'photo_size_select_small',
-      variables: 'playlist_add',
-      plan:      'organization',
-      deploy:    'play_arrow',
-      download:  'file_download'
-    }
-  end
-
-  def simple_sidebar_menu_items
-    [
-      :welcome,
-      :cluster,
-      :variables,
-      :plan,
-      :deploy,
-      :download
-    ]
-  end
-
-  def advanced_sidebar_menu_items
-    [
-      :welcome,
-      :sources,
-      :plan,
-      :deploy,
-      :download
-    ]
-  end
-
   def sidebar_menu_items(advanced=Rails.configuration.x.advanced_mode)
-    if advanced
-      advanced_sidebar_menu_items
-    else
-      simple_sidebar_menu_items
-    end
+    Rails.configuration.x.menu_items[advanced]
   end
 
   def sidebar_menu_item(path_key)
     text = t("sidebar.#{path_key}")
-    icon = sidebar_icons[path_key]
+    icon = Rails.configuration.x.sidebar_icons[path_key]
     url = "/#{path_key}"
 
     content = [

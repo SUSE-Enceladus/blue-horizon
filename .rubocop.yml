@@ -50,6 +50,7 @@ Style/Documentation:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
+    - 'config/initializers/*.rb'
 
 Style/IfUnlessModifier:
   Enabled: false
