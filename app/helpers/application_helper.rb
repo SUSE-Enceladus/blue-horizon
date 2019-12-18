@@ -40,4 +40,11 @@ module ApplicationHelper
       render 'layouts/flash', context: context, message: message
     end.join.html_safe
   end
+
+  def custom_image_exists?(filename)
+    base_path = Rails.root.join('vendor', 'assets', 'images')
+    File.exist?(File.join(base_path, "#{filename}.svg"))   ||
+      File.exist?(File.join(base_path, "#{filename}.png")) ||
+      File.exist?(File.join(base_path, "#{filename}.jpg"))
+  end
 end
