@@ -13,9 +13,6 @@ RSpec.describe Variable, type: :model do
     {
       'location'       => random_string,
       'instance_count' => random_number.to_s,
-      'empty_number'   => format(
-        '%<decimal>7.3f', decimal: random_decimal
-      ),
       'are_you_sure'   => 'true',
       'test_list'      => ['one', 'two', 'three'],
       'cluster_labels' => { foo: 'bar' },
@@ -106,7 +103,6 @@ RSpec.describe Variable, type: :model do
 
       it 'casts number from string' do
         expect(variables.instance_count).to be == random_number
-        expect(variables.empty_number).to be == random_decimal
       end
 
       it 'casts boolean from string' do
