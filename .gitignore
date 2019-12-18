@@ -11,6 +11,8 @@ capybara-*.html
 *.orig
 rerun.txt
 pickle-email-*.html
+vendor/locales/*
+!vendor/locales/.keep
 vendor/sources/*
 !vendor/sources/.keep
 

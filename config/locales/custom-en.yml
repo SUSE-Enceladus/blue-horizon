@@ -1,0 +1,8 @@
+  # Copy to vendor/locales/[LANGUAGE_KEY].yml
+  # Adjust the language key below
+
+  en:
+    # Application title - shown on the home page
+    title: "Blue Horizon"
+    # Abbreviated title for use in navigation
+    short_title: "BlueHorizon"
