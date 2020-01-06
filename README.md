@@ -57,6 +57,36 @@ rspec
 rubocop
 ```
 
+## Customization
+
+_blue-horizon_ is pointless, without a set of terraform scripts to work from, and those scripts represent a "target application", which _blue-horizon_ can adapt to support. The `vendor` path is used by default to host content about the target application.
+
+### Terraform sources
+
+`.tf` and `.sh` files can be placed in `vendor/sources`, and loaded via `rails db:seed`.
+
+To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
+
+### String customization/localization
+
+`.yml` and `.rb` files can be placed in `vendor/locales`, and will be loaded automatically.
+
+See the
+[Rails Internationalization Guide](https://guides.rubyonrails.org/i18n.html#how-to-store-your-custom-translations)
+for advice on formatting.
+
+See `config/locales/custom-en.yml` for a sample/template with keys defined.
+
+To use a different path, set the environment variable `BLUE_HORIZON_LOCALIZERS` with the directory where custom internationalization files are stored.
+
+### Application customization
+
+`vendor/customization.yml` defines configuration keys that can be modified to alter the behavior of the application.
+
+See `config/initializers/customization.rb` for an explanation of the available keys and options.
+
+To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` with the full path of the customization YAML file to load.
+
 ## License
 
 Copyright © 2019 SUSE LLC.

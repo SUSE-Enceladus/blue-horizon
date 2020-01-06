@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
-  # Export path for modified source files (where terraform will run)
-  # defaults to tmp/terraform
-  # config.x.source_export_dir = Rails.root.join('tmp', 'terraform')
+  custom_config_path = ENV['BLUE_HORIZON_CUSTOMIZER']
+  custom_config_path ||= Rails.root.join('vendor', 'customization.yml')
 
-  # Default application mode: simple or advanced?
-  # default is false (simple)
-  # Rails.configuration.x.advanced_mode = false
+  if File.exist? custom_config_path
+    customizer = YAML.load_file(custom_config_path)
+    config.x.merge(customizer)
+  end
+
+  # Customizations
+
+  # Export path for modified source files (where terraform will run)
+  # In customization.yml:
+  # source_export_dir: /path/to/working/dir
+  # defaults to tmp/terraform
 end
 
 # The following performs required actions based on custom configuration above
@@ -19,7 +26,3 @@ if Rails.configuration.x.source_export_dir.blank?
   Rails.configuration.x.source_export_dir = Rails.root.join('tmp', 'terraform')
 end
 FileUtils.mkdir_p(Rails.configuration.x.source_export_dir)
-
-if Rails.configuration.x.advanced_mode.blank?
-  Rails.configuration.x.advanced_mode = false
-end

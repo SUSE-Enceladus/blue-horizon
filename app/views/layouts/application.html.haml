@@ -2,16 +2,27 @@
 %html
   %head
     %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
-    %title BlueHorizon
+    %title= t('short_title')
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
+    - if custom_image_exists? 'logo'
+      %link{ rel: "shortcut icon", href: asset_path('logo') }
   %body
     %div.wrapper
       %nav#sidebar
         = render 'layouts/sidebar'
-      %div.container-fluid#content
+      %main.flex-shrink-0.container-fluid#content
         = bootstrap_flash
         = yield
-
+      %footer.navbar.navbar-expand-lg.fixed-bottom.navbar-dark
+        %div.container-fluid.d-flex.flex-row.justify-content-center
+          %span.navbar-text.small
+            = t('footer')
+          %span.navbar-text.small
+            This tool is
+            %a{ href: "https://www.gnu.org/philosophy/free-sw.html" } free software
+            released under the&nbsp;
+            %a{ href: "https://github.com/SUSE-Enceladus/blue-horizon/blob/master/LICENSE" }> GPLv3 license
+            \.
     = javascript_include_tag 'application'
     = yield :page_javascript

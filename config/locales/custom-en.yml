@@ -1,0 +1,16 @@
+  # Copy to vendor/locales/[LANGUAGE_KEY].yml
+  # Adjust the language key below
+
+  en:
+    # Application title - shown on the home page
+    title: "Blue Horizon"
+    # Abbreviated title for use in navigation
+    short_title: "BlueHorizon"
+    # Brief tag line shown below the title
+    lead: "Ullamcorper parturient erat gravida erat suspendisse."
+    # Long-form description of the application
+    # Place each paragraph in a separate array element.
+    description:
+      - "A adipiscing scelerisque vestibulum enim potenti vestibulum sociosqu sed euismod proin a nec a semper lobortis ultrices venenatis erat tristique hendrerit. Adipiscing luctus euismod fringilla fusce fusce a habitant malesuada habitasse leo nibh malesuada adipiscing ut netus a rutrum a a nulla rutrum pretium sagittis vestibulum nullam scelerisque auctor vestibulum. Eros ullamcorper sed tincidunt sem parturient suspendisse dapibus consectetur a tristique pretium fringilla risus torquent curabitur mus elit ullamcorper. Eget senectus dolor velit sit a id primis quam hac lacinia mauris tristique litora purus eros vel pulvinar parturient. Netus et eros sodales tortor tortor vestibulum viverra nostra penatibus scelerisque a fames consectetur adipiscing nibh condimentum dui cursus suspendisse parturient fusce lorem id. Faucibus condimentum nullam vestibulum vestibulum proin quam suspendisse fermentum parturient a condimentum morbi tristique sed a parturient mollis interdum quis nibh maecenas class dapibus."
+      - "Hac arcu leo ac a vestibulum parturient suscipit parturient a suspendisse consectetur porta hac ullamcorper lacus turpis vestibulum scelerisque vel. Dictumst faucibus scelerisque et a scelerisque mattis vestibulum habitant id enim etiam venenatis mattis vitae luctus sodales potenti congue in scelerisque praesent class himenaeos consequat vivamus lorem dui. At consequat senectus ullamcorper scelerisque a id habitasse cum mi inceptos a condimentum sociis pretium rutrum fusce a imperdiet suspendisse nam id tellus. Consectetur volutpat at a sodales suspendisse tempus scelerisque a phasellus vulputate faucibus vestibulum sagittis a iaculis ipsum egestas convallis vitae libero scelerisque."
+    footer: "© 2019 SUSE, all rights reserved."

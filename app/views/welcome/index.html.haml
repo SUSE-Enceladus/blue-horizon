@@ -1,9 +1,17 @@
-%h1 Welcome#index
+%div.jumbotron.d-flex.flex-row
+  - if custom_image_exists? 'logo'
+    =image_tag('logo')
+  %div.container
+    %h1= t('title')
+    %p.lead= t('lead')
+    %hr
+    %div.d-flex.flex-row.justify-content-around
+      %a.btn.btn-lg.btn-primary{ href: simple_path }
+        %i.eos-icons fast_forward
+        Simple
+      %a.btn.btn-lg.btn-secondary{ href: advanced_path }
+        %i.eos-icons edit
+        Advanced
 
-%div.d-flex.flex-row.justify-content-around
-  %a.btn.btn-lg.btn-primary{ href: simple_path }
-    %i.eos-icons fast_forward
-    Simple
-  %a.btn.btn-lg.btn-secondary{ href: advanced_path }
-    %i.eos-icons edit
-    Advanced
+- t('description').each do |description|
+  %p= description
