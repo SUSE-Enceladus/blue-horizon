@@ -6,7 +6,7 @@ class VariablesController < ApplicationController
   def show
     return if @variables.attributes.present?
 
-    flash.now[:alert] = 'No variables are defined.'
+    flash.now[:alert] = 'No variables are defined!'
   end
 
   def update

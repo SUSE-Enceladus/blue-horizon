@@ -1,10 +1,19 @@
-- if @variables.attributes.present?
-  = form_for(@variables, url: variables_path, method: :put) do |form|
-    - @variables.attributes.each do |key, value|
-      - next if @excluded.include?(key)
-      = render(@variables.type(key), key: key, value: value, description: @variables.description(key))
-    %div#actions.btn-toolbar.d-flex.flex-row.justify-content-end.w-100
-      %div.btn-group.ml-2
-        %button#submit-source{ type: 'submit', class: 'btn btn-primary' }
-          %i.eos-icons.md-18 save
-          Save
+= form_for(@variables, url: variables_path, method: :put) do |form|
+  %div.card
+    %h3.card-header Additional data
+    %div.card-body.variables
+      - @variables.attributes.each do |key, value|
+        - next if @excluded.include?(key)
+        = render(@variables.type(key), key: key, value: value, description: @variables.description(key))
+  %p.clearfix
+  %div.float-right.btn-group.steps-container
+    = link_to cluster_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
+      %i.eos-icons.md-18 fast_rewind
+      = t('sidebar.cluster')
+    %button.btn.btn-primary#submit-cluster{ type: 'submit', title: t('tooltips.save'), data: { toggle: 'tooltip' } }
+      %i.eos-icons.md-18 save
+      = t('save')
+    = link_to plan_path, class: 'btn btn-warning', title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
+      = t('sidebar.plan')
+      %i.eos-icons.md-18 fast_forward
+%p.clearfix

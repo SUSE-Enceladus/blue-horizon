@@ -31,6 +31,7 @@
 
 en:
   hello: "Hello world"
+  save: "Save"
 
   sidebar:
     welcome: "Welcome"
@@ -44,3 +45,5 @@ en:
   tooltips:
     prior_step: "Go back without saving changes"
     next_step: "Save your changes, then go to the next step"
+    save: "Save your changes and review"
+    start_action: "Use your saved data to trigger the next action"

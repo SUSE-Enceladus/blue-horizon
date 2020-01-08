@@ -39,6 +39,6 @@ describe 'variable editing', type: :feature do
 
   it 'notifies that no variables are defined' do
     visit('/variables')
-    expect(page).to have_content('No variables are defined.')
+    expect(page).to have_content('No variables are defined!')
   end
 end
