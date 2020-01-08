@@ -184,6 +184,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    redcarpet (3.5.0)
     regexp_parser (1.6.0)
     rspec-core (3.9.0)
       rspec-support (~> 3.9.0)
@@ -293,6 +294,7 @@ DEPENDENCIES
   mini_racer
   puma (= 3.12.2)
   rails (= 5.1.7)
+  redcarpet
   rspec-rails (~> 3.9)
   rubocop (~> 0.76.0)
   rubocop-rails

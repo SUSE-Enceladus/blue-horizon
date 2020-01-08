@@ -41,6 +41,7 @@ en:
     plan: "Plan"
     deploy: "Deploy"
     download: "Download"
+    simple: "Start setup"
 
   tooltips:
     prior_step: "Go back without saving changes"

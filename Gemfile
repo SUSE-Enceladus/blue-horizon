@@ -17,6 +17,8 @@ gem 'puma', '3.12.2'
 gem 'sassc-rails'
 # Use HAML for views
 gem 'haml-rails', '~> 2.0'
+# Allow markdown to be selectively rendered
+gem 'redcarpet'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
