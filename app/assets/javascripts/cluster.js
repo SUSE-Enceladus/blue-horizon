@@ -1,14 +1,14 @@
 $(function() {
   function calcClusterVcpus() {
     vcpusPerVm = $('.instance-type-description .vcpu-count').data('vcpus');
-    vmCount = clusterSize.getValue();
+    vmCount = clusterSize.slider('getValue');
     $('#cluster-cpu-count').html(vcpusPerVm * vmCount);
   }
 
   function calcClusterRam() {
     bytesPerVm = $('.instance-type-description .ram-size').data('bytes');
     siUnits = $('.instance-type-description .ram-size').data('si');
-    vmCount = clusterSize.getValue();
+    vmCount = clusterSize.slider('getValue');
     totalBytes = bytesPerVm * vmCount;
     $('#cluster-ram-size').attr('data-bytes', totalBytes);
     $('#cluster-ram-size').html(humanFileSize(totalBytes, siUnits))
@@ -19,8 +19,15 @@ $(function() {
     calcClusterRam();
   }
 
-  var clusterSize = $('#cluster_instance_count').slider()
-  .on('slide change', updateClusterSize).data('slider');
+  var clusterSize = $('#cluster_instance_count').slider();
+  clusterSize.on('slide change', updateClusterSize)
+    .on('slide change', function() {
+      $('#count-display').val(clusterSize.slider('getValue'));
+    })
+    .data('slider');
+  $('#count-display').on('change keyup', function() {
+    clusterSize.slider('setValue', $(this).val());
+  });
 
   $('input[name="cluster[instance_type]"]').click(function() {
     definition = $(this).siblings('.definition').html();

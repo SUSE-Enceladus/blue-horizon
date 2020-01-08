@@ -7,7 +7,7 @@ class ClusterSizeSliderDecorator < SimpleDelegator
   def slider_data
     {
       slider_ticks:             slider_ticks,
-      slider_value:             min_nodes_required,
+      slider_value:             instance_count,
       slider_scale:             'logarithmic',
       slider_tooltip:           'always',
       slider_tooltip_position:  'bottom',
