@@ -16,5 +16,5 @@
         %label.h3#cluster-ram-size{ data: { bytes: 0 } }= 0
   - if @cluster.min_nodes_required > 0
     %div.card-footer
-      %i.eos-icons.align-middle{ title: 'Tip' } lightbulb_outline
+      = tip_icon
       At least three nodes are required for a reliable cluster.

@@ -40,3 +40,7 @@ en:
     plan: "Plan"
     deploy: "Deploy"
     download: "Download"
+
+  tooltips:
+    prior_step: "Go back without saving changes"
+    next_step: "Save your changes, then go to the next step"

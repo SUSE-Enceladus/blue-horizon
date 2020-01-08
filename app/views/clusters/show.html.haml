@@ -2,15 +2,18 @@
   = form.hidden_field :cloud_framework
   = render "instance_type_panel",
     form: form,
-    list_url: "https://aws.amazon.com/ec2/instance-types/"
+    list_url: instance_types_doc_url_for(@cluster.cloud_framework)
   %p.clearfix
   = render "cluster_size_panel", form: form
   %p.clearfix
   %div.float-right.btn-group.steps-container
-    = link_to root_path, class: "btn btn-secondary" do
-      &laquo;
+    = link_to welcome_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
+      %i.eos-icons.md-18 fast_rewind
       = t('sidebar.welcome')
-    = form.submit (t('sidebar.variables') + ' &raquo;').html_safe, class: "btn btn-primary", id: 'submit-cluster'
+    %button.btn.btn-primary#submit-cluster{ type: 'submit', title: t('tooltips.next_step'), data: { toggle: 'tooltip' } }
+      = t('sidebar.variables')
+      %i.eos-icons.md-18 fast_forward
+%p.clearfix
 
 - content_for :page_javascript do
   = javascript_include_tag 'cluster', defer: true

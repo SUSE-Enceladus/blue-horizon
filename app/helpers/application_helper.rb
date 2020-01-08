@@ -47,4 +47,14 @@ module ApplicationHelper
       File.exist?(File.join(base_path, "#{filename}.png")) ||
       File.exist?(File.join(base_path, "#{filename}.jpg"))
   end
+
+  def tip_icon
+    content_tag(
+      :i,
+      'lightbulb_outline',
+      class: ['eos-icons', 'text-warning', 'align-middle'],
+      title: 'Tip',
+      data:  { toggle: 'tooltip' }
+    )
+  end
 end

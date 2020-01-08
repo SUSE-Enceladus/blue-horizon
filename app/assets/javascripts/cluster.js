@@ -43,7 +43,11 @@ $(function() {
   });
 
   // kick things off
-  $('input[name="cluster[instance_type]"][checked="checked"]').click();
+  if ($('input[name="cluster[instance_type]"][checked="checked"]').length == 1) {
+    $('input[name="cluster[instance_type]"][checked="checked"]').click();
+  } else {
+    $('input[name="cluster[instance_type]"]').first().click();
+  }
 
   // only submit once
   $('form#new_cluster').submit(function(){
