@@ -47,4 +47,29 @@ module ApplicationHelper
       File.exist?(File.join(base_path, "#{filename}.png")) ||
       File.exist?(File.join(base_path, "#{filename}.jpg"))
   end
+
+  def tip_icon
+    content_tag(
+      :i,
+      'lightbulb_outline',
+      class: ['eos-icons', 'text-warning', 'align-middle'],
+      title: 'Tip',
+      data:  { toggle: 'tooltip' }
+    )
+  end
+
+  def markdown(text, escape_html=true)
+    return '' if text.blank?
+
+    options = {
+      autolink:            true,
+      space_after_headers: true,
+      no_intra_emphasis:   true
+    }
+    markdown = Redcarpet::Markdown.new(
+      Redcarpet::Render::HTML.new(escape_html: escape_html),
+      options
+    )
+    markdown.render(text).html_safe
+  end
 end

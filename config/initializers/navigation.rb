@@ -36,4 +36,10 @@ Rails.application.configure do
     true  => config.x.advanced_sidebar_menu_items,
     false => config.x.simple_sidebar_menu_items
   }
+
+  config.x.external_instance_types_link = {
+    'azure' => 'https://docs.microsoft.com/azure/virtual-machines/linux/sizes/',
+    'aws'   => 'https://aws.amazon.com/ec2/instance-types/',
+    'gcp'   => 'https://cloud.google.com/compute/docs/machine-types'
+  }
 end

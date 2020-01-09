@@ -17,7 +17,9 @@ describe 'welcome', type: :feature do
   describe 'on the simple path' do
     before do
       visit('/welcome')
-      click_on('Simple')
+      within('#content') do
+        click_on('Start setup')
+      end
     end
 
     it 'has a trigger link' do
@@ -32,7 +34,9 @@ describe 'welcome', type: :feature do
   describe 'on the advanced path' do
     before do
       visit('/welcome')
-      click_on('Advanced')
+      within('#content') do
+        click_on('Edit sources')
+      end
     end
 
     it 'has a trigger link' do

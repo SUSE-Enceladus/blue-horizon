@@ -7,7 +7,12 @@
           Number of instances
           - if @cluster.current_cluster_size > 0
             to add (current size: #{ pluralize(@cluster.current_cluster_size, 'node') })
-        = form.text_field :instance_count, data: @cluster.slider_data, class: 'h3'
+        %div.form-row
+          %div.col-2
+            %input.form-control.form-control-sm#count-display{ type: 'number', min: @cluster.min_nodes_required, max: @cluster.max_nodes_allowed, value: @cluster.instance_count }
+          %div.col-1
+          %div.col
+            = form.text_field :instance_count, data: @cluster.slider_data, class: 'h3'
       %div.col-md-2.text-right.cluster-cpu-count
         %label Total vCPUs
         %label.h3#cluster-cpu-count= 0
@@ -16,5 +21,5 @@
         %label.h3#cluster-ram-size{ data: { bytes: 0 } }= 0
   - if @cluster.min_nodes_required > 0
     %div.card-footer
-      %i.eos-icons.align-middle{ title: 'Tip' } lightbulb_outline
+      = tip_icon
       At least three nodes are required for a reliable cluster.
