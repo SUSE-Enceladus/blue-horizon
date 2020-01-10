@@ -3,7 +3,6 @@
 require 'ruby_terraform'
 
 class DeploysController < ApplicationController
-
   def pre_deploy
     RubyTerraform.configuration.stdout = StringIO.new
     @apply_args = {
@@ -24,7 +23,6 @@ class DeploysController < ApplicationController
 
     return render json: { info: @apply_output } unless @apply_output.nil?
   end
-
 
   private
 

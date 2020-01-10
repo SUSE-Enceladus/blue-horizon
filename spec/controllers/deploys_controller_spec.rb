@@ -40,7 +40,8 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'send the info' do
-      allow(ruby_terraform.configuration).to receive(:stdout).and_return(StringIO)
+      allow(ruby_terraform.configuration)
+        .to receive(:stdout).and_return(StringIO)
       get :send_current_status, format: :json
     end
 
