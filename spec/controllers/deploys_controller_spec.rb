@@ -27,7 +27,7 @@ RSpec.describe DeploysController, type: :controller do
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
       allow(ruby_terraform).to receive(:apply)
 
-      get :show
+      get :pre_deploy, format: :json
 
       expect(ruby_terraform).to(
         have_received(:apply)
@@ -37,6 +37,22 @@ RSpec.describe DeploysController, type: :controller do
             auto_approve: true
           )
       )
+    end
+
+    it 'send the info' do
+      allow(ruby_terraform.configuration).to receive(:stdout).and_return(StringIO)
+      get :send_current_status, format: :json
+    end
+
+    it 'rescue exception running apply' do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(File).to receive(:read)
+      allow(JSON).to receive(:parse).and_return(foo: 'bar')
+      allow(ruby_terraform).to(
+        receive(:apply)
+          .and_raise(RubyTerraform::Errors::ExecutionError)
+      )
+      get :pre_deploy, format: :json
     end
   end
 end

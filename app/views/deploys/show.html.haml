@@ -2,10 +2,3 @@
 %p This is the apply output
 %p
   %div#editor.show_plan{ style: 'display: none;'}= @terraform_tfstate
-
-- content_for :page_javascript do
-  :javascript
-    $(function(){
-      var editor = show_plan('#editor');
-      editor.session.setMode("ace/mode/json");
-    });
