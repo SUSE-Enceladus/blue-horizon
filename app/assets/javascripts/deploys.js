@@ -1,5 +1,4 @@
-$(document).ready(function() {
-    if (window.location.href.indexOf("deploy") > -1) {
+$(function() {
 	$.ajax({
 	    type: 'GET',
 	    url: 'deploy/pre_deploy',
@@ -44,5 +43,4 @@ $(document).ready(function() {
 		}
 	    });
 	} , 5000);
-    }
 });

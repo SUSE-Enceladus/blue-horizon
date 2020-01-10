@@ -2,3 +2,5 @@
 %p This is the apply output
 %p
   %div#editor.show_plan{ style: 'display: none;'}= @terraform_tfstate
+- content_for :page_javascript do
+  = javascript_include_tag 'deploys', defer: true
