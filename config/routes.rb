@@ -19,6 +19,16 @@ Rails.application.routes.draw do
   # Deploy
   resource :deploy, only: [:show]
 
+  resource :deploy do
+    get 'pre_deploy', on: :member
+  end
+
+  resource :deploy do
+    get 'send_current_status', on: :member
+  end
+
+  resource :polling, only: [:show]
+
   # mock routes
   get '/download', to: 'welcome#index'
 end

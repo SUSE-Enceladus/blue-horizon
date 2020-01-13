@@ -1,24 +1,46 @@
-function show_plan(editor_id, show_info) {
-    var editor;
+$(function() {
+	$.ajax({
+	    type: 'GET',
+	    url: 'deploy/pre_deploy',
+	    dataType: 'json',
+	    success: function(data) {},
+	    error: function() {
+		console.log('Error calling deploy/pre_deploy');
+	    }
+	});
 
-    if (editor_id.charAt(0) === '#') {
-	editor = ace.edit(editor_id.substr(1));
-    } else {
-	editor = ace.edit(editor_id);
-    }
-    var form_field = $(show_info);
+	// show the output of terraform apply periodically
+	setInterval(function () {
+	    $.ajax({
+		type: 'GET',
+		url: 'deploy/send_current_status',
+		dataType: 'json',
+		success: function(data) {
+		    var editor;
+		    var editor_id = '#editor';
 
-    editor.setTheme("ace/theme/eclipse");
-    editor.setOption('fontSize', '13pt');
-    editor.setOption('vScrollBarAlwaysVisible', true);
-    editor.getSession().setUseWrapMode(true);
-    editor.setValue(JSON.stringify(
-    	JSON.parse(editor.getSession().getValue()),
-    	null,
-    	2
-    ));
-    editor.session.setMode("ace/mode/json");
-    $(editor_id).show();
-    form_field.val(editor.getSession().getValue());
-    return editor;
-}
+    		    if (editor_id.charAt(0) === '#') {
+    			editor = ace.edit(editor_id.substr(1));
+    		    } else {
+    			editor = ace.edit(editor_id);
+    		    }
+
+    		    editor.setTheme("ace/theme/terminal");
+    		    editor.setOption('fontSize', '13pt');
+    		    editor.setOption('vScrollBarAlwaysVisible', true);
+    		    editor.getSession().setUseWrapMode(true);
+    		    $(editor_id).show();
+
+		    var form_field = $(editor_id);
+		    data.info = data.info.replace(/\u001b\[1m/g, '');
+		    data.info = data.info.replace(/\u001b\[0m/g, '');
+		    if (data && data.info != '') {
+			editor.setValue(data.info);
+		    }
+		},
+		error: function() {
+		    console.log('Error calling deploy/send_current_status');
+		}
+	    });
+	} , 5000);
+});
