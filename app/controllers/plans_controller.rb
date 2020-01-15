@@ -11,11 +11,13 @@ class PlansController < ApplicationController
   def show
     return unless @exported_vars
 
-    terraform_plan
+    info = terraform_plan
+    return flash.now[:error] = info[:error] if info.is_a?(Hash)
+
     Dir.chdir(Rails.configuration.x.source_export_dir)
+    # send show output to UI
     terraform_show
     Dir.chdir(Rails.root)
-    # send show output to UI
   end
 
   private
@@ -64,12 +66,14 @@ class PlansController < ApplicationController
   def read_exported_vars
     export_vars
     export_var_path = export_path
+    @exported_vars = nil
     if File.exist?(export_var_path)
       vars = File.read(export_var_path)
       @exported_vars = JSON.parse(vars)
     else
-      @exported_vars = nil
-      flash.now[:error] = 'There are no vars saved.'
+      message = 'There are no vars saved.'
+      logger.error message
+      flash.now[:error] = message
     end
   end
 
@@ -85,6 +89,8 @@ class PlansController < ApplicationController
       plan: saved_plan_path
     )
     Dir.chdir(Rails.root)
+  rescue RubyTerraform::Errors::ExecutionError
+    return { error: 'Plan operation has failed' }
   end
 
   def terraform_show

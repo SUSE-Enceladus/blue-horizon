@@ -53,7 +53,7 @@ class DeploysController < ApplicationController
 
     write_output('/tmp/ruby-terraform.log')
   rescue RubyTerraform::Errors::ExecutionError
-    render json: { error: 'Apply has failed.' }
+    render json: { error: 'Deploy operation has failed' }
   end
 
   def write_output(log_file)
