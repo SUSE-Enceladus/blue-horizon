@@ -9,11 +9,12 @@ class DeploysController < ApplicationController
       directory: Rails.configuration.x.source_export_dir, auto_approve: true
     }
     variables_file = exported_vars_path
-    render :show, flash: { error: 'No plan has been created.' } unless
+
+    return render json: { error: 'No plan has been created.' } unless
       File.exist?(variables_file)
 
     read_exported_vars(variables_file)
-    logger.info('Calling terraform_apply')
+    logger.info('Calling run_deploy')
     run_deploy
   end
 
@@ -53,7 +54,7 @@ class DeploysController < ApplicationController
 
     write_output('/tmp/ruby-terraform.log')
   rescue RubyTerraform::Errors::ExecutionError
-    render json: { error: 'Apply has failed.' }
+    render json: { error: 'Deploy operation has failed.' }
   end
 
   def write_output(log_file)

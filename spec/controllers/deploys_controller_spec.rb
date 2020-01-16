@@ -46,6 +46,7 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'rescue exception running apply' do
+      expected = { error: 'Deploy operation has failed.' }
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:read)
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
@@ -54,6 +55,9 @@ RSpec.describe DeploysController, type: :controller do
           .and_raise(RubyTerraform::Errors::ExecutionError)
       )
       get :pre_deploy, format: :json
+
+      expect(response.body).to include(expected.keys[0].to_s)
+      expect(response.body).to include(expected[:error])
     end
   end
 end
