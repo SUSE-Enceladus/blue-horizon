@@ -3,9 +3,17 @@ $(function() {
 	    type: 'GET',
 	    url: 'deploy/pre_deploy',
 	    dataType: 'json',
-	    success: function(data) {},
+	    success: function(data) {
+		if (data.error) {
+		    $('#error_message').html(data.error);
+		    $('#flash').show();
+		}
+	    },
 	    error: function() {
-		console.log('Error calling deploy/pre_deploy');
+		var message = 'Error calling deploy/pre_deploy';
+		$('#error_message').html(message);
+		$('#flash').show();
+	    	console.log(message);
 	    }
 	});
 
@@ -25,17 +33,19 @@ $(function() {
     			editor = ace.edit(editor_id);
     		    }
 
-    		    editor.setTheme("ace/theme/terminal");
-    		    editor.setOption('fontSize', '13pt');
-    		    editor.setOption('vScrollBarAlwaysVisible', true);
-    		    editor.getSession().setUseWrapMode(true);
-    		    $(editor_id).show();
+    		    if (data.info.length) {
+			editor.setTheme("ace/theme/terminal");
+    			editor.setOption('fontSize', '13pt');
+    			editor.setOption('vScrollBarAlwaysVisible', true);
+    			editor.getSession().setUseWrapMode(true);
+    			$(editor_id).show();
 
-		    var form_field = $(editor_id);
-		    data.info = data.info.replace(/\u001b\[1m/g, '');
-		    data.info = data.info.replace(/\u001b\[0m/g, '');
-		    if (data && data.info != '') {
-			editor.setValue(data.info);
+			var form_field = $(editor_id);
+			data.info = data.info.replace(/\u001b\[1m/g, '');
+			data.info = data.info.replace(/\u001b\[0m/g, '');
+			if (data && data.info != '') {
+			    editor.setValue(data.info);
+			}
 		    }
 		},
 		error: function() {
