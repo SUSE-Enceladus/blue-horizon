@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   resource :polling, only: [:show]
 
   # mock routes
-  get '/download', to: 'welcome#index'
+  get '/download', to: 'welcome#download'
 end

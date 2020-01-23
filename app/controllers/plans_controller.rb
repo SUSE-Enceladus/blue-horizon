@@ -3,6 +3,8 @@
 require 'ruby_terraform'
 
 class PlansController < ApplicationController
+  include Defaults
+
   before_action :config_terraform
   before_action :init_terraform
   before_action :read_exported_vars
@@ -46,10 +48,6 @@ class PlansController < ApplicationController
 
   def find_default_binary
     return `which terraform`.strip
-  end
-
-  def log_path_filename
-    '/tmp/ruby-terraform.log'
   end
 
   def export_vars
