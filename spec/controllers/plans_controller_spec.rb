@@ -21,7 +21,7 @@ RSpec.describe PlansController, type: :controller do
 
     let(:ruby_terraform) { RubyTerraform }
 
-    let(:log_file) { File.open(expected_random_log_path, 'a') }
+    let(:log_file) { Logger::LogDevice.new(expected_random_log_path) }
 
     before do
       allow(controller).to receive(:terraform_plan)
