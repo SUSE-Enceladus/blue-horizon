@@ -2,9 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe WelcomeController, type: :controller do
-  include Defaults
-
+RSpec.describe DownloadController, type: :controller do
   context 'when getting and sending files' do
     let!(:sources) { populate_sources }
 
@@ -21,20 +19,26 @@ RSpec.describe WelcomeController, type: :controller do
 
       get :download, format: :zip
 
+      zip_name = controller.instance_variable_get(:@zip_name)
       expect(controller).to(
         have_received(:send_data)
-          .with(nil, filename: 'cap_scripts.zip')
+          .with(nil, filename: zip_name)
       )
+      index = zip_name.index('-') - 1
+      zip_name = zip_name[0..index]
+      expect(zip_name).to eq('terraform_scripts_and_log')
     end
 
     it 'gets CAP files' do
       expected_files = sources.pluck(:filename)
       prefix = Rails.configuration.x.source_export_dir
+      log_filename = Rails.configuration.x.terraform_log_filename
 
       expected_files.map! do |expected_file|
         Pathname.new(prefix + expected_file)
       end
-      expected_files.push Pathname.new(log_path_filename)
+      expected_files.push Pathname.new(log_filename) if
+        File.exist?(log_filename)
 
       get :download, format: :zip
 

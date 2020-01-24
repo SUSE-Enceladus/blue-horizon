@@ -3,8 +3,6 @@
 require 'ruby_terraform'
 
 class PlansController < ApplicationController
-  include Defaults
-
   before_action :config_terraform
   before_action :init_terraform
   before_action :read_exported_vars
@@ -25,7 +23,9 @@ class PlansController < ApplicationController
   private
 
   def config_terraform
-    @log_file = File.open(log_path_filename, 'a')
+    @log_file = File.open(
+      Rails.configuration.x.terraform_log_filename, 'a'
+    )
     @log_file.sync = true # implicit flushing, no buffering
     RubyTerraform.configure do |config|
       config.binary = find_default_binary

@@ -27,8 +27,5 @@ Rails.application.routes.draw do
     get 'send_current_status', on: :member
   end
 
-  resource :polling, only: [:show]
-
-  # mock routes
-  get '/download', to: 'welcome#download'
+  get '/download', to: 'download#download'
 end
