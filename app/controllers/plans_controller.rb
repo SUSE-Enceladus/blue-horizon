@@ -23,16 +23,16 @@ class PlansController < ApplicationController
   private
 
   def config_terraform
-    @log_file = File.open(log_path_filename, 'a')
-    @log_file.sync = true # implicit flushing, no buffering
+    @log_file = Logger::LogDevice.new(log_path_filename)
+    logger = Logger.new(
+      RubyTerraform::MultiIO.new(STDOUT, @log_file),
+      level: :debug
+    )
     RubyTerraform.configure do |config|
       config.binary = find_default_binary
-      config.logger = Logger.new(
-        RubyTerraform::MultiIO.new(STDOUT, @log_file),
-        level: :debug
-      )
-      config.stdout = config.logger
-      config.stderr = config.logger
+      config.logger = logger
+      config.stdout = logger
+      config.stderr = logger
     end
   end
 
@@ -100,14 +100,6 @@ class PlansController < ApplicationController
     @show_output = RubyTerraform.configuration.stdout.string
     # back to DEFAULT configuration
     RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
-    write_output
-  end
-
-  def write_output
-    # write in STDOUT and file, the output of terraform show
-    f = File.open(@log_file, 'a')
-    f.write(@show_output)
-    logger.info @show_output
   end
 
   def saved_plan_path
