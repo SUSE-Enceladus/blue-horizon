@@ -48,10 +48,6 @@ class PlansController < ApplicationController
     return `which terraform`.strip
   end
 
-  def log_path_filename
-    '/tmp/ruby-terraform.log'
-  end
-
   def export_vars
     variables = Variable.load
     variables.export

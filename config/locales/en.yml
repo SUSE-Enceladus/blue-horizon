@@ -32,6 +32,7 @@
 en:
   hello: "Hello world"
   save: "Save"
+  terraform_files: "terraform scripts and log"
 
   sidebar:
     welcome: "Welcome"
