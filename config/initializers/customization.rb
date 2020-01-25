@@ -26,3 +26,4 @@ if Rails.configuration.x.source_export_dir.blank?
   Rails.configuration.x.source_export_dir = Rails.root.join('tmp', 'terraform')
 end
 FileUtils.mkdir_p(Rails.configuration.x.source_export_dir)
+Rails.configuration.x.terraform_log_filename = Rails.configuration.x.source_export_dir + 'ruby-terraform.log'
