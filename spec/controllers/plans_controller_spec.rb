@@ -24,6 +24,7 @@ RSpec.describe PlansController, type: :controller do
     let(:log_file) { Logger::LogDevice.new(expected_random_log_path) }
 
     before do
+      Rails.configuration.x.terraform_log_filename = expected_random_log_path
       allow(controller).to receive(:terraform_plan)
       allow(controller).to receive(:terraform_show)
 

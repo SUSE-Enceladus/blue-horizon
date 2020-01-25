@@ -23,6 +23,7 @@ class PlansController < ApplicationController
   private
 
   def config_terraform
+    log_path_filename = Rails.configuration.x.terraform_log_filename
     @log_file = Logger::LogDevice.new(log_path_filename)
     logger = Logger.new(
       RubyTerraform::MultiIO.new(STDOUT, @log_file),
