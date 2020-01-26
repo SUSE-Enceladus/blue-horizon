@@ -11,6 +11,8 @@ capybara-*.html
 *.orig
 rerun.txt
 pickle-email-*.html
+public/assets/*
+public/dev-assets/*
 vendor/customization.yml
 vendor/locales/*
 !vendor/locales/.keep
