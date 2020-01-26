@@ -7,6 +7,8 @@
     = stylesheet_link_tag 'application', media: 'all'
     - if custom_image_exists? 'logo'
       %link{ rel: "shortcut icon", href: asset_path('logo') }
+    - else
+      %link{ rel: "shortcut icon", href: asset_path('blue-horizon.svg') }
   %body
     %div.wrapper
       %nav#sidebar
