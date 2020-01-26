@@ -2,14 +2,11 @@
 
 source 'https://rubygems.org'
 
-gem 'ace-rails-ap'
 gem 'active_link_to'
-gem 'bootstrap', '~> 4.3.1'
 gem 'cloud-instancetype'
 gem 'haml-rails', '~> 2.0'
 gem 'hcl-checker', '~> 1.2'
 gem 'jbuilder', '~> 2.5'
-gem 'jquery-rails'
 gem 'puma', '3.12.2'
 gem 'rails', '5.1.7'
 gem 'redcarpet'
