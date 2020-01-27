@@ -87,6 +87,28 @@ See `config/initializers/customization.rb` for an explanation of the available k
 
 To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` with the full path of the customization YAML file to load.
 
+## Packaging
+
+_blue-horizon_ includes supporting tools and documents to build on an open build service (OBS) instance, such as https://build.opensuse.org
+
+### New dependencies
+
+1. When updating dependencies, add a categorized entry with a comment, in Gemfile.development. If the dependency is required in production, add the gemfile entry only, alphabetically, in Gemfile.production.
+
+2. Run `rails gems:rpmspec:requires` and update the specfile (`packaging/blue-horizon.spec`) with the new dependency set.
+
+### Generating a tarball
+
+1. In order to produce a production-ready tarball, assets need to be precompiled, then the tarball built:
+  ```
+  RAILS_ENV=production rails assets:clobber assets:precompile obs:tar
+  ```
+2. Copy the specfile and move the tarball to an OBS project dir
+  ```
+  cp packaging/*.spec path/of/your/project/
+  mv *.tar* path/of/your/project/
+  ```
+
 ## License
 
 Copyright © 2019 SUSE LLC.

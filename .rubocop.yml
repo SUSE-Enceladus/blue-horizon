@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'
+    - 'packaging/*'
 
 Bundler/OrderedGems:
   TreatCommentsAsGroupSeparators: true
@@ -72,5 +73,9 @@ Style/NumericLiterals:
 
 Metrics/MethodLength:
   Enabled: false
+
+Style/FormatStringToken:
+  Exclude:
+    - 'lib/tasks/packaging.rake'
 
 inherit_from: .rubocop_todo.yml
