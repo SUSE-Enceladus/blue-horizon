@@ -10,7 +10,7 @@ capybara-*.html
 /spec/tmp
 *.orig
 rerun.txt
-pickle-email-*.html
+packaging/*.tar*
 public/assets/*
 public/dev-assets/*
 vendor/customization.yml

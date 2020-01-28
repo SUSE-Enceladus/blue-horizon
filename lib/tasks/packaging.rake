@@ -39,11 +39,11 @@ namespace :obs do
   task :tar do |_task|
     app = [
       'app',
+      'bin',
       'config',
       'public',
       'config.ru',
-      'Gemfile.production',
-      'Gemfile.production.lock'
+      'Gemfile.production'
     ]
     docs = ['LICENSE', 'README.md']
     db_setup = ['db/schema.rb', 'db/seeds.rb']
@@ -53,10 +53,9 @@ namespace :obs do
     cp db_setup, "#{name_version}/db/"
     # Use the production Gemfile
     mv "#{name_version}/Gemfile.production", "#{name_version}/Gemfile"
-    mv "#{name_version}/Gemfile.production.lock", "#{name_version}/Gemfile.lock"
-    system "tar cjvf #{tarball_filename} #{name_version}"
-    rm_rf name_version
-    system "ls -la #{tarball_filename}"
+    system "tar cjvf packaging/#{tarball_filename} #{name_version}"
+    rm_rf "#{name_version}"
+    system "ls -la packaging/#{tarball_filename}"
   end
 end
 

@@ -51,7 +51,6 @@ Requires:  %{rubygem hcl-checker}
 Requires:  %{rubygem html2haml}
 Requires:  %{rubygem i18n}
 Requires:  %{rubygem jbuilder}
-Requires:  %{rubygem jquery-rails}
 Requires:  %{rubygem lino}
 Requires:  %{rubygem loofah}
 Requires:  %{rubygem mail}

@@ -105,8 +105,7 @@ _blue-horizon_ includes supporting tools and documents to build on an open build
   ```
 2. Copy the specfile and move the tarball to an OBS project dir
   ```
-  cp packaging/*.spec path/of/your/project/
-  mv *.tar* path/of/your/project/
+  cp packaging/* path/of/your/project/
   ```
 
 ## License
