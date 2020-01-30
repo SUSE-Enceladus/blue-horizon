@@ -17,7 +17,7 @@
 #
 
 Name:      blue-horizon
-Version:   0.0.1
+Version:   0.0.4
 Release:   0
 License:   GPL-3.0
 Summary:   Web server interface for terraforming in a public cloud
@@ -25,7 +25,68 @@ URL:       http://www.github.com/suse-enceladus/blue-horizon
 Source0:   %{name}-%{version}.tar.bz2
 # requirements generated via `rake gems:rpmspec:requires`
 BuildRequires:  ruby-macros >= 5
+BuildRequires: %{rubygem bundler}
+BuildRequires:  %{ruby}
+BuildRequires:  %{rubygem actioncable}
+BuildRequires:  %{rubygem actionmailer}
+BuildRequires:  %{rubygem actionpack}
+BuildRequires:  %{rubygem actionview}
+BuildRequires:  %{rubygem active_link_to}
+BuildRequires:  %{rubygem activejob}
+BuildRequires:  %{rubygem activemodel}
+BuildRequires:  %{rubygem activerecord}
+BuildRequires:  %{rubygem activesupport}
+BuildRequires:  %{rubygem addressable}
+BuildRequires:  %{rubygem arel}
+BuildRequires:  %{rubygem builder}
+BuildRequires:  %{rubygem cloud-instancetype}
+BuildRequires:  %{rubygem concurrent-ruby}
+BuildRequires:  %{rubygem crass}
+BuildRequires:  %{rubygem erubi}
+BuildRequires:  %{rubygem erubis}
+BuildRequires:  %{rubygem globalid}
+BuildRequires:  %{rubygem haml}
+BuildRequires:  %{rubygem haml-rails}
+BuildRequires:  %{rubygem hamster}
+BuildRequires:  %{rubygem hcl-checker}
+BuildRequires:  %{rubygem html2haml}
+BuildRequires:  %{rubygem i18n}
+BuildRequires:  %{rubygem jbuilder}
+BuildRequires:  %{rubygem lino}
+BuildRequires:  %{rubygem loofah}
+BuildRequires:  %{rubygem mail}
+BuildRequires:  %{rubygem method_source}
+BuildRequires:  %{rubygem mini_mime}
+BuildRequires:  %{rubygem mini_portile2}
+BuildRequires:  %{rubygem minitest}
+BuildRequires:  %{rubygem nio4r}
+BuildRequires:  %{rubygem nokogiri}
+BuildRequires:  %{rubygem open4}
+BuildRequires:  %{rubygem public_suffix:4.0}
+BuildRequires:  %{rubygem puma}
+BuildRequires:  %{rubygem rack}
+BuildRequires:  %{rubygem rack-test}
+BuildRequires:  %{rubygem rails:5.1}
+BuildRequires:  %{rubygem rails-dom-testing}
+BuildRequires:  %{rubygem rails-html-sanitizer}
+BuildRequires:  %{rubygem railties}
+BuildRequires:  %{rubygem rake}
+BuildRequires:  %{rubygem redcarpet}
+BuildRequires:  %{rubygem ruby-terraform}
+BuildRequires:  %{rubygem ruby_parser}
+BuildRequires:  %{rubygem sexp_processor}
+BuildRequires:  %{rubygem sprockets}
+BuildRequires:  %{rubygem sprockets-rails}
+BuildRequires:  %{rubygem sqlite3}
+BuildRequires:  %{rubygem temple}
+BuildRequires:  %{rubygem thor}
+BuildRequires:  %{rubygem thread_safe}
+BuildRequires:  %{rubygem tilt}
+BuildRequires:  %{rubygem tzinfo}
+BuildRequires:  %{rubygem websocket-driver}
+BuildRequires:  %{rubygem websocket-extensions}
 Requires:  %{ruby}
+Requires: %{rubygem bundler}
 Requires:  %{rubygem actioncable}
 Requires:  %{rubygem actionmailer}
 Requires:  %{rubygem actionpack}
@@ -61,11 +122,11 @@ Requires:  %{rubygem minitest}
 Requires:  %{rubygem nio4r}
 Requires:  %{rubygem nokogiri}
 Requires:  %{rubygem open4}
-Requires:  %{rubygem public_suffix}
+Requires:  %{rubygem public_suffix:4.0}
 Requires:  %{rubygem puma}
 Requires:  %{rubygem rack}
 Requires:  %{rubygem rack-test}
-Requires:  %{rubygem rails}
+Requires:  %{rubygem rails:5.1}
 Requires:  %{rubygem rails-dom-testing}
 Requires:  %{rubygem rails-html-sanitizer}
 Requires:  %{rubygem railties}
@@ -85,7 +146,7 @@ Requires:  %{rubygem tzinfo}
 Requires:  %{rubygem websocket-driver}
 Requires:  %{rubygem websocket-extensions}
 # end generated requirements
-BuildRequires: nginx
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch: noarch
 
@@ -97,15 +158,15 @@ terraform script in a supported cloud service provider (CSP) environment.
 %setup
 
 %build
+bundle lock --local
 
 %install
 install -m 0755 -d %{buildroot}/srv/www/%{name}
-cp -r app config db public config.ru Gemfile %{buildroot}/srv/www/%{name}/
+cp -r app bin config db public config.ru Gemfile* %{buildroot}/srv/www/%{name}/
 
 %files
 %defattr(-,root,root,-)
 %doc README.md LICENSE
-%defattr(-,nginx,nginx,-)
 /srv/www/%{name}
 
 %changelog

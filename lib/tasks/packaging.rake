@@ -26,7 +26,13 @@ namespace :gems do
     desc 'Generate specfile build requirements from Gemfile.[ENV].lock files'
     task :requires do |_task|
       puts 'BuildRequires:  ruby-macros >= 5'
+      puts 'BuildRequires: %{rubygem bundler}'
+      puts 'BuildRequires:  %{ruby}'
+      gemspecs('Gemfile.production.lock').each do |gemspec|
+        puts "BuildRequires:  %{rubygem #{gemspec}}"
+      end
       puts 'Requires:  %{ruby}'
+      puts 'Requires: %{rubygem bundler}'
       gemspecs('Gemfile.production.lock').each do |gemspec|
         puts "Requires:  %{rubygem #{gemspec}}"
       end
@@ -41,9 +47,10 @@ namespace :obs do
       'app',
       'bin',
       'config',
-      'public',
       'config.ru',
-      'Gemfile.production'
+      'Gemfile.production',
+      'public',
+      'Rakefile'
     ]
     docs = ['LICENSE', 'README.md']
     db_setup = ['db/schema.rb', 'db/seeds.rb']
