@@ -54,7 +54,7 @@ namespace :obs do
     # Use the production Gemfile
     mv "#{name_version}/Gemfile.production", "#{name_version}/Gemfile"
     system "tar cjvf packaging/#{tarball_filename} #{name_version}"
-    rm_rf "#{name_version}"
+    rm_rf name_version
     system "ls -la packaging/#{tarball_filename}"
   end
 end
