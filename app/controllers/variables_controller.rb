@@ -27,6 +27,11 @@ class VariablesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_variables
     @variables = Variable.load
+    if @variables.is_a?(Hash) && @variables[:error]
+      redirect_to sources_path, flash: {
+        error: @variables[:error], warning: 'Please, edit the scripts'
+      }
+    end
     # exclude variables handled by cluster sizing
     @excluded = Cluster.variable_handlers
   end
