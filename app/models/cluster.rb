@@ -16,7 +16,11 @@ class Cluster
 
   def initialize(*args)
     super
-    @instance_count = @instance_count.to_i
+    @instance_count = if @instance_count.to_i < MIN_CLUSTER_SIZE
+      MIN_CLUSTER_SIZE
+    else
+      @instance_count.to_i
+    end
   end
 
   def self.load
