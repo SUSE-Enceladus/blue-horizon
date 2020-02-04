@@ -4,7 +4,10 @@ Rails.application.configure do
   # file types supported as sources,
   # and the ace editor highlighter for each file type
   config.x.supported_source_extensions = {
-    '.sh' => 'sh',
-    '.tf' => 'terraform'
+    '.json' => 'json',
+    '.sh'   => 'sh',
+    '.tf'   => 'terraform',
+    '.yaml' => 'yaml',
+    '.yml'  => 'yaml'
   }
 end
