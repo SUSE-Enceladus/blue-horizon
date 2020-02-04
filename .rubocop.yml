@@ -52,6 +52,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
     - 'config/initializers/*.rb'
+    - 'lib/tasks/*.rake'
 
 Style/IfUnlessModifier:
   Enabled: false
