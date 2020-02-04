@@ -8,7 +8,6 @@ function show_plan(editor_id, show_info) {
     }
     var form_field = $(show_info);
 
-    editor.setTheme("ace/theme/eclipse");
     editor.setOption('fontSize', '13pt');
     editor.setOption('vScrollBarAlwaysVisible', true);
     editor.getSession().setUseWrapMode(true);

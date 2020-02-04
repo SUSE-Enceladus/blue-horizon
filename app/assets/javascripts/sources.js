@@ -11,7 +11,6 @@ function editor_for_form_field(editor_id, form_field_id) {
 	}
 	var form_field = $(form_field_id);
 	// editor style
-	editor.setTheme("ace/theme/eclipse");
 	editor.setOption('fontSize', '13pt');
 	editor.setOption('vScrollBarAlwaysVisible', true);
 	//
