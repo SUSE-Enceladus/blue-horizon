@@ -74,6 +74,9 @@ Style/NumericLiterals:
 Metrics/MethodLength:
   Enabled: false
 
+Metrics/ClassLength:
+  Max: 120
+
 Style/FormatStringToken:
   Exclude:
     - 'lib/tasks/packaging.rake'

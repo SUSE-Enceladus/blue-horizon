@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'ruby_terraform'
 # Terraform variable collection built dynamically from variables in a Source
 # Supported types: string, number, boolean, list, map.
 # Non-string lists, non-string maps, and objects are not supported at this time.
@@ -24,6 +25,16 @@ class Variable
 
   def self.load
     new(Source.terraform.pluck(:content).join("\n"))
+  rescue HCLLexer::ScanError => e
+    log_path_filename = Rails.configuration.x.terraform_log_filename
+    log_file = Logger::LogDevice.new(log_path_filename)
+    logger = Logger.new(
+      RubyTerraform::MultiIO.new(STDOUT, log_file),
+      level: :debug
+    )
+    message = "Unable to parse the terraform scripts: #{e}"
+    logger.error message
+    return { error: message }
   end
 
   def type(key)

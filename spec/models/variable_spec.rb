@@ -53,6 +53,25 @@ RSpec.describe Variable, type: :model do
     end
   end
 
+  context 'when loading wrong formatted script' do
+    let(:message) do
+      { error: 'Unable to parse the terraform scripts: foo' }
+    end
+
+    it 'handles parsing errors from HCL' do
+      allow(HCL::Checker).to(
+        receive(:parse)
+          .and_raise(
+            HCLLexer::ScanError.new('foo')
+          )
+      )
+      allow(Rails.logger).to receive(:error)
+      allow(File).to receive(:open)
+      allow(Logger::LogDevice).to receive(:new)
+      expect(described_class.load).to eq(message)
+    end
+  end
+
   context 'with form handling' do
     let(:expected_params) do
       [
