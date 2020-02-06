@@ -7,7 +7,7 @@
         %ul
           - @source.errors.full_messages.each do |message|
             %li= message
-  %div.form-group
+  %div.form-group.p-2
     = f.label :filename
     = f.text_field :filename, class: 'form-control'
   %div#actions.btn-toolbar.d-flex.flex-row.justify-content-end.w-100
