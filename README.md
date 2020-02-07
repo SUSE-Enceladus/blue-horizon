@@ -108,6 +108,14 @@ _blue-horizon_ includes supporting tools and documents to build on an open build
   cp packaging/* path/of/your/project/
   ```
 
+### Releases
+
+[bumpversion](https://pypi.org/project/bumpversion/) is used to tag releases.
+
+```
+bumpversion [major|minor|patch]
+```
+
 ## License
 
 Copyright © 2019 SUSE LLC.
