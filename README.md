@@ -63,7 +63,9 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 
 ### Terraform sources
 
-`.tf` and `.sh` files can be placed in `vendor/sources`, and loaded via `rails db:seed`.
+`.tf`, `.sh`, `.yaml/.yml`, and `.json` files can be placed in `vendor/sources`, and loaded via `rails db:seed`.
+
+Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`.
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 
