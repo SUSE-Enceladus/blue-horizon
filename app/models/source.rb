@@ -8,6 +8,7 @@ class Source < ApplicationRecord
   before_validation :no_path_in_filename
 
   scope :terraform, -> { where('filename LIKE ?', '%.tf') }
+  scope :variables, -> { where('filename LIKE ?', 'variable%.tf.json') }
 
   def no_path_in_filename
     self.filename = filename.split('/').last

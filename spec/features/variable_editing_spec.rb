@@ -8,7 +8,7 @@ describe 'variable editing', type: :feature do
 
   context 'with sources' do
     let(:variable_names) { collect_variable_names }
-    let(:variables) { Variable.new(Source.terraform.pluck(:content).join) }
+    let(:variables) { Variable.new(Source.variables.pluck(:content)) }
 
     before do
       populate_sources

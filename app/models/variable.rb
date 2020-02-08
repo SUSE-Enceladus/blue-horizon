@@ -12,8 +12,13 @@ class Variable
 
   DEFAULT_EXPORT_FILENAME = 'terraform.tfvars.json'
 
-  def initialize(source_content)
-    @plan = HCL::Checker.parse(source_content)['variable'] || {}
+  def initialize(source_contents)
+    source_contents = [source_contents].flatten
+    @plan ||= {}
+    source_contents.each do |source_content|
+      variables = JSON.parse(source_content)['variable']
+      @plan.merge!(variables) if variables
+    end
     @plan.keys.each do |key|
       self.class.send(:attr_accessor, key)
       instance_variable_set(
@@ -24,8 +29,8 @@ class Variable
   end
 
   def self.load
-    new(Source.terraform.pluck(:content).join("\n"))
-  rescue HCLLexer::ScanError => e
+    new(Source.variables.pluck(:content))
+  rescue JSON::ParserError => e
     log_path_filename = Rails.configuration.x.terraform_log_filename
     log_file = Logger::LogDevice.new(log_path_filename)
     logger = Logger.new(
