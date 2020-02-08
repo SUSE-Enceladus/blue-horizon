@@ -10,7 +10,7 @@ class Variable
   include KeyPrefixable
   include Saveable
 
-  DEFAULT_EXPORT_FILENAME = 'variables.tfvars.json'
+  DEFAULT_EXPORT_FILENAME = 'terraform.tfvars.json'
 
   def initialize(source_content)
     @plan = HCL::Checker.parse(source_content)['variable'] || {}

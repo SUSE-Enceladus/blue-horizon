@@ -179,7 +179,7 @@ RSpec.describe Variable, type: :model do
   end
 
   context 'when exporting' do
-    let(:export_filename) { 'variables.tfvars.json' }
+    let(:export_filename) { 'terraform.tfvars.json' }
     let(:random_path) do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end
