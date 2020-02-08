@@ -1,0 +1,53 @@
+### example deployment configuration file
+### scf-config-values.yaml
+
+env:
+  # the FQDN of your domain
+  DOMAIN: xxx.xxxxx.xxx
+  # the UAA prefix is required
+  UAA_HOST: uaa.xxxxx.xxxx.xxxx
+  # Both UAA_PORT and UAA_PUBLIC_PORT are required for now; the Ingress Controller will listed on 443
+  UAA_PORT: 443
+  UAA_PUBLIC_PORT: 443
+  GARDEN_ROOTFS_DRIVER: "overlay-xfs"
+  DEFAULT_STACK: cflinuxfs3
+
+  #enable:
+  #eirini: true
+
+kube:
+  storage_class:
+    persistent: "persistent"
+    shared: "persistent"
+  auth: "rbac"
+
+  registry:
+    hostname: "registry.suse.com"
+    username: ""
+    password: ""
+  organization: "cap"
+
+secrets:
+  # Create a very strong password for user 'admin'
+  CLUSTER_ADMIN_PASSWORD: xxxxx
+
+  # Create a very strong password, and protect it because it
+  # provides root access to everything
+  UAA_ADMIN_CLIENT_SECRET: xxxxx
+
+  #  UAA_CA_CERT: |
+  #    -----BEGIN CERTIFICATE-----
+  #    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  #    -----END CERTIFICATE-----
+  #
+    #services:
+        #loadbalanced: true
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    certmanager.k8s.io/acme-challenge-type: dns01
+    certmanager.k8s.io/acme-dns01-provider: azuredns
+    

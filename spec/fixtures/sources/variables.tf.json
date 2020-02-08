@@ -1,0 +1,77 @@
+{
+    "variable": {
+        "instance_count": {
+            "type": "number",
+            "description": "The number of worker nodes in your cluster. (Minimum: 3, Maximum 50)",
+            "default": 3
+        },
+        "instance_type": {
+            "type": "string",
+            "description": "The type of instance used for the provisioned workers.",
+            "default": "Standard_DS3_v2"
+        },
+        "subscription_id": {
+            "type": "string",
+            "description": "Azure subscription ID"
+        },
+        "resource_group": {
+            "type": "string",
+            "description": "An existing Azure Resource Group where resources will be created."
+        },
+        "location": {
+            "type": "string",
+            "description": "The Azure region where the Resource Group is placed."
+        },
+        "client_id": {
+            "type": "string",
+            "description": "Azure Service Principal 'appId'"
+        },
+        "client_secret": {
+            "type": "string",
+            "description": "Azure Service Principal 'password'"
+        },
+        "tenant_id": {
+            "type": "string",
+            "description": "Azure Service Principal 'tenant'"
+        },
+        "ssh_username": {
+            "type": "string",
+            "description": "SSH username for accessing the cluster."
+        },
+        "ssh_public_key": {
+            "type": "string",
+            "description": "SSH public key for access to worker nodes."
+        },
+        "k8s_version": {
+            "type": "string",
+            "description": "Kubernetes version to apply to AKS; must be supported in the selected region. (Run `az aks get-versions --location $REGION --output table` for a list of supported options)",
+            "default": "1.15.7"
+        },
+        "disk_size_gb": {
+            "type": "number",
+            "description": "The worker node storage capacity. (Minimum:80, Maximum: 4095)",
+            "default": 80
+        },
+        "cluster_labels": {
+            "type": "map",
+            "description": "Tags to be applied to resources in your cluster. (Optional)"
+        },
+        "dns_zone_name": {
+            "type": "string",
+            "description": "Name of the Azure DNS Zone created for the cluster."
+        },
+        "cap_domain": {
+            "type": "string",
+            "description": "The FQDN of your cluster."
+        },
+        "dns_prefix": {
+            "type": "string",
+            "description": "Prefix for node DNS hostnames. (Must be alphanumeric, may include but not end with dashes)",
+            "default": "cap-on-aks"
+        },
+        "email": {
+            "type": "string",
+            "description": "Email address to send TLS certificate notifications to."
+        }
+    }
+}

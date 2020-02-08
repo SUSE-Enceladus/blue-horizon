@@ -1,16 +1,15 @@
 provider "helm" {
-    version = "~> 0.9.0"
+    version = "0.10.4"
 
-  kubernetes {  
+  kubernetes {
     host                   = "${azurerm_kubernetes_cluster.k8s.kube_config.0.host}"
     client_certificate     = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)}"
     client_key             = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)}"
-    cluster_ca_certificate = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)}" 
+    cluster_ca_certificate = "${base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)}"
+    config_context         = "nothing"
   }
 
   service_account = "${kubernetes_service_account.tiller.metadata.0.name}"
   namespace       = "${kubernetes_service_account.tiller.metadata.0.namespace}"
   tiller_image    = "gcr.io/kubernetes-helm/tiller:v2.14.0"
 }
-
-

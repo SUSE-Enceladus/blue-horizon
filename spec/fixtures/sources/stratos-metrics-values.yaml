@@ -1,0 +1,13 @@
+env:
+  DOPPLER_PORT: 443
+kubernetes:
+  apiEndpoint: MASTER_URL 
+prometheus:
+  kubeStateMetrics:
+    enabled: true
+nginx:
+  username: xxxx
+  password: xxxxx
+services:
+  loadbalanced: true
+
