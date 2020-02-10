@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Variable, type: :model do
-  let(:source_content) { Source.find_by(filename: 'variables.tf').content }
-  let(:variables) { described_class.new(source_content) }
+  let(:source_contents) { Source.variables.pluck(:content) }
+  let(:variables) { described_class.new(source_contents) }
   let(:variable_names) { collect_variable_names }
   let(:random_string) { Faker::Lorem.word }
   let(:random_number) { Faker::Number.number(digits: 3) }
@@ -31,7 +31,7 @@ RSpec.describe Variable, type: :model do
   end
 
   it 'can be initialized with an empty variable set' do
-    expect { described_class.new('') }.not_to raise_error
+    expect { described_class.new('{}') }.not_to raise_error
   end
 
   it 'uses defaults for attributes' do
@@ -58,11 +58,11 @@ RSpec.describe Variable, type: :model do
       { error: 'Unable to parse the terraform scripts: foo' }
     end
 
-    it 'handles parsing errors from HCL' do
-      allow(HCL::Checker).to(
+    it 'handles parsing errors from JSON' do
+      allow(JSON).to(
         receive(:parse)
           .and_raise(
-            HCLLexer::ScanError.new('foo')
+            JSON::ParserError.new('foo')
           )
       )
       allow(Rails.logger).to receive(:error)
@@ -75,18 +75,23 @@ RSpec.describe Variable, type: :model do
   context 'with form handling' do
     let(:expected_params) do
       [
-        'resource_group',
-        'location',
         'instance_count',
         'instance_type',
-        'agent_admin',
-        'dns_prefix',
-        { 'cluster_labels' => {} },
-        'disk_size_gb',
+        'subscription_id',
+        'resource_group',
+        'location',
         'client_id',
         'client_secret',
+        'tenant_id',
+        'ssh_username',
         'ssh_public_key',
-        'azure_dns_json',
+        'k8s_version',
+        'disk_size_gb',
+        { 'cluster_labels' => {} },
+        'dns_zone_name',
+        'cap_domain',
+        'dns_prefix',
+        'email',
         'are_you_sure',
         { 'test_list' => [] },
         'empty_number',
@@ -103,7 +108,9 @@ RSpec.describe Variable, type: :model do
     end
 
     it 'defines strong params from the variables' do
-      expect(variables.strong_params).to eq(expected_params)
+      # expect(variables.strong_params).to eq(expected_params)
+      expect(variables.strong_params - expected_params).to be_empty
+      expect(expected_params - variables.strong_params).to be_empty
     end
 
     it 'presents descriptions' do
@@ -179,7 +186,7 @@ RSpec.describe Variable, type: :model do
   end
 
   context 'when exporting' do
-    let(:export_filename) { 'variables.tfvars.json' }
+    let(:export_filename) { 'terraform.tfvars.json' }
     let(:random_path) do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end

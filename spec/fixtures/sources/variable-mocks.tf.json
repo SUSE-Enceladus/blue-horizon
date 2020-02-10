@@ -1,0 +1,16 @@
+{
+    "variable": {
+        "are_you_sure": {
+            "type": "boolean"
+        },
+        "test_list": {
+            "type": "list"
+        },
+        "empty_number": {
+            "type": "number"
+        },
+        "test_description": {
+            "description": "test desc"
+        }
+    }
+}

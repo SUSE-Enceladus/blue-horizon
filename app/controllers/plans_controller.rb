@@ -56,7 +56,7 @@ class PlansController < ApplicationController
 
   def export_path
     exported_dir_path = Rails.configuration.x.source_export_dir
-    exported_vars_file_path = Variable.new('').filename
+    exported_vars_file_path = Variable::DEFAULT_EXPORT_FILENAME
     return File.join(exported_dir_path, exported_vars_file_path)
   end
 

@@ -10,12 +10,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     location            = "${var.location}"
     resource_group_name = "${var.resource_group}"
     dns_prefix          = "${var.dns_prefix}"
+    kubernetes_version  = "${var.k8s_version}"
 
     linux_profile {
-        admin_username = "${var.agent_admin}"
+        admin_username = "${var.ssh_username}"
 
         ssh_key {
-            key_data = "${file("${var.ssh_public_key}")}"
+            key_data = "${var.ssh_public_key}"
         }
     }
 
@@ -35,19 +36,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     tags = "${var.cluster_labels}"
 }
 
-resource "null_resource" "post_processor" {
-
-  provisioner "local-exec" {
-    command = "/bin/sh aks-post-processing.sh"
-
-    environment = {
-      AKSNAME = "${azurerm_kubernetes_cluster.k8s.name}"
-      RGNAME = "${var.resource_group}"
-      CLUSTER_NAME = "${azurerm_kubernetes_cluster.k8s.name}"
-      NODEPOOLNAME = "agentpool"
-    }
-  }
-}
 
 locals {
   k8scfg = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"

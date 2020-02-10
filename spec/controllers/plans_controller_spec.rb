@@ -8,7 +8,7 @@ RSpec.describe PlansController, type: :controller do
   let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
 
   context 'when preparing terraform' do
-    let(:variable_instance) { Variable.new('') }
+    let(:variable_instance) { Variable.new('{}') }
     let(:variables) { Variable.load }
     let(:log_filename) { 'ruby-terraform-test.log' }
     let(:random_path) do
@@ -80,7 +80,7 @@ RSpec.describe PlansController, type: :controller do
 
       get :show
 
-      expect(json_instance).to have_received(:parse)
+      expect(json_instance).to have_received(:parse).at_least(:once)
     end
   end
 

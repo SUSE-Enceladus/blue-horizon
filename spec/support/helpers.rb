@@ -15,9 +15,11 @@ module Helpers
   end
 
   def collect_variable_names
-    variables_source =
-      Rails.root.join('spec', 'fixtures', 'sources', 'variables.tf')
-    HCL::Checker.parse(File.read(variables_source))['variable'].keys
+    source_path =
+      Rails.root.join('spec', 'fixtures', 'sources', 'variable*.tf.json')
+    Dir.glob(source_path).collect do |variables_source|
+      JSON.parse(File.read(variables_source))['variable'].keys
+    end.flatten
   end
 
   def stubbed_ruby_terraform_config
