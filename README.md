@@ -57,13 +57,15 @@ rspec
 rubocop
 ```
 
+Please be sure to include a screenshot with any view or style changes.
+
 ## Customization
 
 _blue-horizon_ is pointless, without a set of terraform scripts to work from, and those scripts represent a "target application", which _blue-horizon_ can adapt to support. The `vendor` path is used by default to host content about the target application.
 
 ### Terraform sources
 
-`.tf`, `.sh`, `.yaml/.yml`, and `.json` files can be placed in `vendor/sources`, and loaded via `rails db:seed`.
+`.tf`, `.tmpl`, `.sh`, `.yaml/.yml`, and `.json` files can be placed in `vendor/sources`, and loaded via `rails db:seed`.
 
 Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`.
 
@@ -83,11 +85,11 @@ To use a different path, set the environment variable `BLUE_HORIZON_LOCALIZERS` 
 
 ### Application customization
 
-`vendor/customization.yml` defines configuration keys that can be modified to alter the behavior of the application.
+`vendor/customization.json` defines configuration keys that can be modified to alter the behavior of the application.
 
 See `config/initializers/customization.rb` for an explanation of the available keys and options.
 
-To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` with the full path of the customization YAML file to load.
+To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` with the full path of the customization JSON file to load.
 
 ## Packaging
 
@@ -99,6 +101,14 @@ _blue-horizon_ includes supporting tools and documents to build on an open build
 
 2. Run `rails gems:rpmspec:requires` and update the specfile (`packaging/blue-horizon.spec`) with the new dependency set.
 
+### Releases
+
+[bumpversion](https://pypi.org/project/bumpversion/) is used to tag releases.
+
+```
+bumpversion [major|minor|patch]
+```
+
 ### Generating a tarball
 
 1. In order to produce a production-ready tarball, assets need to be precompiled, then the tarball built:
@@ -109,14 +119,6 @@ _blue-horizon_ includes supporting tools and documents to build on an open build
   ```
   cp packaging/* path/of/your/project/
   ```
-
-### Releases
-
-[bumpversion](https://pypi.org/project/bumpversion/) is used to tag releases.
-
-```
-bumpversion [major|minor|patch]
-```
 
 ## License
 
