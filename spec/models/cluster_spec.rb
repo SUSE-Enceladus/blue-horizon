@@ -4,10 +4,17 @@ require 'rails_helper'
 
 RSpec.describe Cluster, type: :model do
   let(:custom_instance_type) { Faker::Lorem.word }
-  let(:instance_count) { Faker::Number.within(range: 1..100) }
+  let(:cluster_size_config) { Rails.configuration.x.cluster_size }
+  let(:instance_count) do
+    Faker::Number.within(
+      range: cluster_size_config.min..cluster_size_config.max
+    )
+  end
+  let(:cluster) do
+    described_class.new(instance_type_custom: custom_instance_type)
+  end
 
   it 'can implicitly represent a custom instance type' do
-    cluster = described_class.new(instance_type_custom: custom_instance_type)
     expect(cluster.instance_type).to be(custom_instance_type)
   end
 
@@ -19,22 +26,24 @@ RSpec.describe Cluster, type: :model do
     expect(cluster.instance_type).to be(custom_instance_type)
   end
 
-  it 'has a constant for minimum cluster size' do
-    expect(described_class).to be_const_defined(:MIN_CLUSTER_SIZE)
+  it 'has a configured minimum cluster size' do
+    expect(cluster).to respond_to(:min_cluster_size)
+    expect(cluster.min_cluster_size).to eq(cluster_size_config.min)
   end
 
-  it 'has a constant for maximum cluster size' do
-    expect(described_class).to be_const_defined(:MAX_CLUSTER_SIZE)
+  it 'has a configured maximum cluster size' do
+    expect(cluster).to respond_to(:max_cluster_size)
+    expect(cluster.max_cluster_size).to eq(cluster_size_config.max)
   end
 
   it 'calculates the minimum number of nodes required for a cluster' do
     expect(described_class.new.min_nodes_required)
-      .to eq(described_class::MIN_CLUSTER_SIZE)
+      .to eq(described_class.new.min_cluster_size)
   end
 
   it 'calculates maximum cluster growth' do
     expect(described_class.new.max_nodes_allowed)
-      .to eq(described_class::MAX_CLUSTER_SIZE)
+      .to eq(described_class.new.max_cluster_size)
   end
 
   context 'when loading' do

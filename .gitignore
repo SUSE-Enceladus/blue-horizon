@@ -13,7 +13,7 @@ rerun.txt
 packaging/*.tar*
 public/assets/*
 public/dev-assets/*
-vendor/customization.yml
+vendor/customization.json
 vendor/locales/*
 !vendor/locales/.keep
 vendor/sources/*

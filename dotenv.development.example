@@ -2,3 +2,6 @@
 # CLOUD_FRAMEWORK="aws"
 CLOUD_FRAMEWORK="azure"
 # CLOUD_FRAMEWORK="gcp"
+
+# Custom config
+# BLUE_HORIZON_CUSTOMIZER = "./vendor/customizaton.yml
