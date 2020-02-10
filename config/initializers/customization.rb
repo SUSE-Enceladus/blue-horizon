@@ -19,6 +19,10 @@ Rails.application.configure do
   # Terraform log path
   config.x.terraform_log_filename ||= config.x.source_export_dir.join('ruby-terraform.log')
 
+  # cluster sizing
+  config.x.cluster_size ||= OpenStruct.new
+  config.x.cluster_size.min ||= 3
+  config.x.cluster_size.max ||= 250
 end
 
 # The following performs required actions based on custom configuration above

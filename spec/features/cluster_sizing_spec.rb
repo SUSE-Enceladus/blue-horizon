@@ -11,9 +11,10 @@ describe 'cluster sizing', type: :feature do
     let(:cloud_framework) { 'azure' }
     let(:instance_types) { Cloud::InstanceType.for(cloud_framework) }
     let(:random_instance_type_key) { instance_types.sample.key }
+    let(:cluster_size_config) { Rails.configuration.x.cluster_size }
     let(:random_cluster_size) do
       Faker::Number.within(
-        range: Cluster::MIN_CLUSTER_SIZE..Cluster::MAX_CLUSTER_SIZE
+        range: cluster_size_config.min..cluster_size_config.max
       )
     end
 

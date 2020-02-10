@@ -11,13 +11,10 @@ class Cluster
     :instance_count, :instance_type_custom
   attr_writer :instance_type
 
-  MIN_CLUSTER_SIZE = 3
-  MAX_CLUSTER_SIZE = 250
-
   def initialize(*args)
     super
-    @instance_count = if @instance_count.to_i < MIN_CLUSTER_SIZE
-      MIN_CLUSTER_SIZE
+    @instance_count = if @instance_count.to_i < min_cluster_size
+      min_cluster_size
     else
       @instance_count.to_i
     end
@@ -47,16 +44,24 @@ class Cluster
     end
   end
 
+  def min_cluster_size
+    Rails.configuration.x.cluster_size.min
+  end
+
+  def max_cluster_size
+    Rails.configuration.x.cluster_size.max
+  end
+
   def current_cluster_size
     0 # TODO: will we support resizing?
   end
 
   def min_nodes_required
-    [0, MIN_CLUSTER_SIZE - current_cluster_size].max
+    [0, min_cluster_size - current_cluster_size].max
   end
 
   def max_nodes_allowed
-    MAX_CLUSTER_SIZE - current_cluster_size
+    max_cluster_size - current_cluster_size
   end
 
   def to_s
