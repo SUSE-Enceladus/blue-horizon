@@ -7,6 +7,7 @@ Rails.application.configure do
     '.json' => 'json',
     '.sh'   => 'sh',
     '.tf'   => 'terraform',
+    '.tmpl' => 'terraform',
     '.yaml' => 'yaml',
     '.yml'  => 'yaml'
   }
