@@ -3,10 +3,10 @@
 require 'ruby_terraform'
 
 class PlansController < ApplicationController
-  before_action :config_terraform
+  prepend_before_action :read_exported_vars
+  prepend_before_action :read_exported_sources
+  prepend_before_action :config_terraform
   before_action :init_terraform
-  before_action :read_exported_vars
-  before_action :read_exported_sources
 
   def show
     return unless @exported_vars
