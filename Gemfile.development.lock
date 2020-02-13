@@ -299,6 +299,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   ruby-terraform
+  rubyzip
   sassc-rails
   selenium-webdriver
   simplecov

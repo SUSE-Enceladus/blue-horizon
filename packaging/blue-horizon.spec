@@ -74,6 +74,7 @@ BuildRequires:  %{rubygem rake}
 BuildRequires:  %{rubygem redcarpet}
 BuildRequires:  %{rubygem ruby-terraform}
 BuildRequires:  %{rubygem ruby_parser}
+BuildRequires:  %{rubygem rubyzip}
 BuildRequires:  %{rubygem sexp_processor}
 BuildRequires:  %{rubygem sprockets}
 BuildRequires:  %{rubygem sprockets-rails}
@@ -134,6 +135,7 @@ Requires:  %{rubygem rake}
 Requires:  %{rubygem redcarpet}
 Requires:  %{rubygem ruby-terraform}
 Requires:  %{rubygem ruby_parser}
+Requires:  %{rubygem rubyzip}
 Requires:  %{rubygem sexp_processor}
 Requires:  %{rubygem sprockets}
 Requires:  %{rubygem sprockets-rails}
