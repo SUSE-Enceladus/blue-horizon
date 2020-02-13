@@ -64,6 +64,13 @@ Rails/OutputSafety:
   Exclude:
     - 'app/helpers/application_helper.rb'
 
+Rails/FilePath:
+  Enabled: false
+
+Rails/RakeEnvironment:
+  Exclude:
+    - 'lib/tasks/packaging.rake'
+
 Metrics/LineLength:
   Max: 80
   Exclude:
