@@ -291,8 +291,8 @@ DEPENDENCIES
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   mini_racer
-  puma (= 3.12.2)
-  rails (= 5.1.7)
+  puma (>= 3.11)
+  rails (~> 5.1)
   redcarpet
   rspec-rails (~> 3.9)
   rubocop (~> 0.76.0)
