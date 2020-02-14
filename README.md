@@ -10,9 +10,11 @@ web-based user interface to terraforming the public cloud
 Requirements are based on supported versions from SUSE Linux Enterprise Server 15 SP1.
 
 * ruby 2.5.5
-* rails 5.1.4
+* rails 5.1.7
 * puma 3.11.0
 * sqlite3
+* terraform 0.12
+* any dependencies of your terraform scripts (e.g. `kubectl`, `helm`, etc.)
 
 ## Contributing
 
@@ -65,7 +67,11 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 
 ### Terraform sources
 
-`.tf`, `.tmpl`, `.sh`, `.yaml/.yml`, and `.json` files can be placed in `vendor/sources`, and loaded via `rails db:seed`.
+⚠ In order for terraform sources to work within _blue-horizon_, all customization must happen through terraform variables. Source files must not require editing.
+
+`.tf`, `.tmpl`, `.sh`, `.yaml/.yml`, and `.json` files can be placed in `vendor/sources`, and loaded via `rails db:setup`.
+
+**NOTE:** _The content of those files will be stored in the database, and may be edited by the application user. When terraform runs, it will run on exported content from the database, so it may not be identical to what was initially provided in `vendor/sources`._
 
 Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`.
 
