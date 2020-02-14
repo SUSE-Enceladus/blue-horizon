@@ -42,6 +42,8 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
 
 5.  Place original _terraform_ scripts in `/vendor/sources`
 
+    💡 _Need a simple script for development? Try this [gist](https://gist.github.com/bear454/96c067ab082f5c6cc9321061f601373f)._
+
 6.  Initialize a development database
     ```
     rails db:setup
