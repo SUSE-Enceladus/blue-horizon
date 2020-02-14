@@ -33,6 +33,10 @@ en:
   hello: "Hello world"
   save: "Save"
   terraform_files: "terraform scripts and log"
+  
+  #password key is used to check whether a form field should be of type
+  # "password" rather than "text"
+  password_key: "password"
 
   sidebar:
     welcome: "Welcome"
