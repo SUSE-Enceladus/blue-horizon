@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'ruby_terraform'
+require 'fileutils'
 
 class PlansController < ApplicationController
-  prepend_before_action :read_exported_vars
-  prepend_before_action :read_exported_sources
-  prepend_before_action :config_terraform
+  include FileUtils
+  prepend_before_action :prep
   before_action :init_terraform
 
   def show
@@ -77,6 +77,19 @@ class PlansController < ApplicationController
   def read_exported_sources
     sources = Source.all
     sources.each(&:export)
+  end
+
+  def cleanup
+    exports = Rails.configuration.x.source_export_dir.join('*')
+    Rails.logger.debug("cleaning up #{exports}")
+    rm_f(Dir.glob(exports))
+  end
+
+  def prep
+    cleanup
+    read_exported_vars
+    read_exported_sources
+    config_terraform
   end
 
   def terraform_plan

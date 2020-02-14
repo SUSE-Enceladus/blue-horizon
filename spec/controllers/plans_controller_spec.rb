@@ -112,6 +112,7 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:config_terraform)
       allow(controller).to receive(:init_terraform)
       allow(controller).to receive(:read_exported_sources)
+      allow(controller).to receive(:cleanup)
     end
 
     it 'runs terraform plan' do
