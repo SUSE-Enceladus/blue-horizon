@@ -1,10 +1,22 @@
-%div#flash.alert.alert-danger.alter-dismissable.fade.show{style: 'display: none;'}
+%div#flash.alert.alert-danger.alert-dismissable.fade.show{style: 'display: none;'}
   %span#error_message
   %button.close{ type: 'button' }
     %i.eos-icons close
-%h1 Deploy#show
-%p This is the apply output
-%p
-  %div#editor.show_plan{ style: 'display: none;'}= @terraform_tfstate
+%div.card
+  %h3.card-header= t('page_title.deploy')
+  %div.card-body
+    %p= markdown(t('page_subtitle.deploy'))
+    %hr
+    %pre.pre-scrollable
+      %code#output= @terraform_tfstate
+%p.clearfix
+  %div.float-right.btn-group.steps-container
+    = link_to plan_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
+      %i.eos-icons.md-18 fast_rewind
+      = t('sidebar.plan')
+    = link_to download_path, class: 'btn btn-warning', title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
+      = t('sidebar.download')
+      %i.eos-icons.md-18 fast_forward
+%p.clearfix
 - content_for :page_javascript do
   = javascript_include_tag 'deploys', defer: true

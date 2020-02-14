@@ -72,4 +72,10 @@ module ApplicationHelper
     )
     markdown.render(text).html_safe
   end
+
+  def pretty_json(source)
+    JSON.pretty_generate(JSON.parse(source.to_s))
+  rescue JSON::ParserError
+    source.to_s
+  end
 end

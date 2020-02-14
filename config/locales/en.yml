@@ -49,3 +49,11 @@ en:
     next_step: "Save your changes, then go to the next step"
     save: "Save your changes and review"
     start_action: "Use your saved data to trigger the next action"
+
+  page_title:
+    plan: "Plan your deployment"
+    deploy: "Deploy your cluster"
+
+  page_subtitle:
+    plan: "This is the output of `terraform plan` that will be applied in the next step."
+    deploy: "Terraform is applying the plan. The `terraform` log will display below as it is generated..."

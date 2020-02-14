@@ -1,11 +1,21 @@
-%h1 This is your current plan
-%h4 This plan will be used to deploy
-%p
-  %div#editor.show_plan{ style: 'display: none;'}= @show_output
-
-- content_for :page_javascript do
-  :javascript
-    $(function(){
-      var editor = show_plan('#editor');
-      editor.session.setMode("ace/mode/json");
-    });
+%div.card
+  %h3.card-header= t('page_title.plan')
+  %div.card-body
+    %p= markdown(t('page_subtitle.plan'))
+    %hr
+    %pre.pre-scrollable
+      %code= pretty_json(@show_output)
+%p.clearfix
+  %div.float-right.btn-group.steps-container
+    - if Rails.configuration.x.advanced_mode
+      = link_to sources_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
+        %i.eos-icons.md-18 fast_rewind
+        = t('sidebar.variables')
+    - else
+      = link_to variables_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
+        %i.eos-icons.md-18 fast_rewind
+        = t('sidebar.variables')
+    = link_to deploy_path, class: 'btn btn-warning', title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
+      = t('sidebar.deploy')
+      %i.eos-icons.md-18 fast_forward
+%p.clearfix
