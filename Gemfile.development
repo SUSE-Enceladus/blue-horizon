@@ -37,7 +37,7 @@ gem 'hcl-checker', '~> 1.2'
 # Terraform wrapper
 gem 'ruby-terraform'
 # Zip files
-gem 'rubyzip'
+gem 'rubyzip', require: 'zip'
 
 group :development, :test do
   # BDD with rspec
