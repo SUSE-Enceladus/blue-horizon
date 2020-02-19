@@ -82,7 +82,7 @@ class PlansController < ApplicationController
   def cleanup
     exports = Rails.configuration.x.source_export_dir.join('*')
     Rails.logger.debug("cleaning up #{exports}")
-    rm_f(Dir.glob(exports))
+    rm_r(Dir.glob(exports), secure: true)
   end
 
   def prep
