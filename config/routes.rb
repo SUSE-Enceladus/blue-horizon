@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # Custom/Advanced
   resources :sources, except: [:show]
   # Show plan
-  resource :plan, only: [:show]
+  resource :plan, only: [:show, :update]
   # Deploy
   resource :deploy, only: [:show]
 

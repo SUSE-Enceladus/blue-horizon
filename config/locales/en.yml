@@ -33,10 +33,12 @@ en:
   hello: "Hello world"
   save: "Save"
   terraform_files: "terraform scripts and log"
-  
+
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"
   password_key: "password"
+
+  running: "Running..."
 
   sidebar:
     welcome: "Welcome"
@@ -53,11 +55,13 @@ en:
     next_step: "Save your changes, then go to the next step"
     save: "Save your changes and review"
     start_action: "Use your saved data to trigger the next action"
+    run: "Execute the terraform action"
 
   page_title:
     plan: "Plan your deployment"
     deploy: "Deploy your cluster"
 
   page_subtitle:
-    plan: "This is the output of `terraform plan` that will be applied in the next step."
+    plan_info: "In this step you can generate an execution plan. The execution plan shows what Terraform will do when you call deploy. This lets you avoid any surprises when Terraform manipulates infrastructure."
+    plan_output: "This is the output of `terraform plan` that will be applied in the next step."
     deploy: "Terraform is applying the plan. The `terraform` log will display below as it is generated..."
