@@ -20,7 +20,11 @@ module AuthorizationHelper
   private
 
   def all_variables_are_set?
-    Variable.load.attributes.values.all?(&:present?)
+    variables = Variable.load
+    variables.attributes.all? do |key, value|
+      variables.type(key) == 'boolean' ||
+      value.present?
+    end
   end
 
   def export_file_exists?(filename)
