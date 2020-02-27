@@ -33,6 +33,7 @@ en:
   hello: "Hello world"
   save: "Save"
   terraform_files: "terraform scripts and log"
+  unauthorized: "Sorry, you can't do that, yet."
 
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"

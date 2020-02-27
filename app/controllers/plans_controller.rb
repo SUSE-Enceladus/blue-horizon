@@ -116,9 +116,6 @@ class PlansController < ApplicationController
   end
 
   def saved_plan_path
-    return Rails.root.join(
-      Rails.configuration.x.source_export_dir,
-      'current_plan'
-    )
+    return Rails.configuration.x.source_export_dir.join('current_plan')
   end
 end

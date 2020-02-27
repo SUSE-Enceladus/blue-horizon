@@ -24,6 +24,8 @@ class DownloadController < ApplicationController
   def zip_files
     @compressed_filestream = Zip::OutputStream.write_buffer do |zos|
       @files.each do |file|
+        next unless File.exist?(file)
+
         zos.put_next_entry File.basename(file)
         zos.print file.read
       end

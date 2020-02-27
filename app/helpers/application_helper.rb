@@ -16,10 +16,17 @@ module ApplicationHelper
       content_tag(:span, text, class: 'collapse')
     ].join(' ').html_safe
 
-    active_link_to(content, url,
-      class: 'list-group-item',
-      data:  { toggle: 'tooltip', placement: 'right', original_title: text }
-    )
+    if can(url)
+      active_link_to(content, url,
+        class: 'list-group-item',
+        data:  { toggle: 'tooltip', placement: 'right', original_title: text }
+      )
+    else
+      content_tag(:span, content,
+        class: 'list-group-item disabled',
+        data:  { toggle: 'tooltip', placement: 'right', original_title: text }
+      )
+    end
   end
 
   def bootstrap_flash

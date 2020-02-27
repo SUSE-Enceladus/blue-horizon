@@ -43,6 +43,12 @@
     padding-right: 1rem;
     border: 0;
 
+    &.disabled {
+      color: $secondary;
+    }
+  }
+
+  a.list-group-item {
     &:hover {
       text-decoration: none;
       color: $primary;

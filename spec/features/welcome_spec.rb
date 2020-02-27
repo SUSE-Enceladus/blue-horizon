@@ -14,6 +14,11 @@ describe 'welcome', type: :feature do
     expect { visit('/welcome') }.not_to raise_error
   end
 
+  it 'is redirected to from the root path' do
+    visit('/')
+    expect(page).to have_current_path(welcome_path)
+  end
+
   describe 'on the simple path' do
     before do
       visit('/welcome')
