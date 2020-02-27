@@ -1,10 +1,16 @@
 {
     "variable": {
+        "test_string": {
+            "default": ""
+        },
         "are_you_sure": {
             "type": "boolean"
         },
         "test_list": {
             "type": "list"
+        },
+        "test_map": {
+            "type": "map"
         },
         "empty_number": {
             "type": "number"
