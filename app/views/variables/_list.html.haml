@@ -1,10 +1,12 @@
 // value is a 'list' type; like an array
 - list = value
 %div.form-group{ class: "list_#{key}"}
-  %label{ for: "variables[#{key}]" }= key.titleize
+  %label{ for: "variables[#{key}]" }
+    = key.titleize
+    = required if @variables.required?(key)
   - list.each do |list_value|
     %div.input-group.mb-2
-      %input.form-control{ type: 'text', name: "variables[#{key}][]", value: list_value }
+      %input.form-control{ type: 'text', name: "variables[#{key}][]", value: list_value, required: true }
       %div.input-group-append
         %button.btn.btn-outline-danger.remove{ type: 'button', data: { toggle: 'tooltip' }, title: 'Remove' }
           %i.eos-icons.md-18 remove

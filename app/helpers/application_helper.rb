@@ -65,6 +65,15 @@ module ApplicationHelper
     )
   end
 
+  def required
+    content_tag(
+      :span,
+      '*',
+      title: t(:required),
+      data:  { toggle: 'tooltip' }
+    )
+  end
+
   def markdown(text, escape_html=true)
     return '' if text.blank?
 

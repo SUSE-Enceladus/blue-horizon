@@ -1,5 +1,7 @@
 %div.form-group{ class: key }
-  %label{ for: "variables[#{key}]" }= key.titleize
-  %input.form-control{ type: 'text', name: "variables[#{key}]", value: value }
+  %label{ for: "variables[#{key}]" }
+    = key.titleize
+    = required if @variables.required?(key)
+  %input.form-control{ type: 'text', name: "variables[#{key}]", value: value, required: @variables.required?(key) }
   - if defined?(description)
     %small.form-text.text-muted= description

@@ -23,7 +23,8 @@ module AuthorizationHelper
     variables = Variable.load
     variables.attributes.all? do |key, value|
       variables.type(key) == 'boolean' ||
-      value.present?
+        !variables.required?(key) ||
+        value.present?
     end
   end
 

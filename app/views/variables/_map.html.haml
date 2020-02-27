@@ -1,14 +1,16 @@
 // value is a 'map' type; like a dictionary/hash
 - map = value
 %div.form-group{ class: "map_#{key}"}
-  %label{ for: "variables[#{key}]" }= key.titleize
+  %label{ for: "variables[#{key}]" }
+    = key.titleize
+    = required if @variables.required?(key)
   - map.each do |map_key, map_value|
     %div.input-group.mb-2
       %div.input-group-prepend
         %span.input-group-text
           = map_key
           \=
-      %input.form-control{ type: 'text', name: "variables[#{key}][#{map_key}]", value: map_value }
+      %input.form-control{ type: 'text', name: "variables[#{key}][#{map_key}]", value: map_value, required: true }
       %div.input-group-append
         %button.btn.btn-outline-danger.remove{ type: 'button', data: { toggle: 'tooltip' }, title: 'Remove' }
           %i.eos-icons.md-18 remove

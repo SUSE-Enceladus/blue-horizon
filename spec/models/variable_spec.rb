@@ -102,6 +102,16 @@ RSpec.describe Variable, type: :model do
       expect(variables.description('test_description')).to eq('test desc')
     end
 
+    it 'assumes variables are required unless explicitly optional' do
+      variables.attributes.keys.each do |key|
+        if /optional/i =~ variables.description(key)
+          expect(variables).not_to be_required(key)
+        else
+          expect(variables).to be_required(key)
+        end
+      end
+    end
+
     context 'with form params' do
       before do
         allow(Rails.logger).to receive(:warn)

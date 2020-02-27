@@ -65,6 +65,10 @@ class Variable
     @plan[key]['description']
   end
 
+  def required?(key)
+    !(/optional/i =~ @plan[key]['description'])
+  end
+
   def attributes
     Hash[
       @plan.keys.collect do |key|

@@ -7,10 +7,12 @@
             "type": "boolean"
         },
         "test_list": {
-            "type": "list"
+            "type": "list",
+            "description": "This is optional."
         },
         "test_map": {
-            "type": "map"
+            "type": "map",
+            "description": "(Optional)"
         },
         "empty_number": {
             "type": "number"

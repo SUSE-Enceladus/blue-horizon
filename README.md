@@ -75,7 +75,7 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 
 **NOTE:** _The content of those files will be stored in the database, and may be edited by the application user. When terraform runs, it will run on exported content from the database, so it may not be identical to what was initially provided in `vendor/sources`._
 
-Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`.
+Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`. Variables will be _required_ unless the description includes the word "optional".
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 
