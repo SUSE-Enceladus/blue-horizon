@@ -13,8 +13,8 @@ describe 'source editing', type: :feature do
   end
 
   it 'edits sources' do
-    source = sources.sample
-    random_content = Faker::Lorem.paragraph
+    source = Source.find_by(filename: 'dummy.sh')
+    random_content = "# #{Faker::Lorem.paragraph}"
     expect(source.content).not_to eq(random_content)
     visit('/sources')
 

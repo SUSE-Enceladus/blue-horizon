@@ -8,15 +8,14 @@ RSpec.describe Variable, type: :model do
   let(:variable_names) { collect_variable_names }
   let(:random_string) { Faker::Lorem.word }
   let(:random_number) { Faker::Number.number(digits: 3) }
-  let(:random_decimal) { Faker::Number.decimal(l_digits: 3, r_digits: 3) }
   let(:attributes_hash) do
     {
-      'location'       => random_string,
-      'instance_count' => random_number.to_s,
-      'are_you_sure'   => 'true',
-      'test_list'      => ['one', 'two', 'three'],
-      'cluster_labels' => { foo: 'bar' },
-      'fake_key'       => 'fake_value'
+      'test_description' => random_string,
+      'empty_number'     => random_number.to_s,
+      'are_you_sure'     => 'true',
+      'test_list'        => ['one', 'two', 'three'],
+      'test_map'         => { foo: 'bar' },
+      'fake_key'         => 'fake_value'
     }
   end
 
@@ -45,11 +44,11 @@ RSpec.describe Variable, type: :model do
     let(:variables) { described_class.load }
 
     before do
-      KeyValue.set('tfvars.ssh_public_key', fake_data)
+      KeyValue.set('tfvars.test_string', fake_data)
     end
 
     it 'returns stored values' do
-      expect(variables.ssh_public_key).to eq(fake_data)
+      expect(variables.test_string).to eq(fake_data)
     end
   end
 
@@ -75,27 +74,13 @@ RSpec.describe Variable, type: :model do
   context 'with form handling' do
     let(:expected_params) do
       [
-        'instance_count',
-        'instance_type',
-        'subscription_id',
-        'resource_group',
-        'location',
-        'client_id',
-        'client_secret',
-        'tenant_id',
-        'ssh_username',
-        'ssh_public_key',
-        'k8s_version',
-        'disk_size_gb',
-        { 'cluster_labels' => {} },
-        'dns_zone_name',
-        'cap_domain',
-        'dns_prefix',
-        'email',
+        'test_string',
         'are_you_sure',
         { 'test_list' => [] },
+        { 'test_map' => {} },
         'empty_number',
-        'test_description'
+        'test_description',
+        'name'
       ]
     end
 
@@ -124,11 +109,11 @@ RSpec.describe Variable, type: :model do
       end
 
       it 'accepts values via attributes' do
-        expect(variables.location).to eq(random_string)
+        expect(variables.test_description).to eq(random_string)
       end
 
       it 'casts number from string' do
-        expect(variables.instance_count).to be == random_number
+        expect(variables.empty_number).to be == random_number
       end
 
       it 'casts boolean from string' do
@@ -140,7 +125,7 @@ RSpec.describe Variable, type: :model do
       end
 
       it 'accepts hashes' do
-        expect(variables.cluster_labels.keys).to eq(['foo'])
+        expect(variables.test_map.keys).to eq(['foo'])
       end
 
       it 'logs a warning for fake attributes' do
@@ -159,9 +144,9 @@ RSpec.describe Variable, type: :model do
     end
 
     it 'performs save!' do
-      variables.client_id = random_string
+      variables.test_string = random_string
       expect { variables.save! }.not_to raise_error
-      expect(KeyValue.get('tfvars.client_id')).to eq(random_string)
+      expect(KeyValue.get('tfvars.test_string')).to eq(random_string)
     end
 
     it 'returns true' do
