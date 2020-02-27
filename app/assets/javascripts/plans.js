@@ -4,7 +4,7 @@ $(document).ready(function () {
       $('code.output').text('')
       $(this).addClass('no-hover')
       $('.btn-secondary').addClass('no-hover')
-      $('.loader').show();
+      $('.eos-icon-loading').removeClass('hide');
     })
     .bind('ajax:success', function(evt, data, status, xhr) {
       $('code.output').text(JSON.stringify(evt.detail[0], null, 2))
@@ -13,6 +13,7 @@ $(document).ready(function () {
       $(this).removeClass('no-hover')
       $('.btn-secondary').removeClass('no-hover')
       $('.btn-warning').removeClass('disabled')
-      $('.loader').hide();
+      $('.eos-icon-loading').addClass('hide');
+      $('.eos-icon-loading').addClass('hide');
     })
 })
