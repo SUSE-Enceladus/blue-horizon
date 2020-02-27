@@ -51,8 +51,8 @@ class DeploysController < ApplicationController
 
   def close_log_info
     set_default_logger_config
-    # TODO: write output in tmp/teraform/
-    write_output('/tmp/ruby-terraform.log')
+    log_path = Rails.configuration.x.source_export_dir.join('tf-apply.log')
+    write_output(log_path)
   end
 
   def set_default_logger_config
