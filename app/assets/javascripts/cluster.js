@@ -25,9 +25,10 @@ $(function() {
       $('#count-display').val(clusterSize.slider('getValue'));
     })
     .data('slider');
-  $('#count-display').on('change keyup', function() {
-    clusterSize.slider('setValue', $(this).val());
-  });
+  $('#count-display').on('change keyup', updateClusterSize)
+    .on('change keyup', function() {
+      clusterSize.slider('setValue', $(this).val());
+    });
 
   $('input[name="cluster[instance_type]"]').click(function() {
     definition = $(this).siblings('.definition').html();
