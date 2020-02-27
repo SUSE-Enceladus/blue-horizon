@@ -89,4 +89,7 @@ Style/FormatStringToken:
   Exclude:
     - 'lib/tasks/packaging.rake'
 
+Metrics/AbcSize:
+   Enabled: false
+
 inherit_from: .rubocop_todo.yml

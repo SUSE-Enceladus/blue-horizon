@@ -62,6 +62,13 @@ en:
     deploy: "Deploy your cluster"
 
   page_subtitle:
-    plan_info: "In this step you can generate an execution plan. The execution plan shows what Terraform will do when you call deploy. This lets you avoid any surprises when Terraform manipulates infrastructure."
+    plan_info: |
+      In this step you can generate an execution plan.
+
+      The execution plan shows what Terraform will do when you call deploy.
+
+      This lets you avoid any surprises when Terraform manipulates infrastructure.
     plan_output: "This is the output of `terraform plan` that will be applied in the next step."
-    deploy: "Terraform is applying the plan. The `terraform` log will display below as it is generated..."
+    deploy_info: |
+      In this step you can apply your plan. All the actions (create cluster/s, deploy and so on) will be executed."
+    deploy: "The `terraform` log will display below as it is generated..."

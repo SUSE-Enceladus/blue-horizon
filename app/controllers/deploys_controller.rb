@@ -3,10 +3,13 @@
 require 'ruby_terraform'
 
 class DeploysController < ApplicationController
-  def pre_deploy
+  def update
+    logger.info('Calling run_deploy')
     RubyTerraform.configuration.stdout = StringIO.new
+    RubyTerraform.configuration.stderr = StringIO.new
     @apply_args = {
-      directory: Rails.configuration.x.source_export_dir, auto_approve: true
+      directory: Rails.configuration.x.source_export_dir, auto_approve: true,
+      no_color: true
     }
     variables_file = exported_vars_path
 
@@ -14,18 +17,48 @@ class DeploysController < ApplicationController
       File.exist?(variables_file)
 
     read_exported_vars(variables_file)
-    logger.info('Calling run_deploy')
     run_deploy
+    logger.info('Deploy finished.')
   end
 
   def send_current_status
-    return render json: { info: RubyTerraform.configuration.stdout.string } if
-      RubyTerraform.configuration.stdout.is_a?(StringIO)
+    success = false
+    terra_stderr = RubyTerraform.configuration.stderr
 
-    return render json: { info: @apply_output } unless @apply_output.nil?
+    if terra_stderr.is_a?(StringIO) && !terra_stderr.string.empty?
+      error = terra_stderr.string
+      success = false
+      close_log_info
+    elsif RubyTerraform.configuration.stdout.is_a?(StringIO)
+      @apply_output = RubyTerraform.configuration.stdout.string
+      success = true
+      if RubyTerraform.configuration.stdout.string.include? 'Apply complete!'
+        close_log_info
+      end
+    end
+
+    html = (render_to_string partial: 'output.html.haml')
+    respond_to do |format|
+      format.json do
+        render json: { new_html: html, success: success,
+                       error: error }
+      end
+    end
+    return
   end
 
   private
+
+  def close_log_info
+    set_default_logger_config
+    # TODO: write output in tmp/teraform/
+    write_output('/tmp/ruby-terraform.log')
+  end
+
+  def set_default_logger_config
+    RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
+    RubyTerraform.configuration.stderr = RubyTerraform.configuration.logger
+  end
 
   def run_deploy
     Dir.chdir(Rails.configuration.x.source_export_dir)
@@ -47,14 +80,8 @@ class DeploysController < ApplicationController
 
   def terraform_apply
     RubyTerraform.apply(@apply_args)
-    @apply_output = RubyTerraform.configuration.stdout.string
-    sleep(7)
-    # back to DEFAULT configuration
-    RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
-
-    write_output('/tmp/ruby-terraform.log')
   rescue RubyTerraform::Errors::ExecutionError
-    render json: { error: 'Deploy operation has failed.' }
+    nil
   end
 
   def write_output(log_file)

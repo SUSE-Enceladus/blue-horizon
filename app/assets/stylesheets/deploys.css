@@ -4,3 +4,15 @@
   flex-direction: column;
   min-height: calc(100vh - 80px);
 }
+.hide {
+    display: none !important;
+}
+.centered {
+    margin-left: 50% !important;
+}
+.no-hover {
+    pointer-events: none;
+}
+.linebreaks {
+    white-space: pre-wrap;
+}
