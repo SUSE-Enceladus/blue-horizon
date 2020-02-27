@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   # Welcome
-  root to: 'welcome#index'
+  root to: redirect('/welcome')
   get '/welcome', to: 'welcome#index'
   # switch paths
   get '/welcome/simple', to: 'welcome#simple', as: 'simple'
