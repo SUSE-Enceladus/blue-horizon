@@ -37,5 +37,16 @@ describe 'cluster sizing', type: :feature do
       expect(cluster.instance_type).to eq(random_instance_type_key)
       expect(cluster.instance_count).to eq(random_cluster_size)
     end
+
+    it 'consistently shows the cluster size' do
+      KeyValue.set('tfvars.instance_count', random_cluster_size)
+      visit '/cluster'
+      expect(page).to have_selector(
+        "input#count-display[value='#{random_cluster_size}']"
+      )
+      expect(page).to have_selector(
+        "input#cluster_instance_count[value='#{random_cluster_size}']"
+      )
+    end
   end
 end

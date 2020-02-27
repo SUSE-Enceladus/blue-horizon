@@ -12,7 +12,7 @@
             %input.form-control.form-control-sm#count-display{ type: 'number', min: @cluster.min_nodes_required, max: @cluster.max_nodes_allowed, value: @cluster.instance_count }
           %div.col-1
           %div.col
-            = form.text_field :instance_count, data: @cluster.slider_data, class: 'h3'
+            = form.text_field :instance_count, value: @cluster.instance_count, data: @cluster.slider_data, class: 'h3'
       %div.col-md-2.text-right.cluster-cpu-count
         %label Total vCPUs
         %label.h3#cluster-cpu-count= 0
