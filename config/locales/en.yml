@@ -45,7 +45,7 @@ en:
     welcome: "Welcome"
     sources: "Edit sources"
     cluster: "Size cluster"
-    variables: "Additional data"
+    variables: "Variables"
     plan: "Plan"
     deploy: "Deploy"
     download: "Download"
