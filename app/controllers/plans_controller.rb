@@ -8,7 +8,9 @@ class PlansController < ApplicationController
   prepend_before_action :prep
   before_action :init_terraform
 
-  def show
+  def show; end
+
+  def update
     return unless @exported_vars
 
     info = terraform_plan
@@ -18,6 +20,7 @@ class PlansController < ApplicationController
     # send show output to UI
     terraform_show
     Dir.chdir(Rails.root)
+    render json: JSON.pretty_generate(JSON.parse(@show_output))
   end
 
   private

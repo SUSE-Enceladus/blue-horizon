@@ -113,18 +113,20 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:init_terraform)
       allow(controller).to receive(:read_exported_sources)
       allow(controller).to receive(:cleanup)
+      allow(JSON).to receive(:pretty_generate)
+      allow(JSON).to receive(:parse).and_return(blue: 'horizon')
     end
 
     it 'runs terraform plan' do
       allow(controller).to receive(:terraform_show)
       allow(ruby_terraform).to receive(:plan)
 
-      get :show
+      get :update, format: :json
 
       expect(ruby_terraform).to(
         have_received(:plan)
           .with(
-            directory: sources_dir, vars: {},
+            directory: sources_dir, vars: { blue: 'horizon' },
             plan: plan_file
           )
       )
@@ -136,7 +138,7 @@ RSpec.describe PlansController, type: :controller do
       allow(file).to receive(:open).and_return(File)
       allow(file_write).to receive(:write)
 
-      get :show
+      get :update
 
       expect(ruby_terraform).to(
         have_received(:show)
@@ -155,7 +157,7 @@ RSpec.describe PlansController, type: :controller do
           .and_raise(RubyTerraform::Errors::ExecutionError)
       )
 
-      get :show
+      get :update, format: :json
 
       expect(flash[:error]).to match(/Plan operation has failed/)
     end

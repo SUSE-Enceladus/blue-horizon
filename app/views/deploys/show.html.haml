@@ -5,15 +5,20 @@
 %div.card
   %h3.card-header= t('page_title.deploy')
   %div.card-body
+    %p= markdown(t('page_subtitle.deploy_info'))
+    %hr
     %p= markdown(t('page_subtitle.deploy'))
     %hr
     %pre.pre-scrollable
-      %code#output= @terraform_tfstate
+      = render 'output'
 %p.clearfix
   %div.float-right.btn-group.steps-container
     = link_to plan_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
       %i.eos-icons.md-18 fast_rewind
       = t('sidebar.plan')
+    = link_to deploy_path, class: "btn btn-primary", id: "submit-deploy", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
+      %i.eos-icons.md-18 save
+      = t('run')
     = link_to download_path, class: 'btn btn-warning', title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
       = t('sidebar.download')
       %i.eos-icons.md-18 fast_forward

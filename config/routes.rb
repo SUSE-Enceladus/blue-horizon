@@ -15,13 +15,13 @@ Rails.application.routes.draw do
   # Custom/Advanced
   resources :sources, except: [:show]
   # Show plan
-  resource :plan, only: [:show]
+  resource :plan, only: [:show, :update]
   # Deploy
-  resource :deploy, only: [:show]
+  resource :deploy, only: [:show, :update, :create]
 
-  resource :deploy do
-    get 'pre_deploy', on: :member
-  end
+  # resource :deploy do
+  #   get 'pre_deploy', on: :member
+  # end
 
   resource :deploy do
     get 'send_current_status', on: :member

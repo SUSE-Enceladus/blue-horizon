@@ -1,28 +1,18 @@
-function show_plan(editor_id, show_info) {
-    var editor;
-
-    if (editor_id.charAt(0) === '#') {
-	editor = ace.edit(editor_id.substr(1));
-    } else {
-	editor = ace.edit(editor_id);
-    }
-    var form_field = $(show_info);
-
-    editor.setOption('fontSize', '13pt');
-    editor.setOption('vScrollBarAlwaysVisible', true);
-    editor.getSession().setUseWrapMode(true);
-
-    if (editor.getSession().getValue().length) {
-	editor.setValue(
-	    JSON.stringify(
-		JSON.parse(editor.getSession().getValue()),
-		null,
-		2
-	    )
-	);
-	editor.session.setMode("ace/mode/json");
-	$(editor_id).show();
-	form_field.val(editor.getSession().getValue());
-    }
-    return editor;
-}
+$(document).ready(function () {
+  $('#submit-plan')
+    .bind('ajax:beforeSend', function(evt, xhr, settings) {
+      $('code.output').text('')
+      $(this).addClass('no-hover')
+      $('.btn-secondary').addClass('no-hover')
+      $('.loader').show();
+    })
+    .bind('ajax:success', function(evt, data, status, xhr) {
+      $('code.output').text(JSON.stringify(evt.detail[0], null, 2))
+    })
+    .bind('ajax:complete', function(evt, status, xhr) {
+      $(this).removeClass('no-hover')
+      $('.btn-secondary').removeClass('no-hover')
+      $('.btn-warning').removeClass('disabled')
+      $('.loader').hide();
+    })
+})
