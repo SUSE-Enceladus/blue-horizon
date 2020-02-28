@@ -41,7 +41,7 @@ en:
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"
   password_key: "password"
-
+  run: "Build plan"
   running: "Running..."
 
   sidebar:

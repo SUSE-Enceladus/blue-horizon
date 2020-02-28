@@ -113,8 +113,8 @@ class PlansController < ApplicationController
   def terraform_plan
     Dir.chdir(Rails.configuration.x.source_export_dir)
     result = RubyTerraform.plan(
-      directory: Rails.configuration.x.source_export_dir, vars: @exported_vars,
-      plan: saved_plan_path
+      directory: Rails.configuration.x.source_export_dir,
+      plan:      saved_plan_path
     )
     return result
   rescue RubyTerraform::Errors::ExecutionError
