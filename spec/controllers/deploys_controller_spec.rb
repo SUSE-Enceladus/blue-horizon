@@ -35,10 +35,9 @@ RSpec.describe DeploysController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:apply)
           .with(
-            directory: sources_dir, vars: { foo: 'bar' },
-            vars_files: [terraform_tfvars],
+            directory:    sources_dir,
             auto_approve: true,
-            no_color: true
+            no_color:     true
           )
       )
     end

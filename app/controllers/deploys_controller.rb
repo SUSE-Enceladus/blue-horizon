@@ -8,15 +8,10 @@ class DeploysController < ApplicationController
     RubyTerraform.configuration.stdout = StringIO.new
     RubyTerraform.configuration.stderr = StringIO.new
     @apply_args = {
-      directory: Rails.configuration.x.source_export_dir, auto_approve: true,
-      no_color: true
+      directory:    Rails.configuration.x.source_export_dir,
+      auto_approve: true,
+      no_color:     true
     }
-    variables_file = exported_vars_path
-
-    return render json: { error: 'No plan has been created.' } unless
-      File.exist?(variables_file)
-
-    read_exported_vars(variables_file)
     run_deploy
     logger.info('Deploy finished.')
   end
@@ -64,18 +59,6 @@ class DeploysController < ApplicationController
     Dir.chdir(Rails.configuration.x.source_export_dir)
     terraform_apply
     Dir.chdir(Rails.root)
-  end
-
-  def exported_vars_path
-    exported_dir_path = Rails.configuration.x.source_export_dir
-    exported_vars_file_path = Variable::DEFAULT_EXPORT_FILENAME
-    return File.join(exported_dir_path, exported_vars_file_path)
-  end
-
-  def read_exported_vars(variables_file)
-    @exported_vars = File.read(variables_file)
-    @apply_args[:vars] = JSON.parse(@exported_vars)
-    @apply_args[:vars_files] = ['terraform.tfvars']
   end
 
   def terraform_apply

@@ -41,7 +41,8 @@ en:
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"
   password_key: "password"
-  run: "Build plan"
+  plan: "Plan"
+  apply: "Apply"
   running: "Running..."
 
   sidebar:
@@ -71,5 +72,4 @@ en:
     plan_info: |
       In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ acts.
     deploy_info: |
-      In this step you can apply your plan. All the actions (create cluster/s, deploy and so on) will be executed.
-    deploy: "The `terraform` log will display below as it is generated..."
+      In this step you can apply your plan. This may take some time. The `terraform` log will display below as it is generated.

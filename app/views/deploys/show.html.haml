@@ -7,8 +7,6 @@
   %div.card-body
     %p= markdown(t('page_subtitle.deploy_info'))
     %hr
-    %p= markdown(t('page_subtitle.deploy'))
-    %hr
     %pre.pre-scrollable
       = render 'output'
 %p.clearfix
@@ -17,8 +15,8 @@
       %i.eos-icons.md-18 fast_rewind
       = t('sidebar.plan')
     = link_to deploy_path, class: "btn btn-primary", id: "submit-deploy", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
-      %i.eos-icons.md-18 save
-      = t('run')
+      %i.eos-icons.md-18 cloud_upload
+      = t('apply')
     = link_to download_path, class: "btn btn-warning #{'disabled' unless can(download_path)}", title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
       = t('sidebar.download')
       %i.eos-icons.md-18 fast_forward

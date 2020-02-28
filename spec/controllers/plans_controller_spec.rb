@@ -153,8 +153,8 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:plan)
           .with(
-            directory: sources_dir, vars: { blue: 'horizon' },
-            plan: plan_file
+            directory: sources_dir,
+            plan:      plan_file
           )
       )
     end
