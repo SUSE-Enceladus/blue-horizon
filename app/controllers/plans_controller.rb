@@ -48,9 +48,11 @@ class PlansController < ApplicationController
   end
 
   def init_terraform
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.init(
       from_module: '', path: Rails.configuration.x.source_export_dir
     )
+    Dir.chdir(Rails.root)
   end
 
   def find_default_binary
@@ -101,12 +103,16 @@ class PlansController < ApplicationController
   end
 
   def terraform_plan
-    RubyTerraform.plan(
+    Dir.chdir(Rails.configuration.x.source_export_dir)
+    result = RubyTerraform.plan(
       directory: Rails.configuration.x.source_export_dir, vars: @exported_vars,
       plan: saved_plan_path
     )
+    return result
   rescue RubyTerraform::Errors::ExecutionError
     return { error: 'Plan operation has failed' }
+  ensure
+    Dir.chdir(Rails.root)
   end
 
   def terraform_show
