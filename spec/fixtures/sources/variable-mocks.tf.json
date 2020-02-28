@@ -4,7 +4,7 @@
             "default": ""
         },
         "are_you_sure": {
-            "type": "boolean"
+            "type": "bool"
         },
         "test_list": {
             "type": "list",

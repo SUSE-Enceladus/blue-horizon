@@ -50,7 +50,7 @@ class Variable
     @plan[key]['default'] || case type(key)
     when 'number'
       0
-    when 'boolean'
+    when 'bool'
       false
     when 'list'
       []
@@ -124,7 +124,7 @@ class Variable
     case type(key)
     when 'number'
       BigDecimal(value)
-    when 'boolean'
+    when 'bool'
       ActiveModel::Type::Boolean.new.cast(value)
     when 'list'
       value.collect(&:to_s)

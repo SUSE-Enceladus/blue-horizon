@@ -22,7 +22,7 @@ module AuthorizationHelper
   def all_variables_are_set?
     variables = Variable.load
     variables.attributes.all? do |key, value|
-      variables.type(key) == 'boolean' ||
+      variables.type(key) == 'bool' ||
         !variables.required?(key) ||
         value.present?
     end
