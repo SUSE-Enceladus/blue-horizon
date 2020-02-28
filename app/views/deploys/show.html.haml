@@ -19,7 +19,7 @@
     = link_to deploy_path, class: "btn btn-primary", id: "submit-deploy", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
       %i.eos-icons.md-18 save
       = t('run')
-    = link_to download_path, class: 'btn btn-warning', title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
+    = link_to download_path, class: "btn btn-warning #{'disabled' unless can(download_path)}", title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
       = t('sidebar.download')
       %i.eos-icons.md-18 fast_forward
 %p.clearfix

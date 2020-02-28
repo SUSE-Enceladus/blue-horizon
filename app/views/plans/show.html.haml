@@ -18,8 +18,11 @@
         %i.eos-icons.md-18 fast_rewind
         = t('sidebar.variables')
     = link_to plan_path, class: "btn btn-primary", id: "submit-plan", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
-      %i.eos-icons.md-18 save
+      %i.eos-icons.md-18 build
       = t('run')
+    = link_to plan_path(format: :json), class: "btn btn-info #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
+      %i.eos-icons.md-18  get_app
+      = t('sidebar.download_plan')
     = link_to deploy_path, class: "btn btn-warning #{'disabled' unless can(deploy_path)}", title: t('tooltips.start_action') do
       = t('sidebar.deploy')
       %i.eos-icons.md-18 fast_forward
