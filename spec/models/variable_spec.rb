@@ -15,6 +15,7 @@ RSpec.describe Variable, type: :model do
       'are_you_sure'     => 'true',
       'test_list'        => ['one', 'two', 'three'],
       'test_map'         => { foo: 'bar' },
+      'test_password'    => 'Superman123!',
       'fake_key'         => 'fake_value'
     }
   end
@@ -80,6 +81,7 @@ RSpec.describe Variable, type: :model do
         { 'test_map' => {} },
         'empty_number',
         'test_description',
+        'test_password',
         'name'
       ]
     end
