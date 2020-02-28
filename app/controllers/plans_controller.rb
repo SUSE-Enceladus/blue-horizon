@@ -7,16 +7,16 @@ class PlansController < ApplicationController
   include FileUtils
 
   def show
+    return unless helpers.can(deploy_path)
+
     terraform_show
-    @current_plan = JSON.pretty_generate(JSON.parse(@show_output))
-  rescue RubyTerraform::Errors::ExecutionError, JSON::ParserError
-    @current_plan = ''
-  ensure
+    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
+
     name = 'terraform_plan.json'
     respond_to do |format|
       format.html
       format.json do
-        send_data @current_plan, disposition: 'attachment', filename: name
+        send_data @show_output, disposition: 'attachment', filename: name
       end
     end
   end
@@ -27,14 +27,16 @@ class PlansController < ApplicationController
     return unless @exported_vars
 
     info = terraform_plan
-    return flash.now[:error] = info[:error] if info.is_a?(Hash)
-
+    if info.is_a?(Hash)
+      flash.now[:error] = info[:error]
+      return render json: flash.to_hash
+    end
     terraform_show
-    @current_plan = JSON.pretty_generate(JSON.parse(@show_output))
+    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
     respond_to do |format|
       format.html { render :show }
-      format.js   { render json: @current_plan }
+      format.js   { render json: @show_output }
     end
   end
 
@@ -89,6 +91,7 @@ class PlansController < ApplicationController
       message = 'There are no vars saved.'
       logger.error message
       flash.now[:error] = message
+      return render json: flash.to_hash
     end
   end
 
