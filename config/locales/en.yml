@@ -67,5 +67,5 @@ en:
     plan_info: |
       In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ acts.
     deploy_info: |
-      In this step you can apply your plan. All the actions (create cluster/s, deploy and so on) will be executed."
+      In this step you can apply your plan. All the actions (create cluster/s, deploy and so on) will be executed.
     deploy: "The `terraform` log will display below as it is generated..."
