@@ -1,18 +1,18 @@
-$(document).ready(function () {
+$(function() {
   $('#submit-plan')
-    .bind('ajax:beforeSend', function(evt, xhr, settings) {
-      $('code.output').text('')
-      $(this).addClass('no-hover')
-      $('.btn-secondary').addClass('no-hover')
-      $('.eos-icon-loading').removeClass('hide');
+    .bind('ajax:beforeSend', function() {
+      $('code.output').text('');
+      $(this).addClass('no-hover');
+      $('.btn-secondary').addClass('disabled');
+      $('.eos-icon-loading').show();
     })
-    .bind('ajax:success', function(evt, data, status, xhr) {
-      $('code.output').text(evt.detail[0])
+    .bind('ajax:success', function(evt) {
+      $('code.output').text(evt.detail[0]);
     })
-    .bind('ajax:complete', function(evt, status, xhr) {
-      $(this).removeClass('no-hover')
-      $('.btn-secondary').removeClass('no-hover')
-      $('.btn-warning').removeClass('disabled')
+    .bind('ajax:complete', function() {
+      $(this).removeClass('no-hover');
+      $('.btn-secondary').removeClass('disabled');
+      $("a[href='/deploy']").removeClass('disabled');
       $('.eos-icon-loading').addClass('hide');
-    })
-})
+    });
+});

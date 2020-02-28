@@ -1,40 +1,39 @@
-$(document).ready(function () {
+$(function() {
   var intervalId = undefined;
   var finished = false;
-  $('.eos-icon-loading').addClass('hide')
+  $('.eos-icon-loading').hide();
 
   $('#submit-deploy')
-    .bind('ajax:beforeSend', function(evt, xhr, settings) {
-      $('#output').text('')
-      $(this).addClass('no-hover')
-      $('.btn-secondary').addClass('no-hover')
-      $('.btn-warning').addClass('no-hover')
-      $('.eos-icon-loading').removeClass('hide');
+    .bind('ajax:beforeSend', function() {
+      $('#output').text('');
+      $(this).addClass('no-hover');
+      $('.btn-secondary').addClass('disabled');
+      $("a[href='/download']").addClass('disabled');
+      $('.eos-icon-loading').show();
       intervalId = setTimeout(function() {
-	fetch_output(finished, intervalId)
+	      fetch_output(finished, intervalId)
       }, 5000)
     })
-    .bind('ajax:success', function(evt, data, status, xhr) {
-      $('#notice').html("<%= flash[:error] %>")
+    .bind('ajax:success', function() {
+      $('#notice').html("<%= flash[:error] %>");
       if ($('#output').text().length > 0) {
-	$('.eos-icon-loading').addClass('hide');
-	clearTimeout(intervalId);
+	      $('.eos-icon-loading').addClass('hide');
+	      clearTimeout(intervalId);
       }
       finished = true;
     })
-    .bind('ajax:complete', function(evt, status, xhr) {
-      $('.btn-secondary').removeClass('no-hover')
-      $('.btn-warning').removeClass('disabled')
-      $(this).removeClass('no-hover')
-
+    .bind('ajax:complete', function() {
+      $('.btn-secondary').removeClass('disabled');
+      $("a[href='/download']").removeClass('disabled');
+      $(this).removeClass('no-hover');
       if ($('#output').text().length > 0) {
-	$('.eos-icon-loading').addClass('hide');
+	      $('.eos-icon-loading').hide();
         clearTimeout(intervalId);
-	finished = true;
+	      finished = true;
       }
     })
-    .bind('ajax:error', function(evt) {
-      $('.eos-icons-loading').addClass('hide');
+    .bind('ajax:error', function() {
+      $('.eos-icons-loading').hide();
       clearTimeout(intervalId);
     });
 });
@@ -45,25 +44,23 @@ function fetch_output(finished, intervalId) {
     url: 'deploy/send_current_status',
     dataType: 'json',
     success: function(data) {
-
       if(data.success == false) {
-	$('.eos-icon-loading').addClass('hide');
-	// show rails flash message
-	$('#error_message').text('Deploy operation has failed.')
-	$('#flash').show()
-	// show terraform error message in output section
-	$('#output').text($('#output').text() + data.error)
-	clearTimeout(intervalId);
+        $('.eos-icon-loading').hide();
+        // show rails flash message
+        $('#error_message').text('Deploy operation has failed.');
+        $('#flash').show();
+        // show terraform error message in output section
+        $('#output').text($('#output').text() + data.error);
+        clearTimeout(intervalId);
       } else {
-	$('.pre-scrollable').html(data.new_html)
-
-	if (!finished) {
-	  intervalId = setTimeout(function() {
-	    fetch_output()
-	  }, 5000);
-	} else {
-	  $('.eos-icon-loading').addClass('hide');
-	}
+        $('.pre-scrollable').html(data.new_html);
+        if (!finished) {
+      	  intervalId = setTimeout(function() {
+	          fetch_output();
+	        }, 5000);
+	      } else {
+	        $('.eos-icon-loading').addClass('hide');
+        }
       }
     },
     error: function() {

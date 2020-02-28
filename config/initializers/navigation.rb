@@ -13,7 +13,7 @@ Rails.application.configure do
     variables: 'playlist_add',
     plan:      'organization',
     deploy:    'play_arrow',
-    download:  'file_download'
+    download:  'archive'
   }
 
   # menus for each path
