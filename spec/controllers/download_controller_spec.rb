@@ -5,6 +5,11 @@ require 'rails_helper'
 RSpec.describe DownloadController, type: :controller do
   context 'when getting and sending files' do
     let!(:sources) { populate_sources }
+    let(:random_path) do
+      Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
+    end
+
+    let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
 
     before do
       mock_member = double
@@ -12,6 +17,13 @@ RSpec.describe DownloadController, type: :controller do
       controller.instance_variable_set(:@compressed_filestream, mock_member)
       allow(controller).to receive(:zip_files)
       allow(controller).to receive(:send_data)
+      FileUtils.mkdir_p(random_path)
+      Variable.load.export
+      Source.all.each(&:export)
+    end
+
+    after do
+      FileUtils.rm_rf(random_path)
     end
 
     it 'send zip data' do
@@ -42,9 +54,10 @@ RSpec.describe DownloadController, type: :controller do
 
       get :download, format: :zip
 
-      expect(controller.instance_variable_get(:@files)).to(
-        eq(expected_files)
-      )
+      files = controller.instance_variable_get(:@files)
+      expected_files.each do |expected_file|
+        expect(files).to be_include(expected_file)
+      end
     end
   end
 

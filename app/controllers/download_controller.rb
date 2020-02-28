@@ -12,9 +12,11 @@ class DownloadController < ApplicationController
   end
 
   def files
-    sources = Source.all.order(:filename)
-    @files = sources.map do |source|
-      Rails.configuration.x.source_export_dir + source.filename
+    sources = Dir.glob(
+      Rails.configuration.x.source_export_dir.join('*.*')
+    )
+    @files = sources.collect do |file|
+      Rails.configuration.x.source_export_dir.join(file)
     end
 
     @files.push Pathname.new(DEFAULT_LOG_FILENAME) if
