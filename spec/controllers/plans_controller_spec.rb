@@ -46,7 +46,7 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:init_terraform)
       allow(controller).to receive(:read_exported_vars)
 
-      get :show
+      put :update
 
       ruby_terraform.configure do |config|
         config.logger do |log_device|
@@ -61,7 +61,7 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:config_terraform)
       allow(controller).to receive(:read_exported_vars)
 
-      get :show
+      put :update
 
       expect(ruby_terraform).to(
         have_received(:init)
@@ -78,7 +78,7 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:read_exported_sources)
       allow(json_instance).to receive(:parse)
 
-      get :show
+      put :update
 
       expect(json_instance).to have_received(:parse).at_least(:once)
     end
@@ -96,7 +96,7 @@ RSpec.describe PlansController, type: :controller do
     end
 
     it 'no exported variables' do
-      get :show
+      put :update
 
       expect(flash[:error]).to match(/There are no vars saved./)
     end
@@ -121,7 +121,7 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:terraform_show)
       allow(ruby_terraform).to receive(:plan)
 
-      get :update, format: :json
+      put :update
 
       expect(ruby_terraform).to(
         have_received(:plan)

@@ -5,22 +5,29 @@ require 'fileutils'
 
 class PlansController < ApplicationController
   include FileUtils
-  prepend_before_action :prep
-  before_action :init_terraform
 
-  def show; end
+  def show
+    terraform_show
+    @current_plan = JSON.pretty_generate(JSON.parse(@show_output))
+  rescue RubyTerraform::Errors::ExecutionError, JSON::ParserError
+    @current_plan = ''
+  end
 
   def update
+    prep
+    init_terraform
     return unless @exported_vars
 
     info = terraform_plan
     return flash.now[:error] = info[:error] if info.is_a?(Hash)
 
-    Dir.chdir(Rails.configuration.x.source_export_dir)
-    # send show output to UI
     terraform_show
-    Dir.chdir(Rails.root)
-    render json: JSON.pretty_generate(JSON.parse(@show_output))
+    @current_plan = JSON.pretty_generate(JSON.parse(@show_output))
+
+    respond_to do |format|
+      format.html { render :show }
+      format.js   { render json: @current_plan }
+    end
   end
 
   private
@@ -41,11 +48,9 @@ class PlansController < ApplicationController
   end
 
   def init_terraform
-    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.init(
       from_module: '', path: Rails.configuration.x.source_export_dir
     )
-    Dir.chdir(Rails.root)
   end
 
   def find_default_binary
@@ -96,12 +101,10 @@ class PlansController < ApplicationController
   end
 
   def terraform_plan
-    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.plan(
       directory: Rails.configuration.x.source_export_dir, vars: @exported_vars,
       plan: saved_plan_path
     )
-    Dir.chdir(Rails.root)
   rescue RubyTerraform::Errors::ExecutionError
     return { error: 'Plan operation has failed' }
   end

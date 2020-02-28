@@ -7,7 +7,7 @@ $(document).ready(function () {
       $('.eos-icon-loading').removeClass('hide');
     })
     .bind('ajax:success', function(evt, data, status, xhr) {
-      $('code.output').text(JSON.stringify(evt.detail[0], null, 2))
+      $('code.output').text(evt.detail[0])
     })
     .bind('ajax:complete', function(evt, status, xhr) {
       $(this).removeClass('no-hover')
