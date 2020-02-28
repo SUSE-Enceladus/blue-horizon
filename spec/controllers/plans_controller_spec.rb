@@ -96,7 +96,7 @@ RSpec.describe PlansController, type: :controller do
     end
 
     it 'no exported variables' do
-      put :update
+      put :update, format: :js
 
       expect(flash[:error]).to match(/There are no vars saved./)
     end
@@ -121,7 +121,7 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:terraform_show)
       allow(ruby_terraform).to receive(:plan)
 
-      put :update
+      put :update, format: :js
 
       expect(ruby_terraform).to(
         have_received(:plan)
@@ -138,7 +138,7 @@ RSpec.describe PlansController, type: :controller do
       allow(file).to receive(:open).and_return(File)
       allow(file_write).to receive(:write)
 
-      get :update
+      put :update, format: :js
 
       expect(ruby_terraform).to(
         have_received(:show)
@@ -157,7 +157,7 @@ RSpec.describe PlansController, type: :controller do
           .and_raise(RubyTerraform::Errors::ExecutionError)
       )
 
-      get :update, format: :json
+      put :update, format: :js
 
       expect(flash[:error]).to match(/Plan operation has failed/)
     end
