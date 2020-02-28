@@ -19,6 +19,9 @@
         },
         "test_description": {
             "description": "test desc"
+        },
+        "test_password": {
+            "description": "Password is optional"
         }
     }
 }

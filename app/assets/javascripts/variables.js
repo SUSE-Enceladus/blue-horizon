@@ -9,4 +9,17 @@ $(function(){
         event.preventDefault();
     }
 	});
+	// Show/hide passwords
+	$("button.peek").click(function(){
+		var group = $(this).closest('.input-group')
+		$(this).hide().tooltip('hide');
+		group.find('button.unpeek').show();
+		group.find("input[type='password'").attr('type', 'text');
+	});
+	$("button.unpeek").click(function(){
+		var group = $(this).closest('.input-group')
+		$(this).hide().tooltip('hide');
+		group.find('button.peek').show();
+		group.find("input[type='text'").attr('type', 'password');
+	});
 });
