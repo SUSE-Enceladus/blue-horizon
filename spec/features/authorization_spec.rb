@@ -58,7 +58,6 @@ describe 'authorization', type: :feature do
       it 'allows access to download' do
         visit '/download'
         expect(page).to have_current_path(download_path)
-        expect(page).not_to have_content(auth_message)
       end
     end
   end
