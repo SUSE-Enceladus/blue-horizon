@@ -19,10 +19,6 @@ Rails.application.routes.draw do
   # Deploy
   resource :deploy, only: [:show, :update, :create]
 
-  # resource :deploy do
-  #   get 'pre_deploy', on: :member
-  # end
-
   resource :deploy do
     get 'send_current_status', on: :member
   end

@@ -117,6 +117,33 @@ RSpec.describe PlansController, type: :controller do
       allow(JSON).to receive(:parse).and_return(blue: 'horizon')
     end
 
+    it 'shows the saved plan' do
+      allow(ruby_terraform).to receive(:show)
+      allow(controller).to(
+        receive(:saved_plan_path)
+          .and_return('super_plan')
+      )
+
+      get :show, format: :json
+
+      expect(ruby_terraform).to(
+        have_received(:show)
+          .with(
+            json: true, path: 'super_plan'
+          )
+      )
+    end
+
+    it 'allows to download the plan' do
+      allow(controller).to receive(:terraform_show)
+      allow(ruby_terraform).to receive(:show)
+      expected_content = 'attachment; filename="terraform_plan.json"'
+
+      get :show, format: :json
+
+      expect(response.header['Content-Disposition']).to eq(expected_content)
+    end
+
     it 'runs terraform plan' do
       allow(controller).to receive(:terraform_show)
       allow(ruby_terraform).to receive(:plan)
@@ -132,7 +159,7 @@ RSpec.describe PlansController, type: :controller do
       )
     end
 
-    it 'runs terraform show' do
+    it 'runs terraform show after creating a plan' do
       allow(controller).to receive(:terraform_plan)
       allow(ruby_terraform).to receive(:show)
       allow(file).to receive(:open).and_return(File)

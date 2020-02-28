@@ -50,6 +50,7 @@ en:
     cluster: "Size cluster"
     variables: "Variables"
     plan: "Plan"
+    download_plan: "Download plan"
     deploy: "Deploy"
     download: "Download"
     simple: "Start setup"
@@ -60,6 +61,7 @@ en:
     save: "Save your changes and review"
     start_action: "Use your saved data to trigger the next action"
     run: "Execute the terraform action"
+    download_plan: "Get the current plan"
 
   page_title:
     plan: "Plan your deployment"

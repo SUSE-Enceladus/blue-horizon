@@ -11,6 +11,14 @@ class PlansController < ApplicationController
     @current_plan = JSON.pretty_generate(JSON.parse(@show_output))
   rescue RubyTerraform::Errors::ExecutionError, JSON::ParserError
     @current_plan = ''
+  ensure
+    name = 'terraform_plan.json'
+    respond_to do |format|
+      format.html
+      format.json do
+        send_data @current_plan, disposition: 'attachment', filename: name
+      end
+    end
   end
 
   def update
