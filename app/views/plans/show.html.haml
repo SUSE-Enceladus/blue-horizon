@@ -1,10 +1,14 @@
+%div#flash.alert.alert-danger.alert-dismissable.fade.show{style: 'display: none;'}
+  %span#error_message
+  %button.close{ type: 'button' }
+    %i.eos-icons close
 %div.card
   %h3.card-header= t('page_title.plan')
   %div.card-body
     %p= markdown(t('page_subtitle.plan_info'))
     %hr
     %pre.pre-scrollable
-      %code.output= @current_plan
+      %code.output= @show_output
 
       %i.eos-icon-loading.md-48.centered.hide
 %p.clearfix
