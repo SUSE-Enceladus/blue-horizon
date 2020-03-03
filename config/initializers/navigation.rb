@@ -13,6 +13,7 @@ Rails.application.configure do
     variables: 'playlist_add',
     plan:      'organization',
     deploy:    'play_arrow',
+    wrapup:    'enhancement',
     download:  'archive'
   }
 
@@ -23,14 +24,14 @@ Rails.application.configure do
     :variables,
     :plan,
     :deploy,
-    :download
+    :wrapup
   ]
   config.x.advanced_sidebar_menu_items = [
     :welcome,
     :sources,
     :plan,
     :deploy,
-    :download
+    :wrapup
   ]
   config.x.menu_items = {
     true  => config.x.advanced_sidebar_menu_items,

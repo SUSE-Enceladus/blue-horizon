@@ -8,7 +8,7 @@ module AuthorizationHelper
       all_variables_are_set?
     when deploy_path
       plan_exists?
-    when download_path
+    when wrapup_path, download_path
       plan_exists? && apply_log_exists?
     else
       true

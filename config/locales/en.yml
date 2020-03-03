@@ -53,6 +53,7 @@ en:
     plan: "Plan"
     download_plan: "Download plan"
     deploy: "Deploy"
+    wrapup: "Next steps"
     download: "Download"
     simple: "Start setup"
 
@@ -67,9 +68,13 @@ en:
   page_title:
     plan: "Plan your deployment"
     deploy: "Deploy your cluster"
+    wrapup: "Next steps after deployment"
 
   page_subtitle:
     plan_info: |
       In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ acts.
     deploy_info: |
       In this step you can apply your plan. This may take some time. The `terraform` log will display below as it is generated.
+    wrapup_info: |
+      Your application has been deployed, here's how to use it.
+      [Download](/download) your results and follow the instructions below.
