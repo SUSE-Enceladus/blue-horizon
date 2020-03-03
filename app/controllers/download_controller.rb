@@ -13,7 +13,7 @@ class DownloadController < ApplicationController
 
   def files
     sources = Dir.glob(
-      Rails.configuration.x.source_export_dir.join('*.*')
+      Rails.configuration.x.source_export_dir.join('*')
     )
     @files = sources.collect do |file|
       Rails.configuration.x.source_export_dir.join(file)

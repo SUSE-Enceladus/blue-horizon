@@ -33,6 +33,11 @@ module Helpers
     end
     instance
   end
+
+  def random_export_path
+    random_path = Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
+    Rails.configuration.x.source_export_dir = random_path
+  end
 end
 
 RSpec.configure do |config|

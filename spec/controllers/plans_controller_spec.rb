@@ -4,17 +4,20 @@ require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
   let(:json_instance) { JSON }
+  let!(:random_path) { random_export_path }
 
-  let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
+  before do
+    FileUtils.mkdir_p(random_path)
+  end
+
+  after do
+    FileUtils.rm_rf(random_path)
+  end
 
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('{}') }
     let(:variables) { Variable.load }
     let(:log_filename) { 'ruby-terraform-test.log' }
-    let(:random_path) do
-      Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-    end
-
     let(:expected_random_log_path) do
       File.join(random_path, log_filename)
     end
@@ -28,7 +31,6 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:terraform_plan)
       allow(controller).to receive(:terraform_show)
 
-      FileUtils.mkdir_p(random_path)
       RubyTerraform.configure do |config|
         config.binary = 'path to binary'
         config.logger = Logger.new(
@@ -36,10 +38,6 @@ RSpec.describe PlansController, type: :controller do
           level: :debug
         )
       end
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
     end
 
     it 'sets the configuration' do
@@ -66,7 +64,7 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:init)
           .with(
-            from_module: '', path: sources_dir
+            from_module: '', path: random_path
           )
       )
     end
@@ -106,7 +104,7 @@ RSpec.describe PlansController, type: :controller do
     let(:ruby_terraform) { RubyTerraform }
     let(:file) { File }
     let(:file_write) { File }
-    let(:plan_file) { Rails.root.join(sources_dir, 'current_plan') }
+    let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
 
     before do
       allow(controller).to receive(:config_terraform)
@@ -164,7 +162,7 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:plan)
           .with(
-            directory: sources_dir,
+            directory: random_path,
             plan:      plan_file
           )
       )
@@ -173,8 +171,6 @@ RSpec.describe PlansController, type: :controller do
     it 'runs terraform show after creating a plan' do
       allow(controller).to receive(:terraform_plan)
       allow(ruby_terraform).to receive(:show)
-      allow(file).to receive(:open).and_return(File)
-      allow(file_write).to receive(:write)
 
       put :update, format: :js
 
@@ -188,8 +184,6 @@ RSpec.describe PlansController, type: :controller do
 
     it 'handles rubyterraform exception' do
       allow(ruby_terraform).to receive(:show)
-      allow(file).to receive(:open).and_return(File)
-      allow(file_write).to receive(:write)
       allow(ruby_terraform).to(
         receive(:plan)
           .and_raise(RubyTerraform::Errors::ExecutionError)

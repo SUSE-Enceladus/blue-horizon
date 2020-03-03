@@ -5,19 +5,16 @@ require 'rails_helper'
 RSpec.describe DownloadController, type: :controller do
   context 'when getting and sending files' do
     let!(:sources) { populate_sources }
-    let(:random_path) do
-      Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-    end
-
-    let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
+    let(:random_path) { random_export_path }
 
     before do
+      FileUtils.mkdir_p(random_path)
       mock_member = double
       allow(mock_member).to receive(:read)
       controller.instance_variable_set(:@compressed_filestream, mock_member)
       allow(controller).to receive(:zip_files)
       allow(controller).to receive(:send_data)
-      FileUtils.mkdir_p(random_path)
+
       Variable.load.export
       Source.all.each(&:export)
     end
@@ -41,7 +38,7 @@ RSpec.describe DownloadController, type: :controller do
       expect(zip_name).to eq('terraform_scripts_and_log')
     end
 
-    it 'gets CAP files' do
+    it 'gets source files' do
       expected_files = sources.pluck(:filename)
       prefix = Rails.configuration.x.source_export_dir
       log_filename = Rails.configuration.x.terraform_log_filename
@@ -58,6 +55,15 @@ RSpec.describe DownloadController, type: :controller do
       expected_files.each do |expected_file|
         expect(files).to be_include(expected_file)
       end
+    end
+
+    it 'gets files without extensions' do
+      test_file = random_path.join('test_file')
+      File.write(test_file, 'w') { |_f| '' }
+
+      get :download, format: :zip
+      files = controller.instance_variable_get(:@files)
+      expect(files).to be_include(test_file)
     end
   end
 
