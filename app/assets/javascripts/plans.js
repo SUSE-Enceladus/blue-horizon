@@ -5,14 +5,13 @@ $(function() {
       $(this).addClass("no-hover");
       $(".eos-icon-loading").show();
     })
-    .bind('ajax:success', function(evt) {
+    .bind("ajax:success", function(evt) {
       var output = evt.detail[0];
       if (output.error) {
-	$('#flash').show();
-	$('#error_message').text(output.error)
-     }
-      else {
-	$('code.output').text(output);
+        $("#flash").show();
+        $("#error_message").text(output.error);
+      } else {
+        $("code.output").text(output);
       }
     })
     .bind("ajax:complete", function() {

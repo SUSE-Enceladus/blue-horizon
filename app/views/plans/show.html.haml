@@ -9,8 +9,7 @@
     %hr
     %pre.pre-scrollable
       %code.output= @show_output
-
-      %i.eos-icon-loading.md-48.centered.hide
+      %i.eos-icon-loading.md-48.centered{style: 'display: none;' }
 %p.clearfix
   %div.float-right.btn-group.steps-container
     - if Rails.configuration.x.advanced_mode
@@ -23,7 +22,7 @@
         = t('sidebar.variables')
     = link_to plan_path, class: "btn btn-primary", id: "submit-plan", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
       %i.eos-icons.md-18 build
-      = t('build')
+      = t('plan')
     = link_to plan_path(format: :json), class: "btn btn-info #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
       %i.eos-icons.md-18  get_app
       = t('sidebar.download_plan')
