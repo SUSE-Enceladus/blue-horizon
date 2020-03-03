@@ -17,7 +17,7 @@
 #
 
 Name:      blue-horizon
-Version:   0.2.1
+Version:   0.3.0
 Release:   0
 License:   GPL-3.0
 Summary:   Web server interface for terraforming in a public cloud
