@@ -34,6 +34,7 @@ en:
   save: "Save"
   required: "Required"
   terraform_files: "terraform scripts and log"
+  terraform_init_error: "terraform failed to initialize"
   unauthorized: "Sorry, you can't do that, yet."
   password_show: "Show password"
   password_hide: "Hide password"

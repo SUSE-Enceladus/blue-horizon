@@ -23,10 +23,12 @@ class PlansController < ApplicationController
 
   def update
     prep
-    init_terraform
+    info = init_terraform
     return unless @exported_vars
 
-    info = terraform_plan
+    unless info.is_a?(Hash)
+      info = terraform_plan
+    end
     if info.is_a?(Hash)
       flash.now[:error] = info[:error]
       return render json: flash.to_hash
@@ -59,10 +61,16 @@ class PlansController < ApplicationController
 
   def init_terraform
     Dir.chdir(Rails.configuration.x.source_export_dir)
-    RubyTerraform.init(
-      from_module: '', path: Rails.configuration.x.source_export_dir
-    )
-    Dir.chdir(Rails.root)
+    begin
+      RubyTerraform.init(
+        from_module: '', path: Rails.configuration.x.source_export_dir
+      )
+    rescue StandardError
+      err = I18n.t 'terraform_init_error'
+      return { error: err }
+    ensure
+      Dir.chdir(Rails.root)
+    end
   end
 
   def find_default_binary
