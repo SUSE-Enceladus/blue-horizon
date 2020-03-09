@@ -24,7 +24,7 @@ $(function() {
     })
     .bind("ajax:complete", function() {
       $(".btn-secondary").removeClass("disabled");
-      $("a[href='/download']").removeClass("disabled");
+      $("a[href='/wrapup']").removeClass("disabled");
       $(this).removeClass("no-hover");
       if ($("#output").text().length > 0) {
         $(".eos-icon-loading").hide();
