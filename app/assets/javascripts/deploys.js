@@ -44,7 +44,7 @@ function fetch_output(finished, intervalId) {
     url: "deploy/send_current_status",
     dataType: "json",
     success: function(data) {
-      if (data.success == false) {
+      if (data.error !== null) {
         $(".eos-icon-loading").hide();
         // show rails flash message
         $("#error_message").text("Deploy operation has failed.");
@@ -53,10 +53,10 @@ function fetch_output(finished, intervalId) {
         $("#output").text($("#output").text() + data.error);
         clearTimeout(intervalId);
       } else {
-        $(".pre-scrollable").html(data.new_html);
-        if (!finished) {
+	$(".pre-scrollable").html(data.new_html);
+	if (!finished && !data.success) {
           intervalId = setTimeout(function() {
-            fetch_output();
+	    fetch_output();
           }, 5000);
         } else {
           $(".eos-icon-loading").addClass("hide");
