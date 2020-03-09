@@ -22,12 +22,11 @@ class DeploysController < ApplicationController
 
     if terra_stderr.is_a?(StringIO) && !terra_stderr.string.empty?
       error = terra_stderr.string
-      success = false
       close_log_info
     elsif RubyTerraform.configuration.stdout.is_a?(StringIO)
       @apply_output = RubyTerraform.configuration.stdout.string
-      success = true
       if RubyTerraform.configuration.stdout.string.include? 'Apply complete!'
+        success = true
         close_log_info
       end
     end
