@@ -10,6 +10,7 @@ $(function() {
       $(".btn-secondary").addClass("disabled");
       $("a[href='/download']").addClass("disabled");
       $(".eos-icon-loading").show();
+      $("a[data-toggle]").tooltip("hide");
       intervalId = setTimeout(function() {
         fetch_output(finished, intervalId);
       }, 5000);
