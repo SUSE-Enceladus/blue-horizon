@@ -4,7 +4,7 @@ $(function() {
       $("code.output").text("");
       $(this).addClass("no-hover");
       $(".eos-icon-loading").show();
-      $('a[data-toggle]').tooltip('hide');
+      $("a[data-toggle]").tooltip("hide");
     })
     .bind("ajax:success", function(evt) {
       var output = evt.detail[0];
