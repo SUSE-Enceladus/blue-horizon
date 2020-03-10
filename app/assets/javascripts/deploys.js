@@ -1,15 +1,14 @@
 $(function() {
   var intervalId = undefined;
   var finished = false;
-  $(".eos-icon-loading").hide();
 
   $("#submit-deploy")
     .bind("ajax:beforeSend", function() {
       $("#output").text("");
       $(this).addClass("no-hover");
-      $(".btn-secondary").addClass("disabled");
-      $("a[href='/download']").addClass("disabled");
-      $(".eos-icon-loading").show();
+      $(".steps-container .btn").addClass("disabled");
+      $(".list-group-flush a").addClass("disabled");
+      $(".eos-icon-loading").removeClass("hide");
       $("a[data-toggle]").tooltip("hide");
       intervalId = setTimeout(function() {
         fetch_output(finished, intervalId);
@@ -18,23 +17,19 @@ $(function() {
     .bind("ajax:success", function() {
       $("#notice").html("<%= flash[:error] %>");
       if ($("#output").text().length > 0) {
-        $(".eos-icon-loading").addClass("hide");
         clearTimeout(intervalId);
       }
       finished = true;
     })
     .bind("ajax:complete", function() {
-      $(".btn-secondary").removeClass("disabled");
-      $("a[href='/wrapup']").removeClass("disabled");
       $(this).removeClass("no-hover");
       if ($("#output").text().length > 0) {
-        $(".eos-icon-loading").hide();
         clearTimeout(intervalId);
         finished = true;
       }
     })
     .bind("ajax:error", function() {
-      $(".eos-icons-loading").hide();
+      $(".eos-icons-loading").addClass("hide");
       clearTimeout(intervalId);
     });
 });
@@ -46,7 +41,7 @@ function fetch_output(finished, intervalId) {
     dataType: "json",
     success: function(data) {
       if (data.error !== null) {
-        $(".eos-icon-loading").hide();
+        $(".eos-icon-loading").addClass("hide");
         // show rails flash message
         $("#error_message").text("Deploy operation has failed.");
         $("#flash").show();
@@ -60,7 +55,9 @@ function fetch_output(finished, intervalId) {
 	    fetch_output();
           }, 5000);
         } else {
-          $(".eos-icon-loading").addClass("hide");
+	  $(".steps-container .btn").removeClass("disabled");
+	  $(".list-group-flush a").removeClass("disabled");
+	  $(".eos-icon-loading").addClass("hide");
         }
       }
     },
