@@ -7,6 +7,11 @@
   %div.card-body
     %p= markdown(t('page_subtitle.deploy_info'))
     %hr
+    %div.float-right
+      = check_box('deploy_log', 'autoscroll', {class: 'form-check-input'})
+      %label.form-check-label= t('autoscroll')
+    %p.clearfix
+    %hr
     %pre.pre-scrollable
       = render 'output'
 %p.clearfix
