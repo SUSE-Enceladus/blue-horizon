@@ -58,7 +58,7 @@ describe 'source editing', type: :feature do
     click_on('New Source')
     fill_in('source[filename]', with: filename)
     click_on(id: 'submit-source')
-    expect(page).to have_no_content('Source was successfully created.')
+    expect(page).not_to have_content('Source was successfully created.')
   end
 
   it 'does not update new sources' do
@@ -73,7 +73,7 @@ describe 'source editing', type: :feature do
     fill_in_hidden('#source_content', random_content)
     click_on(id: 'submit-source')
 
-    expect(page).to have_no_content('Source was successfully updated.')
+    expect(page).not_to have_content('Source was successfully updated.')
     expect(source.content).not_to eq(random_content)
   end
 

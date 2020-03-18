@@ -57,9 +57,6 @@ describe 'cluster sizing', type: :feature do
       )
       click_on(id: 'submit-cluster')
       expect(page).to have_content('Size is wrong')
-      # cluster = Cluster.load
-      # expect(cluster.instance_type).to eq(random_instance_type_key)
-      # expect(cluster.instance_count).to eq(random_cluster_size)
     end
 
     it 'consistently shows the cluster size' do

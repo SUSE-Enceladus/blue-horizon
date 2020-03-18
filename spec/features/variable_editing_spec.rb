@@ -52,7 +52,7 @@ describe 'variable editing', type: :feature do
       allow(variables).to receive(:errors).and_return(active_model_errors)
       click_on('Save')
 
-      expect(page).to have_no_content('Variables were successfully updated.')
+      expect(page).not_to have_content('Variables were successfully updated.')
       expect(page).to have_content('Variable is wrong')
     end
   end
@@ -66,7 +66,7 @@ describe 'variable editing', type: :feature do
     allow(Variable).to receive(:load).and_return(error: 'wrong')
     warning_message = 'Please, edit the scripts'
     visit('/variables')
-    expect(page).to have_no_content('No variables are defined!')
+    expect(page).not_to have_content('No variables are defined!')
     expect(page).to have_content('wrong').and have_content(warning_message)
     expect(page).to have_current_path(sources_path)
   end
