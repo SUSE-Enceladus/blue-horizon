@@ -16,7 +16,7 @@ class VariablesController < ApplicationController
         notice: 'Variables were successfully updated.'
       }
     else
-      render :show, flash: {
+      redirect_to variables_path, flash: {
         error: @variables.errors.full_messages
       }
     end

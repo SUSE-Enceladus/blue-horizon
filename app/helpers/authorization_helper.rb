@@ -21,6 +21,9 @@ module AuthorizationHelper
 
   def all_variables_are_set?
     variables = Variable.load
+
+    return false if variables.is_a?(Hash) && variables[:error]
+
     variables.attributes.all? do |key, value|
       variables.type(key) == 'bool' ||
         !variables.required?(key) ||
