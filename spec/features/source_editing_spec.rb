@@ -46,6 +46,37 @@ describe 'source editing', type: :feature do
     expect(source.content).to eq(random_content)
   end
 
+  it 'does not create new sources' do
+    filename = Faker::File.file_name(ext: 'foo')
+
+    source_instance = Source.new(filename: filename)
+    allow(Source).to receive(:new).and_return(source_instance)
+    allow(source_instance).to receive(:save).and_return(false)
+
+    visit('/sources')
+
+    click_on('New Source')
+    fill_in('source[filename]', with: filename)
+    click_on(id: 'submit-source')
+    expect(page).to have_no_content('Source was successfully created.')
+  end
+
+  it 'does not update new sources' do
+    source = Source.find_by(filename: 'dummy.sh')
+    random_content = "# #{Faker::Lorem.paragraph}"
+    allow(Source).to receive(:find).and_return(source)
+    allow(source).to receive(:update).and_return(false)
+
+    expect(source.content).not_to eq(random_content)
+
+    visit("/sources/#{source.id}/edit")
+    fill_in_hidden('#source_content', random_content)
+    click_on(id: 'submit-source')
+
+    expect(page).to have_no_content('Source was successfully updated.')
+    expect(source.content).not_to eq(random_content)
+  end
+
   it 'deletes sources' do
     source = create(:source)
     visit('/sources')
