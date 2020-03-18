@@ -46,14 +46,14 @@ describe 'variable editing', type: :feature do
       fill_in("variables[#{random_variable_key}]", with: fake_data)
       allow(Variable).to receive(:new).and_return(variables)
       allow(variables).to receive(:save).and_return(false)
-      allow(variables).to(
-        receive_message_chain(:errors, :full_messages)
-          .and_return(["Error 1", "Error 2"])
-      )
+      active_model_errors = ActiveModel::Errors.new(variables).tap do |e|
+        e.add(:variable, 'is wrong')
+      end
+      allow(variables).to receive(:errors).and_return(active_model_errors)
       click_on('Save')
 
       expect(page).to have_no_content('Variables were successfully updated.')
-      expect(page).to have_content('["Error 1", "Error 2"]')
+      expect(page).to have_content('Variable is wrong')
     end
   end
 
