@@ -49,6 +49,16 @@ describe 'authorization', type: :feature do
       expect(page).not_to have_content(auth_message)
     end
 
+    it 'raises StandardError while checking access to deploy' do
+      allow(Rails.configuration.x.source_export_dir).to(
+        receive(:join)
+          .and_raise(StandardError)
+      )
+      visit '/deploy'
+      expect(page).to have_current_path(welcome_path)
+      expect(page).to have_content(auth_message)
+    end
+
     describe 'after deploy' do
       before do
         artifact = Rails.configuration.x.source_export_dir.join('tf-apply.log')

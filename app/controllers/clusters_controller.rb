@@ -11,7 +11,7 @@ class ClustersController < ApplicationController
     if @cluster.save
       redirect_to variables_path
     else
-      render :show, flash: {
+      redirect_to cluster_path, flash: {
         error: @cluster.errors.full_messages
       }
     end
