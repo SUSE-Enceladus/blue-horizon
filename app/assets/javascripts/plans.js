@@ -5,6 +5,8 @@ $(function() {
       $(this).addClass("no-hover");
       $(".eos-icon-loading").show();
       $("a[data-toggle]").tooltip("hide");
+      $(".steps-container .btn").addClass("disabled");
+      $(".list-group-flush a").addClass("disabled");
     })
     .bind("ajax:success", function(evt) {
       var output = evt.detail[0];
@@ -17,8 +19,9 @@ $(function() {
     })
     .bind("ajax:complete", function() {
       $(this).removeClass("no-hover");
-      $("a[href='/deploy']").removeClass("disabled");
       $(".eos-icon-loading").addClass("hide");
-      $(".btn-info").removeClass("disabled");
+      $(".list-group-flush a").removeClass("disabled");
+      $(".steps-container .btn").removeClass("disabled");
+      $('a[data-original-title="Next steps"]').addClass("disabled")
     });
 });

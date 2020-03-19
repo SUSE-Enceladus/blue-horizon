@@ -61,7 +61,7 @@ RSpec.describe DeploysController, type: :controller do
 
       expected_html = "<code id='output'>hello world! " \
                       "Apply complete!</code>\n<i class=" \
-                      "'eos-icon-loading md-48 centered'></i>\n"
+                      "'eos-icon-loading md-48 centered hide'></i>\n"
       expected_json = { new_html: expected_html, success: true, error: nil }
       allow(controller).to receive(:render).with(json: expected_json)
       allow(ruby_terraform).to receive(:apply)
@@ -84,7 +84,7 @@ RSpec.describe DeploysController, type: :controller do
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
 
       expected_html = "<code id='output'></code>\n<i class=" \
-                      "'eos-icon-loading md-48 centered'></i>\n"
+                      "'eos-icon-loading md-48 centered hide'></i>\n"
       expected_json = { new_html: expected_html, success: false,
                         error: "Error\n" }
 
