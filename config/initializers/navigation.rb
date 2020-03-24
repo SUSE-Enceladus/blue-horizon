@@ -43,4 +43,6 @@ Rails.application.configure do
     'aws'   => 'https://aws.amazon.com/ec2/instance-types/',
     'gcp'   => 'https://cloud.google.com/compute/docs/machine-types'
   }
+
+  config.x.source_link = 'https://github.com/SUSE-Enceladus/blue-horizon/'
 end

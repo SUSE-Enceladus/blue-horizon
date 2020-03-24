@@ -64,7 +64,6 @@
   }
 }
 
-
 #sidebar.active {
   margin-left: -200px;
 
@@ -81,7 +80,6 @@
 
   .list-group {
     text-align: right;
-
   }
 }
 
@@ -97,4 +95,28 @@
 
 #content.active {
   width: calc(100% - 50px);
+}
+
+footer {
+  margin-left: 250px; //250 sidebar width TODO - consider putting menu width into a shared variable
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.9) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(2px);
+  &.navbar {
+    padding-left: 25px; //the main content has a left-padding of 40, but container-fluid divs
+    // with the footer text, have a built-in pad of 15, so 40-15 = 25 to line up the footer with the content
+  }
+  span a,
+  span a:hover {
+    color: $eos-bc-cerulean-900;
+  }
+}
+
+nav.active ~ footer {
+  margin-left: 50px; //250 sidebar width minus-200 for collapsed margin left
 }
