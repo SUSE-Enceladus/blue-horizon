@@ -32,8 +32,6 @@ gem 'jquery-rails'
 gem 'active_link_to'
 # Ace editor
 gem 'ace-rails-ap'
-# HCL parser
-gem 'hcl-checker', '~> 1.2'
 # Terraform wrapper
 gem 'ruby-terraform'
 # Zip files

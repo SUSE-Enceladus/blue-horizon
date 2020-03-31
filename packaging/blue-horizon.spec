@@ -48,7 +48,6 @@ BuildRequires:  %{rubygem globalid}
 BuildRequires:  %{rubygem haml}
 BuildRequires:  %{rubygem haml-rails}
 BuildRequires:  %{rubygem hamster}
-BuildRequires:  %{rubygem hcl-checker}
 BuildRequires:  %{rubygem html2haml}
 BuildRequires:  %{rubygem i18n}
 BuildRequires:  %{rubygem jbuilder}
@@ -109,7 +108,6 @@ Requires:  %{rubygem globalid}
 Requires:  %{rubygem haml}
 Requires:  %{rubygem haml-rails}
 Requires:  %{rubygem hamster}
-Requires:  %{rubygem hcl-checker}
 Requires:  %{rubygem html2haml}
 Requires:  %{rubygem i18n}
 Requires:  %{rubygem jbuilder}

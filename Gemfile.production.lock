@@ -63,7 +63,6 @@ GEM
       railties (>= 5.1)
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
-    hcl-checker (1.2.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -150,7 +149,6 @@ DEPENDENCIES
   active_link_to
   cloud-instancetype
   haml-rails (~> 2.0)
-  hcl-checker (~> 1.2)
   jbuilder (~> 2.5)
   puma (>= 3.11)
   rails (~> 5.1)
