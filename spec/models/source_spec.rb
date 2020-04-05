@@ -4,6 +4,14 @@ require 'rails_helper'
 require 'fileutils'
 
 RSpec.describe Source, type: :model do
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
+
+  before do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
+  end
+
   it 'has unique filenames' do
     static_filename = 'static'
     create(:source, filename: static_filename)

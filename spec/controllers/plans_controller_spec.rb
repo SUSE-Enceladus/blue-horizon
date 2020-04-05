@@ -83,6 +83,10 @@ RSpec.describe PlansController, type: :controller do
   end
 
   context 'when not exporting' do
+    let(:ruby_terraform) { RubyTerraform }
+    let(:terra) { Terraform }
+    let(:instance_terra) { instance_double(Terraform) }
+
     before do
       allow(File).to receive(:exist?).and_return(false)
       allow(controller).to receive(:terraform_plan)
@@ -91,6 +95,8 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:init_terraform)
       allow(json_instance).to receive(:parse)
       allow(controller).to receive(:read_exported_sources)
+      allow(terra).to receive(:new).and_return(instance_terra)
+      allow(instance_terra).to receive(:validate).with(true, true)
     end
 
     it 'no exported variables' do
@@ -105,6 +111,8 @@ RSpec.describe PlansController, type: :controller do
     let(:file) { File }
     let(:file_write) { File }
     let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
+    let(:terra) { Terraform }
+    let(:instance_terra) { instance_double(Terraform) }
 
     before do
       allow(controller).to receive(:config_terraform)
@@ -113,6 +121,8 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:cleanup)
       allow(JSON).to receive(:pretty_generate)
       allow(JSON).to receive(:parse).and_return(blue: 'horizon')
+      allow(terra).to receive(:new).and_return(instance_terra)
+      allow(instance_terra).to receive(:validate).with(true, true)
     end
 
     it 'shows the saved plan' do

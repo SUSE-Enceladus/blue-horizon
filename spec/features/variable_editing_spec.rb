@@ -5,12 +5,16 @@ require 'rails_helper'
 describe 'variable editing', type: :feature do
   let(:exclusions) { Cluster.variable_handlers }
   let(:fake_data) { Faker::Crypto.sha256 }
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
 
   context 'with sources' do
     let(:variable_names) { collect_variable_names }
     let(:variables) { Variable.new(Source.variables.pluck(:content)) }
 
     before do
+      allow(terra).to receive(:new).and_return(instance_terra)
+      allow(instance_terra).to receive(:validate)
       populate_sources
       visit('/variables')
     end
@@ -58,6 +62,9 @@ describe 'variable editing', type: :feature do
   end
 
   it 'notifies that no variables are defined' do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
+
     visit('/variables')
     expect(page).to have_content('No variables are defined!')
   end

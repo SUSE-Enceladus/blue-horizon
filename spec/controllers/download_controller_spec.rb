@@ -4,7 +4,13 @@ require 'rails_helper'
 
 RSpec.describe DownloadController, type: :controller do
   context 'when getting and sending files' do
-    let!(:sources) { populate_sources }
+    let(:ruby_terraform) { RubyTerraform }
+    let!(:sources) do
+      allow(ruby_terraform).to receive(:init)
+      allow(ruby_terraform).to receive(:validate)
+
+      populate_sources
+    end
     let(:random_path) { random_export_path }
 
     before do
@@ -68,7 +74,14 @@ RSpec.describe DownloadController, type: :controller do
   end
 
   context 'when creating zip files' do
-    let!(:sources) { populate_sources }
+    let(:ruby_terraform) { RubyTerraform }
+    let!(:sources) do
+      allow(ruby_terraform).to receive(:init)
+      allow(ruby_terraform).to receive(:validate)
+
+      populate_sources
+    end
+    # let!(:sources) { populate_sources }
 
     it 'zip files' do
       prefix = Rails.root.join('spec', 'fixtures', 'sources')
