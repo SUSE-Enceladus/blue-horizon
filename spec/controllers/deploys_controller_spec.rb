@@ -15,6 +15,8 @@ RSpec.describe DeploysController, type: :controller do
 
     let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
     let(:terraform_tfvars) { 'terraform.tfvars' }
+    let(:terra) { Terraform }
+    let(:instance_terra) { instance_doube(terra) }
 
     before do
       FileUtils.mkdir_p(random_path)
@@ -52,12 +54,12 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'can show deploy output' do
-      string_output = StringIO.new
-      string_output.puts 'hello world! Apply complete!'
-
-      RubyTerraform.configure do |config|
-        config.stdout = string_output
-      end
+      allow(Terraform).to(
+        receive(:stdout)
+          .and_return(
+            StringIO.new('hello world! Apply complete!')
+          )
+      )
 
       expected_html = "<code id='output'>hello world! " \
                       "Apply complete!</code>\n<i class=" \
@@ -72,13 +74,6 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'can show error output when deploy fails' do
-      string_output = StringIO.new
-      string_output.puts 'Error'
-
-      RubyTerraform.configure do |config|
-        config.stderr = string_output
-      end
-
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:read)
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
@@ -89,6 +84,8 @@ RSpec.describe DeploysController, type: :controller do
                         error: "Error\n" }
 
       allow(controller).to receive(:render).with(json: expected_json)
+      allow(Terraform).to receive(:stderr).and_return(StringIO.new("Error\n"))
+      allow(Terraform).to receive(:stdout).and_return(StringIO.new)
 
       get :send_current_status, format: :json
 

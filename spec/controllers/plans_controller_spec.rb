@@ -5,6 +5,9 @@ require 'rails_helper'
 RSpec.describe PlansController, type: :controller do
   let(:json_instance) { JSON }
   let!(:random_path) { random_export_path }
+  let(:ruby_terraform) { RubyTerraform }
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
 
   before do
     FileUtils.mkdir_p(random_path)
@@ -21,28 +24,18 @@ RSpec.describe PlansController, type: :controller do
     let(:expected_random_log_path) do
       File.join(random_path, log_filename)
     end
-
-    let(:ruby_terraform) { RubyTerraform }
-
     let(:log_file) { Logger::LogDevice.new(expected_random_log_path) }
 
     before do
       Rails.configuration.x.terraform_log_filename = expected_random_log_path
-      allow(controller).to receive(:terraform_plan)
-      allow(controller).to receive(:terraform_show)
-
-      RubyTerraform.configure do |config|
-        config.binary = 'path to binary'
-        config.logger = Logger.new(
-          RubyTerraform::MultiIO.new(STDOUT, log_file),
-          level: :debug
-        )
-      end
+      allow(terra).to receive(:new).and_return(instance_terra)
+      # allow(terra).to receive(:stdout).and_return(StringIO.new('bar'))
     end
 
     it 'sets the configuration' do
-      allow(controller).to receive(:init_terraform)
-      allow(controller).to receive(:read_exported_vars)
+      allow(instance_terra).to receive(:plan).and_return(error: 'error')
+      allow(controller.instance_variable_set(:@exported_vars, 'foo'))
+      allow(File).to receive(:exist?).and_return(true)
 
       put :update
 
@@ -54,25 +47,8 @@ RSpec.describe PlansController, type: :controller do
       expect(File).to exist(expected_random_log_path)
     end
 
-    it 'initializes terraform' do
-      allow(ruby_terraform).to receive(:init)
-      allow(controller).to receive(:config_terraform)
-      allow(controller).to receive(:read_exported_vars)
-
-      put :update
-
-      expect(ruby_terraform).to(
-        have_received(:init)
-          .with(
-            from_module: '', path: random_path
-          )
-      )
-    end
-
     it 'exports variables' do
       allow(variable_instance).to receive(:load)
-      allow(controller).to receive(:config_terraform)
-      allow(controller).to receive(:init_terraform)
       allow(controller).to receive(:read_exported_sources)
       allow(json_instance).to receive(:parse)
 
@@ -85,12 +61,7 @@ RSpec.describe PlansController, type: :controller do
   context 'when not exporting' do
     before do
       allow(File).to receive(:exist?).and_return(false)
-      allow(controller).to receive(:terraform_plan)
-      allow(controller).to receive(:terraform_show)
-      allow(controller).to receive(:config_terraform)
-      allow(controller).to receive(:init_terraform)
-      allow(json_instance).to receive(:parse)
-      allow(controller).to receive(:read_exported_sources)
+      allow(instance_terra).to receive(:show)
     end
 
     it 'no exported variables' do
@@ -101,15 +72,15 @@ RSpec.describe PlansController, type: :controller do
   end
 
   context 'when showing the plan' do
-    let(:ruby_terraform) { RubyTerraform }
+    # let(:ruby_terraform) { RubyTerraform }
     let(:file) { File }
     let(:file_write) { File }
     let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
+    let(:terra) { Terraform }
+    let(:instance_terra) { instance_double(Terraform) }
 
     before do
-      allow(controller).to receive(:config_terraform)
-      allow(controller).to receive(:init_terraform)
-      allow(controller).to receive(:read_exported_sources)
+      allow(Logger::LogDevice).to receive(:new)
       allow(controller).to receive(:cleanup)
       allow(JSON).to receive(:pretty_generate)
       allow(JSON).to receive(:parse).and_return(blue: 'horizon')
@@ -127,7 +98,7 @@ RSpec.describe PlansController, type: :controller do
 
       expect(ruby_terraform).to(
         have_received(:show)
-          .with(
+        .with(
             json: true, path: 'super_plan'
           )
       )
@@ -135,7 +106,7 @@ RSpec.describe PlansController, type: :controller do
 
     it 'allows to download the plan' do
       allow(controller.helpers).to receive(:can).and_return(true)
-      allow(controller).to receive(:terraform_show)
+      allow(instance_terra).to receive(:show)
       allow(ruby_terraform).to receive(:show)
       expected_content = 'attachment; filename="terraform_plan.json"'
 
@@ -154,36 +125,39 @@ RSpec.describe PlansController, type: :controller do
     end
 
     it 'runs terraform plan' do
-      allow(controller).to receive(:terraform_show)
       allow(ruby_terraform).to receive(:plan)
-
+      allow(ruby_terraform).to receive(:show)
+      allow(instance_terra).to receive(:show)
+      allow(terra).to receive(:stdout).and_return(StringIO.new('foo'))
+      allow(JSON).to receive(:parse).and_return('foo plan')
+      allow(json_instance).to receive(:pretty_generate).and_return('foo plan')
       put :update, format: :js
 
       expect(ruby_terraform).to(
         have_received(:plan)
           .with(
             directory: random_path,
-            plan:      plan_file
+            plan:      plan_file,
+            no_color:  true
           )
       )
     end
 
     it 'runs terraform show after creating a plan' do
-      allow(controller).to receive(:terraform_plan)
+      allow(ruby_terraform).to receive(:plan)
       allow(ruby_terraform).to receive(:show)
 
       put :update, format: :js
 
       expect(ruby_terraform).to(
         have_received(:show)
-          .with(
-            json: true, path: plan_file
-          )
+        .with(
+          json: true, path: plan_file
+        )
       )
     end
 
     it 'handles rubyterraform exception' do
-      allow(ruby_terraform).to receive(:show)
       allow(ruby_terraform).to(
         receive(:plan)
           .and_raise(RubyTerraform::Errors::ExecutionError)
@@ -191,7 +165,10 @@ RSpec.describe PlansController, type: :controller do
 
       put :update, format: :js
 
-      expect(flash[:error]).to match(/Plan operation has failed/)
+      expect(flash[:error]).to match(
+                                 message: /Plan operation has failed/,
+                                 output: ''
+                               )
     end
   end
 end

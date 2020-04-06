@@ -61,8 +61,7 @@ describe 'authorization', type: :feature do
 
     describe 'after deploy' do
       before do
-        artifact = Rails.configuration.x.source_export_dir.join('tf-apply.log')
-        File.open(artifact, 'w') {}
+        File.open(Terraform.statefilename, 'w') {}
       end
 
       it 'allows access to download' do

@@ -9,29 +9,38 @@ class PlansController < ApplicationController
   def show
     return unless helpers.can(deploy_path)
 
-    terraform_show
+    Terraform.new.show(saved_plan_path)
+    @show_output = Terraform.stdout.string
     @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
-    name = 'terraform_plan.json'
     respond_to do |format|
       format.html
       format.json do
-        send_data @show_output, disposition: 'attachment', filename: name
+        send_data(
+          @show_output,
+          disposition: 'attachment',
+          filename:    'terraform_plan.json'
+        )
       end
     end
   end
 
   def update
     prep
-    init_terraform
     return unless @exported_vars
 
-    info = terraform_plan
-    if info.is_a?(Hash)
-      flash.now[:error] = info[:error]
+    terra = Terraform.new
+    result = terra.plan(
+      Rails.configuration.x.source_export_dir,
+      saved_plan_path
+    )
+
+    if result.is_a?(Hash)
+      flash.now[:error] = result[:error]
       return render json: flash.to_hash
     end
-    terraform_show
+    terra.show(saved_plan_path)
+    @show_output = Terraform.stdout.string
     @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
     respond_to do |format|
@@ -41,33 +50,6 @@ class PlansController < ApplicationController
   end
 
   private
-
-  def config_terraform
-    log_path_filename = Rails.configuration.x.terraform_log_filename
-    @log_file = Logger::LogDevice.new(log_path_filename)
-    logger = Logger.new(
-      RubyTerraform::MultiIO.new(STDOUT, @log_file),
-      level: :debug
-    )
-    RubyTerraform.configure do |config|
-      config.binary = find_default_binary
-      config.logger = logger
-      config.stdout = logger
-      config.stderr = logger
-    end
-  end
-
-  def init_terraform
-    Dir.chdir(Rails.configuration.x.source_export_dir)
-    RubyTerraform.init(
-      from_module: '', path: Rails.configuration.x.source_export_dir
-    )
-    Dir.chdir(Rails.root)
-  end
-
-  def find_default_binary
-    return `which terraform`.strip
-  end
 
   def export_vars
     variables = Variable.load
@@ -110,31 +92,6 @@ class PlansController < ApplicationController
     cleanup
     read_exported_vars
     read_exported_sources
-    config_terraform
-  end
-
-  def terraform_plan
-    Dir.chdir(Rails.configuration.x.source_export_dir)
-    result = RubyTerraform.plan(
-      directory: Rails.configuration.x.source_export_dir,
-      plan:      saved_plan_path
-    )
-    return result
-  rescue RubyTerraform::Errors::ExecutionError
-    return { error: 'Plan operation has failed' }
-  ensure
-    Dir.chdir(Rails.root)
-  end
-
-  def terraform_show
-    Dir.chdir(Rails.configuration.x.source_export_dir)
-    # change stdout to capture the output
-    RubyTerraform.configuration.stdout = StringIO.new
-    RubyTerraform.show(path: saved_plan_path, json: true)
-    @show_output = RubyTerraform.configuration.stdout.string
-    # back to DEFAULT configuration
-    RubyTerraform.configuration.stdout = RubyTerraform.configuration.logger
-    Dir.chdir(Rails.root)
   end
 
   def saved_plan_path
