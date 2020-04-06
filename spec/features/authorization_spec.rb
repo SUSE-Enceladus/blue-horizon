@@ -20,6 +20,10 @@ describe 'authorization', type: :feature do
   end
 
   it 'initially blocks access to deploy' do
+    allow(File).to(
+      receive(:exist?)
+        .and_return(false)
+    )
     visit '/deploy'
     expect(page).to have_current_path(welcome_path)
     expect(page).to have_content(auth_message)
@@ -61,8 +65,7 @@ describe 'authorization', type: :feature do
 
     describe 'after deploy' do
       before do
-        artifact = Rails.configuration.x.source_export_dir.join('tf-apply.log')
-        File.open(artifact, 'w') {}
+        File.open(Terraform.statefilename, 'w') {}
       end
 
       it 'allows access to download' do
