@@ -8,10 +8,12 @@ class Terraform
   end
 
   def init_terraform
+    Dir.chdir(Rails.configuration.x.source_export_dir)
     RubyTerraform.init(
-      from_module: '', path: Rails.configuration.x.source_export_dir,
-      backend: false
+      backend:  false,
+      no_color: true
     )
+    Dir.chdir(Rails.root)
   end
 
   def config_terraform
@@ -37,6 +39,7 @@ class Terraform
   end
 
   def validate(parse_output, file=false)
+    #  print "\n\n#{Rails.configuration.x.source_export_dir}\n\n"
     validate_params = {
       directory: Rails.configuration.x.source_export_dir
     }
@@ -49,7 +52,7 @@ class Terraform
     if parse_output
       error_output = RubyTerraform.configuration.stderr.string
       Rails.logger.error error_output
-      write_log_output(error_output)
+      Terraform.write_log_output(error_output)
       return parse_error_output(error_output, file)
     end
   ensure
@@ -57,7 +60,7 @@ class Terraform
       parse_output
   end
 
-  def write_log_output(content)
+  def self.write_log_output(content)
     f = File.open(Rails.configuration.x.terraform_log_filename, 'a')
     f.write(content)
     f.flush
@@ -90,5 +93,44 @@ class Terraform
 
   def self.statefilename
     Rails.configuration.x.source_export_dir.join('terraform.tfstate')
+  end
+
+  def plan(dir, output_path)
+    RubyTerraform.configuration.stdout = StringIO.new
+    RubyTerraform.configuration.stderr = StringIO.new
+    RubyTerraform.plan(
+      directory: dir,
+      plan:      output_path,
+      no_color:  true
+    )
+  rescue RubyTerraform::Errors::ExecutionError
+    return {
+      error: {
+        message: 'Plan operation has failed',
+        output:  RubyTerraform.configuration.stderr.string
+      }
+    }
+  end
+
+  def apply(args)
+    RubyTerraform.configuration.stdout = StringIO.new
+    RubyTerraform.configuration.stderr = StringIO.new
+    RubyTerraform.apply(args)
+  rescue RubyTerraform::Errors::ExecutionError
+    nil
+  end
+
+  def show(plan_path)
+    RubyTerraform.configuration.stdout = StringIO.new
+    RubyTerraform.configuration.stderr = StringIO.new
+    RubyTerraform.show(path: plan_path, json: true)
+  end
+
+  def self.stdout
+    RubyTerraform.configuration.stdout
+  end
+
+  def self.stderr
+    RubyTerraform.configuration.stderr
   end
 end

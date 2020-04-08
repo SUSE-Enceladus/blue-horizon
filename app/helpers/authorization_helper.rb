@@ -43,6 +43,6 @@ module AuthorizationHelper
   end
 
   def apply_log_exists?
-    export_file_exists?(Terraform.statefilename)
+    export_file_exists? Terraform.statefilename
   end
 end

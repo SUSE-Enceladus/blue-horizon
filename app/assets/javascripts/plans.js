@@ -10,9 +10,11 @@ $(function() {
     })
     .bind("ajax:success", function(evt) {
       var output = evt.detail[0];
+
       if (output.error) {
         $("#flash").show();
-        $("#error_message").text(output.error);
+        $("#error_message").text(output.error.message);
+        $("code.output").text(output.error.output);
       } else {
         $("code.output").text(output);
       }
