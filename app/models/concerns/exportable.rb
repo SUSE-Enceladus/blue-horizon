@@ -2,8 +2,13 @@
 
 # common module for handling terraform exports
 module Exportable
+  EXECUTABLE = ['.sh'].freeze
+
   def export_into(path, filename=self.filename)
     File.write(File.join(path, filename), content)
+    return unless EXECUTABLE.include?(File.extname(filename))
+
+    FileUtils.chmod('+x', File.join(path, filename))
   end
 
   def export

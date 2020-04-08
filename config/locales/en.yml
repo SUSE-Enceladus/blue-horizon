@@ -73,7 +73,7 @@ en:
 
   page_subtitle:
     plan_info: |
-      In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ acts.
+      In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ deploys.
     deploy_info: |
       In this step you can apply your plan. This may take some time. The `terraform` log will display below as it is generated.
     wrapup_info: |
