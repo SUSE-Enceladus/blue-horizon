@@ -3,8 +3,14 @@
 require 'ruby_terraform'
 
 module Helpers
-  def populate_sources
-    source_path = Rails.root.join('spec', 'fixtures', 'sources', '*')
+  def populate_sources(auth_plan=nil)
+    sources_dir =
+      if auth_plan
+        'sources_auth'
+      else
+        'sources'
+      end
+    source_path = Rails.root.join('spec', 'fixtures', sources_dir, '*')
     Dir.glob(source_path).each do |filepath|
       Source.create(
         filename: filepath,

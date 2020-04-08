@@ -57,6 +57,29 @@ describe 'variable editing', type: :feature do
     end
   end
 
+  context 'with sources visit plan' do
+    let(:variable_names) { collect_variable_names }
+    let(:variables) { Variable.new(Source.variables.pluck(:content)) }
+    let(:instance_var) { instance_double(Variable) }
+    let(:instance_var_controller) { instance_double(VariablesController) }
+
+    before do
+      populate_sources(true)
+      visit('/variables')
+    end
+
+    it 'stores form data for variables and redirects to plan' do
+      allow(Variable).to receive(:load).and_return(variables)
+      fill_in('variables[test_password]', with: fake_data)
+      find('#next').click
+      expect(KeyValue.get(variables.storage_key('test_password')))
+        .to eq(fake_data)
+
+      expect(page).not_to have_content('Variables were successfully updated.')
+      expect(page).to have_current_path(plan_path)
+    end
+  end
+
   it 'notifies that no variables are defined' do
     visit('/variables')
     expect(page).to have_content('No variables are defined!')

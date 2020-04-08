@@ -13,7 +13,7 @@
     %button.btn.btn-primary#submit-cluster{ type: 'submit', title: t('tooltips.save'), data: { toggle: 'tooltip' } }
       %i.eos-icons.md-18 save
       = t('save')
-    = link_to plan_path, class: 'btn btn-warning', title: t('tooltips.start_action'), data: { toggle: 'tooltip' } do
+    = button_tag variables_path, method: :put, class: "btn btn-warning", title: t('tooltips.start_action'), data: { toggle: 'tooltip' }, id: 'next' do
       = t('sidebar.plan')
       %i.eos-icons.md-18 fast_forward
 %p.clearfix
