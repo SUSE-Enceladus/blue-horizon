@@ -24,6 +24,6 @@ $(function() {
       $(".eos-icon-loading").addClass("hide");
       $(".list-group-flush a").removeClass("disabled");
       $(".steps-container .btn").removeClass("disabled");
-      $('a[data-original-title="Next steps"]').addClass("disabled")
+      $('a[data-original-title="Next steps"]').addClass("disabled");
     });
 });
