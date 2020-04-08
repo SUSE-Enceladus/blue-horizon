@@ -87,4 +87,8 @@ class Terraform
 
     return " on script '#{filename}'"
   end
+
+  def self.statefilename
+    Rails.configuration.x.source_export_dir.join('terraform.tfstate')
+  end
 end
