@@ -29,17 +29,11 @@ class Variable
   end
 
   def self.load
+    terra = Terraform.new
+    validation = terra.validate(true, true)
+    return { error: validation } if validation
+
     new(Source.variables.pluck(:content))
-  rescue JSON::ParserError => e
-    log_path_filename = Rails.configuration.x.terraform_log_filename
-    log_file = Logger::LogDevice.new(log_path_filename)
-    logger = Logger.new(
-      RubyTerraform::MultiIO.new(STDOUT, log_file),
-      level: :debug
-    )
-    message = "Unable to parse the terraform scripts: #{e}"
-    logger.error message
-    return { error: message }
   end
 
   def type(key)

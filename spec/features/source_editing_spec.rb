@@ -3,7 +3,14 @@
 require 'rails_helper'
 
 describe 'source editing', type: :feature do
-  let!(:sources) { populate_sources }
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
+
+  let!(:sources) do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
+    populate_sources
+  end
 
   it 'lists all sources' do
     visit('/sources')
@@ -13,6 +20,7 @@ describe 'source editing', type: :feature do
   end
 
   it 'edits sources' do
+    allow(File).to receive(:write)
     source = Source.find_by(filename: 'dummy.sh')
     random_content = "# #{Faker::Lorem.paragraph}"
     expect(source.content).not_to eq(random_content)
@@ -27,7 +35,26 @@ describe 'source editing', type: :feature do
     expect(source.content).to eq(random_content)
   end
 
+  it 'edits sources wrong syntax' do
+    allow(File).to receive(:write)
+    source = Source.find_by(filename: 'dummy.sh')
+    random_content = "# #{Faker::Lorem.paragraph}"
+    expect(source.content).not_to eq(random_content)
+    allow(instance_terra).to(
+      receive(:validate)
+        .and_return('Error: wrong syntax')
+    )
+    visit('/sources')
+
+    click_on(source.filename)
+    fill_in_hidden('#source_content', random_content)
+    click_on(id: 'submit-source')
+
+    expect(page).to have_content('Error: wrong syntax')
+  end
+
   it 'creates new sources' do
+    allow(File).to receive(:write)
     random_content = Faker::Lorem.paragraph
     filename = Faker::File.file_name(ext: 'sh')
     visit('/sources')
