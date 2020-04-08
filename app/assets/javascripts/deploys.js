@@ -49,19 +49,19 @@ function fetch_output(finished, intervalId) {
         $("#output").text($("#output").text() + data.error);
         clearTimeout(intervalId);
       } else {
-	$(".pre-scrollable").html(data.new_html);
-        const autoscroll = $('#deploy_log_autoscroll').prop('checked');
-        if(autoscroll) {
-          $(".pre-scrollable").scrollTop($(".pre-scrollable").height());
+        $(".pre-scrollable").html(data.new_html);
+        const autoscroll = $("#deploy_log_autoscroll").prop("checked");
+        if (autoscroll) {
+          $(".pre-scrollable").scrollTop($("#output").height());
         }
-	if (!finished && !data.success) {
+        if (!finished && !data.success) {
           intervalId = setTimeout(function() {
-	    fetch_output();
+            fetch_output();
           }, 5000);
         } else {
-	  $(".steps-container .btn").removeClass("disabled");
-	  $(".list-group-flush a").removeClass("disabled");
-	  $(".eos-icon-loading").addClass("hide");
+          $(".steps-container .btn").removeClass("disabled");
+          $(".list-group-flush a").removeClass("disabled");
+          $(".eos-icon-loading").addClass("hide");
         }
       }
     },
