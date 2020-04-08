@@ -41,7 +41,13 @@ function fetch_output(finished, intervalId) {
     dataType: "json",
     success: function(data) {
       if (data.error !== null) {
-        $(".eos-icon-loading").addClass("hide");
+	const nextStep =  "a[href='" + data.next + "']"
+	$(".steps-container .btn").removeClass("disabled");
+	$(".list-group-flush a").removeClass("disabled");
+	// can not go to next step screen if error
+	$(".list-group-flush " + nextStep).addClass("disabled");
+	$(".steps-container " + nextStep).addClass("disabled");
+	$(".eos-icon-loading").addClass("hide");
         // show rails flash message
         $("#error_message").text("Deploy operation has failed.");
         $("#flash").show();

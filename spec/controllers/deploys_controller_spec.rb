@@ -15,9 +15,14 @@ RSpec.describe DeploysController, type: :controller do
 
     let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
     let(:terraform_tfvars) { 'terraform.tfvars' }
+    let(:file) { File }
 
     before do
       FileUtils.mkdir_p(random_path)
+      allow(Terraform).to(
+        receive(:statefilename)
+          .and_return(random_path.join('terraform.tfstate'))
+      )
     end
 
     after do
@@ -25,9 +30,7 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'deploys a plan successfully' do
-      allow(File).to receive(:exist?).and_return(true)
-      allow(File).to receive(:read)
-      allow(JSON).to receive(:parse).and_return(foo: 'bar')
+      allow(controller).to receive(:close_log_info)
       allow(ruby_terraform).to receive(:apply)
 
       get :update, format: :json
@@ -43,6 +46,8 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'raise exception when deploying a plan' do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(FileUtils).to receive(:rm)
       allow(ruby_terraform).to(
         receive(:apply)
           .and_raise(RubyTerraform::Errors::ExecutionError)
@@ -52,6 +57,9 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'can show deploy output' do
+      filename = Rails.configuration.x.terraform_log_filename
+      allow(File).to receive(:open).with(filename, 'a').and_return(file)
+      allow(file).to receive(:write).with("hello world! Apply complete!\n")
       string_output = StringIO.new
       string_output.puts 'hello world! Apply complete!'
 
@@ -62,7 +70,12 @@ RSpec.describe DeploysController, type: :controller do
       expected_html = "<code id='output'>hello world! " \
                       "Apply complete!</code>\n<i class=" \
                       "'eos-icon-loading md-48 centered hide'></i>\n"
-      expected_json = { new_html: expected_html, success: true, error: nil }
+      expected_json = {
+        new_html: expected_html,
+        success:  true,
+        error:    nil,
+        next:     '/wrapup'
+      }
       allow(controller).to receive(:render).with(json: expected_json)
       allow(ruby_terraform).to receive(:apply)
 
@@ -72,6 +85,9 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'can show error output when deploy fails' do
+      allow(File).to receive(:exist?).and_return(true)
+      allow(FileUtils).to receive(:rm)
+      allow(controller).to receive(:close_log_info)
       string_output = StringIO.new
       string_output.puts 'Error'
 
@@ -79,14 +95,10 @@ RSpec.describe DeploysController, type: :controller do
         config.stderr = string_output
       end
 
-      allow(File).to receive(:exist?).and_return(true)
-      allow(File).to receive(:read)
-      allow(JSON).to receive(:parse).and_return(foo: 'bar')
-
       expected_html = "<code id='output'></code>\n<i class=" \
                       "'eos-icon-loading md-48 centered hide'></i>\n"
       expected_json = { new_html: expected_html, success: false,
-                        error: "Error\n" }
+                        error: "Error\n", next: '/wrapup' }
 
       allow(controller).to receive(:render).with(json: expected_json)
 

@@ -22,9 +22,13 @@ class DeploysController < ApplicationController
 
     if terra_stderr.is_a?(StringIO) && !terra_stderr.string.empty?
       error = terra_stderr.string
+      # no access to wrapup step if deploy step fails
+      FileUtils.rm(Terraform.statefilename) if
+        File.exist? Terraform.statefilename
       close_log_info
     elsif RubyTerraform.configuration.stdout.is_a?(StringIO)
       @apply_output = RubyTerraform.configuration.stdout.string
+
       if RubyTerraform.configuration.stdout.string.include? 'Apply complete!'
         success = true
         close_log_info
@@ -35,7 +39,7 @@ class DeploysController < ApplicationController
     respond_to do |format|
       format.json do
         render json: { new_html: html, success: success,
-                       error: error }
+                       error: error, next: wrapup_path }
       end
     end
     return
@@ -62,6 +66,8 @@ class DeploysController < ApplicationController
   def terraform_apply
     RubyTerraform.apply(@apply_args)
   rescue RubyTerraform::Errors::ExecutionError
+    # no access to wrapup step if deploy step fails
+    FileUtils.rm(Terraform.statefilename) if File.exist? Terraform.statefilename
     nil
   end
 
