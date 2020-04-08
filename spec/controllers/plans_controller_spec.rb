@@ -29,7 +29,6 @@ RSpec.describe PlansController, type: :controller do
     before do
       Rails.configuration.x.terraform_log_filename = expected_random_log_path
       allow(terra).to receive(:new).and_return(instance_terra)
-      # allow(terra).to receive(:stdout).and_return(StringIO.new('bar'))
     end
 
     it 'sets the configuration' do
@@ -72,7 +71,6 @@ RSpec.describe PlansController, type: :controller do
   end
 
   context 'when showing the plan' do
-    # let(:ruby_terraform) { RubyTerraform }
     let(:file) { File }
     let(:file_write) { File }
     let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
@@ -99,8 +97,8 @@ RSpec.describe PlansController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:show)
         .with(
-            json: true, path: 'super_plan'
-          )
+          json: true, path: 'super_plan'
+        )
       )
     end
 
@@ -165,10 +163,12 @@ RSpec.describe PlansController, type: :controller do
 
       put :update, format: :js
 
-      expect(flash[:error]).to match(
-                                 message: /Plan operation has failed/,
-                                 output: ''
-                               )
+      expect(flash[:error]).to(
+        match(
+          message: /Plan operation has failed/,
+          output:  ''
+        )
+      )
     end
   end
 end

@@ -104,9 +104,10 @@ class Terraform
     )
   rescue RubyTerraform::Errors::ExecutionError
     return {
-      error:
-        { message: 'Plan operation has failed',
-          output:  RubyTerraform.configuration.stderr.string }
+      error: {
+        message: 'Plan operation has failed',
+        output:  RubyTerraform.configuration.stderr.string
+      }
     }
   end
 
