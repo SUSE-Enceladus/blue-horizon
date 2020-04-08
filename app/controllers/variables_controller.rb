@@ -14,9 +14,14 @@ class VariablesController < ApplicationController
   def update
     @variables.attributes = variables_params
     if @variables.save
-      redirect_to variables_path, flash: {
-        notice: 'Variables were successfully updated.'
-      }
+      flash_message = {}
+      if params[:button]
+        target_path = plan_path
+      else
+        flash_message = { notice: 'Variables were successfully updated.' }
+        target_path = variables_path
+      end
+      redirect_to target_path, flash: flash_message
     else
       redirect_to variables_path, flash: {
         error: @variables.errors.full_messages
