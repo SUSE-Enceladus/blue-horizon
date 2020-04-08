@@ -19,8 +19,13 @@ RSpec.describe Variable, type: :model do
       'fake_key'         => 'fake_value'
     }
   end
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
 
   before do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
+
     populate_sources
   end
 
@@ -55,14 +60,16 @@ RSpec.describe Variable, type: :model do
 
   context 'when loading wrong formatted script' do
     let(:message) do
-      { error: 'Unable to parse the terraform scripts: foo' }
+      { error: 'Incorrect JSON value type on script \'foo.tf.json\''\
+               'in line 42: } This error is highly illogical.' }
     end
 
     it 'handles parsing errors from JSON' do
-      allow(JSON).to(
-        receive(:parse)
-          .and_raise(
-            JSON::ParserError.new('foo')
+      allow(instance_terra).to(
+        receive(:validate)
+          .and_return(
+            'Incorrect JSON value type on script \'foo.tf.json\''\
+            'in line 42: } This error is highly illogical.'
           )
       )
       allow(Rails.logger).to receive(:error)

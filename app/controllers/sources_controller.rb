@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SourcesController < ApplicationController
+  include Exportable
   before_action :set_sources, only: [:index, :show, :new, :edit]
   before_action :set_source, only: [:show, :edit, :update, :destroy]
 
@@ -23,10 +24,7 @@ class SourcesController < ApplicationController
     @source = Source.new(source_params)
 
     if @source.save
-      redirect_to(
-        edit_source_path(@source),
-        notice: 'Source was successfully created.'
-      )
+      terra_validate
     else
       set_sources
       render :new
@@ -36,13 +34,10 @@ class SourcesController < ApplicationController
   # PATCH/PUT /sources/1
   def update
     if @source.update(source_params)
-      redirect_to(
-        edit_source_path(@source),
-        notice: 'Source was successfully updated.'
-      )
+      terra_validate
     else
       set_sources
-      render :edit
+      render :new
     end
   end
 
@@ -64,5 +59,23 @@ class SourcesController < ApplicationController
 
   def source_params
     params.require(:source).permit(:filename, :content)
+  end
+
+  def terra_validate
+    Source.all.each(&:export)
+    terra = Terraform.new
+    output = terra.validate(true)
+
+    if output
+      flash = { error: output }
+    else
+      message = 'Source was successfully '
+      message += params[:action] == 'create' ? 'created.' : 'updated.'
+      flash = { notice: message }
+    end
+    return redirect_to edit_source_path(@source), flash: flash if
+      params[:action] == 'create'
+
+    redirect_to edit_source_path, flash: flash
   end
 end

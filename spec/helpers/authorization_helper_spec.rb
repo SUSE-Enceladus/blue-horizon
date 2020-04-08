@@ -18,8 +18,13 @@ describe AuthorizationHelper do
       'test_string'      => random_string
     }
   end
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
 
   before do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
+
     populate_sources
   end
 
