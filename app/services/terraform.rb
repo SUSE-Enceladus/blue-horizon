@@ -39,6 +39,7 @@ class Terraform
   end
 
   def validate(parse_output, file=false)
+    #  print "\n\n#{Rails.configuration.x.source_export_dir}\n\n"
     validate_params = {
       directory: Rails.configuration.x.source_export_dir
     }

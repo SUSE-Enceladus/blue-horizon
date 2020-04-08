@@ -5,12 +5,24 @@ require 'rails_helper'
 describe 'source editing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
-
+  let(:random_path) { random_export_path }
   let!(:sources) do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
+    # allow(ruby_terraform).to receive(:init)
+    # allow(ruby_terraform).to receive(:validate)
+    # FileUtils.mkdir_p(random_path)
+
     populate_sources
   end
+  # let!(:sources) do
+  #   allow(terra).to receive(:new).and_return(instance_terra)
+  #   allow(instance_terra).to receive(:validate)
+  #   populate_sources
+  # end
+  # after do
+  #   FileUtils.rm_rf(random_path)
+  # end
 
   it 'lists all sources' do
     visit('/sources')
@@ -20,6 +32,7 @@ describe 'source editing', type: :feature do
   end
 
   it 'edits sources' do
+    allow(FileUtils).to receive(:chmod)
     allow(File).to receive(:write)
     source = Source.find_by(filename: 'dummy.sh')
     random_content = "# #{Faker::Lorem.paragraph}"
@@ -36,6 +49,7 @@ describe 'source editing', type: :feature do
   end
 
   it 'edits sources wrong syntax' do
+    allow(FileUtils).to receive(:chmod)
     allow(File).to receive(:write)
     source = Source.find_by(filename: 'dummy.sh')
     random_content = "# #{Faker::Lorem.paragraph}"
@@ -54,6 +68,7 @@ describe 'source editing', type: :feature do
   end
 
   it 'creates new sources' do
+    allow(FileUtils).to receive(:chmod)
     allow(File).to receive(:write)
     random_content = Faker::Lorem.paragraph
     filename = Faker::File.file_name(ext: 'sh')

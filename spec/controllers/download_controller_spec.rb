@@ -3,18 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe DownloadController, type: :controller do
+  let(:ruby_terraform) { RubyTerraform }
+  let(:random_path) { random_export_path }
+  let!(:sources) do
+    allow(ruby_terraform).to receive(:init)
+    allow(ruby_terraform).to receive(:validate)
+    FileUtils.mkdir_p(random_path)
+
+    populate_sources
+  end
+
   context 'when getting and sending files' do
-    let(:ruby_terraform) { RubyTerraform }
-    let!(:sources) do
-      allow(ruby_terraform).to receive(:init)
-      allow(ruby_terraform).to receive(:validate)
-
-      populate_sources
-    end
-    let(:random_path) { random_export_path }
-
     before do
-      FileUtils.mkdir_p(random_path)
       mock_member = double
       allow(mock_member).to receive(:read)
       controller.instance_variable_set(:@compressed_filestream, mock_member)
@@ -74,15 +74,6 @@ RSpec.describe DownloadController, type: :controller do
   end
 
   context 'when creating zip files' do
-    let(:ruby_terraform) { RubyTerraform }
-    let!(:sources) do
-      allow(ruby_terraform).to receive(:init)
-      allow(ruby_terraform).to receive(:validate)
-
-      populate_sources
-    end
-    # let!(:sources) { populate_sources }
-
     it 'zip files' do
       prefix = Rails.root.join('spec', 'fixtures', 'sources')
       controller.instance_variable_set(

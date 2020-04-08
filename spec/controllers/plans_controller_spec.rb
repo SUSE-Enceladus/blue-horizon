@@ -32,6 +32,7 @@ RSpec.describe PlansController, type: :controller do
     end
 
     it 'sets the configuration' do
+      allow(instance_terra).to receive(:validate).and_return('')
       allow(instance_terra).to receive(:plan).and_return(error: 'error')
       allow(controller.instance_variable_set(:@exported_vars, 'foo'))
       allow(File).to receive(:exist?).and_return(true)
@@ -50,6 +51,7 @@ RSpec.describe PlansController, type: :controller do
       allow(variable_instance).to receive(:load)
       allow(controller).to receive(:read_exported_sources)
       allow(json_instance).to receive(:parse)
+      allow(instance_terra).to receive(:validate).with(true, true)
 
       put :update
 
@@ -64,13 +66,6 @@ RSpec.describe PlansController, type: :controller do
 
     before do
       allow(File).to receive(:exist?).and_return(false)
-      allow(instance_terra).to receive(:show)
-      allow(controller).to receive(:terraform_plan)
-      allow(controller).to receive(:terraform_show)
-      allow(controller).to receive(:config_terraform)
-      allow(controller).to receive(:init_terraform)
-      allow(json_instance).to receive(:parse)
-      allow(controller).to receive(:read_exported_sources)
       allow(terra).to receive(:new).and_return(instance_terra)
       allow(instance_terra).to receive(:validate).with(true, true)
     end
@@ -94,8 +89,6 @@ RSpec.describe PlansController, type: :controller do
       allow(controller).to receive(:cleanup)
       allow(JSON).to receive(:pretty_generate)
       allow(JSON).to receive(:parse).and_return(blue: 'horizon')
-      allow(terra).to receive(:new).and_return(instance_terra)
-      allow(instance_terra).to receive(:validate).with(true, true)
     end
 
     it 'shows the saved plan' do
@@ -110,9 +103,9 @@ RSpec.describe PlansController, type: :controller do
 
       expect(ruby_terraform).to(
         have_received(:show)
-        .with(
-          json: true, path: 'super_plan'
-        )
+          .with(
+            json: true, path: 'super_plan'
+          )
       )
     end
 
