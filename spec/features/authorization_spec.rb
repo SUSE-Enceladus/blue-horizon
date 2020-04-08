@@ -8,8 +8,12 @@ describe 'authorization', type: :feature do
     Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
   end
   let(:auth_message) { 'Sorry, you can\'t do that, yet.' }
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
 
   before do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
     populate_sources
     KeyValue.set(:cloud_framework, cloud_framework)
   end
@@ -20,17 +24,19 @@ describe 'authorization', type: :feature do
   end
 
   it 'initially blocks access to deploy' do
-    allow(File).to(
-      receive(:exist?)
-        .and_return(false)
-    )
+    allow(File).to receive(:exist?).and_return(false)
+
     visit '/deploy'
+
     expect(page).to have_current_path(welcome_path)
     expect(page).to have_content(auth_message)
   end
 
   it 'initially blocks access to download' do
+    allow(File).to receive(:exist?).and_return(false)
+
     visit '/download'
+
     expect(page).to have_current_path(welcome_path)
     expect(page).to have_content(auth_message)
   end

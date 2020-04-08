@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ruby_terraform'
+
 class VariablesController < ApplicationController
   before_action :set_variables
 

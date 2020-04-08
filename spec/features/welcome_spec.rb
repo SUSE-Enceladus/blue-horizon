@@ -4,8 +4,12 @@ require 'rails_helper'
 
 describe 'welcome', type: :feature do
   let(:cloud_framework) { 'azure' }
+  let(:terra) { Terraform }
+  let(:instance_terra) { instance_double(Terraform) }
 
   before do
+    allow(terra).to receive(:new).and_return(instance_terra)
+    allow(instance_terra).to receive(:validate)
     populate_sources
     KeyValue.set(:cloud_framework, cloud_framework)
   end
