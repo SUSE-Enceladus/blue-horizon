@@ -5,9 +5,9 @@ require 'ruby_terraform'
 class Source < ApplicationRecord
   include Exportable
 
-  validates :filename, uniqueness: true
   before_validation :no_path_in_filename
-  after_save :validate_scripts
+  validates :filename, uniqueness: true
+  validate :terraform_validation
 
   scope :terraform, -> { where('filename LIKE ?', '%.tf') }
   scope :variables, -> { where('filename LIKE ?', 'variable%.tf.json') }
@@ -16,8 +16,7 @@ class Source < ApplicationRecord
     self.filename = filename.split('/').last
   end
 
-  def validate_scripts
-    terra = Terraform.new
-    terra.validate(true, false)
+  def terraform_validation
+    Terraform.new.validate(true, false)
   end
 end
