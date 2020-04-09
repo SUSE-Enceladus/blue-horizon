@@ -13,13 +13,17 @@ RSpec.describe DeploysController, type: :controller do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end
 
-    let(:sources_dir) { Rails.root.join('tmp', 'terraform') }
+    let(:sources_dir) { Rails.root.join('tmp', random_path) }
     let(:terraform_tfvars) { 'terraform.tfvars' }
     let(:terra) { Terraform }
     let(:instance_terra) { instance_doube(terra) }
+    let(:log_filename) { 'ruby-terraform-test.log' }
+    let(:expected_random_log_path) { File.join(random_path, log_filename) }
 
     before do
       FileUtils.mkdir_p(random_path)
+      Rails.configuration.x.terraform_log_filename = expected_random_log_path
+      Rails.configuration.x.source_export_dir = random_path
     end
 
     after do

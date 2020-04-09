@@ -9,20 +9,8 @@ describe 'source editing', type: :feature do
   let!(:sources) do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
-    # allow(ruby_terraform).to receive(:init)
-    # allow(ruby_terraform).to receive(:validate)
-    # FileUtils.mkdir_p(random_path)
-
     populate_sources
   end
-  # let!(:sources) do
-  #   allow(terra).to receive(:new).and_return(instance_terra)
-  #   allow(instance_terra).to receive(:validate)
-  #   populate_sources
-  # end
-  # after do
-  #   FileUtils.rm_rf(random_path)
-  # end
 
   it 'lists all sources' do
     visit('/sources')

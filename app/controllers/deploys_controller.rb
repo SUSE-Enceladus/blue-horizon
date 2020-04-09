@@ -3,8 +3,6 @@
 require 'ruby_terraform'
 
 class DeploysController < ApplicationController
-  @terra = Terraform.new
-
   def update
     logger.info('Calling run_deploy')
     @apply_args = {
