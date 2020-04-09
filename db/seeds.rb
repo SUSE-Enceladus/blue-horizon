@@ -20,10 +20,10 @@ def import_sources(glob)
     next if Source.find_by(filename: filename)
 
     Rails.logger.info("New source file '#{filename}'")
-    Source.create(
+    Source.new(
       filename: filename,
       content:  File.read(filepath)
-    )
+    ).save(validate: false)
   end
 end
 
