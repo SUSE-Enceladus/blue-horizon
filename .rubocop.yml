@@ -4,9 +4,9 @@ require:
 
 AllCops:
   Exclude:
-    - 'bin/*'
-    - 'vendor/**/*'
-    - 'packaging/*'
+    - "bin/*"
+    - "vendor/**/*"
+    - "packaging/*"
 
 Bundler/OrderedGems:
   TreatCommentsAsGroupSeparators: true
@@ -44,15 +44,15 @@ RSpec/MultipleExpectations:
 
 Style/Documentation:
   Exclude:
-    - 'spec/**/*'
-    - 'db/migrate/*.rb'
-    - 'app/controllers/*_controller.rb'
+    - "spec/**/*"
+    - "db/migrate/*.rb"
+    - "app/controllers/*_controller.rb"
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/**/*_spec.rb'
-    - 'config/initializers/*.rb'
-    - 'lib/tasks/*.rake'
+    - "spec/**/*_spec.rb"
+    - "config/initializers/*.rb"
+    - "lib/tasks/*.rake"
 
 Style/IfUnlessModifier:
   Enabled: false
@@ -62,19 +62,19 @@ Style/RedundantReturn:
 
 Rails/OutputSafety:
   Exclude:
-    - 'app/helpers/application_helper.rb'
+    - "app/helpers/application_helper.rb"
 
 Rails/FilePath:
   Enabled: false
 
 Rails/RakeEnvironment:
   Exclude:
-    - 'lib/tasks/packaging.rake'
+    - "lib/tasks/packaging.rake"
 
 Metrics/LineLength:
   Max: 80
   Exclude:
-    - 'config/**/*'
+    - "config/**/*"
 
 Style/NumericLiterals:
   Enabled: false
@@ -83,13 +83,13 @@ Metrics/MethodLength:
   Enabled: false
 
 Metrics/ClassLength:
-  Max: 120
+  Max: 150
 
 Style/FormatStringToken:
   Exclude:
-    - 'lib/tasks/packaging.rake'
+    - "lib/tasks/packaging.rake"
 
 Metrics/AbcSize:
-   Enabled: false
+  Enabled: false
 
 inherit_from: .rubocop_todo.yml

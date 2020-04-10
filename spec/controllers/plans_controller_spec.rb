@@ -83,6 +83,7 @@ RSpec.describe PlansController, type: :controller do
     let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
     let(:terra) { Terraform }
     let(:instance_terra) { instance_double(Terraform) }
+    let(:tfvars_file) { Variable.load.export_path }
 
     before do
       allow(Logger::LogDevice).to receive(:new)
@@ -94,18 +95,11 @@ RSpec.describe PlansController, type: :controller do
     it 'shows the saved plan' do
       allow(controller.helpers).to receive(:can).and_return(true)
       allow(ruby_terraform).to receive(:show)
-      allow(controller).to(
-        receive(:saved_plan_path)
-          .and_return('super_plan')
-      )
 
       get :show, format: :json
 
       expect(ruby_terraform).to(
         have_received(:show)
-          .with(
-            json: true, path: 'super_plan'
-          )
       )
     end
 
@@ -143,7 +137,8 @@ RSpec.describe PlansController, type: :controller do
           .with(
             directory: random_path,
             plan:      plan_file,
-            no_color:  true
+            no_color:  true,
+            var_file:  tfvars_file
           )
       )
     end
