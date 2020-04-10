@@ -26,5 +26,7 @@
             released under the&nbsp;
             %a{ href: Rails.configuration.x.source_link + 'blob/master/LICENSE' , target: '_blank', rel: 'noopener noreferrer' }> GPLv3 license
             \.
+    - if @active_session_ip
+      = render 'layouts/locked_session', ip_address: @active_session_ip
     = javascript_include_tag 'application'
     = yield :page_javascript

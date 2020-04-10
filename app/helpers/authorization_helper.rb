@@ -3,7 +3,47 @@
 # Authorize access to steps
 module AuthorizationHelper
   def can(path)
-    result = case path
+    result =
+      session_check(path) &&
+      flow_restriction_checks(path)
+    logger.debug "AUTH: #{result ? 'can' : 'cannot'} access #{path}"
+    return result
+  end
+
+  def active_session?
+    session_id = session[:session_id]
+    active_session_id = KeyValue.get(:active_session_id)
+
+    # first request - allowed
+    return true if !active_session_id && !session_id
+
+    if !active_session_id && session_id
+      # 2nd request - lock it down
+      set_session!
+      return true
+    else
+      session_id == active_session_id
+    end
+  end
+
+  def set_session!
+    KeyValue.set(:active_session_id, session[:session_id])
+    KeyValue.set(:active_session_ip, request.remote_ip)
+  end
+
+  private
+
+  def session_check(path)
+    case path
+    when welcome_path, reset_session_path
+      true
+    else
+      active_session?
+    end
+  end
+
+  def flow_restriction_checks(path)
+    case path
     when plan_path
       all_variables_are_set?
     when deploy_path
@@ -13,11 +53,7 @@ module AuthorizationHelper
     else
       true
     end
-    logger.debug "AUTH: #{result ? 'can' : 'cannot'} access #{path}"
-    return result
   end
-
-  private
 
   def all_variables_are_set?
     variables = Variable.load

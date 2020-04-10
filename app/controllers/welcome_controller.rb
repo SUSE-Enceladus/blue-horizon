@@ -12,4 +12,10 @@ class WelcomeController < ApplicationController
     Rails.configuration.x.advanced_mode = false
     redirect_to cluster_path
   end
+
+  def reset_session
+    helpers.set_session!
+    flash[:alert] = t(:session_reset)
+    redirect_to welcome_path
+  end
 end

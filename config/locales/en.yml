@@ -35,6 +35,8 @@ en:
   required: "Required"
   terraform_files: "terraform scripts and log"
   unauthorized: "Sorry, you can't do that, yet."
+  non_active_session: "Duplicate session!"
+  session_reset: "The active session has been reset."
   password_show: "Show password"
   password_hide: "Hide password"
   autoscroll: "Autoscroll"
@@ -42,9 +44,12 @@ en:
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"
   password_key: "password"
+
   plan: "Plan"
   apply: "Apply"
   running: "Running..."
+  action:
+    reset_session: "Reset session"
 
   sidebar:
     welcome: "Welcome"
@@ -82,3 +87,11 @@ en:
     wrapup_info: |
       Your application has been deployed, here's how to use it.
       [Download](/download) your results and follow the instructions below.
+
+  content:
+    explain_duplicate_session: |
+      Someone is already logged into this application, but this application is only intended for one user at a time.
+
+      Please switch back to the active session if possible. If not, you may reset the active session.
+    label_active_session_ip: |
+      Active session IP address: `%{ip}`
