@@ -70,9 +70,8 @@ class PlansController < ApplicationController
       vars = File.read(export_var_path)
       @exported_vars = JSON.parse(vars)
     else
-      message = 'There are no vars saved.'
-      logger.error message
-      flash.now[:error] = message
+      logger.error t('flash.export_failure')
+      flash.now[:error] = t('flash.export_failure')
       return render json: flash.to_hash
     end
   end

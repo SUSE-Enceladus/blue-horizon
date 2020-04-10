@@ -71,9 +71,9 @@ RSpec.describe PlansController, type: :controller do
     end
 
     it 'no exported variables' do
-      put :update, format: :js
+      put :update
 
-      expect(flash[:error]).to match(/There are no vars saved./)
+      expect(flash[:error]).to match(I18n.t('flash.export_failure'))
     end
   end
 
