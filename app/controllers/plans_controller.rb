@@ -9,7 +9,7 @@ class PlansController < ApplicationController
   def show
     return unless helpers.can(deploy_path)
 
-    Terraform.new.show(saved_plan_path)
+    Terraform.new.show
     @show_output = Terraform.stdout.string
     @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
@@ -30,16 +30,13 @@ class PlansController < ApplicationController
     return unless @exported_vars
 
     terra = Terraform.new
-    result = terra.plan(
-      Rails.configuration.x.source_export_dir,
-      saved_plan_path
-    )
+    result = terra.plan
 
     if result.is_a?(Hash)
       flash.now[:error] = result[:error]
       return render json: flash.to_hash
     end
-    terra.show(saved_plan_path)
+    terra.show
     @show_output = Terraform.stdout.string
     @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
@@ -91,9 +88,5 @@ class PlansController < ApplicationController
     cleanup
     read_exported_vars
     read_exported_sources
-  end
-
-  def saved_plan_path
-    return Rails.configuration.x.source_export_dir.join('current_plan')
   end
 end

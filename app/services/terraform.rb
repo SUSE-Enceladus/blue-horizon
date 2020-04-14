@@ -8,12 +8,12 @@ class Terraform
   end
 
   def init_terraform
-    Dir.chdir(Rails.configuration.x.source_export_dir)
-    RubyTerraform.init(
-      backend:  false,
-      no_color: true
-    )
-    Dir.chdir(Rails.root)
+    in_export_dir do
+      RubyTerraform.init(
+        backend:  false,
+        no_color: true
+      )
+    end
   end
 
   def config_terraform
@@ -34,12 +34,25 @@ class Terraform
     return Logger::LogDevice.new(log_path_filename)
   end
 
+  def saved_plan_path
+    return Rails.configuration.x.source_export_dir.join('current_plan')
+  end
+
   def find_default_binary
     return `which terraform`.strip
   end
 
+  def in_export_dir(path=Rails.configuration.x.source_export_dir)
+    current_working_dir = Dir.pwd
+    Dir.chdir(path)
+    Rails.logger.debug "Changed dir to '#{path}'"
+    yield
+  ensure
+    Rails.logger.debug "Returning to '#{current_working_dir}'"
+    Dir.chdir(current_working_dir)
+  end
+
   def validate(parse_output, file=false)
-    #  print "\n\n#{Rails.configuration.x.source_export_dir}\n\n"
     validate_params = {
       directory: Rails.configuration.x.source_export_dir
     }
@@ -47,7 +60,9 @@ class Terraform
       RubyTerraform.configuration.stderr = StringIO.new
       validate_params[:no_color] = true
     end
-    RubyTerraform.validate(validate_params)
+    in_export_dir do
+      RubyTerraform.validate(validate_params)
+    end
   rescue RubyTerraform::Errors::ExecutionError
     if parse_output
       error_output = RubyTerraform.configuration.stderr.string
@@ -95,35 +110,46 @@ class Terraform
     Rails.configuration.x.source_export_dir.join('terraform.tfstate')
   end
 
-  def plan(dir, output_path)
-    RubyTerraform.configuration.stdout = StringIO.new
-    RubyTerraform.configuration.stderr = StringIO.new
-    RubyTerraform.plan(
-      directory: dir,
-      plan:      output_path,
-      no_color:  true
-    )
+  def plan(output_path=saved_plan_path)
+    stdout = StringIO.new
+    stderr = StringIO.new
+    set_output(stdout, stderr)
+    in_export_dir do
+      RubyTerraform.plan(
+        directory: Rails.configuration.x.source_export_dir,
+        plan:      output_path,
+        no_color:  true,
+        var_file:  Variable.load.export_path
+      )
+    end
   rescue RubyTerraform::Errors::ExecutionError
     return {
       error: {
         message: 'Plan operation has failed',
-        output:  RubyTerraform.configuration.stderr.string
+        output:  stderr.string
       }
     }
   end
 
   def apply(args)
-    RubyTerraform.configuration.stdout = StringIO.new
-    RubyTerraform.configuration.stderr = StringIO.new
-    RubyTerraform.apply(args)
+    set_output
+    in_export_dir do
+      RubyTerraform.apply(args)
+    end
   rescue RubyTerraform::Errors::ExecutionError
     nil
   end
 
-  def show(plan_path)
-    RubyTerraform.configuration.stdout = StringIO.new
-    RubyTerraform.configuration.stderr = StringIO.new
-    RubyTerraform.show(path: plan_path, json: true)
+  def show(plan_path=saved_plan_path)
+    set_output
+    in_export_dir do
+      RubyTerraform.show(path: plan_path, json: true)
+    end
+  end
+
+  def set_output(stdout=StringIO.new, stderr=StringIO.new)
+    RubyTerraform.configuration.stdout = stdout
+    RubyTerraform.configuration.stderr = stderr
   end
 
   def self.stdout
