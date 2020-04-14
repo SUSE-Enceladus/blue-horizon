@@ -10,9 +10,8 @@ class Terraform
   def init_terraform
     in_export_dir do
       RubyTerraform.init(
-        backend:   false,
-        no_color:  true,
-        directory: Rails.configuration.x.source_export_dir
+        backend:  false,
+        no_color: true
       )
     end
   end
@@ -114,7 +113,7 @@ class Terraform
   def plan(output_path=saved_plan_path)
     stdout = StringIO.new
     stderr = StringIO.new
-    reset_output(stdout, stderr)
+    set_output(stdout, stderr)
     in_export_dir do
       RubyTerraform.plan(
         directory: Rails.configuration.x.source_export_dir,
@@ -133,7 +132,7 @@ class Terraform
   end
 
   def apply(args)
-    reset_output
+    set_output
     in_export_dir do
       RubyTerraform.apply(args)
     end
@@ -142,13 +141,13 @@ class Terraform
   end
 
   def show(plan_path=saved_plan_path)
-    reset_output
+    set_output
     in_export_dir do
       RubyTerraform.show(path: plan_path, json: true)
     end
   end
 
-  def reset_output(stdout=StringIO.new, stderr=StringIO.new)
+  def set_output(stdout=StringIO.new, stderr=StringIO.new)
     RubyTerraform.configuration.stdout = stdout
     RubyTerraform.configuration.stderr = stderr
   end
