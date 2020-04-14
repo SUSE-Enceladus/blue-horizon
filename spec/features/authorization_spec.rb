@@ -80,4 +80,38 @@ describe 'authorization', type: :feature do
       end
     end
   end
+
+  describe 'with an active session' do
+    let(:active_session_id) { Faker::Crypto.md5 }
+    let(:active_session_ip) { Faker::Internet.ip_v4_address }
+    let(:session_lock_message) { I18n.t('non_active_session') }
+    let(:reset_session) { I18n.t('action.reset_session') }
+
+    before do
+      create(:key_value, key: 'active_session_id', value: active_session_id)
+      create(:key_value, key: 'active_session_ip', value: active_session_ip)
+    end
+
+    it 'only allows access to welcome page' do
+      Rails.configuration.x.simple_sidebar_menu_items.each do |path|
+        visit("/#{path}")
+        expect(page).to have_current_path(welcome_path)
+        expect(page).to have_content(session_lock_message)
+      end
+    end
+
+    it 'warns of additional session' do
+      visit(welcome_path)
+      expect(page).to have_content(session_lock_message)
+    end
+
+    it 'allows session lock to be reset' do
+      visit(welcome_path)
+      within('#locked-session') do
+        click_on(reset_session)
+      end
+      expect(page).to have_current_path(welcome_path)
+      expect(page).not_to have_content(session_lock_message)
+    end
+  end
 end

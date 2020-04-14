@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # switch paths
   get '/welcome/simple', to: 'welcome#simple', as: 'simple'
   get '/welcome/advanced', to: 'welcome#advanced', as: 'advanced'
+  put '/welcome/reset-session', to: 'welcome#reset_session', as: 'reset_session'
 
   # Cluster size
   resource :cluster, only: [:show, :update]
