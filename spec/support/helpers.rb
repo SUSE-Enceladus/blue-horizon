@@ -3,7 +3,7 @@
 require 'ruby_terraform'
 
 module Helpers
-  def populate_sources(auth_plan=nil)
+  def populate_sources(auth_plan=false, include_mocks=true)
     sources_dir =
       if auth_plan
         'sources_auth'
@@ -12,12 +12,29 @@ module Helpers
       end
     source_path = Rails.root.join('spec', 'fixtures', sources_dir, '*')
     Dir.glob(source_path).each do |filepath|
-      Source.create(
-        filename: filepath,
+      next if !include_mocks && filepath.include?('mocks')
+
+      Source.new(
+        filename: filepath.split('/').last,
         content:  File.read(filepath)
-      )
+      ).save(validate: false)
     end
     Source.all
+  end
+
+  def current_plan_fixture
+    # place the binary plan file
+    source_path =
+      Rails.root.join('spec', 'fixtures', 'current_plan')
+    dest_path =
+      Rails.configuration.x.source_export_dir.join('current_plan')
+    FileUtils.cp source_path, dest_path
+
+    current_plan_fixture_json
+  end
+
+  def current_plan_fixture_json
+    File.read(Rails.root.join('spec', 'fixtures', 'current_plan.json'))
   end
 
   def collect_variable_names
@@ -26,18 +43,6 @@ module Helpers
     Dir.glob(source_path).collect do |variables_source|
       JSON.parse(File.read(variables_source))['variable'].keys
     end.flatten
-  end
-
-  def stubbed_ruby_terraform_config
-    double_allowing(:binary=, :logger=, :logger, :stdout=, :stderr=)
-  end
-
-  def double_allowing(*messages)
-    instance = double
-    messages.each do |message|
-      allow(instance).to(receive(message))
-    end
-    instance
   end
 
   def random_export_path

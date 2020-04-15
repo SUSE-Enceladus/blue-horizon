@@ -56,6 +56,8 @@ group :development, :test do
   gem 'capybara', '>= 2.15'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
+  # enable capyabara to open test output
+  gem 'launchy'
   # code style enforcement
   gem 'rubocop', '~> 0.76.0', require: false
   gem 'rubocop-rails'

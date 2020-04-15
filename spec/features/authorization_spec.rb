@@ -7,9 +7,10 @@ describe 'authorization', type: :feature do
   let(:random_path) do
     Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
   end
-  let(:auth_message) { 'Sorry, you can\'t do that, yet.' }
+  let(:auth_message) { I18n.t('flash.unauthorized') }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
+  let(:session_lock_message) { I18n.t('non_active_session') }
 
   before do
     allow(terra).to receive(:new).and_return(instance_terra)
@@ -84,7 +85,6 @@ describe 'authorization', type: :feature do
   describe 'with an active session' do
     let(:active_session_id) { Faker::Crypto.md5 }
     let(:active_session_ip) { Faker::Internet.ip_v4_address }
-    let(:session_lock_message) { I18n.t('non_active_session') }
     let(:reset_session) { I18n.t('action.reset_session') }
 
     before do
@@ -112,6 +112,30 @@ describe 'authorization', type: :feature do
       end
       expect(page).to have_current_path(welcome_path)
       expect(page).not_to have_content(session_lock_message)
+    end
+  end
+
+  describe 'when terraform is running' do
+    let(:terraform_lock_message) { I18n.t('flash.terraform_is_running') }
+
+    before do
+      KeyValue.set(:active_terraform_action, Faker::Verb.base)
+    end
+
+    after do
+      KeyValue.set(:active_terraform_action, nil)
+    end
+
+    it 'only allows access to welcome page' do
+      paths = Rails.configuration.x.simple_sidebar_menu_items.collect do |path|
+        visit("/#{path}")
+      end
+      paths.each do |path|
+        expect(page).to have_current_path(welcome_path)
+        if path != welcome_path
+          expect(page).to have_content(terraform_lock_message)
+        end
+      end
     end
   end
 end

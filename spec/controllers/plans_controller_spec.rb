@@ -20,14 +20,11 @@ RSpec.describe PlansController, type: :controller do
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('{}') }
     let(:variables) { Variable.load }
-    let(:log_filename) { 'ruby-terraform-test.log' }
-    let(:expected_random_log_path) do
-      File.join(random_path, log_filename)
+    let(:log_file) do
+      Logger::LogDevice.new(Rails.configuration.x.terraform_log_filename)
     end
-    let(:log_file) { Logger::LogDevice.new(expected_random_log_path) }
 
     before do
-      Rails.configuration.x.terraform_log_filename = expected_random_log_path
       allow(terra).to receive(:new).and_return(instance_terra)
     end
 
@@ -44,7 +41,7 @@ RSpec.describe PlansController, type: :controller do
           expect(log_device.targets).to eq([IO::STDOUT, log_file])
         end
       end
-      expect(File).to exist(expected_random_log_path)
+      expect(File).to exist(Rails.configuration.x.terraform_log_filename)
     end
 
     it 'exports variables' do
@@ -92,17 +89,6 @@ RSpec.describe PlansController, type: :controller do
       allow(JSON).to receive(:parse).and_return(blue: 'horizon')
     end
 
-    it 'shows the saved plan' do
-      allow(controller.helpers).to receive(:can).and_return(true)
-      allow(ruby_terraform).to receive(:show)
-
-      get :show, format: :json
-
-      expect(ruby_terraform).to(
-        have_received(:show)
-      )
-    end
-
     it 'allows to download the plan' do
       allow(controller.helpers).to receive(:can).and_return(true)
       allow(instance_terra).to receive(:show)
@@ -112,49 +98,6 @@ RSpec.describe PlansController, type: :controller do
       get :show, format: :json
 
       expect(response.header['Content-Disposition']).to eq(expected_content)
-    end
-
-    it 'does not show plan if no plan created' do
-      allow(controller.helpers).to receive(:can).and_return(false)
-      expected_content = 'text/html; charset=utf-8'
-
-      get :show
-
-      expect(response.header['Content-Type']).to eq(expected_content)
-    end
-
-    it 'runs terraform plan' do
-      allow(ruby_terraform).to receive(:plan)
-      allow(ruby_terraform).to receive(:show)
-      allow(instance_terra).to receive(:show)
-      allow(terra).to receive(:stdout).and_return(StringIO.new('foo'))
-      allow(JSON).to receive(:parse).and_return('foo plan')
-      allow(json_instance).to receive(:pretty_generate).and_return('foo plan')
-      put :update, format: :js
-
-      expect(ruby_terraform).to(
-        have_received(:plan)
-          .with(
-            directory: random_path,
-            plan:      plan_file,
-            no_color:  true,
-            var_file:  tfvars_file
-          )
-      )
-    end
-
-    it 'runs terraform show after creating a plan' do
-      allow(ruby_terraform).to receive(:plan)
-      allow(ruby_terraform).to receive(:show)
-
-      put :update, format: :js
-
-      expect(ruby_terraform).to(
-        have_received(:show)
-        .with(
-          json: true, path: plan_file
-        )
-      )
     end
 
     it 'handles rubyterraform exception' do

@@ -67,11 +67,8 @@ describe 'variable editing', type: :feature do
     let(:instance_var) { instance_double(Variable) }
     let(:instance_var_controller) { instance_double(VariablesController) }
     let!(:random_path) { random_export_path }
-    let(:log_filename) { 'ruby-terraform-test.log' }
-    let(:expected_random_log_path) { File.join(random_path, log_filename) }
 
     before do
-      Rails.configuration.x.terraform_log_filename = expected_random_log_path
       FileUtils.mkdir_p(random_path)
       populate_sources(true)
       visit('/variables')

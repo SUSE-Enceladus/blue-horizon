@@ -9,7 +9,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && bundle exec rubocop -a && bundle exec rspec"
+      "pre-commit": "pretty-quick --staged && bundle exec rubocop && bundle exec rspec"
     }
   }
 }

@@ -5,9 +5,7 @@ require 'fileutils'
 
 RSpec.describe Terraform, type: :service do
   let(:ruby_terraform) { RubyTerraform }
-  let(:random_path) do
-    Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-  end
+  let!(:random_path) { random_export_path }
   let(:error_message) do
     'Either a JSON object or a JSON array is required,'\
     "representing stuff of\none or more \"variable\""\
@@ -17,11 +15,6 @@ RSpec.describe Terraform, type: :service do
   end
 
   before do
-    Rails.configuration.x.source_export_dir = random_path
-    Rails.configuration.x.terraform_log_filename = File.join(
-      random_path,
-      'fake.log'
-    )
     FileUtils.mkdir_p(random_path)
   end
 
@@ -41,7 +34,6 @@ RSpec.describe Terraform, type: :service do
     described_class.new.validate(true, true)
 
     filename = Rails.configuration.x.terraform_log_filename
-    expect(filename.include?('fake.log')).to be true
     expect(File).to exist(filename)
     file_content = File.read(filename)
     expect(

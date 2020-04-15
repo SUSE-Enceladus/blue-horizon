@@ -8,9 +8,8 @@ class ApplicationController < ActionController::Base
   def authorize
     active_session = helpers.active_session?
     @active_session_ip = KeyValue.get(:active_session_ip) unless active_session
-    return if helpers.can(request.path)
+    return if helpers.check_and_alert(request.path)
 
-    flash[:error] = t(:unauthorized)
-    redirect_back(fallback_location: welcome_path)
+    redirect_to(welcome_path)
   end
 end
