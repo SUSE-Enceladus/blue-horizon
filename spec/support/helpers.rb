@@ -3,7 +3,7 @@
 require 'ruby_terraform'
 
 module Helpers
-  def populate_sources(auth_plan=nil)
+  def populate_sources(auth_plan=false, include_mocks=true)
     sources_dir =
       if auth_plan
         'sources_auth'
@@ -12,10 +12,12 @@ module Helpers
       end
     source_path = Rails.root.join('spec', 'fixtures', sources_dir, '*')
     Dir.glob(source_path).each do |filepath|
-      Source.create(
-        filename: filepath,
+      next if !include_mocks && filepath.include?('mocks')
+
+      Source.new(
+        filename: filepath.split('/').last,
         content:  File.read(filepath)
-      )
+      ).save(validate: false)
     end
     Source.all
   end
