@@ -28,18 +28,6 @@ module Helpers
     end.flatten
   end
 
-  def stubbed_ruby_terraform_config
-    double_allowing(:binary=, :logger=, :logger, :stdout=, :stderr=)
-  end
-
-  def double_allowing(*messages)
-    instance = double
-    messages.each do |message|
-      allow(instance).to(receive(message))
-    end
-    instance
-  end
-
   def random_export_path
     random_path = Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     Rails.configuration.x.source_export_dir = random_path
