@@ -89,17 +89,6 @@ RSpec.describe PlansController, type: :controller do
       allow(JSON).to receive(:parse).and_return(blue: 'horizon')
     end
 
-    it 'shows the saved plan' do
-      allow(controller.helpers).to receive(:can).and_return(true)
-      allow(ruby_terraform).to receive(:show)
-
-      get :show, format: :json
-
-      expect(ruby_terraform).to(
-        have_received(:show)
-      )
-    end
-
     it 'allows to download the plan' do
       allow(controller.helpers).to receive(:can).and_return(true)
       allow(instance_terra).to receive(:show)
@@ -109,52 +98,6 @@ RSpec.describe PlansController, type: :controller do
       get :show, format: :json
 
       expect(response.header['Content-Disposition']).to eq(expected_content)
-    end
-
-    it 'successfully responds without plan if no plan created' do
-      allow(controller.helpers)
-        .to receive(:can).with(plan_path).and_return(true)
-      allow(controller.helpers)
-        .to receive(:session_check_flash).with(plan_path).and_return(true)
-      allow(controller.helpers)
-        .to receive(:can).with(deploy_path).and_return(false)
-
-      get :show
-      expect(response.status).to eq(200)
-    end
-
-    it 'runs terraform plan' do
-      allow(ruby_terraform).to receive(:plan)
-      allow(ruby_terraform).to receive(:show)
-      allow(instance_terra).to receive(:show)
-      allow(terra).to receive(:stdout).and_return(StringIO.new('foo'))
-      allow(JSON).to receive(:parse).and_return('foo plan')
-      allow(json_instance).to receive(:pretty_generate).and_return('foo plan')
-      put :update, format: :js
-
-      expect(ruby_terraform).to(
-        have_received(:plan)
-          .with(
-            directory: random_path,
-            plan:      plan_file,
-            no_color:  true,
-            var_file:  tfvars_file
-          )
-      )
-    end
-
-    it 'runs terraform show after creating a plan' do
-      allow(ruby_terraform).to receive(:plan)
-      allow(ruby_terraform).to receive(:show)
-
-      put :update, format: :js
-
-      expect(ruby_terraform).to(
-        have_received(:show)
-        .with(
-          json: true, path: plan_file
-        )
-      )
     end
 
     it 'handles rubyterraform exception' do
