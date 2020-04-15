@@ -114,13 +114,16 @@ RSpec.describe PlansController, type: :controller do
       expect(response.header['Content-Disposition']).to eq(expected_content)
     end
 
-    it 'does not show plan if no plan created' do
-      allow(controller.helpers).to receive(:can).and_return(false)
-      expected_content = 'text/html; charset=utf-8'
+    it 'successfully responds without plan if no plan created' do
+      allow(controller.helpers)
+        .to receive(:can).with(plan_path).and_return(true)
+      allow(controller.helpers)
+        .to receive(:session_check_flash).with(plan_path).and_return(true)
+      allow(controller.helpers)
+        .to receive(:can).with(deploy_path).and_return(false)
 
       get :show
-
-      expect(response.header['Content-Type']).to eq(expected_content)
+      expect(response.status).to eq(200)
     end
 
     it 'runs terraform plan' do
