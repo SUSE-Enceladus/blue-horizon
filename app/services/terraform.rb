@@ -111,6 +111,7 @@ class Terraform
   end
 
   def plan(output_path=saved_plan_path)
+    KeyValue.set(:active_terraform_action, 'plan')
     stdout = StringIO.new
     stderr = StringIO.new
     set_output(stdout, stderr)
@@ -129,15 +130,20 @@ class Terraform
         output:  stderr.string
       }
     }
+  ensure
+    KeyValue.set(:active_terraform_action, nil)
   end
 
   def apply(args)
+    KeyValue.set(:active_terraform_action, 'apply')
     set_output
     in_export_dir do
       RubyTerraform.apply(args)
     end
   rescue RubyTerraform::Errors::ExecutionError
     nil
+  ensure
+    KeyValue.set(:active_terraform_action, nil)
   end
 
   def show(plan_path=saved_plan_path)

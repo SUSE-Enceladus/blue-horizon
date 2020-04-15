@@ -5,9 +5,16 @@ module AuthorizationHelper
   def can(path)
     result =
       session_check(path) &&
+      terraform_action_check(path) &&
       flow_restriction_checks(path)
     logger.debug "AUTH: #{result ? 'can' : 'cannot'} access #{path}"
     return result
+  end
+
+  def check_and_alert(path)
+    session_check_flash(path) &&
+      terraform_action_check_flash(path) &&
+      flow_restriction_checks_flash(path)
   end
 
   def active_session?
@@ -42,6 +49,15 @@ module AuthorizationHelper
     end
   end
 
+  def terraform_action_check(path)
+    case path
+    when welcome_path
+      true
+    else
+      !terraform_running?
+    end
+  end
+
   def flow_restriction_checks(path)
     case path
     when plan_path
@@ -53,6 +69,27 @@ module AuthorizationHelper
     else
       true
     end
+  end
+
+  def session_check_flash(path)
+    return true if session_check(path)
+
+    flash[:error] = t('non_active_session')
+    false
+  end
+
+  def terraform_action_check_flash(path)
+    return true if terraform_action_check(path)
+
+    flash[:error] = t('flash.terraform_is_running')
+    false
+  end
+
+  def flow_restriction_checks_flash(path)
+    return true if flow_restriction_checks(path)
+
+    flash[:error] = t('flash.unauthorized')
+    false
   end
 
   def all_variables_are_set?
@@ -80,5 +117,9 @@ module AuthorizationHelper
 
   def apply_log_exists?
     export_file_exists? Terraform.statefilename
+  end
+
+  def terraform_running?
+    KeyValue.get(:active_terraform_action).present?
   end
 end

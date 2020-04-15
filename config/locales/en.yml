@@ -34,7 +34,6 @@ en:
   save: "Save"
   required: "Required"
   terraform_files: "terraform scripts and log"
-  unauthorized: "Sorry, you can't do that, yet."
   non_active_session: "Duplicate session!"
   session_reset: "The active session has been reset."
   password_show: "Show password"
@@ -65,6 +64,8 @@ en:
 
   flash:
     export_failure: "One or more sources or variables failed to export!"
+    unauthorized: "Sorry, you can't do that, yet."
+    terraform_is_running: "You cannot make any changes while terraform is running."
 
   tooltips:
     prior_step: "Go back without saving changes"
