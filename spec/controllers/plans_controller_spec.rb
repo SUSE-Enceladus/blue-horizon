@@ -20,14 +20,11 @@ RSpec.describe PlansController, type: :controller do
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('{}') }
     let(:variables) { Variable.load }
-    let(:log_filename) { 'ruby-terraform-test.log' }
-    let(:expected_random_log_path) do
-      File.join(random_path, log_filename)
+    let(:log_file) do
+      Logger::LogDevice.new(Rails.configuration.x.terraform_log_filename)
     end
-    let(:log_file) { Logger::LogDevice.new(expected_random_log_path) }
 
     before do
-      Rails.configuration.x.terraform_log_filename = expected_random_log_path
       allow(terra).to receive(:new).and_return(instance_terra)
     end
 
@@ -44,7 +41,7 @@ RSpec.describe PlansController, type: :controller do
           expect(log_device.targets).to eq([IO::STDOUT, log_file])
         end
       end
-      expect(File).to exist(expected_random_log_path)
+      expect(File).to exist(Rails.configuration.x.terraform_log_filename)
     end
 
     it 'exports variables' do

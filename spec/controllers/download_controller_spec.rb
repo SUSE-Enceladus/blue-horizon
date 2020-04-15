@@ -5,15 +5,14 @@ require 'rails_helper'
 RSpec.describe DownloadController, type: :controller do
   let(:ruby_terraform) { RubyTerraform }
   let(:random_path) { random_export_path }
-  let(:log_filename) { 'ruby-terraform-test.log' }
-  let(:expected_random_log_path) { File.join(random_path, log_filename) }
-  let!(:sources) do
-    allow(ruby_terraform).to receive(:init)
-    allow(ruby_terraform).to receive(:validate)
-    FileUtils.mkdir_p(random_path)
-    Rails.configuration.x.terraform_log_filename = expected_random_log_path
+  let!(:sources) { populate_sources }
 
-    populate_sources
+  before do
+    FileUtils.mkdir_p(random_path)
+  end
+
+  after do
+    FileUtils.rm_rf(random_path)
   end
 
   context 'when getting and sending files' do
@@ -23,14 +22,9 @@ RSpec.describe DownloadController, type: :controller do
       controller.instance_variable_set(:@compressed_filestream, mock_member)
       allow(controller).to receive(:zip_files)
       allow(controller).to receive(:send_data)
-      Rails.configuration.x.terraform_log_filename = expected_random_log_path
       Variable.load.export
       Source.all.each(&:export)
       FileUtils.mkdir_p(random_path)
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
     end
 
     it 'send zip data' do
@@ -51,13 +45,11 @@ RSpec.describe DownloadController, type: :controller do
     it 'gets source files' do
       expected_files = sources.pluck(:filename)
       prefix = Rails.configuration.x.source_export_dir
-      log_filename = Rails.configuration.x.terraform_log_filename
 
       expected_files.map! do |expected_file|
         Pathname.new(prefix + expected_file)
       end
-      expected_files.push Pathname.new(log_filename) if
-        File.exist?(log_filename)
+      expected_files.push Rails.configuration.x.terraform_log_filename
       allow(File).to receive(:exist?).and_return(true)
 
       get :download, format: :zip
@@ -79,14 +71,6 @@ RSpec.describe DownloadController, type: :controller do
   end
 
   context 'when creating zip files' do
-    before do
-      Rails.configuration.x.terraform_log_filename = expected_random_log_path
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
-    end
-
     it 'zip files' do
       prefix = Rails.root.join('spec', 'fixtures', 'sources')
       controller.instance_variable_set(
