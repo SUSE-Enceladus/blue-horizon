@@ -22,6 +22,21 @@ module Helpers
     Source.all
   end
 
+  def current_plan_fixture
+    # place the binary plan file
+    source_path =
+      Rails.root.join('spec', 'fixtures', 'current_plan')
+    dest_path =
+      Rails.configuration.x.source_export_dir.join('current_plan')
+    FileUtils.cp source_path, dest_path
+
+    current_plan_fixture_json
+  end
+
+  def current_plan_fixture_json
+    File.read(Rails.root.join('spec', 'fixtures', 'current_plan.json'))
+  end
+
   def collect_variable_names
     source_path =
       Rails.root.join('spec', 'fixtures', 'sources', 'variable*.tf.json')
