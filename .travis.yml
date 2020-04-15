@@ -11,7 +11,6 @@ jobs:
   include:
     - name: "specs"
       script:
-        - "RAILS_ENV=test bundle exec rails db:setup"
         - "bundle exec rails spec"
     - name: "style"
       script:
