@@ -10,14 +10,12 @@ module Helpers
       else
         'sources'
       end
-    source_path = Rails.root.join('spec', 'fixtures', sources_dir, '*')
-    Dir.glob(source_path).each do |filepath|
+    source_path = Rails.root.join('spec', 'fixtures', sources_dir)
+    Dir.glob(source_path.join('**/*')).each do |filepath|
       next if !include_mocks && filepath.include?('mocks')
 
-      Source.new(
-        filename: filepath.split('/').last,
-        content:  File.read(filepath)
-      ).save(validate: false)
+      relative_path = filepath.to_s.sub("#{source_path}/", '')
+      Source.import(source_path, relative_path, validate: false)
     end
     Source.all
   end

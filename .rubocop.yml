@@ -42,6 +42,10 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Enabled: false
 
+# When testing instantiation, it's perfectly valid to stub any instance
+RSpec/AnyInstance:
+  Enabled: false
+
 Style/Documentation:
   Exclude:
     - "spec/**/*"

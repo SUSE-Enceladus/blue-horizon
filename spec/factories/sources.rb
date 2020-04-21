@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :source do
-    filename { Faker::File.file_name }
+    filename { Faker::File.file_name(dir: '') }
     content { Faker::Lorem.paragraphs }
   end
 end

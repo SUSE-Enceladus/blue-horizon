@@ -14,21 +14,6 @@ if ENV['CLOUD_FRAMEWORK'].present?
 end
 
 # Populate editable sources from the static documents
-def import_sources(glob)
-  glob.each do |filepath|
-    filename = filepath.split('/').last
-    next if Source.find_by(filename: filename)
-
-    Rails.logger.info("New source file '#{filename}'")
-    Source.new(
-      filename: filename,
-      content:  File.read(filepath)
-    ).save(validate: false)
-  end
-end
-
 sources_path = ENV['TERRAFORM_SOURCES_PATH']
 sources_path ||= Rails.root.join('vendor', 'sources')
-Rails.configuration.x.supported_source_extensions.keys.each do |ext|
-  import_sources(Dir.glob(File.join(sources_path, "*#{ext}")))
-end
+Source.import_dir(sources_path, validate: false)
