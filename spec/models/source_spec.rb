@@ -52,6 +52,29 @@ RSpec.describe Source, type: :model do
       expect(source.filename).to eq(relative_path)
       expect(source.content).to eq(content)
     end
+
+    it 'imports only accepted files in a directory tree' do
+      source_dir = Rails.root.join('spec', 'fixtures', 'sources_nested')
+      accepted_files = [
+        'main.tf',
+        'modules/hello/hello.tf',
+        'modules/hello/variables.tf',
+        'variables.tf.json'
+      ]
+      rejected_files = [
+        'excluded.md',
+        'modules/hello/excluded.txt'
+      ]
+      described_class.import_dir(source_dir)
+      accepted_files.each do |file|
+        relative_path = file.sub("#{source_dir}/", '')
+        expect(described_class.where(filename: relative_path).count).to eq(1)
+      end
+      rejected_files.each do |file|
+        relative_path = file.sub("#{source_dir}/", '')
+        expect(described_class.where(filename: relative_path).count).to eq(0)
+      end
+    end
   end
 
   context 'when exporting' do
