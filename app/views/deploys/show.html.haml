@@ -8,8 +8,9 @@
     %p= markdown(t('page_subtitle.deploy_info'))
     %hr
     %div.float-right
-      = check_box('deploy_log', 'autoscroll', {class: 'form-check-input'})
-      %label.form-check-label= t('autoscroll')
+      %label.form-check-label
+        = check_box('deploy_log', 'autoscroll', class: 'form-check-input', checked: true)
+        = t('autoscroll')
     %p.clearfix
     %hr
     %pre.pre-scrollable
