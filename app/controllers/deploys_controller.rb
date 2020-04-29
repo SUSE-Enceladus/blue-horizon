@@ -18,14 +18,17 @@ class DeploysController < ApplicationController
     if Terraform.stderr.is_a?(StringIO) && !Terraform.stderr.string.empty?
       error = Terraform.stderr.string
       content = error
+      success = false
+      write_output(content, success)
     elsif Terraform.stdout.is_a?(StringIO)
       @apply_output = Terraform.stdout.string
       content = @apply_output
+      success = Terraform.stdout.string.include? 'Apply complete!'
     end
-
-    success = Terraform.stdout.string.include? 'Apply complete!'
-    write_output(content, success)
-    set_default_logger_config
+    if success
+      write_output(content, success)
+      set_default_logger_config
+    end
     html = (render_to_string partial: 'output.html.haml')
     respond_to do |format|
       format.json do
