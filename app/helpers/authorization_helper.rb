@@ -51,7 +51,7 @@ module AuthorizationHelper
 
   def terraform_action_check(path)
     case path
-    when welcome_path
+    when welcome_path, send_current_status_deploy_path
       true
     else
       !terraform_running?
