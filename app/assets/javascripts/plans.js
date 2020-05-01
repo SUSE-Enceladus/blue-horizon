@@ -26,4 +26,8 @@ $(function() {
       $(".steps-container .btn").removeClass("disabled");
       $('a[data-original-title="Next steps"]').addClass("disabled");
     });
+
+  $("#flash .close").click(function() {
+    $("#flash").hide();
+  });
 });

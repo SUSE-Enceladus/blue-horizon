@@ -48,7 +48,7 @@ function fetch_output(finished, intervalId) {
         // show terraform error message in output section
         $("#output").text($("#output").text() + data.error);
         clearTimeout(intervalId);
-	$(".steps-container .btn").removeClass("disabled");
+        $(".steps-container .btn").removeClass("disabled");
         $(".list-group-flush a").removeClass("disabled");
         $(".eos-icon-loading").addClass("hide");
       } else {
@@ -69,14 +69,17 @@ function fetch_output(finished, intervalId) {
       }
     },
     error: function(data) {
-      let endIndex = data.responseText.indexOf('#');
-      if (endIndex == -1)
-	endIndex = data.responseText.indexOf('\n');
+      let endIndex = data.responseText.indexOf("#");
+      if (endIndex == -1) endIndex = data.responseText.indexOf("\n");
       $("#error_message").text(data.responseText.substring(0, endIndex));
       $("#flash").show();
       $(".steps-container .btn").removeClass("disabled");
       $(".list-group-flush a").removeClass("disabled");
       $(".eos-icon-loading").addClass("hide");
     }
+  });
+
+  $("#flash .close").click(function() {
+    $("#flash").hide();
   });
 }
