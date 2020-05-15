@@ -2,14 +2,5 @@
   "name": "blue-horizon",
   "private": true,
   "dependencies": {},
-  "devDependencies": {
-    "husky": "^4.2.3",
-    "prettier": "1.19.1",
-    "pretty-quick": "^2.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && bundle exec rubocop && bundle exec rspec"
-    }
-  }
+  "devDependencies": {}
 }
