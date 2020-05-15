@@ -53,7 +53,7 @@ function fetch_output(finished, intervalId) {
         $(".eos-icon-loading").addClass("hide");
       } else {
         $(".pre-scrollable").html(data.new_html);
-        const autoscroll = $("#deploy_log_autoscroll").prop("checked");
+        var autoscroll = $("#deploy_log_autoscroll").prop("checked");
         if (autoscroll) {
           $(".pre-scrollable").scrollTop($("#output").height());
         }
@@ -69,7 +69,7 @@ function fetch_output(finished, intervalId) {
       }
     },
     error: function(data) {
-      let endIndex = data.responseText.indexOf("#");
+      var endIndex = data.responseText.indexOf("#");
       if (endIndex == -1) endIndex = data.responseText.indexOf("\n");
       $("#error_message").text(data.responseText.substring(0, endIndex));
       $("#flash").show();
