@@ -17,7 +17,7 @@
 #
 
 Name:      blue-horizon
-Version:   1.0.1
+Version:   1.1.0
 Release:   0
 License:   GPL-3.0
 Summary:   Web server interface for terraforming in a public cloud
@@ -162,7 +162,7 @@ bundle lock --local
 
 %install
 install -m 0755 -d %{buildroot}/srv/www/%{name}
-cp -r app bin config db public config.ru Gemfile* Rakefile %{buildroot}/srv/www/%{name}/
+cp -r app bin config db lib public config.ru Gemfile* Rakefile %{buildroot}/srv/www/%{name}/
 
 %files
 %defattr(-,root,root,-)

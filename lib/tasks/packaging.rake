@@ -49,6 +49,7 @@ namespace :obs do
       'config',
       'config.ru',
       'Gemfile.production',
+      'lib',
       'public',
       'Rakefile'
     ]
