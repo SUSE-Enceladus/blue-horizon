@@ -162,7 +162,7 @@ bundle lock --local
 
 %install
 install -m 0755 -d %{buildroot}/srv/www/%{name}
-cp -r app bin config db public config.ru Gemfile* Rakefile %{buildroot}/srv/www/%{name}/
+cp -r app bin config db lib public config.ru Gemfile* Rakefile %{buildroot}/srv/www/%{name}/
 
 %files
 %defattr(-,root,root,-)
