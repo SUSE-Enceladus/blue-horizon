@@ -42,13 +42,29 @@ RSpec.describe DeploysController, type: :controller do
       )
     end
 
-    it 'raise exception when deploying a plan' do
+    it 'raise exception' do
       allow(ruby_terraform).to(
         receive(:apply)
           .and_raise(RubyTerraform::Errors::ExecutionError)
       )
 
       get :update, format: :json
+    end
+
+    it 'writes error in the log' do
+      allow(ruby_terraform.configuration).to(
+        receive(:stderr)
+          .and_return(StringIO.new('Something went wrong'))
+      )
+
+      get :send_current_status, format: :json
+
+      filename = Rails.configuration.x.terraform_log_filename
+      expect(File).to exist(filename)
+      file_content = File.read(filename)
+      expect(
+        file_content.include?('Something went wrong')
+      ).to be true
     end
 
     it 'can show deploy output' do

@@ -49,8 +49,9 @@ class DeploysController < ApplicationController
   def write_output(content, success)
     # write the output of terraform apply
     # in STDOUT and file
-    f = File.open(Rails.configuration.x.terraform_log_filename, 'a')
-    f.write(content)
+    File.open(
+      Rails.configuration.x.terraform_log_filename, 'a'
+    ) { |file| file.write(content) }
     if success
       logger.info content
     else
