@@ -6,6 +6,7 @@ describe 'source editing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
   let(:random_path) { random_export_path }
+  let(:instance_sources_controller) { instance_double(SourcesController) }
   let!(:sources) do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
@@ -36,23 +37,67 @@ describe 'source editing', type: :feature do
     expect(source.content).to eq(random_content)
   end
 
-  it 'edits sources wrong syntax' do
+  it 'edits sources with wrong syntax does not validate on save' do
     allow(FileUtils).to receive(:chmod)
     allow(File).to receive(:write)
     source = Source.find_by(filename: 'dummy.sh')
     random_content = "# #{Faker::Lorem.paragraph}"
     expect(source.content).not_to eq(random_content)
-    allow(instance_terra).to(
-      receive(:validate)
-        .and_return('Error: wrong syntax')
-    )
+
     visit('/sources')
 
     click_on(source.filename)
     fill_in_hidden('#source_content', random_content)
     click_on(id: 'submit-source')
 
-    expect(page).to have_content('Error: wrong syntax')
+    expect(page).to have_content('Source was successfully updated.')
+  end
+
+  it 'validates sources' do
+    allow(File).to receive(:write)
+    allow(FileUtils).to receive(:chmod)
+    allow(Rails.configuration.x).to receive(:advanced_mode).and_return(true)
+
+    allow(instance_terra).to(
+      receive(:validate)
+        .and_return(
+          'Reference to undeclared input variable on' \
+          'script \'dummy.sh\' in line 2: value = "Hello, '\
+          '${var.names}."'
+        )
+    )
+
+    visit('/sources')
+    within('.float-right.btn-group.steps-container') do
+      click_link('Plan')
+    end
+
+    expect(page).to(
+      have_content(
+        'Reference to undeclared input variable on' \
+        'script \'dummy.sh\' in line 2: value = "Hello, '\
+        '${var.names}."'
+      )
+    )
+    visit('/sources')
+
+    click_link('Check Sources')
+
+    expect(page).to(
+      have_content(
+        'Reference to undeclared input variable on' \
+        'script \'dummy.sh\' in line 2: value = "Hello, '\
+        '${var.names}."'
+      )
+    )
+    allow(instance_terra).to(
+      receive(:validate)
+        .and_return(nil)
+    )
+
+    click_link('Check Sources')
+
+    expect(page).to have_content('All sources are valid.')
   end
 
   it 'creates new sources' do

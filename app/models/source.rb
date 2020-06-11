@@ -35,4 +35,11 @@ class Source < ApplicationRecord
   def terraform_validation
     Terraform.new.validate(true, false)
   end
+
+  def self.valid_sources
+    Source.all.find_each(&:export)
+    terra = Terraform.new
+    validation = terra.validate(true, true)
+    return validation
+  end
 end

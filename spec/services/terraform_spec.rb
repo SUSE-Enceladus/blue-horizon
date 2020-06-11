@@ -31,6 +31,7 @@ RSpec.describe Terraform, type: :service do
       receive(:stderr)
         .and_return(StringIO.new(error_message))
     )
+    allow(File).to receive(:basename).and_return("#{random_path}/foo.tf.json")
     described_class.new.validate(true, true)
 
     filename = Rails.configuration.x.terraform_log_filename
