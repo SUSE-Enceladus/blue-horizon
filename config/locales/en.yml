@@ -43,6 +43,8 @@ en:
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"
   password_key: "password"
+  #options key is used to create a multi select input rather than normal "text"
+  options_key: "options"
 
   plan: "Plan"
   apply: "Apply"
