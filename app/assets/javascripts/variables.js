@@ -28,4 +28,10 @@ $(function() {
     group.find("button.peek").show();
     group.find("input[type='text'").attr("type", "password");
   });
+  // Update file type input labels
+  $("input[type=file]").change(function() {
+    var group = $(this).closest(".input-group");
+    group.find("input[type='text'").attr(
+        "value", $(this).val().replace(/.*[\/|\\]/, ''));
+  });
 });

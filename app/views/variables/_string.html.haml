@@ -9,6 +9,11 @@
       %select.form-control{ name: "variables[#{key}]" }
         - @options.each do |option|
           %option{value: option, selected: value == option}= option
+    - elsif fieldtype == 'file'
+      - filename = value.split('/')[-1]
+      %input.form-control{ type: 'text', value: filename, required: @variables.required?(key), "style": "pointer-events: none" }
+      %div.input-group-append
+        %input.form-control{ type: fieldtype, name: "variables[#{key}]", style: "padding:0;margin:0;" }
     - else
       %input.form-control{ type: fieldtype, name: "variables[#{key}]", value: value, required: @variables.required?(key) }
     - if fieldtype == 'password'

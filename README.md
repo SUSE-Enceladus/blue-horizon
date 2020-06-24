@@ -79,6 +79,7 @@ Variables **must** be defined in terraform JSON format, and named `variable*.tf.
 - Variables will be _required_ unless the description includes the word "optional".
 - Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
 - Variables with "options=["option1", "option2"]" content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
+- Variables with "file_type" content will create a file upload input (the file will be uploaded to the server to run the deployment). This keyword value can be changed in the `en.yml` configuration file changing `file_key` entry.
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 

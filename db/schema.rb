@@ -15,12 +15,14 @@
 # It's strongly recommended that you check this file into your version control
 # system.
 
-ActiveRecord::Schema.define(version: 20191025213201) do
+ActiveRecord::Schema.define(version: 20200622081731) do
+
   create_table 'key_values', force: :cascade do |t|
     t.string 'key', null: false
     t.text 'value'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.string 'attachment'
     t.index ['key'], name: 'index_key_values_on_key', unique: true
   end
 
@@ -31,4 +33,5 @@ ActiveRecord::Schema.define(version: 20191025213201) do
     t.datetime 'updated_at', null: false
     t.index ['filename'], name: 'index_sources_on_filename'
   end
+
 end

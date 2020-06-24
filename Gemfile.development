@@ -36,6 +36,8 @@ gem 'ace-rails-ap'
 gem 'ruby-terraform'
 # Zip files
 gem 'rubyzip', require: 'zip'
+# Upload files to the server side. Read more: https://github.com/carrierwaveuploader/carrierwave
+gem 'carrierwave', '>=2.1.0'
 
 group :development, :test do
   # BDD with rspec

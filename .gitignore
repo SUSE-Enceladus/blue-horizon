@@ -13,6 +13,7 @@ rerun.txt
 packaging/*.tar*
 public/assets/*
 public/dev-assets/*
+public/uploads
 vendor/customization.json
 vendor/locales/*
 !vendor/locales/.keep

@@ -45,6 +45,8 @@ en:
   password_key: "password"
   #options key is used to create a multi select input rather than normal "text"
   options_key: "options"
+  #file key is used to create a file upload input
+  file_key: "file_key"
 
   plan: "Plan"
   apply: "Apply"

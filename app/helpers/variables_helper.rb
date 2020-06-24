@@ -14,6 +14,8 @@ module VariablesHelper
   def string_input_type(description)
     if description.to_s.downcase.match?('.*' + t('options_key') + '=\[(.*)\].*')
       'select'
+    elsif description.to_s.downcase.match?('.*' + t('file_key') + '*')
+      'file'
     elsif description.to_s.downcase.include?(t('password_key'))
       'password'
     else

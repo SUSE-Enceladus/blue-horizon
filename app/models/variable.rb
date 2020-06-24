@@ -63,6 +63,11 @@ class Variable
     !(/optional/i =~ @plan[key]['description'])
   end
 
+  def file_key?(key)
+    file_key_pattern = I18n.t('file_key')
+    (/#{file_key_pattern}/i =~ @plan[key]['description'])
+  end
+
   def attributes
     Hash[
       @plan.keys.collect do |key|
@@ -125,7 +130,11 @@ class Variable
     when 'map'
       Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
     else
-      value.to_s
+      if self.file_key?(key)
+        value
+      else
+        value.to_s
+      end
     end
   end
 end
