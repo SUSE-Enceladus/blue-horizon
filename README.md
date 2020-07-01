@@ -75,7 +75,10 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 
 **NOTE:** _The content of those files will be stored in the database, and may be edited by the application user. When terraform runs, it will run on exported content from the database, so it may not be identical to what was initially provided in `vendor/sources`._
 
-Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`. Variables will be _required_ unless the description includes the word "optional".
+Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`. Here some additional tips to customize your variables options:
+- Variables will be _required_ unless the description includes the word "optional".
+- Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
+- Variables with "options=["option1", "option2"]" content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 

@@ -22,6 +22,9 @@
         },
         "test_password": {
             "description": "Password is optional"
+        },
+        "test_options": {
+            "description": "Multi Options=[\"option1\", \"option2\"]"
         }
     }
 }
