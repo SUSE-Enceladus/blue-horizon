@@ -3,5 +3,4 @@
     = key.titleize
     = required if @variables.required?(key)
   %input.form-control{ type: 'number', name: "variables[#{key}]", value: value, required: @variables.required?(key) }
-  - if defined?(description)
-    %small.form-text.text-muted= description
+  = formatted_description(description)

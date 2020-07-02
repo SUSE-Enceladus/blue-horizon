@@ -56,6 +56,11 @@ describe 'variable editing', type: :feature do
       end
     end
 
+    it 'does not display description comments' do
+      expect(page).to have_content 'Some things'
+      expect(page).not_to have_content '// are best left unsaid'
+    end
+
     it 'fails to update and shows error' do
       random_variable_key = nil
       until random_variable_key &&

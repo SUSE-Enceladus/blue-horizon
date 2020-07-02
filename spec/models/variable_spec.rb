@@ -91,6 +91,7 @@ RSpec.describe Variable, type: :model do
         'test_description',
         'test_password',
         'test_options',
+        'test_description_comment',
         'name'
       ]
     end

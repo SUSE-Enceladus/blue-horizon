@@ -1,5 +1,4 @@
 %div.form-group.form-check{ class: key }
   = check_box('variables', key, class: 'form-check-input')
   %label.form-check-label{ for: "variables[#{key}]" }= key.titleize
-  - if defined?(description)
-    %small.form-text.text-muted= description
+  = formatted_description(description)
