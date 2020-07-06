@@ -17,5 +17,4 @@
           %i.eos-icons.md-18 visibility
         %button.btn.btn-outline-warning.unpeek{ id: "unpeek_#{key}",type: 'button', data: { toggle: 'tooltip' }, title: t(:password_hide), style: "display: none;"}
           %i.eos-icons.md-18 visibility_off
-  - if defined?(description)
-    %small.form-text.text-muted= description
+  = formatted_description(description)

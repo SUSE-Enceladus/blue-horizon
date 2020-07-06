@@ -11,6 +11,16 @@ module VariablesHelper
     )
   end
 
+  def formatted_description(description)
+    return nil unless description
+
+    content_tag(
+      :small,
+      description.split('//').first,
+      class: ['form-text', 'text-muted']
+    )
+  end
+
   def string_input_type(description)
     if description.to_s.downcase.match?('.*' + t('options_key') + '=\[(.*)\].*')
       'select'

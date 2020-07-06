@@ -20,8 +20,7 @@
     %div.input-group-append
       %button.btn.btn-outline-primary{ id: "#{key}_add_map", type: 'button', data: { toggle: 'tooltip' }, title: 'Add' }
         %i.eos-icons.md-18 add
-  - if defined?(description)
-    %small.form-text.text-muted= description
+  = formatted_description(description)
   %div{id: "#{key}_template", style: 'display: none;' }
     %div.input-group.mb-2
       %div.input-group-prepend

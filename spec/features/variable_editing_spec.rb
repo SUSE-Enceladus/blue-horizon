@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'variable editing', type: :feature do
-  let(:exclusions) { Cluster.variable_handlers }
+  let(:exclusions) { Cluster.variable_handlers << 'test_options' }
   let(:fake_data) { Faker::Crypto.sha256 }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
@@ -54,6 +54,11 @@ describe 'variable editing', type: :feature do
           .to eq(option_value)
         expect(page).to have_content('Variables were successfully updated.')
       end
+    end
+
+    it 'does not display description comments' do
+      expect(page).to have_content 'Some things'
+      expect(page).not_to have_content '// are best left unsaid'
     end
 
     it 'fails to update and shows error' do
