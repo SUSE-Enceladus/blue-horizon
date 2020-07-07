@@ -44,4 +44,20 @@ RSpec.describe Terraform, type: :service do
       file_content.include?('highly illogical')
     ).to be true
   end
+
+  it 'raise terraform exception when init because of wrong sources' do
+    allow(RubyTerraform).to(
+      receive(:init)
+        .and_raise(RubyTerraform::Errors::ExecutionError)
+    )
+    allow(File).to receive(:basename).and_return("#{random_path}/foo.tf.json")
+    described_class.new
+
+    filename = Rails.configuration.x.terraform_log_filename
+    expect(File).to exist(filename)
+    file_content = File.read(filename)
+    expect(
+      file_content.include?('Error calling terraform init.')
+    ).to be true
+  end
 end

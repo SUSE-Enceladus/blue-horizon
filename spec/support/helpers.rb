@@ -32,7 +32,9 @@ module Helpers
   end
 
   def current_plan_fixture_json
-    File.read(Rails.root.join('spec', 'fixtures', 'current_plan.json'))
+    plan = File.read(Rails.root.join('spec', 'fixtures', 'current_plan.json'))
+    terraform_version = `terraform --version`.match(/v([0-9.]+)/)[1]
+    plan.gsub('$VERSION', terraform_version)
   end
 
   def collect_variable_names

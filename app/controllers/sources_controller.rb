@@ -29,7 +29,7 @@ class SourcesController < ApplicationController
       redirect_to edit_source_path(@source), flash: flash
     else
       set_sources
-      render :new
+      return render :new
     end
   end
 
@@ -66,14 +66,40 @@ class SourcesController < ApplicationController
   private
 
   def set_sources
+    terra = Terraform.new
+    validation = terra.validate(true, true)
+    flash.now[:error] = validation if validation
+
     @sources = Source.all.order(:filename)
   end
 
   def set_source
+    terra = Terraform.new
+    validation = terra.validate(true, true)
+    flash.now[:error] = validation if validation
     @source = Source.find(params[:id])
   end
 
   def source_params
     params.require(:source).permit(:filename, :content)
+  end
+
+  def terra_validate
+    # Source.all.each(&:export)
+    @source.export
+    terra = Terraform.new
+    output = terra.validate(true, true)
+
+    if output
+      flash = { error: output }
+    else
+      message = 'Source was successfully '
+      message += params[:action] == 'create' ? 'created.' : 'updated.'
+      flash = { notice: message }
+    end
+    return redirect_to edit_source_path(@source), flash: flash if
+      params[:action] == 'create'
+
+    redirect_to edit_source_path, flash: flash
   end
 end

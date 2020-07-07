@@ -13,19 +13,21 @@ class Terraform
         backend:  false,
         no_color: true
       )
+    rescue RubyTerraform::Errors::ExecutionError
+      @logger.error('Error calling terraform init.')
     end
   end
 
   def config_terraform
-    logger = Logger.new(
+    @logger = Logger.new(
       RubyTerraform::MultiIO.new(STDOUT, log_file),
       level: :debug
     )
     RubyTerraform.configure do |config|
       config.binary = find_default_binary
-      config.logger = logger
-      config.stdout = logger
-      config.stderr = logger
+      config.logger = @logger
+      config.stdout = @logger
+      config.stderr = @logger
     end
   end
 
@@ -86,7 +88,7 @@ class Terraform
     start += 'Error: '.length
     limit = message[start, message.length].index("\n")
     parsed_message = message[start, limit]
-    line = message =~ /line [0-9]+,/
+    line = message =~ /line [0-9]+/
 
     parsed_message += add_filename(message) if file
     parsed_message += " in #{message[line, 6]}:"

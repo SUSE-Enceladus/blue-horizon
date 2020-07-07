@@ -22,6 +22,13 @@
         },
         "test_password": {
             "description": "Password is optional"
+        },
+        "test_options": {
+            "description": "Multi Options=[\"option1\", \"option2\"]"
+        },
+        "test_description_comment": {
+            "description": "Some things // are best left unsaid",
+            "default": "be quiet"
         }
     }
 }

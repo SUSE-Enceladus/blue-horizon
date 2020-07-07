@@ -119,6 +119,9 @@ describe 'source editing', type: :feature do
     expect(source).to be_a(Source)
     expect(filename).to include(source.filename)
     expect(source.content).to eq(random_content)
+
+    click_on('New Source')
+    click_on(id: 'submit-source')
   end
 
   it 'does not create new sources' do

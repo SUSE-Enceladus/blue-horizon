@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'variable editing', type: :feature do
-  let(:exclusions) { Cluster.variable_handlers }
+  let(:exclusions) { Cluster.variable_handlers << 'test_options' }
   let(:fake_data) { Faker::Crypto.sha256 }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
@@ -30,7 +30,9 @@ describe 'variable editing', type: :feature do
     it 'stores form data for variables' do
       random_variable_key = nil
       until random_variable_key &&
-            variables.type(random_variable_key) == 'string'
+            variables.type(random_variable_key) == 'string' &&
+            (variables.description(random_variable_key).nil? ||
+            !variables.description(random_variable_key).include?('options'))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
@@ -41,10 +43,30 @@ describe 'variable editing', type: :feature do
       expect(page).to have_content('Variables were successfully updated.')
     end
 
+    it 'stores form data for variables in multi options input' do
+      expect(page).to have_select 'variables[test_options]',
+        with_options: ['option1', 'option2']
+      ['option1', 'option2'].each do |option_value|
+        select(option_value, from: 'variables[test_options]')
+        click_on('Save')
+
+        expect(KeyValue.get(variables.storage_key('test_options')))
+          .to eq(option_value)
+        expect(page).to have_content('Variables were successfully updated.')
+      end
+    end
+
+    it 'does not display description comments' do
+      expect(page).to have_content 'Some things'
+      expect(page).not_to have_content '// are best left unsaid'
+    end
+
     it 'fails to update and shows error' do
       random_variable_key = nil
       until random_variable_key &&
-            variables.type(random_variable_key) == 'string'
+            variables.type(random_variable_key) == 'string' &&
+            (variables.description(random_variable_key).nil? ||
+            !variables.description(random_variable_key).include?('options'))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
