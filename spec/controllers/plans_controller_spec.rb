@@ -105,13 +105,19 @@ RSpec.describe PlansController, type: :controller do
         receive(:plan)
           .and_raise(RubyTerraform::Errors::ExecutionError)
       )
+      allow(ruby_terraform.configuration).to(
+        receive(:stderr)
+          .and_return(
+            StringIO.new('foo')
+          )
+      )
 
       put :update, format: :js
 
       expect(flash[:error]).to(
         match(
           message: /Plan operation has failed/,
-          output:  ''
+          output:  'foo'
         )
       )
     end

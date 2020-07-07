@@ -30,7 +30,13 @@ class PlansController < ApplicationController
     return unless @exported_vars
 
     terra = Terraform.new
-    result = terra.plan
+    args = {
+      directory: Rails.configuration.x.source_export_dir,
+      plan:      terra.saved_plan_path,
+      no_color:  true,
+      var_file:  Variable.load.export_path
+    }
+    result = terra.plan(args)
 
     if result.is_a?(Hash)
       flash.now[:error] = result[:error]
