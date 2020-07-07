@@ -110,24 +110,17 @@ class Terraform
     Rails.configuration.x.source_export_dir.join('terraform.tfstate')
   end
 
-  def plan(output_path=saved_plan_path)
+  def plan(args)
     KeyValue.set(:active_terraform_action, 'plan')
-    stdout = StringIO.new
-    stderr = StringIO.new
-    set_output(stdout, stderr)
+    set_output
     in_export_dir do
-      RubyTerraform.plan(
-        directory: Rails.configuration.x.source_export_dir,
-        plan:      output_path,
-        no_color:  true,
-        var_file:  Variable.load.export_path
-      )
+      RubyTerraform.plan(args)
     end
   rescue RubyTerraform::Errors::ExecutionError
     return {
       error: {
         message: 'Plan operation has failed',
-        output:  stderr.string
+        output:  RubyTerraform.configuration.stderr.string
       }
     }
   ensure
