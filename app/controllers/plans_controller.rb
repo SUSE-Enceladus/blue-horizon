@@ -5,6 +5,7 @@ require 'fileutils'
 
 class PlansController < ApplicationController
   include FileUtils
+  before_action :validate_source, only: [:show]
 
   def show
     return unless helpers.can(deploy_path)
@@ -53,6 +54,14 @@ class PlansController < ApplicationController
   end
 
   private
+
+  def validate_source
+    validation = Source.valid_sources if Rails.configuration.x.advanced_mode
+    return unless validation
+
+    flash[:error] = validation
+    redirect_to sources_path
+  end
 
   def export_vars
     variables = Variable.load
