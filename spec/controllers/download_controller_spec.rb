@@ -19,8 +19,7 @@ RSpec.describe DownloadController, type: :controller do
     before do
       mock_member = double
       allow(mock_member).to receive(:read)
-      controller.instance_variable_set(:@compressed_filestream, mock_member)
-      allow(controller).to receive(:zip_files)
+      allow(controller).to receive(:zip_files).and_return(mock_member)
       allow(controller).to receive(:send_data)
       Variable.load.export
       Source.all.each(&:export)
@@ -28,8 +27,6 @@ RSpec.describe DownloadController, type: :controller do
     end
 
     it 'send zip data' do
-      allow(controller).to receive(:files)
-
       get :download, format: :zip
 
       zip_name = controller.instance_variable_get(:@zip_name)
@@ -50,11 +47,10 @@ RSpec.describe DownloadController, type: :controller do
         Pathname.new(prefix + expected_file)
       end
       expected_files.push Rails.configuration.x.terraform_log_filename
+      expected_files = expected_files.collect(&:to_s)
       allow(File).to receive(:exist?).and_return(true)
 
-      get :download, format: :zip
-
-      files = controller.instance_variable_get(:@files)
+      files = controller.files
       expected_files.each do |expected_file|
         expect(files).to be_include(expected_file)
       end
@@ -64,29 +60,20 @@ RSpec.describe DownloadController, type: :controller do
       test_file = random_path.join('test_file')
       File.write(test_file, 'w') { |_f| '' }
 
-      get :download, format: :zip
-      files = controller.instance_variable_get(:@files)
-      expect(files).to be_include(test_file)
+      expect(controller.files).to be_include(test_file.to_s)
     end
   end
 
   context 'when creating zip files' do
-    it 'zip files' do
-      prefix = Rails.root.join('spec', 'fixtures', 'sources')
-      controller.instance_variable_set(
-        :@files,
-        sources.map { |source| Pathname.new(prefix + source.filename) }
-      )
-      allow(controller).to receive(:files)
-      allow(controller).to receive(:send_data)
+    it 'zips files' do
+      files = sources.map(&:filename)
+      allow(Zip::OutputStream).to receive(:write_buffer).and_call_original
 
-      get :download, format: :zip
+      compressed_filestream = controller.zip_files(files)
 
-      expect(controller.instance_variable_get(:@compressed_filestream)).to(
-        be_a(StringIO)
-      )
-      expect(controller.instance_variable_get(:@compressed_filestream).length)
-        .to be > 0
+      expect(Zip::OutputStream).to have_received(:write_buffer)
+      expect(compressed_filestream).to be_a(StringIO)
+      expect(compressed_filestream.length).to be > 0
     end
   end
 end
