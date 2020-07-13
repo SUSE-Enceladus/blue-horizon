@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # Show plan
   resource :plan, only: [:show, :update]
   # Deploy
-  resource :deploy, only: [:show, :update, :create]
+  resource :deploy, only: [:update, :destroy]
 
   resource :deploy do
     get 'send_current_status', on: :member
