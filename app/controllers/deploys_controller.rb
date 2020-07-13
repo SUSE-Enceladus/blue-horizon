@@ -39,6 +39,14 @@ class DeploysController < ApplicationController
     return
   end
 
+  def destroy
+    flash.now[:error] = Terraform.new.destroy
+    unless flash.now[:error]
+      flash.now[:notice] = 'Terraform resources have been destroyed.'
+    end
+    render :show
+  end
+
   private
 
   def set_default_logger_config

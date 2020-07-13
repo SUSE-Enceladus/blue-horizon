@@ -106,4 +106,46 @@ RSpec.describe DeploysController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  context 'when destroying terraform resources' do
+    let(:ruby_terraform) { RubyTerraform }
+    let!(:random_path) { random_export_path }
+
+    before do
+      FileUtils.mkdir_p(random_path)
+    end
+
+    after do
+      FileUtils.rm_rf(random_path)
+    end
+
+    it 'destroys the resources deployed' do
+      allow(ruby_terraform).to receive(:destroy)
+      allow(File).to receive(:exist?).and_return(true)
+      allow(controller).to receive(:render)
+
+      delete :destroy
+
+      expect(response).to be_success
+      expect(flash[:notice]).to(
+        include('Terraform resources have been destroyed.')
+      )
+    end
+
+    it 'shows error when destroying resources' do
+      allow(ruby_terraform).to(
+        receive(:destroy)
+          .and_raise(RubyTerraform::Errors::ExecutionError)
+      )
+      allow(File).to receive(:exist?).and_return(true)
+      allow(controller).to receive(:render)
+
+      delete :destroy
+
+      expect(response).to be_success
+      expect(flash[:error]).to(
+        include('Error: Terraform destroy has failed.')
+      )
+    end
+  end
 end

@@ -146,6 +146,19 @@ class Terraform
     end
   end
 
+  def destroy
+    KeyValue.set(:active_terraform_action, 'destroy')
+    destroy_args = {
+      directory:    Rails.configuration.x.source_export_dir,
+      auto_approve: true
+    }
+    RubyTerraform.destroy(destroy_args)
+  rescue RubyTerraform::Errors::ExecutionError
+    return 'Error: Terraform destroy has failed.'
+  ensure
+    KeyValue.set(:active_terraform_action, nil)
+  end
+
   def set_output(stdout=StringIO.new, stderr=StringIO.new)
     RubyTerraform.configuration.stdout = stdout
     RubyTerraform.configuration.stderr = stderr

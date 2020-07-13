@@ -6,7 +6,7 @@ $(function() {
     .bind("ajax:beforeSend", function() {
       $("#output").text("");
       $(this).addClass("no-hover");
-      $(".steps-container .btn").addClass("disabled");
+      $(".float-right .steps-container .btn").addClass("disabled");
       $(".list-group-flush a").addClass("disabled");
       $(".eos-icon-loading").removeClass("hide");
       $("a[data-toggle]").tooltip("hide");
@@ -50,6 +50,7 @@ function fetch_output(finished, intervalId) {
         clearTimeout(intervalId);
         $(".steps-container .btn").removeClass("disabled");
         $(".list-group-flush a").removeClass("disabled");
+	$(".btn-danger").removeClass("disabled");
         $(".eos-icon-loading").addClass("hide");
       } else {
         $(".pre-scrollable").html(data.new_html);
@@ -62,9 +63,10 @@ function fetch_output(finished, intervalId) {
             fetch_output();
           }, 5000);
         } else {
-          $(".steps-container .btn").removeClass("disabled");
+          $(".float-right .steps-container .btn").removeClass("disabled");
           $(".list-group-flush a").removeClass("disabled");
           $(".eos-icon-loading").addClass("hide");
+	  $(".btn-danger").addClass("disabled");
         }
       }
     },
@@ -76,6 +78,7 @@ function fetch_output(finished, intervalId) {
       $(".steps-container .btn").removeClass("disabled");
       $(".list-group-flush a").removeClass("disabled");
       $(".eos-icon-loading").addClass("hide");
+      $(".btn-danger").removeClass("disabled");
     }
   });
 
