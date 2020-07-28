@@ -11,7 +11,7 @@ describe 'welcome', type: :feature do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
     populate_sources
-    KeyValue.set(:cloud_framework, cloud_framework)
+    Rails.configuration.x.cloud_framework = cloud_framework
   end
 
   it 'exists' do

@@ -24,7 +24,7 @@ describe 'cluster sizing', type: :feature do
     end
 
     before do
-      KeyValue.set(:cloud_framework, cloud_framework)
+      Rails.configuration.x.cloud_framework = cloud_framework
       visit '/cluster'
     end
 

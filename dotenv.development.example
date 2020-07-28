@@ -1,7 +1,5 @@
-# Cloud Framework
-# CLOUD_FRAMEWORK="aws"
-CLOUD_FRAMEWORK="azure"
-# CLOUD_FRAMEWORK="gcp"
-
 # Custom config
-# BLUE_HORIZON_CUSTOMIZER = "./vendor/customizaton.yml
+# BLUE_HORIZON_CUSTOMIZER = "./vendor/customizaton.yml"
+
+# Custom sources path
+# TERRAFORM_SOURCES_PATH = "./vendor/sources"

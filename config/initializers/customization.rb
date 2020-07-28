@@ -23,6 +23,11 @@ Rails.application.configure do
   config.x.cluster_size ||= OpenStruct.new
   config.x.cluster_size.min ||= 3
   config.x.cluster_size.max ||= 250
+
+  # fallback to ENV var if not defined in custom config
+  # _cloud_framework_ should be one of "AWS", "Azure", "GCP"
+  config.x.cloud_framework ||= ENV['CLOUD_FRAMEWORK']
+  config.x.cloud_framework = config.x.cloud_framework.downcase if config.x.cloud_framework.present?
 end
 
 # The following performs required actions based on custom configuration above

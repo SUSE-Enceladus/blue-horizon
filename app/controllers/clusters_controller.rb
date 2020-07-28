@@ -21,7 +21,7 @@ class ClustersController < ApplicationController
     safe_params = params.require(:cluster).permit(
       :cloud_framework, :instance_type, :instance_type_custom, :instance_count
     )
-    safe_params['cloud_framework'] = KeyValue.get(:cloud_framework)
+    safe_params['cloud_framework'] = Rails.configuration.x.cloud_framework
     return safe_params
   end
 end

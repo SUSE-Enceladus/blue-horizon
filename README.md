@@ -34,13 +34,17 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
     sudo zypper in libxml2-devel libxslt-devel
     ```
 
-4.  Create a dotenv file (e.g. `.env.development`) that defines:
-    *   The cloud framework
+4.  If you need to use a path _other than_ `./vendor/` for customization, create a dotenv file (e.g. `.env.development`) that defines:
+    *   The path to the customization JSON:
         ```
-        CLOUD_FRAMEWORK="aws"
+        BLUE_HORIZON_CUSTOMIZER = "./vendor/customizaton.yml"
+        ```
+    *   The path where _terraform_ sources will be imported from:
+        ```
+        TERRAFORM_SOURCES_PATH = "./vendor/sources"
         ```
 
-5.  Place original _terraform_ scripts in `/vendor/sources`
+5.  Place original _terraform_ scripts in `/vendor/sources` (or your custom `TERRAFORM_SOURCES_PATH`)
 
     💡 _Need a simple script for development? Try this [gist](https://gist.github.com/bear454/96c067ab082f5c6cc9321061f601373f)._
 
