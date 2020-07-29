@@ -152,7 +152,9 @@ class Terraform
       directory:    Rails.configuration.x.source_export_dir,
       auto_approve: true
     }
-    RubyTerraform.destroy(destroy_args)
+    in_export_dir do
+      RubyTerraform.destroy(destroy_args)
+    end
   rescue RubyTerraform::Errors::ExecutionError
     return 'Error: Terraform destroy has failed.'
   ensure
