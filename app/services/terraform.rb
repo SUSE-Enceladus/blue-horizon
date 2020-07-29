@@ -9,10 +9,7 @@ class Terraform
 
   def init_terraform
     in_export_dir do
-      RubyTerraform.init(
-        backend:  false,
-        no_color: true
-      )
+      RubyTerraform.init(backend: false, no_color: true)
     rescue RubyTerraform::Errors::ExecutionError
       @logger.error('Error calling terraform init.')
     end
@@ -32,16 +29,15 @@ class Terraform
   end
 
   def log_file
-    log_path_filename = Rails.configuration.x.terraform_log_filename
-    return Logger::LogDevice.new(log_path_filename)
+    Logger::LogDevice.new(Rails.configuration.x.terraform_log_filename)
   end
 
   def saved_plan_path
-    return Rails.configuration.x.source_export_dir.join('current_plan')
+    Rails.configuration.x.source_export_dir.join('current_plan')
   end
 
   def find_default_binary
-    return `which terraform`.strip
+    `which terraform`.strip
   end
 
   def in_export_dir(path=Rails.configuration.x.source_export_dir)
