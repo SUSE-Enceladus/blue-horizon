@@ -8,11 +8,6 @@
 Rails.logger = Logger.new(STDOUT)
 Rails.logger.level = Logger::INFO
 
-# Populate KeyValues
-if ENV['CLOUD_FRAMEWORK'].present?
-  KeyValue.set(:cloud_framework, ENV['CLOUD_FRAMEWORK'])
-end
-
 # Populate editable sources from the static documents
 sources_path = ENV['TERRAFORM_SOURCES_PATH']
 sources_path ||= Rails.root.join('vendor', 'sources')

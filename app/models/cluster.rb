@@ -22,7 +22,7 @@ class Cluster
 
   def self.load
     new(
-      cloud_framework:      KeyValue.get(:cloud_framework),
+      cloud_framework:      Rails.configuration.x.cloud_framework,
       instance_count:       prefixed_get(:instance_count),
       instance_type:        prefixed_get(:instance_type),
       instance_type_custom: prefixed_get(:instance_type_custom)
