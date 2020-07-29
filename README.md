@@ -37,7 +37,7 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
 4.  If you need to use a path _other than_ `./vendor/` for customization, create a dotenv file (e.g. `.env.development`) that defines:
     *   The path to the customization JSON:
         ```
-        BLUE_HORIZON_CUSTOMIZER = "./vendor/customizaton.yml"
+        BLUE_HORIZON_CUSTOMIZER = "./vendor/customization.yml"
         ```
     *   The path where _terraform_ sources will be imported from:
         ```
