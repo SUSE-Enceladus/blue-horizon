@@ -122,4 +122,46 @@ RSpec.describe PlansController, type: :controller do
       )
     end
   end
+
+  context 'when showing the plan raises an error' do
+    let(:file) { File }
+    let(:file_write) { File }
+    let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
+    let(:tfvars_file) { Variable.load.export_path }
+
+    it 'handles and show the error' do
+      terraform_error = 'Error: Invalid plan file\n\nFailed ' \
+                        'to read prior state snapshot from plan file: state ' \
+                        'snapshot was created\nby Terraform v0.12.26, which ' \
+                        'is newer than current v0.12.24; upgrade to' \
+                        '\nTerraform v0.12.26 or greater to work with this ' \
+                        'state.\n\n'
+
+      parsed_error = 'Error: Invalid plan file\\\\n\\\\nFailed to read prior ' \
+                     'state snapshot from plan file: state snapshot was ' \
+                     'created\\\\nby Terraform v0.12.26, which is newer than ' \
+                     'current v0.12.24; upgrade to\\\\nTerraform v0.12.26 or ' \
+                     'greater to work with this state.\\\\n\\\\n'
+      error_message = "{\n  \"error\": {\n    \"message\": \"Show plan " \
+                      "operation has failed\",\n    \"output\": " \
+                      "\"#{parsed_error}\"\n  }\n}"
+
+      allow(ruby_terraform.configuration).to(
+        receive(:stderr)
+          .and_return(
+            StringIO.new(terraform_error)
+          )
+      )
+      allow(controller.helpers).to receive(:can).and_return(true)
+      allow(ruby_terraform).to(
+        receive(:show)
+          .and_raise(RubyTerraform::Errors::ExecutionError)
+      )
+      allow(controller.helpers).to receive(:can).and_return(true)
+
+      get :show, format: :json
+
+      expect(response.body).to have_content(error_message)
+    end
+  end
 end

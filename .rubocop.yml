@@ -87,7 +87,7 @@ Metrics/MethodLength:
   Enabled: false
 
 Metrics/ClassLength:
-  Max: 150
+  Max: 157
 
 Style/FormatStringToken:
   Exclude:

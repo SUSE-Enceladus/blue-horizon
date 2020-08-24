@@ -10,8 +10,9 @@ class PlansController < ApplicationController
   def show
     return unless helpers.can(deploy_path)
 
-    Terraform.new.show
-    @show_output = Terraform.stdout.string
+    @show_output = Terraform.new.show
+    @show_output = @show_output.to_json unless @show_output.nil?
+    @show_output ||= Terraform.stdout.string
     @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
     respond_to do |format|

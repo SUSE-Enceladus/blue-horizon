@@ -21,11 +21,16 @@ module Helpers
   end
 
   def current_plan_fixture
+    plan_name = 'current_plan'
+    plan_path = Rails.root.join('spec', 'fixtures', 'sources_show_plan')
+    Dir.chdir(plan_path)
+    # generate a mock plan with local $VERSION of terraform
+    `terraform plan -out=#{plan_name}`
     # place the binary plan file
     source_path =
-      Rails.root.join('spec', 'fixtures', 'current_plan')
+      Rails.root.join(plan_path, plan_name)
     dest_path =
-      Rails.configuration.x.source_export_dir.join('current_plan')
+      Rails.configuration.x.source_export_dir.join(plan_name)
     FileUtils.cp source_path, dest_path
 
     current_plan_fixture_json

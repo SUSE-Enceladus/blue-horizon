@@ -138,7 +138,15 @@ class Terraform
   def show(plan_path=saved_plan_path)
     set_output
     in_export_dir do
-      RubyTerraform.show(path: plan_path, json: true)
+      RubyTerraform.show(path: plan_path, json: true, no_color: true)
+    rescue RubyTerraform::Errors::ExecutionError
+      error_message = RubyTerraform.configuration.stderr.string
+      @logger.error("Error calling terraform show: #{error_message}")
+      return {
+        error: {
+          message: 'Show plan operation has failed', output: error_message
+        }
+      }
     end
   end
 
