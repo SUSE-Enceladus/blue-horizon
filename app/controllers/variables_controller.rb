@@ -12,6 +12,8 @@ class VariablesController < ApplicationController
   end
 
   def update
+    params[:variables][:cluster_labels] ||= {}
+
     @variables.attributes = variables_params
     if @variables.save
       flash_message = {}
