@@ -58,6 +58,10 @@ group :development, :test do
   gem 'selenium-webdriver'
   # enable capyabara to open test output
   gem 'launchy'
+  gem 'pry', '~> 0.10.4'
+  gem 'pry-doc', '~> 0.6.0'
+  gem 'pry-nav'
+  gem 'pry-remote'
   # code style enforcement
   gem 'rubocop', '~> 0.76.0', require: false
   gem 'rubocop-rails'
