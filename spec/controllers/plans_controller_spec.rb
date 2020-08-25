@@ -103,7 +103,10 @@ RSpec.describe PlansController, type: :controller do
     it 'handles rubyterraform exception' do
       allow(ruby_terraform).to(
         receive(:plan)
-          .and_raise(RubyTerraform::Errors::ExecutionError)
+          .and_raise(
+            RubyTerraform::Errors::ExecutionError,
+            'Failed while running \'plan\'.'
+          )
       )
       allow(ruby_terraform.configuration).to(
         receive(:stderr)
@@ -116,7 +119,7 @@ RSpec.describe PlansController, type: :controller do
 
       expect(flash[:error]).to(
         match(
-          message: /Plan operation has failed/,
+          message: /Failed while running 'plan'./,
           output:  'foo'
         )
       )
