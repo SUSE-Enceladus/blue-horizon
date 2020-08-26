@@ -97,3 +97,6 @@ Metrics/AbcSize:
   Enabled: false
 
 inherit_from: .rubocop_todo.yml
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
