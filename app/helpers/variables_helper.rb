@@ -16,7 +16,7 @@ module VariablesHelper
 
     content_tag(
       :small,
-      markdown(description, escape_html=false),
+      markdown(description, false),
       class: ['form-text', 'text-muted']
     )
   end
