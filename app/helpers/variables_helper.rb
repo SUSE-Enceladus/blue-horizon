@@ -16,7 +16,7 @@ module VariablesHelper
 
     content_tag(
       :small,
-      description.split('//').first,
+      markdown(description, escape_html=false),
       class: ['form-text', 'text-muted']
     )
   end

@@ -69,10 +69,14 @@ module ApplicationHelper
       space_after_headers: true,
       no_intra_emphasis:   true
     }
+    # Redcarpet doesn't remove HTML comments even with `filter_html: true`
+    # https://github.com/vmg/redcarpet/issues/692
+    uncommented_text = text.gsub(/<!--(.*?)-->/,'')
+
     markdown = Redcarpet::Markdown.new(
       Redcarpet::Render::HTML.new(escape_html: escape_html),
       options
     )
-    markdown.render(text).html_safe
+    markdown.render(uncommented_text).html_safe
   end
 end
