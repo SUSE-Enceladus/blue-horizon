@@ -112,11 +112,12 @@ class Terraform
     in_export_dir do
       RubyTerraform.plan(args)
     end
-  rescue RubyTerraform::Errors::ExecutionError
+  rescue RubyTerraform::Errors::ExecutionError => e
+    plan_stderr = RubyTerraform.configuration.stderr.string
+    plan_stderr ||= ''
     return {
       error: {
-        message: 'Plan operation has failed',
-        output:  RubyTerraform.configuration.stderr.string
+        message: e.to_s, output: plan_stderr
       }
     }
   ensure

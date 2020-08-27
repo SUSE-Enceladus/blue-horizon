@@ -14,7 +14,7 @@ $(function() {
       if (output.error) {
         $("#flash").show();
         $("#error_message").text(output.error.message);
-        $("code.output").text(output.error.output);
+        $("code.output").text(JSON.stringify(output, null, 4));
       } else {
         $("code.output").text(output);
       }
