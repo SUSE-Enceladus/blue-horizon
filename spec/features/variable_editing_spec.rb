@@ -58,7 +58,7 @@ describe 'variable editing', type: :feature do
 
     it 'does not display description comments' do
       expect(page).to have_content 'Some things'
-      expect(page).not_to have_content '// are best left unsaid'
+      expect(page).not_to have_content 'are best left unsaid'
     end
 
     it 'fails to update and shows error' do
