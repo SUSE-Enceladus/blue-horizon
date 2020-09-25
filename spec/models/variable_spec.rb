@@ -17,7 +17,8 @@ RSpec.describe Variable, type: :model do
       'test_map'         => { foo: 'bar' },
       'test_password'    => 'Superman123!',
       'test_options'     => 'option1',
-      'fake_key'         => 'fake_value'
+      'fake_key'         => 'fake_value',
+      'region'           => random_string
     }
   end
   let(:terra) { Terraform }
@@ -92,6 +93,7 @@ RSpec.describe Variable, type: :model do
         'test_password',
         'test_options',
         'test_description_comment',
+        'region',
         'name'
       ]
     end

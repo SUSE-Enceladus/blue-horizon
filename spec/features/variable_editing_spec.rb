@@ -3,10 +3,19 @@
 require 'rails_helper'
 
 describe 'variable editing', type: :feature do
-  let(:exclusions) { Cluster.variable_handlers << 'test_options' }
+  let(:exclusions) do
+    [
+      *Cluster.variable_handlers,
+      *Region.variable_handlers,
+      'test_options'
+    ]
+  end
   let(:fake_data) { Faker::Crypto.sha256 }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
+  let(:mock_location) { Faker::Internet.slug }
+
+  before { mock_metadata_location(mock_location) }
 
   context 'with sources' do
     let(:variable_names) { collect_variable_names }

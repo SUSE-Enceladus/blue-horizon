@@ -5,6 +5,7 @@ require 'rails_helper'
 describe 'cluster sizing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
+  let(:mock_location) { Faker::Internet.slug }
 
   before do
     allow(terra).to receive(:new).and_return(instance_terra)
@@ -35,6 +36,8 @@ describe 'cluster sizing', type: :feature do
     end
 
     it 'stores cluster sizing' do
+      mock_metadata_location(mock_location)
+
       choose(random_instance_type_key)
       fill_in('cluster_instance_count', with: random_cluster_size)
       click_on(id: 'submit-cluster')

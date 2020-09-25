@@ -84,7 +84,15 @@ Variables **must** be defined in terraform JSON format, and named `variable*.tf.
 - Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
 - Variables with "options=["option1", "option2"]" content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
 - Variable descriptions may include a comment that is not displayed. Any content contained in an HTML comment block `<!-- like this -->` will not be included in the UI, but _will_ be parsed for other customization flags.
-- Variable descriptions will be rendered as inline _markdown_ in the UI. 
+- Variable descriptions will be rendered as inline _markdown_ in the UI.
+
+#### Special variables
+
+The following variables will not be displayed on the variable entry form, but will be populated via other application interfaces:
+- `instance_type`: the virtual machine type to be used when starting cloud instances; this will be populated from the _Size Cluster_ page.
+- `instance_count`: the number of virtual machines to be deployed; this will be populate from the _Size Cluster_ page.
+- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).  
+  ⚠ _End users should be notified that the application needs to run in the same region where it will be deployed._
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 
