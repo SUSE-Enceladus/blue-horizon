@@ -4,18 +4,9 @@ require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
   let(:json_instance) { JSON }
-  let!(:random_path) { random_export_path }
   let(:ruby_terraform) { RubyTerraform }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
-
-  before do
-    FileUtils.mkdir_p(random_path)
-  end
-
-  after do
-    FileUtils.rm_rf(random_path)
-  end
 
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('{}') }

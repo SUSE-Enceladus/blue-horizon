@@ -88,16 +88,10 @@ describe 'variable editing', type: :feature do
     let(:variables) { Variable.new(Source.variables.pluck(:content)) }
     let(:instance_var) { instance_double(Variable) }
     let(:instance_var_controller) { instance_double(VariablesController) }
-    let!(:random_path) { random_export_path }
 
     before do
-      FileUtils.mkdir_p(random_path)
       populate_sources(true)
       visit('/variables')
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
     end
 
     it 'stores form data for variables and redirects to plan' do

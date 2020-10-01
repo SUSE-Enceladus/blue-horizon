@@ -197,38 +197,29 @@ RSpec.describe Variable, type: :model do
     let(:random_path) do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end
-    let(:expected_random_export_path) do
-      File.join(random_path, export_filename)
-    end
-    let(:expected_config_export_path) do
-      File.join(Rails.configuration.x.source_export_dir, export_filename)
+    let(:expected_export) do
+      File.join(working_path, export_filename)
     end
     let(:json) { JSON.dump(variables.attributes) }
 
     before do
-      Rails.configuration.x.source_export_dir = random_path
-      FileUtils.mkdir_p(random_path)
       variables.attributes = attributes_hash
     end
 
-    after do
-      FileUtils.rm_rf(random_path)
-    end
-
     it 'writes to a file' do
-      variables.export_into(random_path)
-      expect(File).to exist(expected_random_export_path)
+      variables.export_into(working_path)
+      expect(File).to exist(expected_export)
     end
 
     it 'writes variable values' do
       variables.export
-      exported = File.read(expected_config_export_path)
+      exported = File.read(expected_export)
       expect(exported).to eq(json)
     end
 
     it 'writes to the config path unless otherwise specified' do
       variables.export
-      expect(File).to exist(expected_config_export_path)
+      expect(File).to exist(expected_export)
     end
   end
 end
