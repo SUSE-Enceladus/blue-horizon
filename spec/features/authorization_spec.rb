@@ -4,9 +4,6 @@ require 'rails_helper'
 
 describe 'authorization', type: :feature do
   let(:cloud_framework) { 'azure' }
-  let(:random_path) do
-    Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-  end
   let(:auth_message) { I18n.t('flash.unauthorized') }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
@@ -44,14 +41,8 @@ describe 'authorization', type: :feature do
 
   describe 'after planning' do
     before do
-      FileUtils.mkdir_p(random_path)
-      Rails.configuration.x.source_export_dir = random_path
-      artifact = Rails.configuration.x.source_export_dir.join('current_plan')
+      artifact = working_path.join('current_plan')
       File.open(artifact, 'w') {}
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
     end
 
     it 'allows access to deploy' do
@@ -61,7 +52,7 @@ describe 'authorization', type: :feature do
     end
 
     it 'raises StandardError while checking access to deploy' do
-      allow(Rails.configuration.x.source_export_dir).to(
+      allow(working_path).to(
         receive(:join)
           .and_raise(StandardError)
       )

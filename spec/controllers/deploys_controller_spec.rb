@@ -9,20 +9,10 @@ RSpec.describe DeploysController, type: :controller do
     let(:ruby_terraform) { RubyTerraform }
     let(:terra_stderr) { ruby_terraform.configuration.stderr }
     let(:variable_instance) { Variable.new('') }
-    let!(:random_path) { random_export_path }
 
-    let(:sources_dir) { Rails.root.join('tmp', random_path) }
     let(:terraform_tfvars) { 'terraform.tfvars' }
     let(:terra) { Terraform }
     let(:instance_terra) { instance_doube(terra) }
-
-    before do
-      FileUtils.mkdir_p(random_path)
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
-    end
 
     it 'deploys a plan successfully' do
       allow(File).to receive(:exist?).and_return(true)
@@ -35,7 +25,7 @@ RSpec.describe DeploysController, type: :controller do
       expect(ruby_terraform).to(
         have_received(:apply)
           .with(
-            directory:    sources_dir,
+            directory:    working_path,
             auto_approve: true,
             no_color:     true
           )
@@ -109,15 +99,6 @@ RSpec.describe DeploysController, type: :controller do
 
   context 'when destroying terraform resources' do
     let(:ruby_terraform) { RubyTerraform }
-    let!(:random_path) { random_export_path }
-
-    before do
-      FileUtils.mkdir_p(random_path)
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
-    end
 
     it 'destroys the resources deployed' do
       allow(ruby_terraform).to receive(:destroy)

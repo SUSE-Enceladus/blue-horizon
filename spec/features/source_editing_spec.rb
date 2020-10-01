@@ -5,7 +5,6 @@ require 'rails_helper'
 describe 'source editing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
-  let(:random_path) { random_export_path }
   let(:instance_sources_controller) { instance_double(SourcesController) }
   let!(:sources) do
     allow(terra).to receive(:new).and_return(instance_terra)

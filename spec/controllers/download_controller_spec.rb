@@ -4,16 +4,7 @@ require 'rails_helper'
 
 RSpec.describe DownloadController, type: :controller do
   let(:ruby_terraform) { RubyTerraform }
-  let(:random_path) { random_export_path }
   let!(:sources) { populate_sources }
-
-  before do
-    FileUtils.mkdir_p(random_path)
-  end
-
-  after do
-    FileUtils.rm_rf(random_path)
-  end
 
   context 'when getting and sending files' do
     before do
@@ -23,7 +14,6 @@ RSpec.describe DownloadController, type: :controller do
       allow(controller).to receive(:send_data)
       Variable.load.export
       Source.all.each(&:export)
-      FileUtils.mkdir_p(random_path)
     end
 
     it 'send zip data' do
@@ -41,7 +31,7 @@ RSpec.describe DownloadController, type: :controller do
 
     it 'gets source files' do
       expected_files = sources.pluck(:filename)
-      prefix = Rails.configuration.x.source_export_dir
+      prefix = working_path
 
       expected_files.map! do |expected_file|
         Pathname.new(prefix + expected_file)
@@ -57,7 +47,7 @@ RSpec.describe DownloadController, type: :controller do
     end
 
     it 'gets files without extensions' do
-      test_file = random_path.join('test_file')
+      test_file = working_path.join('test_file')
       File.write(test_file, 'w') { |_f| '' }
 
       expect(controller.files).to be_include(test_file.to_s)
