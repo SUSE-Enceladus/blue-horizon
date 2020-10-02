@@ -66,6 +66,8 @@ group :development, :test do
   gem 'rubocop', '~> 0.76.0', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  # Mock external web requests
+  gem 'webmock', require: false
 end
 
 group :development do

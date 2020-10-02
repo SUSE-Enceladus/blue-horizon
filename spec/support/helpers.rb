@@ -37,6 +37,10 @@ module Helpers
     plan.gsub('$VERSION', terraform_version)
   end
 
+  def metadata_fixture(name)
+    File.read(Rails.root.join('spec', 'fixtures', 'metadata', name))
+  end
+
   def collect_variable_names
     source_path =
       Rails.root.join('spec', 'fixtures', 'sources', 'variable*.tf.json')
@@ -58,6 +62,10 @@ module Helpers
 
   def working_path
     Rails.configuration.x.source_export_dir
+  end
+
+  def mock_metadata_location(location)
+    allow_any_instance_of(Metadata).to receive(:location).and_return(location)
   end
 end
 

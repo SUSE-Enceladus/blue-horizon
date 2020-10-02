@@ -43,6 +43,14 @@ class VariablesController < ApplicationController
     end
     # exclude variables handled by cluster sizing
     @excluded = Cluster.variable_handlers
+    # set region automatically, if possibe
+    return unless @variables.respond_to? :region
+
+    region = Region.load
+    return unless region.set_by_metadata
+
+    region.save
+    @excluded += Region.variable_handlers
   end
 
   def variables_params
