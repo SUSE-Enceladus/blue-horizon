@@ -10,10 +10,10 @@
               %div.instance-type-box
                 = instance_type.category.name
                 %br
-                %small= instance_type.key
+                %small= instance_type.name
               %div.definition
                 %h3= instance_type.category.name
-                %h4= instance_type.key
+                %h4= instance_type.name
                 %p= instance_type.category.description
                 %p
                   - instance_type.category.features.each do |feature|

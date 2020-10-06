@@ -1,7 +1,7 @@
 {
     "categories": {
         "General Purpose: T2": {
-            "key": "General Purpose: T2",
+            "name": "General Purpose: T2",
             "description": "T2 instances are Burstable Performance Instances that provide a baseline level of CPU performance with the ability to burst above the baseline. The baseline performance and ability to burst are governed by CPU Credits.",
             "features": [
                 "Burstable CPU",
@@ -9,7 +9,7 @@
             ]
         },
         "General Purpose: M4": {
-            "key": "General Purpose: M4",
+            "name": "General Purpose: M4",
             "description": "M4 instances provides a balance of compute, memory, and network resources, and are a good choice for many applications; featuring 2.3 GHz Intel Xeon® E5-2686 v4 (Broadwell) processors or 2.4 GHz Intel Xeon® E5-2676 v3 (Haswell) processors.",
             "features": [
                 "EBS-optimized",
@@ -17,7 +17,7 @@
             ]
         },
         "Compute Optimized: C4": {
-            "key": "Compute Optimized: C4",
+            "name": "Compute Optimized: C4",
             "description": "C4 instances are optimized for compute-intensive workloads and delivers very cost-effective high performance at a low price/compute performance in EC2; featuring Intel Xeon E5-2666 v3 (Haswell) processors optimized specifically for EC2.",
             "features": [
                 "EBS-optimized",
@@ -25,7 +25,7 @@
             ]
         },
         "Memory Optimized: R3": {
-            "key": "Memory Optimized: R3",
+            "name": "Memory Optimized: R3",
             "description": "R3 instances are optimized for memory-intensive applications and offer lower price per GiB of RAM; featuring Intel Xeon E5-2670 v2 (Ivy Bridge) Processors",
             "features": [
                 "SSD Storage",
@@ -33,7 +33,7 @@
             ]
         },
         "Storage Optimized: I3": {
-            "key": "Storage Optimized: I3",
+            "name": "Storage Optimized: I3",
             "description": "High Storage Instances provide storage optimized for low latency, very high random I/O performance, high sequential read throughput and provide high IOPS at a low cost; featuring 2.3 GHz Intel Xeon E5-2686 v4 (Broadwell) processors.",
             "features": [
                 "NVMe SSD Storage",
@@ -42,7 +42,7 @@
             ]
         },
         "Storage Optimized: D2": {
-            "key": "Storage Optimized: D2",
+            "name": "Storage Optimized: D2",
             "description": "D2 instances feature up to 48 TB of HDD-based local storage, deliver high disk throughput, and offer the lowest price per disk throughput performance on Amazon EC2; featuring ntel Xeon E5-2676v3 (Haswell) processors.",
             "features": [
                 "HDD storage",
@@ -53,7 +53,7 @@
     "instance_types": {
         "t2.xlarge": {
             "sort_value": "00",
-            "key": "t2.xlarge",
+            "name": "t2.xlarge",
             "category": "General Purpose: T2",
             "vcpu_count": 4,
             "ram_bytes": 17179869184,
@@ -65,7 +65,7 @@
         },
         "m4.xlarge": {
             "sort_value": "01",
-            "key": "m4.xlarge",
+            "name": "m4.xlarge",
             "category": "General Purpose: M4",
             "vcpu_count": 4,
             "ram_bytes": 17179869184,
@@ -77,7 +77,7 @@
         },
         "c4.2xlarge": {
             "sort_value": "10",
-            "key": "c4.2xlarge",
+            "name": "c4.2xlarge",
             "category": "Compute Optimized: C4",
             "vcpu_count": 8,
             "ram_bytes": 16106127360,
@@ -89,7 +89,7 @@
         },
         "r3.xlarge": {
             "sort_value": "20",
-            "key": "r3.xlarge",
+            "name": "r3.xlarge",
             "category": "Memory Optimized: R3",
             "vcpu_count": 4,
             "ram_bytes": 32749125632,
@@ -100,7 +100,7 @@
         },
         "i3.xlarge": {
             "sort_value": "30",
-            "key": "i3.xlarge",
+            "name": "i3.xlarge",
             "category": "Storage Optimized: I3",
             "vcpu_count": 4,
             "ram_bytes": 32749125632,
@@ -112,7 +112,7 @@
         },
         "d2.xlarge": {
             "sort_value": "31",
-            "key": "d2.xlarge",
+            "name": "d2.xlarge",
             "category": "Storage Optimized: D2",
             "vcpu_count": 4,
             "ram_bytes": 32749125632,

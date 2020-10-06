@@ -76,7 +76,7 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    cloud-instancetype (0.0.3)
+    cloud-instancetype (1.1.0)
     codecov (0.2.5)
       colorize
       json
@@ -315,7 +315,7 @@ DEPENDENCIES
   bootstrap (~> 4.3.1)
   byebug
   capybara (>= 2.15)
-  cloud-instancetype
+  cloud-instancetype (~> 1.1)
   codecov
   dotenv-rails
   factory_bot_rails
