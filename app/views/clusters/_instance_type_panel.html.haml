@@ -41,8 +41,9 @@
                   are 2 vCPUs and 8GB of RAM; 4 vCPUs are recommended.
 
       %div.col-md-4.instance-type-description
-  %div.card-footer
-    = tip_icon
-    Not sure which type of instance to use? Check the
-    = link_to "Instance Types", list_url , target: :_blank, rel: 'noopener noreferrer'
-    list.
+  - if Rails.configuration.x.show_instance_type_tip
+    %div.card-footer
+      = tip_icon
+      Not sure which type of instance to use? Check the
+      = link_to "Instance Types", list_url , target: :_blank, rel: 'noopener noreferrer'
+      list.
