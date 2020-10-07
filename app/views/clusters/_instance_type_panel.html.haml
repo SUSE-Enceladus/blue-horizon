@@ -1,5 +1,4 @@
 %div.card
-  %h3.card-header Instance Type
   %div.card-body.instance-type-selector
     %div.row
       %div.col-md-8.instance-types
@@ -14,19 +13,21 @@
               %div.definition
                 %h3= instance_type.category.name
                 %h4= instance_type.name
-                %p= instance_type.category.description
+                %p= markdown(instance_type.category.description)
                 %p
                   - instance_type.category.features.each do |feature|
-                    %span.label.label-default= feature
+                    %span.label.label-default= markdown(feature)
                 %dl
-                  %dt vCPUs
-                  %dd.vcpu-count{ data: { vcpus: instance_type.vcpu_count } }
-                    = pluralize(instance_type.vcpu_count, 'core')
-                  %dt RAM
-                  %dd.ram-size{ data: { bytes: instance_type.ram_bytes, si: instance_type.ram_si_units } }
+                  - if instance_type.vcpu_count
+                    %dt vCPUs
+                    %dd.vcpu-count{ data: { vcpus: instance_type.vcpu_count } }
+                      = pluralize(instance_type.vcpu_count, 'core')
+                  - if instance_type.ram_bytes
+                    %dt RAM
+                    %dd.ram-size{ data: { bytes: instance_type.ram_bytes, si: instance_type.ram_si_units } }
                   - instance_type.details.each do |key, value|
                     %dt= key
-                    %dd= value
+                    %dd= markdown(value)
           - if Rails.configuration.x.allow_custom_instance_type
             %label.instance-type
               = form.radio_button :instance_type, 'CUSTOM'
