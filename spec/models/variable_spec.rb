@@ -23,17 +23,19 @@ RSpec.describe Variable, type: :model do
   end
   let(:expected_keys) do
     [
-      "name", 
-      "test_string", 
-      "are_you_sure", 
-      "test_list", 
-      "test_map", 
-      "empty_number", 
-      "test_description", 
-      "test_password", 
-      "test_options", 
-      "test_description_comment", 
-      "region"
+      'name',
+      'instance_count',
+      'instance_type',
+      'test_string',
+      'are_you_sure',
+      'test_list',
+      'test_map',
+      'empty_number',
+      'test_description',
+      'test_password',
+      'test_options',
+      'test_description_comment',
+      'region'
     ]
   end
   let(:terra) { Terraform }
@@ -114,7 +116,9 @@ RSpec.describe Variable, type: :model do
         'test_options',
         'test_description_comment',
         'region',
-        'name'
+        'name',
+        'instance_count',
+        'instance_type'
       ]
     end
 
