@@ -27,17 +27,18 @@
                   - instance_type.details.each do |key, value|
                     %dt= key
                     %dd= value
-          %label.instance-type
-            = form.radio_button :instance_type, 'CUSTOM'
-            %div.instance-type-box.double
-              Other types&hellip;
-              %br
-              %br
-              %small= form.text_field :instance_type_custom, class: "form-control", style: "display: none;"
-            %div.definition
-              %p
-                You may specify a preferred instance type with a minimum of
-                are 2 vCPUs and 8GB of RAM; 4 vCPUs are recommended.
+          - if Rails.configuration.x.allow_custom_instance_type
+            %label.instance-type
+              = form.radio_button :instance_type, 'CUSTOM'
+              %div.instance-type-box.double
+                Other types&hellip;
+                %br
+                %br
+                %small= form.text_field :instance_type_custom, class: "form-control", style: "display: none;"
+              %div.definition
+                %p
+                  You may specify a preferred instance type with a minimum of
+                  are 2 vCPUs and 8GB of RAM; 4 vCPUs are recommended.
 
       %div.col-md-4.instance-type-description
   %div.card-footer

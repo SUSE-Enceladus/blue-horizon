@@ -23,6 +23,9 @@ Rails.application.configure do
   config.x.cluster_size ||= OpenStruct.new
   config.x.cluster_size.min ||= 3
   config.x.cluster_size.max ||= 250
+  # custom instance type option can be removed:
+  # set `"allow_custom_instance_type": false` in customization.json
+  config.x.allow_custom_instance_type = true if config.x.allow_custom_instance_type.nil?
 
   # fallback to ENV var if not defined in custom config
   # _cloud_framework_ should be one of "AWS", "Azure", "GCP"
