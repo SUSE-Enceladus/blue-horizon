@@ -2,7 +2,7 @@ sudo: false
 language: ruby
 cache: bundler
 before_install:
-  - curl -sLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.13.3/terraform_0.13.3_linux_amd64.zip
+  - curl -sLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/0.13.4/terraform_0.13.4_linux_amd64.zip
   - unzip /tmp/terraform.zip -d /tmp
   - mv /tmp/terraform ~/bin
 before_script:

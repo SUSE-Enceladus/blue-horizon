@@ -13,7 +13,7 @@ Requirements are based on supported versions from SUSE Linux Enterprise Server 1
 * rails 5.1.7
 * puma 3.11.0
 * sqlite3
-* terraform 0.12
+* terraform 0.13.4
 * any dependencies of your terraform scripts (e.g. `kubectl`, `helm`, etc.)
 
 ## Contributing
