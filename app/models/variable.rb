@@ -36,6 +36,10 @@ class Variable
     new(Source.variables.pluck(:content))
   end
 
+  def keys
+    @plan.keys
+  end
+
   def type(key)
     @plan[key]['type'] || 'string'
   end

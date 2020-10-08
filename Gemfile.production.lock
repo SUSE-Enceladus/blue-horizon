@@ -45,7 +45,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (8.0.0)
     builder (3.2.4)
-    cloud-instancetype (0.0.2)
+    cloud-instancetype (1.1.0)
     concurrent-ruby (1.1.5)
     crass (1.0.6)
     erubi (1.9.0)
@@ -147,7 +147,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
-  cloud-instancetype
+  cloud-instancetype (~> 1.1)
   haml-rails (~> 2.0)
   jbuilder (~> 2.5)
   puma (>= 3.11)

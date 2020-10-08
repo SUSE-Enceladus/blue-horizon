@@ -21,6 +21,23 @@ RSpec.describe Variable, type: :model do
       'region'           => random_string
     }
   end
+  let(:expected_keys) do
+    [
+      'name',
+      'instance_count',
+      'instance_type',
+      'test_string',
+      'are_you_sure',
+      'test_list',
+      'test_map',
+      'empty_number',
+      'test_description',
+      'test_password',
+      'test_options',
+      'test_description_comment',
+      'region'
+    ]
+  end
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
 
@@ -45,6 +62,11 @@ RSpec.describe Variable, type: :model do
     variable_names.each do |key|
       expect(variables.send(key)).to eq(variables.default(key))
     end
+  end
+
+  it 'has a list of variable keys' do
+    expect(variables.keys).to be_an(Array)
+    expect(variables.keys.sort).to eq(expected_keys.sort)
   end
 
   context 'when loading' do
@@ -94,7 +116,9 @@ RSpec.describe Variable, type: :model do
         'test_options',
         'test_description_comment',
         'region',
-        'name'
+        'name',
+        'instance_count',
+        'instance_type'
       ]
     end
 

@@ -2,6 +2,7 @@
 
 class ClustersController < ApplicationController
   def show
+    @variable_keys = Variable.load.keys
     @cluster = ClusterSizeSliderDecorator.new(Cluster.load)
     @instance_types = Cloud::InstanceType.for(@cluster.cloud_framework)
   end
