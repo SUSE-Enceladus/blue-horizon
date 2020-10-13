@@ -78,7 +78,7 @@ def name_version
 end
 
 def version
-  File.read('.bumpversion.cfg').match(/^current_version = (?<version>[0-9.]+)$/)[:version]
+  File.read('.bumpversion.cfg').match(/^current_version = (?<v>[0-9.]+)$/)[:v]
 end
 
 def tarball_filename
