@@ -10,3 +10,6 @@ $dark:      $eos-bc-gray-800;
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+// Override with EOS styles
+@import "eos-overrides";
