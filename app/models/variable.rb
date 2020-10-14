@@ -11,6 +11,7 @@ class Variable
   include Saveable
 
   DEFAULT_EXPORT_FILENAME = 'terraform.tfvars.json'
+  UNGROUPED = 'ungrouped'
 
   def initialize(source_contents)
     source_contents = [source_contents].flatten
@@ -65,6 +66,22 @@ class Variable
 
   def required?(key)
     !(/optional/i =~ @plan[key]['description'])
+  end
+
+  def group(key)
+    /\[group:(?<group>.+)?\]/.match(@plan[key]['description'])[:group]
+  rescue StandardError
+    UNGROUPED
+  end
+
+  def by_groups
+    result = {}
+    attributes.each do |key, value|
+      group = self.group(key)
+      result[group] ||= {}
+      result[group][key] = value
+    end
+    return result
   end
 
   def attributes

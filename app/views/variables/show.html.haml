@@ -1,11 +1,12 @@
 = form_for(@variables, url: variables_path, method: :put) do |form|
-  %div.card
-    %h3.card-header Additional data
-    %div.card-body.variables
-      - @variables.attributes.each do |key, value|
-        - next if @excluded.include?(key)
-        = render(@variables.type(key), key: key, value: value, description: @variables.description(key))
-  %p.clearfix
+  - @variables.by_groups.each do |group, grouped_vars|
+    %div.card
+      %h3.card-header= t("variable_groups.#{group}")
+      %div.card-body.variables{ class: "variable_group_#{group}" }
+        - grouped_vars.each do |key, value|
+          - next if @excluded.include?(key)
+          = render(@variables.type(key), key: key, value: value, description: @variables.description(key))
+    %p.clearfix
   %div.float-right.btn-group.steps-container
     = link_to cluster_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
       %i.eos-icons.md-18 fast_rewind
