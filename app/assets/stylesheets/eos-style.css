@@ -1,0 +1,2403 @@
+/* Base
+   ========================================================================== */
+/**
+* This folder holds the boilerplate code for the project. Here you'll find all
+* the project's variables, and standard styles for commonly used HTML elements
+*/
+/* Variables
+  ========================================================================== */
+/**
+* This folder contains all our variables
+*
+* When variables are component specific, place the file in the /components folder
+*/
+/* Primary colors variables. Shades generated at : http://mcg.mbitson.com/
+   ========================================================================== */
+/* brand color - green */
+/* TODO: Add RGB Values */
+/* brand color - Pine */
+/* brand color - cerulean */
+/* brand color - red */
+/* brand color - yellow */
+/* brand color - gray */
+/* brand color - neutral */
+/* Meaningful colors variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Typography
+   ========================================================================== */
+/* @import url("https://fonts.googleapis.com/css?family=Work+Sans:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700"); */
+/* Paragraph variables
+   ========================================================================== */
+/* Variables: /assets/stylesheets/eos-base/variables/typography.scss */
+/* Titles
+   ========================================================================== */
+/* z-index variables for use cases
+   ========================================================================== */
+/* z-index values for content */
+/* Spacing variables
+   ========================================================================== */
+/**
+* Spacing variables used for margins and paddings
+*
+* $eos-space-base: base size from which the rest of the sizes are calculated
+*/
+/* Borders variables
+   ========================================================================== */
+/* Links
+   ========================================================================== */
+/*
+ * Colors variables: /assets/stylesheets/eos-base/variables/branding.scss
+*/
+/* Shadow variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Box shadow */
+/* Element focus shadow */
+/* Media query variables
+   ========================================================================== */
+/**
+* Media query variables for mobile and tablets
+*
+* $eos-sd-min for Small Devices (mobile) and $eos-md-min for Medium Devices (tablets)
+*/
+/* Lists
+   ========================================================================== */
+/*
+ * Colors variables: /assets/stylesheets/eos-base/variables/spacing.scss
+*/
+/* prism-theme variables
+   ========================================================================== */
+/* Variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/*#4CAF50*/
+/*#f8f8f2*/
+/*#272822*/
+/*#f92672*/
+/*#a6e22e*/
+/*#e6db74*/
+/*#66d9ef*/
+/* Helpers
+   ========================================================================== */
+/**
+*  This folder gathers all Sass tools and helpers
+*  Functions, mixins and placeholders should be put in here
+*/
+/* Mixins
+   ========================================================================== */
+/* Margin rules */
+/* Padding rules */
+/* Spacing rules
+   ========================================================================== */
+/**
+ * The margins/paddings mixins will generate classes following the format:
+ * type-direction-size
+ * for example, you will be able to use in PUG:
+ * .margin-top-xs or .padding-bottom-xl
+ * for more information checkout the file mixins.scss in this same folder.
+ */
+.margin-top-m {
+  margin-top: 16px; }
+
+.margin-top-xs {
+  margin-top: 4px; }
+
+.margin-top-s {
+  margin-top: 8px; }
+
+.margin-top-l {
+  margin-top: 24px; }
+
+.margin-top-xl {
+  margin-top: 32px; }
+
+.margin-top-xxl {
+  margin-top: 48px; }
+
+.margin-top-xxxl {
+  margin-top: 64px; }
+
+.margin-bottom-m {
+  margin-bottom: 16px; }
+
+.margin-bottom-xs {
+  margin-bottom: 4px; }
+
+.margin-bottom-s {
+  margin-bottom: 8px; }
+
+.margin-bottom-l {
+  margin-bottom: 24px; }
+
+.margin-bottom-xl {
+  margin-bottom: 32px; }
+
+.margin-bottom-xxl {
+  margin-bottom: 48px; }
+
+.margin-bottom-xxxl {
+  margin-bottom: 64px; }
+
+.margin-left-m {
+  margin-left: 16px; }
+
+.margin-left-xs {
+  margin-left: 4px; }
+
+.margin-left-s {
+  margin-left: 8px; }
+
+.margin-left-l {
+  margin-left: 24px; }
+
+.margin-left-xl {
+  margin-left: 32px; }
+
+.margin-left-xxl {
+  margin-left: 48px; }
+
+.margin-left-xxxl {
+  margin-left: 64px; }
+
+.margin-right-m {
+  margin-right: 16px; }
+
+.margin-right-xs {
+  margin-right: 4px; }
+
+.margin-right-s {
+  margin-right: 8px; }
+
+.margin-right-l {
+  margin-right: 24px; }
+
+.margin-right-xl {
+  margin-right: 32px; }
+
+.margin-right-xxl {
+  margin-right: 48px; }
+
+.margin-right-xxxl {
+  margin-right: 64px; }
+
+.padding-top-m {
+  padding-top: 16px; }
+
+.padding-top-xs {
+  padding-top: 4px; }
+
+.padding-top-s {
+  padding-top: 8px; }
+
+.padding-top-l {
+  padding-top: 24px; }
+
+.padding-top-xl {
+  padding-top: 32px; }
+
+.padding-top-xxl {
+  padding-top: 48px; }
+
+.padding-top-xxxl {
+  padding-top: 64px; }
+
+.padding-bottom-m {
+  padding-bottom: 16px; }
+
+.padding-bottom-xs {
+  padding-bottom: 4px; }
+
+.padding-bottom-s {
+  padding-bottom: 8px; }
+
+.padding-bottom-l {
+  padding-bottom: 24px; }
+
+.padding-bottom-xl {
+  padding-bottom: 32px; }
+
+.padding-bottom-xxl {
+  padding-bottom: 48px; }
+
+.padding-bottom-xxxl {
+  padding-bottom: 64px; }
+
+.padding-left-m {
+  padding-left: 16px; }
+
+.padding-left-xs {
+  padding-left: 4px; }
+
+.padding-left-s {
+  padding-left: 8px; }
+
+.padding-left-l {
+  padding-left: 24px; }
+
+.padding-left-xl {
+  padding-left: 32px; }
+
+.padding-left-xxl {
+  padding-left: 48px; }
+
+.padding-left-xxxl {
+  padding-left: 64px; }
+
+.padding-right-m {
+  padding-right: 16px; }
+
+.padding-right-xs {
+  padding-right: 4px; }
+
+.padding-right-s {
+  padding-right: 8px; }
+
+.padding-right-l {
+  padding-right: 24px; }
+
+.padding-right-xl {
+  padding-right: 32px; }
+
+.padding-right-xxl {
+  padding-right: 48px; }
+
+.padding-right-xxxl {
+  padding-right: 64px; }
+
+/* Mixins
+   ========================================================================== */
+/* Margin rules */
+/* Padding rules */
+/* Titles
+   ========================================================================== */
+/**
+* Titles
+*
+* Typography variables: /assets/stylesheets/eos-base/variables/typography.scss
+* Titles variables: /assets/stylesheets/eos-base/variables/titles.scss
+* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*/
+.subheadline,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Work Sans", arial, helvetica, sans-serif; }
+
+h1,
+h2 {
+  font-weight: 400;
+  line-height: 1.5em; }
+
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.5em; }
+
+h1 {
+  font-size: 2em; }
+
+h2 {
+  font-size: 1.75em; }
+
+h3 {
+  font-size: 1.5em;
+  line-height: 1.5em; }
+
+h4 {
+  font-size: 1.3em; }
+
+h5 {
+  font-size: 1.15em; }
+
+h6 {
+  font-size: 1em; }
+
+.title-line {
+  margin-bottom: 32px;
+  width: 100%; }
+  .title-line::after, .title-line::before {
+    border-top: 1px solid #ddd;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 30%; }
+  .title-line::before {
+    margin-right: 32px; }
+  .title-line::after {
+    margin-left: 32px; }
+
+.title-no-margings {
+  margin: 0; }
+
+.subheadline {
+  font-size: 1.3em;
+  font-weight: 300;
+  line-height: 1.5em; }
+
+/* Paragraphs
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/paragraphs.scss */
+p {
+  font-size: 14px;
+  line-height: 1.5em;
+  margin-top: 14px; }
+
+/* List styles
+   ========================================================================== */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* Reset list styles */
+.no-list-style {
+  list-style: none;
+  padding-left: 0; }
+  .no-list-style ul {
+    list-style: none;
+    padding-left: 0;
+    padding-top: 8px; }
+    .no-list-style ul li a {
+      padding-left: 32px; }
+    .no-list-style ul li:last-of-type {
+      padding-bottom: 0; }
+
+/* List without padding */
+.list-no-padding {
+  list-style-position: inside;
+  padding-left: 0; }
+
+.ul-horizontal.no-list-style li {
+  margin-right: 16px; }
+
+.ul-horizontal li {
+  display: inline-block; }
+
+li {
+  padding: 8px 0 8px; }
+
+ol > li {
+  padding-left: 16px; }
+  ol > li .fa {
+    margin-right: 8px; }
+
+@media screen and (max-width: 769px) {
+  ul {
+    padding-left: 4px; } }
+
+/* Description List */
+dt {
+  display: inline-block;
+  width: 20%; }
+
+dd {
+  display: inline-block;
+  margin-left: 0;
+  width: 80%; }
+
+@media screen and (max-width: 769px) {
+  dt,
+  dd {
+    display: block;
+    width: auto; } }
+
+/* Links
+   ========================================================================== */
+/**
+*
+* Links variables: /assets/stylesheets/eos-base/variables/links.scss
+*/
+/* Set the link color to our blue and not the bootstrap default */
+/* Remove the default text decoration from link status */
+a,
+a:active,
+a:visited,
+a:focus {
+  text-decoration: none; }
+
+a,
+.link-default,
+a:not([href]):not([tabindex]) {
+  color: #008acf;
+  font-weight: bold; }
+  a:hover,
+  .link-default:hover,
+  a:not([href]):not([tabindex]):hover {
+    color: #008acf;
+    cursor: pointer;
+    text-decoration: underline; }
+  a * p,
+  .link-default * p,
+  a:not([href]):not([tabindex]) * p {
+    font-weight: normal; }
+
+a.link-dark,
+a.link-dark:not([href]):not([tabindex]) {
+  color: #141823;
+  text-decoration: underline; }
+  a.link-dark:hover,
+  a.link-dark:not([href]):not([tabindex]):hover {
+    text-decoration: none; }
+
+a.link-light,
+a.link-light:not([href]):not([tabindex]) {
+  color: #ffffff;
+  text-decoration: underline; }
+  a.link-light:hover,
+  a.link-light:not([href]):not([tabindex]):hover {
+    text-decoration: none; }
+
+a.btn-link-dark,
+a.btn-link-dark:not([href]):not([tabindex]) {
+  color: #141823;
+  font-weight: bold; }
+  a.btn-link-dark:hover,
+  a.btn-link-dark:not([href]):not([tabindex]):hover {
+    text-decoration: none; }
+
+a.btn-link-light,
+a.btn-link-light:not([href]):not([tabindex]) {
+  color: #ffffff;
+  font-weight: bold; }
+  a.btn-link-light:hover,
+  a.btn-link-light:not([href]):not([tabindex]):hover {
+    text-decoration: none; }
+
+/* PrismJS 1.19.0
+https://prismjs.com/download.html#themes=prism-okaidia&languages=markup+css+clike+javascript */
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+pre {
+  border-bottom: 0; }
+
+code[class*='language-'],
+pre[class*='language-'] {
+  -moz-hyphens: none;
+  -moz-tab-size: 2;
+  -ms-hyphens: none;
+  -o-tab-size: 2;
+  -webkit-hyphens: none;
+  background: none;
+  color: #ffecb5;
+  display: block;
+  font-family: "Lato", arial, helvetica, sans-serif;
+  font-size: 14px;
+  hyphens: none;
+  line-height: 1.5;
+  tab-size: 2;
+  text-align: left;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal; }
+
+/* Code blocks */
+pre[class*='language-'] {
+  border-radius: 0;
+  margin: .5em 0;
+  overflow: auto;
+  padding: 10px; }
+
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  background: #141823; }
+
+/* Inline code */
+:not(pre) > code[class*='language-'] {
+  border-radius: .3em;
+  padding: .1em;
+  white-space: normal; }
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #686565; }
+
+.token.punctuation {
+  color: #ffecb5; }
+
+.token.namespace {
+  opacity: .7; }
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #dc3545; }
+
+.token.boolean,
+.token.number {
+  color: #ae81ff; }
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #e4f6ee; }
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: #ffecb5; }
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+  color: #ffc107; }
+
+.token.keyword {
+  color: #00b2e2; }
+
+.token.regex,
+.token.important {
+  color: #fd971f; }
+
+.token.important,
+.token.bold {
+  font-weight: bold; }
+
+.token.italic {
+  font-style: italic; }
+
+.token.entity {
+  cursor: help; }
+
+/* Layout
+   ========================================================================== */
+/**
+* This folder contains everything that takes part in laying out the  application
+*/
+/* Layout variables
+   ========================================================================== */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* Footer variables: /assets/stylesheets/eos-components/footer/footer.variables.scss */
+/* Post styles
+   ========================================================================== */
+/**
+*  Use it in HTML as
+*  <section class='post'></section>
+*
+*  This rule wraps a section with a max width of 1116px and applies a box box-shadow
+*  Titles: /assets/stylesheets/eos-base/variables/typography.scss
+*  Media-query: /assets/stylesheets/eos-base/variables/media-query.scss
+*  Spacing: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Variables: /assets/stylesheets/eos-layout/layout.variables.scss
+*/
+html {
+  position: relative; }
+
+html,
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  height: 100%; }
+
+body {
+  background-color: #ffffff;
+  color: #141823;
+  font-family: "Lato", arial, helvetica, sans-serif;
+  font-weight: 400;
+  line-height: 1.5em; }
+
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px;
+  min-height: calc( 100vh - 40px);
+  min-width: 360px; }
+  @media screen and (max-width: 769px) {
+    .content {
+      margin-left: 0;
+      padding-top: 80px; } }
+
+.container {
+  margin-bottom: 64px;
+  max-width: 1116px;
+  overflow-x: hidden;
+  padding: 32px;
+  position: relative;
+  width: 100%; }
+
+hr {
+  border-top-color: #f2f2f2;
+  margin: 48px 0; }
+
+eos-alert ~ .main-menu,
+eos-alert ~ .content .submenu {
+  top: 37px; }
+
+eos-alert ~ .content {
+  margin-top: 37px; }
+
+@media screen and (max-width: 769px) {
+  eos-alert ~ .mobile-menu {
+    top: 37px; }
+  eos-alert ~ .content .submenu {
+    top: 117px; } }
+
+/* Components
+   ========================================================================== */
+/**
+*  This folder contains modules that compose the application
+*/
+/* Main Menu
+   ========================================================================== */
+/* Main Menu
+   ========================================================================== */
+/* Header
+   ========================================================================== */
+/**
+* Colors
+*
+* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss
+* Titles: /assets/stylesheets/eos-base/variables/titles.scss
+*/
+/* Header styles
+   ========================================================================== */
+/* Variables file: assets/stylesheets/eos-components/menu/header/header.variables.scss */
+.main-menu header {
+  align-items: center;
+  background: #0c322c;
+  display: flex;
+  height: 48px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-left: 21px;
+  padding-right: 16px; }
+  .main-menu header i {
+    color: #ffffff;
+    cursor: pointer;
+    margin: 0;
+    width: 18px; }
+  .main-menu header img {
+    height: 20px; }
+  .main-menu header .design-system {
+    color: #ffffff;
+    display: inline-block;
+    font-size: 1.15em;
+    vertical-align: middle; }
+
+/* Main menu variables
+   ========================================================================== */
+/* Typography variables: /assets/stylesheets/eos-base/variables/typography.scss */
+/* Media query variables: /assets/stylesheets/eos-base/variables/media-query.scss */
+/* Border variables: /assets/stylesheets/eos-base/variables/borders.scss */
+/* z-index variables: /assets/stylesheets/eos-base/variables/z-index.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* Collapsed menu variables */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Layout */
+/* Layout variables: /assets/stylesheets/eos-base/variables/layout.scss */
+/* for temporary styles */
+/* Mobile menu section / $eos-mm = mobile-menu
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* z-index variables: /assets/stylesheets/eos-base/variables/z-index.scss */
+/* ==========================================================================
+   Menu stylesheet
+   ========================================================================== */
+/* Variables file: assets/stylesheets/eos-components/menu/menu.variables.scss */
+/* Menu & desktop version styles
+   ========================================================================== */
+.main-menu {
+  background-color: #f2f2f2;
+  border-right: 0px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  left: 0;
+  max-width: 250px;
+  position: fixed;
+  top: 0;
+  width: 250px;
+  z-index: 1000; }
+  .main-menu .selected {
+    background: #30ba78;
+    border-radius: 0 2px 2px 0; }
+    .main-menu .selected > .menu-title {
+      color: #ffffff; }
+  @media screen and (max-width: 769px) {
+    .main-menu {
+      display: none; } }
+  .main-menu .menu-togglable {
+    margin-bottom: 40px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 0 0 48px 0; }
+    .main-menu .menu-togglable li {
+      padding: 0; }
+  .main-menu .menu-title {
+    border-left: 5px solid transparent;
+    color: #141823;
+    cursor: pointer;
+    display: block;
+    font-weight: 400;
+    margin: 0 16px 0 0;
+    padding: 8px 0 8px 21px;
+    transition: 0.1s;
+    user-select: none; }
+    .main-menu .menu-title.selected {
+      color: #ffffff; }
+    .main-menu .menu-title:hover {
+      border-left: 5px solid #30ba78;
+      text-decoration: none; }
+  .main-menu hr {
+    border-top-color: #e0dfdf;
+    margin: 16px 0; }
+  .main-menu h6 {
+    color: #141823;
+    margin: 0;
+    padding: 16px; }
+
+.mm-navigation-container {
+  width: 100%;
+  /* Fixed size for icons to fix the fliker when are not done loaded. */ }
+  .mm-navigation-container i {
+    font-size: 18px;
+    height: 18px;
+    width: 18px; }
+
+.mm-navigation-close {
+  cursor: pointer;
+  margin-right: -16px;
+  padding: 16px; }
+
+/* Collapsed menu style.
+  ========================================================================== */
+.collapsed-sidebar.main-menu {
+  width: 60px;
+  /* From here starts the style for items with dropdown when the menu is collapsed
+      ========================================================================== */ }
+  .collapsed-sidebar.main-menu li a {
+    margin: 0; }
+    .collapsed-sidebar.main-menu li a.selected {
+      border-radius: 0; }
+  .collapsed-sidebar.main-menu .selected {
+    border-radius: 0; }
+  .collapsed-sidebar.main-menu .menu-item {
+    position: relative; }
+    .collapsed-sidebar.main-menu .menu-item:hover .main-collapsed-title {
+      display: block; }
+    .collapsed-sidebar.main-menu .menu-item:hover i {
+      color: #ffffff; }
+  .collapsed-sidebar.main-menu input[type='checkbox']:checked ~ ul {
+    display: none; }
+  .collapsed-sidebar.main-menu input[type='checkbox']:checked ~ .menu-title {
+    background-color: transparent; }
+  .collapsed-sidebar.main-menu input[type='checkbox']:checked ~ label {
+    color: #ffffff; }
+  .collapsed-sidebar.main-menu .menu-item:hover .menu-dropdown-list {
+    display: block; }
+  .collapsed-sidebar.main-menu .menu-title-content,
+  .collapsed-sidebar.main-menu .menu-expand {
+    display: none; }
+  .collapsed-sidebar.main-menu .menu-togglable {
+    height: 100%;
+    max-height: 85vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%; }
+    .collapsed-sidebar.main-menu .menu-togglable .menu-item {
+      position: static; }
+      .collapsed-sidebar.main-menu .menu-togglable .menu-item .menu-element {
+        display: none;
+        position: absolute; }
+      .collapsed-sidebar.main-menu .menu-togglable .menu-item:hover {
+        background-color: #30ba78;
+        cursor: pointer; }
+      .collapsed-sidebar.main-menu .menu-togglable .menu-item:hover > .menu-element {
+        display: block; }
+  .collapsed-sidebar.main-menu .menu-dropdown-list,
+  .collapsed-sidebar.main-menu .main-collapsed-title {
+    background: #ffffff;
+    box-shadow: 6px 3px 5px rgba(20, 24, 35, 0.21);
+    left: 60px;
+    padding-top: 0;
+    position: absolute;
+    top: 0;
+    width: 200px; }
+    .collapsed-sidebar.main-menu .menu-dropdown-list li,
+    .collapsed-sidebar.main-menu .main-collapsed-title li {
+      padding: 8px 16px; }
+      .collapsed-sidebar.main-menu .menu-dropdown-list li a,
+      .collapsed-sidebar.main-menu .main-collapsed-title li a {
+        color: #141823;
+        padding: 0; }
+        .collapsed-sidebar.main-menu .menu-dropdown-list li a:hover, .collapsed-sidebar.main-menu .menu-dropdown-list li a.selected,
+        .collapsed-sidebar.main-menu .main-collapsed-title li a:hover,
+        .collapsed-sidebar.main-menu .main-collapsed-title li a.selected {
+          background: #ffffff;
+          color: #30ba78; }
+  .collapsed-sidebar.main-menu .menu-collapsed-title,
+  .collapsed-sidebar.main-menu .main-collapsed-title {
+    background-color: #30ba78;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: -1px; }
+  .collapsed-sidebar.main-menu .menu-collapsed-title {
+    display: block; }
+  .collapsed-sidebar.main-menu .main-collapsed-title {
+    padding: 8px 16px; }
+
+.collapsed-sidebar .mm-navigation-close {
+  left: 0;
+  margin-right: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%; }
+
+.collapsed-sidebar .footer-side-menu,
+.collapsed-sidebar .hide-collapsed,
+.collapsed-sidebar span {
+  display: none; }
+
+.collapsed-sidebar ~ .content {
+  margin-left: 60px; }
+  @media screen and (max-width: 769px) {
+    .collapsed-sidebar ~ .content {
+      margin-left: 0; } }
+
+.collapsed-sidebar .menu-headers {
+  max-height: 53px;
+  max-width: 60px;
+  visibility: hidden; }
+
+.collapsed-sidebar .menu-title {
+  border-left: 0; }
+  .collapsed-sidebar .menu-title:hover {
+    border-left: 0; }
+
+/* Dropdown menu in main menu
+  ========================================================================== */
+.menu-dropdown input[type='checkbox'] {
+  display: none; }
+
+.menu-dropdown ul {
+  display: none; }
+
+.menu-dropdown input[type='checkbox']:checked ~ ul, .menu-dropdown.selected ~ ul {
+  display: block; }
+
+.menu-dropdown input[type='checkbox']:checked ~ label, .menu-dropdown.selected ~ label {
+  color: #141823; }
+  .menu-dropdown input[type='checkbox']:checked ~ label .menu-expand, .menu-dropdown.selected ~ label .menu-expand {
+    margin-right: 16px;
+    transform: rotate(180deg); }
+
+.menu-dropdown input[type='checkbox']:checked ~ .menu-title, .menu-dropdown.selected ~ .menu-title {
+  background-color: #f2f2f2;
+  margin-right: 0; }
+
+.menu-title .menu-expand {
+  margin-right: 0; }
+
+/* Uncollapsed sidebar styles for dropdown menu */
+.menu-togglable .menu-dropdown-list {
+  background: #f2f2f2;
+  padding-top: 0; }
+  .menu-togglable .menu-dropdown-list li a {
+    padding-left: 48px; }
+
+.menu-collapsed-title,
+.main-collapsed-title {
+  display: none; }
+
+.nav-wrap {
+  max-height: 80vh;
+  position: relative; }
+
+.svg-icon-menu {
+  height: 18px;
+  margin-right: 8px;
+  width: 18px; }
+
+/* Mobile menu styles
+   ========================================================================== */
+.mobile-menu {
+  display: none; }
+  @media screen and (max-width: 769px) {
+    .mobile-menu {
+      background-color: #0c322c;
+      display: block;
+      height: 80px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1040; } }
+  .mobile-menu .selected {
+    background-color: #30ba78; }
+  .mobile-menu-open {
+    overflow: hidden; }
+  .mobile-menu header {
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 24px;
+    position: relative; }
+    .mobile-menu header .burger-menu {
+      position: absolute;
+      right: 24px; }
+      .mobile-menu header .burger-menu i {
+        color: #ffffff;
+        cursor: pointer; }
+  .mobile-menu nav {
+    background-color: #f2f2f2;
+    display: none;
+    min-height: 1200px;
+    position: relative; }
+    .mobile-menu nav hr {
+      border-top: 1px solid #e0dfdf;
+      margin: 16px 0; }
+    .mobile-menu nav .nav-wrap {
+      overflow-y: scroll;
+      padding-top: 16px; }
+    .mobile-menu nav .menu-togglable {
+      margin: 0;
+      padding: 0; }
+      .mobile-menu nav .menu-togglable li {
+        cursor: pointer;
+        list-style: none;
+        margin: 0;
+        padding: 0; }
+        .mobile-menu nav .menu-togglable li .menu-title {
+          border-left: 5px solid transparent;
+          color: #141823;
+          cursor: pointer;
+          display: block;
+          font-weight: 400;
+          margin: 0;
+          padding: 8px 24px;
+          transition: 0.1s;
+          user-select: none; }
+          .mobile-menu nav .menu-togglable li .menu-title i {
+            font-size: 18px;
+            height: 18px;
+            text-align: center;
+            width: 18px; }
+          .mobile-menu nav .menu-togglable li .menu-title:hover {
+            border-left: 5px solid #30ba78;
+            text-decoration: none; }
+          .mobile-menu nav .menu-togglable li .menu-title.selected {
+            background-color: #30ba78;
+            color: #ffffff; }
+            .mobile-menu nav .menu-togglable li .menu-title.selected > label {
+              color: #ffffff; }
+        .mobile-menu nav .menu-togglable li .menu-element li a {
+          padding-left: 48px; }
+        .mobile-menu nav .menu-togglable li.menu-dropdown.selected label {
+          color: #ffffff; }
+        .mobile-menu nav .menu-togglable li.menu-dropdown input[type='checkbox'] {
+          display: none; }
+        .mobile-menu nav .menu-togglable li.menu-dropdown .menu-element ul {
+          display: none; }
+        .mobile-menu nav .menu-togglable li.menu-dropdown input[type='checkbox']:checked .menu-element > ul, .mobile-menu nav .menu-togglable li.menu-dropdown.selected .menu-element > ul {
+          display: block; }
+        .mobile-menu nav .menu-togglable li.menu-dropdown input[type='checkbox']:checked ~ label, .mobile-menu nav .menu-togglable li.menu-dropdown.selected ~ label {
+          color: #141823; }
+          .mobile-menu nav .menu-togglable li.menu-dropdown input[type='checkbox']:checked ~ label .menu-expand, .mobile-menu nav .menu-togglable li.menu-dropdown.selected ~ label .menu-expand {
+            margin-right: 0; }
+
+/* Footer
+   ========================================================================== */
+/* Footer variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* ==========================================================================
+  Footer style
+========================================================================== */
+footer {
+  height: 40px;
+  /* Style for side-menu footer.
+   ========================================================================== */
+  /* Style for content footer.
+   ========================================================================== */
+  /* Devices and when menu is collapsed.
+   ========================================================================== */ }
+  footer ul.footer-list {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    justify-content: center;
+    margin: 0;
+    padding: 8px 24px; }
+  footer li.footer-list-item {
+    list-style: none;
+    padding: 0 8px 0 0; }
+    footer li.footer-list-item img {
+      width: 18px; }
+  footer.footer-side-menu {
+    align-items: center;
+    background-color: #f2f2f2;
+    border-top: 1px solid #e0dfdf;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    justify-content: space-between;
+    position: fixed; }
+    footer.footer-side-menu ul.footer-list {
+      color: #ffffff;
+      display: flex;
+      justify-content: flex-start;
+      width: 249px; }
+  footer.footer-content {
+    align-items: center;
+    border-top: 1px solid #f2f2f2;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; }
+    footer.footer-content ul.footer-list {
+      color: #969494; }
+  @media screen and (min-width: 770px) {
+    footer {
+      /* Hide footer for Devices */ }
+      footer.footer-content {
+        display: none; } }
+  footer.display-collapsed {
+    display: flex;
+    margin-left: 60px;
+    width: auto; }
+    @media screen and (max-width: 769px) {
+      footer.display-collapsed {
+        margin-left: 0; } }
+
+/* Submenu
+   ========================================================================== */
+/* Submenu variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* z-index variables: /assets/stylesheets/eos-components/mobile-menu/mobile-menu.variables.scss */
+/* Submenu
+   ========================================================================== */
+/* Variables file: assets/stylesheets/eos-components/submenu/submenu.variables.scss */
+.submenu {
+  align-items: center;
+  align-self: baseline;
+  background: #0c322c;
+  display: flex;
+  height: 48px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1030;
+  /* shared link styles */
+  /* top level specific link styles */
+  /* this toggle is currently static */
+  /* shared search input styles */
+  /* overwrite bootstrap styles */ }
+  @media screen and (max-width: 769px) {
+    .submenu {
+      background-color: #e4f6ee;
+      top: 80px; } }
+  .submenu a:not([href]):not([tabindex]),
+  .submenu a {
+    color: #ffffff;
+    font-weight: normal; }
+    .submenu a:not([href]):not([tabindex]):hover,
+    .submenu a:hover {
+      border-color: #969494;
+      cursor: pointer;
+      text-decoration: none; }
+      @media screen and (max-width: 769px) {
+        .submenu a:not([href]):not([tabindex]):hover,
+        .submenu a:hover {
+          border-color: #30ba78; } }
+    @media screen and (max-width: 769px) {
+      .submenu a:not([href]):not([tabindex]),
+      .submenu a {
+        color: #141823; } }
+  .submenu .user-profile {
+    margin-left: auto;
+    padding: 10px 8px 10px 0; }
+    .submenu .user-profile i {
+      color: #ffffff;
+      cursor: pointer; }
+      @media screen and (max-width: 769px) {
+        .submenu .user-profile i {
+          color: #141823; } }
+    .submenu .user-profile > .dropdown-menu {
+      margin-right: 8px;
+      margin-top: 11px;
+      padding: 0; }
+      .submenu .user-profile > .dropdown-menu li {
+        border-bottom: 1px solid #e0dfdf;
+        padding: 8px 16px 16px 16px; }
+        .submenu .user-profile > .dropdown-menu li a {
+          margin-top: 8px; }
+        .submenu .user-profile > .dropdown-menu li i {
+          color: inherit; }
+      .submenu .user-profile > .dropdown-menu .user-name > strong,
+      .submenu .user-profile > .dropdown-menu .user-name span {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap; }
+      .submenu .user-profile > .dropdown-menu .user-name > span {
+        color: #686565;
+        font-size: 12px; }
+  .submenu .dropdown-toggle:after {
+    content: none; }
+  .submenu .submenu-item {
+    border-bottom: 3px solid transparent;
+    display: inline-block;
+    padding: 12px 16px;
+    transition: all ease-in 0.1s;
+    white-space: nowrap; }
+  .submenu .sidebar-toggle,
+  .submenu nav,
+  .submenu .submenu-search-wrap {
+    display: flex; }
+  .submenu .sidebar-toggle {
+    padding: 16px; }
+    .submenu .sidebar-toggle i {
+      margin: 0; }
+  .submenu .main-submenu {
+    display: none; }
+    .submenu .main-submenu a.selected {
+      border-color: #30ba78; }
+      @media screen and (max-width: 769px) {
+        .submenu .main-submenu a.selected {
+          border-color: #0c322c; } }
+  .submenu .submenu-search,
+  .submenu .submenu-search-wrap {
+    align-items: center; }
+  .submenu .submenu-search {
+    display: flex;
+    justify-content: space-around;
+    margin-left: auto; }
+    .submenu .submenu-search .submenu-search-wrap {
+      border-bottom: 1px solid #b6b4b4;
+      height: 32px; }
+    .submenu .submenu-search input,
+    .submenu .submenu-search a {
+      border: 0; }
+    .submenu .submenu-search input {
+      outline: 0; }
+    .submenu .submenu-search a {
+      margin-left: auto;
+      padding: 0; }
+  .submenu .dropdown-menu {
+    border: 0;
+    border-radius: 0;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    margin-top: 0;
+    padding: 8px 16px;
+    width: 200px; }
+    .submenu .dropdown-menu > li > span {
+      color: #b6b4b4; }
+    .submenu .dropdown-menu > li .dropdown-item {
+      color: #141823;
+      padding: 0; }
+      .submenu .dropdown-menu > li .dropdown-item:hover {
+        background: transparent;
+        color: #30ba78; }
+      .submenu .dropdown-menu > li .dropdown-item.selected {
+        color: #30ba78; }
+  .submenu .visible {
+    display: inline-block; }
+
+/* Smart submenu nav dropdown */
+.dropdown-more .submenu-item {
+  padding: 11px 16px; }
+  .dropdown-more .submenu-item.selected {
+    border-bottom: 3px solid #30ba78; }
+
+.dropdown-more .dropdown-menu a {
+  margin-top: 8px; }
+  .dropdown-more .dropdown-menu a:first-child {
+    margin-top: 0; }
+
+.dropdown-more + .user-submenu {
+  margin-left: auto; }
+
+.submenu-scroll {
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out; }
+
+/* Alerts gallery
+   ========================================================================== */
+/* Alerts variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/typography.scss */
+/* z-index variables: /assets/stylesheets/eos-base/variables/z-index.scss */
+/* Shared */
+/* Global alerts */
+/* All Alert-danger */
+/* Section alerts */
+/* Success section alert vars */
+/* Info section alert vars */
+/* Warning section alert vars */
+/* Danger section alert vars */
+/* Inline alerts */
+/* Alerts
+   ========================================================================== */
+/**
+*  These rules overwrite existing Bootstrap rules
+*  Alerts depend on 3 classes: alert alert-position alert-type
+*  Use it in HTML as
+*  <div class='alert alert-global alert-danger'>
+*    Alert content goes here
+*  </div>
+*
+*
+* Variables file: assets/stylesheets/eos-components/alerts/alerts.variables.scss
+*/
+/* Shared styles */
+.alert {
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  padding: 8px;
+  position: relative; }
+  .alert .close {
+    margin-left: 8px;
+    opacity: 1;
+    text-shadow: none; }
+    .alert .close i {
+      margin-right: 0; }
+  .alert > i {
+    margin-top: 2px; }
+  .alert a {
+    font-weight: bold;
+    text-decoration: underline; }
+  .alert-body {
+    flex: 1; }
+
+/*
+  Affects all danger alerts:
+  Given that alert-danger do not have a close button, the alert requires an extra padding on the right
+  to avoid getting too close to the right edge and look consistent with the rest of the alerts
+*/
+.alert-danger {
+  padding-right: 16px; }
+
+/* Global alerts
+   ========================================================================== */
+.alert-global {
+  color: #ffffff;
+  height: 37px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1040;
+  /* Success alert */
+  /* Info alert */
+  /* Warning alert */
+  /* Danger alert */ }
+  .alert-global a:not([href]):not([tabindex]),
+  .alert-global a {
+    color: #ffffff;
+    text-decoration: underline; }
+    .alert-global a:not([href]):not([tabindex]):hover,
+    .alert-global a:hover {
+      text-decoration: none; }
+  .alert-global .close:hover,
+  .alert-global .close:focus {
+    color: #ffffff; }
+  .alert-global.alert-success {
+    background-color: #30ba78; }
+  .alert-global.alert-info {
+    background-color: #00b2e2; }
+  .alert-global.alert-warning {
+    background-color: #ff9e02; }
+  .alert-global.alert-danger {
+    background-color: #dc3545; }
+  .alert-global-mobile {
+    display: none; }
+  @media screen and (max-width: 769px) {
+    .alert-global-desktop {
+      display: none; }
+    .alert-global-mobile {
+      display: block; } }
+  .alert-global ~ .main-menu,
+  .alert-global ~ .content .submenu {
+    top: 37px; }
+  .alert-global ~ .main-menu .footer-content {
+    margin-bottom: 37px; }
+  @media screen and (max-width: 769px) {
+    .alert-global ~ .mobile-menu {
+      top: 37px; }
+      .alert-global ~ .mobile-menu ~ .content {
+        padding-top: 117px; }
+    .alert-global ~ .content .submenu {
+      top: 117px; } }
+  .alert-global ~ .content {
+    padding-top: 37px; }
+    @media screen and (max-width: 769px) {
+      .alert-global ~ .content {
+        margin-left: 0;
+        padding-top: 80px; } }
+
+.alert-global.alert-hidden {
+  display: none; }
+  @media screen and (max-width: 769px) {
+    .alert-global.alert-hidden ~ .mobile-menu {
+      top: 0; }
+      .alert-global.alert-hidden ~ .mobile-menu ~ .content {
+        padding-top: 80px; }
+    .alert-global.alert-hidden ~ .content .submenu {
+      top: 0; } }
+  @media screen and (min-width: 769px) {
+    .alert-global.alert-hidden ~ .content {
+      padding: 0; }
+    .alert-global.alert-hidden ~ .main-menu,
+    .alert-global.alert-hidden ~ .content .submenu {
+      top: 0; } }
+
+/* Section alerts
+   ========================================================================== */
+.alert-section {
+  border-left: 5px solid;
+  color: #141823;
+  /* Success alert */
+  /* Info alert */
+  /* Warning alert */
+  /* Danger alert */ }
+  .alert-section a:not([href]):not([tabindex]),
+  .alert-section a {
+    color: #141823;
+    text-decoration: underline; }
+    .alert-section a:not([href]):not([tabindex]):hover,
+    .alert-section a:hover {
+      text-decoration: none; }
+  .alert-section .alert-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px; }
+  .alert-section.alert-success {
+    background-color: #e4f6ee;
+    border-color: #30ba78; }
+    .alert-section.alert-success .alert-icon {
+      color: #30ba78; }
+  .alert-section.alert-info {
+    background-color: #b3e8f6;
+    border-color: #00b2e2; }
+    .alert-section.alert-info .alert-icon {
+      color: #00b2e2; }
+  .alert-section.alert-warning {
+    background-color: #ffecb5;
+    border-color: #ff9e02; }
+    .alert-section.alert-warning .alert-icon {
+      color: #ff9e02; }
+  .alert-section.alert-danger {
+    background-color: #f5c2c7;
+    border-color: #dc3545; }
+    .alert-section.alert-danger .alert-icon {
+      color: #dc3545; }
+
+/* Inline alerts
+   ========================================================================== */
+.alert-inline {
+  border-left: 5px solid;
+  color: #141823;
+  /* Success alert */
+  /* Info alert */
+  /* Warning alert */
+  /* Danger alert */ }
+  .alert-inline a:not([href]):not([tabindex]),
+  .alert-inline a {
+    color: #141823;
+    text-decoration: underline; }
+    .alert-inline a:not([href]):not([tabindex]):hover,
+    .alert-inline a:hover {
+      text-decoration: none; }
+  .alert-inline.alert-success {
+    background-color: #e4f6ee;
+    border-color: #30ba78; }
+    .alert-inline.alert-success .alert-icon {
+      color: #30ba78; }
+  .alert-inline.alert-info {
+    background-color: #b3e8f6;
+    border-color: #00b2e2; }
+    .alert-inline.alert-info .alert-icon {
+      color: #00b2e2; }
+  .alert-inline.alert-warning {
+    background-color: #ffecb5;
+    border-color: #ff9e02; }
+    .alert-inline.alert-warning .alert-icon {
+      color: #ff9e02; }
+  .alert-inline.alert-danger {
+    background-color: #f5c2c7;
+    border-color: #dc3545; }
+    .alert-inline.alert-danger .alert-icon {
+      color: #dc3545; }
+
+/* Form elements
+   ========================================================================== */
+/* Shared
+  ========================================================================== */
+/* Shared form element variables
+   ========================================================================== */
+/**
+*
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Form messages */
+/* Form elements shared styles
+  ========================================================================== */
+/**
+*  These rules overwrite existing Bootstrap rules
+*
+*  Variables file: assets/stylesheets/eos-components/form-elements/form-elements.variables.scss
+*/
+label {
+  color: #141823;
+  display: block;
+  font-size: 14px;
+  font-weight: bold; }
+  label .optional-label {
+    color: #969494;
+    margin-left: 4px; }
+  label.disabled {
+    color: #b6b4b4; }
+
+.form-group:not(:last-child) {
+  margin-bottom: 32px; }
+
+.form-check:not(:last-child) {
+  margin-bottom: 8px; }
+
+.form-messages {
+  color: #969494;
+  display: flex;
+  font-size: 12px;
+  justify-content: flex-end;
+  margin-top: 8px; }
+
+.error-msg {
+  color: #dc3545;
+  display: block;
+  font-size: 14px;
+  margin-top: 8px;
+  width: 100%; }
+
+.maxlength {
+  color: #969494; }
+
+/* Checkbox
+  ========================================================================== */
+/* Checkbox variables
+   ========================================================================== */
+/**
+*
+*  Z-index variables: /assets/stylesheets/eos-base/variables/z-index.scss
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Checkbox component
+   ========================================================================== */
+.eos-checkbox {
+  opacity: 0;
+  position: absolute;
+  z-index: -1; }
+
+.eos-checkbox ~ label {
+  margin-left: 8px; }
+  .eos-checkbox ~ label::before, .eos-checkbox ~ label::after {
+    content: '';
+    display: block;
+    height: 16px;
+    left: 0;
+    position: absolute;
+    top: 0.25rem;
+    width: 16px; }
+  .eos-checkbox ~ label::before {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    background-color: white;
+    border: 1px solid #797777;
+    border-radius: 4px;
+    pointer-events: none;
+    user-select: none; }
+  .eos-checkbox ~ label::after {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 50% 50%;
+    content: ''; }
+
+.eos-checkbox:focus ~ .form-check-label::before {
+  box-shadow: 0px 0px 4px #00b2e2; }
+
+.eos-checkbox:checked ~ .form-check-label::before {
+  background-color: #30ba78;
+  border: 0; }
+
+.eos-checkbox:checked ~ .form-check-label::after {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDEyIDE2Ij48dGV4dCB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDE0KSIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSIxNiIgZm9udC1mYW1pbHk9ImVvcy1pY29ucyI+PHRzcGFuIHg9IjAiIHk9IjAiPmNoZWNrPC90c3Bhbj48L3RleHQ+PC9zdmc+");
+  background-position: 4px 1px;
+  background-size: 60%; }
+
+.eos-checkbox:disabled ~ .form-check-label {
+  color: #b6b4b4; }
+  .eos-checkbox:disabled ~ .form-check-label::before {
+    background-color: #b6b4b4;
+    border: 1px solid #b6b4b4; }
+
+/* Input fields
+  ========================================================================== */
+/* Input-text
+  ========================================================================== */
+/* Text input variables
+   ========================================================================== */
+/**
+*
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Input fields
+  ========================================================================== */
+/**
+*  These rules overwrite existing Bootstrap rules
+*
+* Variables file: assets/stylesheets/eos-components/input-fields/text/input-text.variables.scss
+*/
+.form-control {
+  border: 0;
+  border-bottom: 1px solid #797777;
+  border-radius: 0;
+  padding: 8px 4px;
+  width: 100%; }
+  .form-control:focus {
+    box-shadow: 0px 1px 0px #00b2e2;
+    outline: none; }
+  .form-control:disabled {
+    background-color: transparent;
+    border-bottom: 1px solid #b6b4b4;
+    color: #b6b4b4; }
+    .form-control:disabled ~ .input-group-append i {
+      color: #b6b4b4;
+      pointer-events: none; }
+  .form-control.approved {
+    border-bottom: 1px solid #30ba78; }
+  .form-control.error {
+    border-bottom: 1px solid #dc3545; }
+
+/* Input-range
+   ========================================================================== */
+/* Input-range
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* Input range
+  ========================================================================== */
+/**
+*  These rules overwrite existing Bootstrap rules
+*
+* Variables file: assets/stylesheets/eos-components/input-fields/range/input-range.variables.scss
+*/
+input[type='range'] {
+  -webkit-appearance: none;
+  border-bottom: 0;
+  cursor: pointer;
+  min-height: 25px;
+  overflow: hidden;
+  width: 240px; }
+  input[type='range']::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background: #30ba78;
+    height: 4px; }
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #ffffff;
+    border: 2px solid #797777;
+    border-radius: 20px;
+    box-shadow: 5px 0 0 -8px #797777, 6px 0 0 -8px #797777, 7px 0 0 -8px #797777, 8px 0 0 -8px #797777, 9px 0 0 -8px #797777, 10px 0 0 -8px #797777, 11px 0 0 -8px #797777, 12px 0 0 -8px #797777, 13px 0 0 -8px #797777, 14px 0 0 -8px #797777, 15px 0 0 -8px #797777, 16px 0 0 -8px #797777, 17px 0 0 -8px #797777, 18px 0 0 -8px #797777, 19px 0 0 -8px #797777, 20px 0 0 -8px #797777, 21px 0 0 -8px #797777, 22px 0 0 -8px #797777, 23px 0 0 -8px #797777, 24px 0 0 -8px #797777, 25px 0 0 -8px #797777, 26px 0 0 -8px #797777, 27px 0 0 -8px #797777, 28px 0 0 -8px #797777, 29px 0 0 -8px #797777, 30px 0 0 -8px #797777, 31px 0 0 -8px #797777, 32px 0 0 -8px #797777, 33px 0 0 -8px #797777, 34px 0 0 -8px #797777, 35px 0 0 -8px #797777, 36px 0 0 -8px #797777, 37px 0 0 -8px #797777, 38px 0 0 -8px #797777, 39px 0 0 -8px #797777, 40px 0 0 -8px #797777, 41px 0 0 -8px #797777, 42px 0 0 -8px #797777, 43px 0 0 -8px #797777, 44px 0 0 -8px #797777, 45px 0 0 -8px #797777, 46px 0 0 -8px #797777, 47px 0 0 -8px #797777, 48px 0 0 -8px #797777, 49px 0 0 -8px #797777, 50px 0 0 -8px #797777, 51px 0 0 -8px #797777, 52px 0 0 -8px #797777, 53px 0 0 -8px #797777, 54px 0 0 -8px #797777, 55px 0 0 -8px #797777, 56px 0 0 -8px #797777, 57px 0 0 -8px #797777, 58px 0 0 -8px #797777, 59px 0 0 -8px #797777, 60px 0 0 -8px #797777, 61px 0 0 -8px #797777, 62px 0 0 -8px #797777, 63px 0 0 -8px #797777, 64px 0 0 -8px #797777, 65px 0 0 -8px #797777, 66px 0 0 -8px #797777, 67px 0 0 -8px #797777, 68px 0 0 -8px #797777, 69px 0 0 -8px #797777, 70px 0 0 -8px #797777, 71px 0 0 -8px #797777, 72px 0 0 -8px #797777, 73px 0 0 -8px #797777, 74px 0 0 -8px #797777, 75px 0 0 -8px #797777, 76px 0 0 -8px #797777, 77px 0 0 -8px #797777, 78px 0 0 -8px #797777, 79px 0 0 -8px #797777, 80px 0 0 -8px #797777, 81px 0 0 -8px #797777, 82px 0 0 -8px #797777, 83px 0 0 -8px #797777, 84px 0 0 -8px #797777, 85px 0 0 -8px #797777, 86px 0 0 -8px #797777, 87px 0 0 -8px #797777, 88px 0 0 -8px #797777, 89px 0 0 -8px #797777, 90px 0 0 -8px #797777, 91px 0 0 -8px #797777, 92px 0 0 -8px #797777, 93px 0 0 -8px #797777, 94px 0 0 -8px #797777, 95px 0 0 -8px #797777, 96px 0 0 -8px #797777, 97px 0 0 -8px #797777, 98px 0 0 -8px #797777, 99px 0 0 -8px #797777, 100px 0 0 -8px #797777, 101px 0 0 -8px #797777, 102px 0 0 -8px #797777, 103px 0 0 -8px #797777, 104px 0 0 -8px #797777, 105px 0 0 -8px #797777, 106px 0 0 -8px #797777, 107px 0 0 -8px #797777, 108px 0 0 -8px #797777, 109px 0 0 -8px #797777, 110px 0 0 -8px #797777, 111px 0 0 -8px #797777, 112px 0 0 -8px #797777, 113px 0 0 -8px #797777, 114px 0 0 -8px #797777, 115px 0 0 -8px #797777, 116px 0 0 -8px #797777, 117px 0 0 -8px #797777, 118px 0 0 -8px #797777, 119px 0 0 -8px #797777, 120px 0 0 -8px #797777, 121px 0 0 -8px #797777, 122px 0 0 -8px #797777, 123px 0 0 -8px #797777, 124px 0 0 -8px #797777, 125px 0 0 -8px #797777, 126px 0 0 -8px #797777, 127px 0 0 -8px #797777, 128px 0 0 -8px #797777, 129px 0 0 -8px #797777, 130px 0 0 -8px #797777, 131px 0 0 -8px #797777, 132px 0 0 -8px #797777, 133px 0 0 -8px #797777, 134px 0 0 -8px #797777, 135px 0 0 -8px #797777, 136px 0 0 -8px #797777, 137px 0 0 -8px #797777, 138px 0 0 -8px #797777, 139px 0 0 -8px #797777, 140px 0 0 -8px #797777, 141px 0 0 -8px #797777, 142px 0 0 -8px #797777, 143px 0 0 -8px #797777, 144px 0 0 -8px #797777, 145px 0 0 -8px #797777, 146px 0 0 -8px #797777, 147px 0 0 -8px #797777, 148px 0 0 -8px #797777, 149px 0 0 -8px #797777, 150px 0 0 -8px #797777, 151px 0 0 -8px #797777, 152px 0 0 -8px #797777, 153px 0 0 -8px #797777, 154px 0 0 -8px #797777, 155px 0 0 -8px #797777, 156px 0 0 -8px #797777, 157px 0 0 -8px #797777, 158px 0 0 -8px #797777, 159px 0 0 -8px #797777, 160px 0 0 -8px #797777, 161px 0 0 -8px #797777, 162px 0 0 -8px #797777, 163px 0 0 -8px #797777, 164px 0 0 -8px #797777, 165px 0 0 -8px #797777, 166px 0 0 -8px #797777, 167px 0 0 -8px #797777, 168px 0 0 -8px #797777, 169px 0 0 -8px #797777, 170px 0 0 -8px #797777, 171px 0 0 -8px #797777, 172px 0 0 -8px #797777, 173px 0 0 -8px #797777, 174px 0 0 -8px #797777, 175px 0 0 -8px #797777, 176px 0 0 -8px #797777, 177px 0 0 -8px #797777, 178px 0 0 -8px #797777, 179px 0 0 -8px #797777, 180px 0 0 -8px #797777, 181px 0 0 -8px #797777, 182px 0 0 -8px #797777, 183px 0 0 -8px #797777, 184px 0 0 -8px #797777, 185px 0 0 -8px #797777, 186px 0 0 -8px #797777, 187px 0 0 -8px #797777, 188px 0 0 -8px #797777, 189px 0 0 -8px #797777, 190px 0 0 -8px #797777, 191px 0 0 -8px #797777, 192px 0 0 -8px #797777, 193px 0 0 -8px #797777, 194px 0 0 -8px #797777, 195px 0 0 -8px #797777, 196px 0 0 -8px #797777, 197px 0 0 -8px #797777, 198px 0 0 -8px #797777, 199px 0 0 -8px #797777, 200px 0 0 -8px #797777, 201px 0 0 -8px #797777, 202px 0 0 -8px #797777, 203px 0 0 -8px #797777, 204px 0 0 -8px #797777, 205px 0 0 -8px #797777, 206px 0 0 -8px #797777, 207px 0 0 -8px #797777, 208px 0 0 -8px #797777, 209px 0 0 -8px #797777, 210px 0 0 -8px #797777, 211px 0 0 -8px #797777, 212px 0 0 -8px #797777, 213px 0 0 -8px #797777, 214px 0 0 -8px #797777, 215px 0 0 -8px #797777, 216px 0 0 -8px #797777, 217px 0 0 -8px #797777, 218px 0 0 -8px #797777, 219px 0 0 -8px #797777, 220px 0 0 -8px #797777, 221px 0 0 -8px #797777, 222px 0 0 -8px #797777, 223px 0 0 -8px #797777, 224px 0 0 -8px #797777, 225px 0 0 -8px #797777, 226px 0 0 -8px #797777, 227px 0 0 -8px #797777, 228px 0 0 -8px #797777, 229px 0 0 -8px #797777, 230px 0 0 -8px #797777, 231px 0 0 -8px #797777, 232px 0 0 -8px #797777, 233px 0 0 -8px #797777, 234px 0 0 -8px #797777, 235px 0 0 -8px #797777, 236px 0 0 -8px #797777, 237px 0 0 -8px #797777, 238px 0 0 -8px #797777, 239px 0 0 -8px #797777, 240px 0 0 -8px #797777;
+    height: 20px;
+    margin-top: -8px;
+    width: 20px; }
+  input[type='range']::-moz-range-track {
+    background: #797777;
+    height: 4px;
+    width: 240px; }
+  input[type='range']::-moz-range-thumb {
+    background: #ffffff;
+    border: 2px solid #797777;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 20px;
+    position: relative;
+    width: 20px; }
+  input[type='range']::-moz-range-progress {
+    background: #30ba78;
+    border: 0;
+    height: 4px;
+    margin-top: 0; }
+  input[type='range']::-ms-track {
+    background: transparent;
+    border: 0;
+    border-color: transparent;
+    border-radius: 0;
+    border-width: 0;
+    color: transparent;
+    height: 4px;
+    margin-top: 10px;
+    width: 240px; }
+  input[type='range']::-ms-thumb {
+    background: #ffffff;
+    border: 2px solid #797777;
+    border-radius: 20px;
+    height: 20px;
+    width: 20px; }
+  input[type='range']::-ms-fill-lower {
+    background: #30ba78;
+    border-radius: 0; }
+  input[type='range']::-ms-fill-upper {
+    background: #797777;
+    border-radius: 0; }
+  input[type='range']::-ms-tooltip {
+    display: none; }
+  input[type='range']:focus {
+    box-shadow: none;
+    outline: none; }
+    input[type='range']:focus::-webkit-slider-thumb {
+      border-color: #008acf; }
+    input[type='range']:focus::-moz-range-thumb {
+      border-color: #008acf; }
+    input[type='range']:focus::-ms-thumb {
+      border-color: #008acf; }
+  input[type='range']:disabled {
+    background: transparent;
+    box-shadow: none;
+    outline: none; }
+    input[type='range']:disabled::-webkit-slider-thumb {
+      border-color: #e0dfdf;
+      box-shadow: 5px 0 0 -8px #e0dfdf, 6px 0 0 -8px #e0dfdf, 7px 0 0 -8px #e0dfdf, 8px 0 0 -8px #e0dfdf, 9px 0 0 -8px #e0dfdf, 10px 0 0 -8px #e0dfdf, 11px 0 0 -8px #e0dfdf, 12px 0 0 -8px #e0dfdf, 13px 0 0 -8px #e0dfdf, 14px 0 0 -8px #e0dfdf, 15px 0 0 -8px #e0dfdf, 16px 0 0 -8px #e0dfdf, 17px 0 0 -8px #e0dfdf, 18px 0 0 -8px #e0dfdf, 19px 0 0 -8px #e0dfdf, 20px 0 0 -8px #e0dfdf, 21px 0 0 -8px #e0dfdf, 22px 0 0 -8px #e0dfdf, 23px 0 0 -8px #e0dfdf, 24px 0 0 -8px #e0dfdf, 25px 0 0 -8px #e0dfdf, 26px 0 0 -8px #e0dfdf, 27px 0 0 -8px #e0dfdf, 28px 0 0 -8px #e0dfdf, 29px 0 0 -8px #e0dfdf, 30px 0 0 -8px #e0dfdf, 31px 0 0 -8px #e0dfdf, 32px 0 0 -8px #e0dfdf, 33px 0 0 -8px #e0dfdf, 34px 0 0 -8px #e0dfdf, 35px 0 0 -8px #e0dfdf, 36px 0 0 -8px #e0dfdf, 37px 0 0 -8px #e0dfdf, 38px 0 0 -8px #e0dfdf, 39px 0 0 -8px #e0dfdf, 40px 0 0 -8px #e0dfdf, 41px 0 0 -8px #e0dfdf, 42px 0 0 -8px #e0dfdf, 43px 0 0 -8px #e0dfdf, 44px 0 0 -8px #e0dfdf, 45px 0 0 -8px #e0dfdf, 46px 0 0 -8px #e0dfdf, 47px 0 0 -8px #e0dfdf, 48px 0 0 -8px #e0dfdf, 49px 0 0 -8px #e0dfdf, 50px 0 0 -8px #e0dfdf, 51px 0 0 -8px #e0dfdf, 52px 0 0 -8px #e0dfdf, 53px 0 0 -8px #e0dfdf, 54px 0 0 -8px #e0dfdf, 55px 0 0 -8px #e0dfdf, 56px 0 0 -8px #e0dfdf, 57px 0 0 -8px #e0dfdf, 58px 0 0 -8px #e0dfdf, 59px 0 0 -8px #e0dfdf, 60px 0 0 -8px #e0dfdf, 61px 0 0 -8px #e0dfdf, 62px 0 0 -8px #e0dfdf, 63px 0 0 -8px #e0dfdf, 64px 0 0 -8px #e0dfdf, 65px 0 0 -8px #e0dfdf, 66px 0 0 -8px #e0dfdf, 67px 0 0 -8px #e0dfdf, 68px 0 0 -8px #e0dfdf, 69px 0 0 -8px #e0dfdf, 70px 0 0 -8px #e0dfdf, 71px 0 0 -8px #e0dfdf, 72px 0 0 -8px #e0dfdf, 73px 0 0 -8px #e0dfdf, 74px 0 0 -8px #e0dfdf, 75px 0 0 -8px #e0dfdf, 76px 0 0 -8px #e0dfdf, 77px 0 0 -8px #e0dfdf, 78px 0 0 -8px #e0dfdf, 79px 0 0 -8px #e0dfdf, 80px 0 0 -8px #e0dfdf, 81px 0 0 -8px #e0dfdf, 82px 0 0 -8px #e0dfdf, 83px 0 0 -8px #e0dfdf, 84px 0 0 -8px #e0dfdf, 85px 0 0 -8px #e0dfdf, 86px 0 0 -8px #e0dfdf, 87px 0 0 -8px #e0dfdf, 88px 0 0 -8px #e0dfdf, 89px 0 0 -8px #e0dfdf, 90px 0 0 -8px #e0dfdf, 91px 0 0 -8px #e0dfdf, 92px 0 0 -8px #e0dfdf, 93px 0 0 -8px #e0dfdf, 94px 0 0 -8px #e0dfdf, 95px 0 0 -8px #e0dfdf, 96px 0 0 -8px #e0dfdf, 97px 0 0 -8px #e0dfdf, 98px 0 0 -8px #e0dfdf, 99px 0 0 -8px #e0dfdf, 100px 0 0 -8px #e0dfdf, 101px 0 0 -8px #e0dfdf, 102px 0 0 -8px #e0dfdf, 103px 0 0 -8px #e0dfdf, 104px 0 0 -8px #e0dfdf, 105px 0 0 -8px #e0dfdf, 106px 0 0 -8px #e0dfdf, 107px 0 0 -8px #e0dfdf, 108px 0 0 -8px #e0dfdf, 109px 0 0 -8px #e0dfdf, 110px 0 0 -8px #e0dfdf, 111px 0 0 -8px #e0dfdf, 112px 0 0 -8px #e0dfdf, 113px 0 0 -8px #e0dfdf, 114px 0 0 -8px #e0dfdf, 115px 0 0 -8px #e0dfdf, 116px 0 0 -8px #e0dfdf, 117px 0 0 -8px #e0dfdf, 118px 0 0 -8px #e0dfdf, 119px 0 0 -8px #e0dfdf, 120px 0 0 -8px #e0dfdf, 121px 0 0 -8px #e0dfdf, 122px 0 0 -8px #e0dfdf, 123px 0 0 -8px #e0dfdf, 124px 0 0 -8px #e0dfdf, 125px 0 0 -8px #e0dfdf, 126px 0 0 -8px #e0dfdf, 127px 0 0 -8px #e0dfdf, 128px 0 0 -8px #e0dfdf, 129px 0 0 -8px #e0dfdf, 130px 0 0 -8px #e0dfdf, 131px 0 0 -8px #e0dfdf, 132px 0 0 -8px #e0dfdf, 133px 0 0 -8px #e0dfdf, 134px 0 0 -8px #e0dfdf, 135px 0 0 -8px #e0dfdf, 136px 0 0 -8px #e0dfdf, 137px 0 0 -8px #e0dfdf, 138px 0 0 -8px #e0dfdf, 139px 0 0 -8px #e0dfdf, 140px 0 0 -8px #e0dfdf, 141px 0 0 -8px #e0dfdf, 142px 0 0 -8px #e0dfdf, 143px 0 0 -8px #e0dfdf, 144px 0 0 -8px #e0dfdf, 145px 0 0 -8px #e0dfdf, 146px 0 0 -8px #e0dfdf, 147px 0 0 -8px #e0dfdf, 148px 0 0 -8px #e0dfdf, 149px 0 0 -8px #e0dfdf, 150px 0 0 -8px #e0dfdf, 151px 0 0 -8px #e0dfdf, 152px 0 0 -8px #e0dfdf, 153px 0 0 -8px #e0dfdf, 154px 0 0 -8px #e0dfdf, 155px 0 0 -8px #e0dfdf, 156px 0 0 -8px #e0dfdf, 157px 0 0 -8px #e0dfdf, 158px 0 0 -8px #e0dfdf, 159px 0 0 -8px #e0dfdf, 160px 0 0 -8px #e0dfdf, 161px 0 0 -8px #e0dfdf, 162px 0 0 -8px #e0dfdf, 163px 0 0 -8px #e0dfdf, 164px 0 0 -8px #e0dfdf, 165px 0 0 -8px #e0dfdf, 166px 0 0 -8px #e0dfdf, 167px 0 0 -8px #e0dfdf, 168px 0 0 -8px #e0dfdf, 169px 0 0 -8px #e0dfdf, 170px 0 0 -8px #e0dfdf, 171px 0 0 -8px #e0dfdf, 172px 0 0 -8px #e0dfdf, 173px 0 0 -8px #e0dfdf, 174px 0 0 -8px #e0dfdf, 175px 0 0 -8px #e0dfdf, 176px 0 0 -8px #e0dfdf, 177px 0 0 -8px #e0dfdf, 178px 0 0 -8px #e0dfdf, 179px 0 0 -8px #e0dfdf, 180px 0 0 -8px #e0dfdf, 181px 0 0 -8px #e0dfdf, 182px 0 0 -8px #e0dfdf, 183px 0 0 -8px #e0dfdf, 184px 0 0 -8px #e0dfdf, 185px 0 0 -8px #e0dfdf, 186px 0 0 -8px #e0dfdf, 187px 0 0 -8px #e0dfdf, 188px 0 0 -8px #e0dfdf, 189px 0 0 -8px #e0dfdf, 190px 0 0 -8px #e0dfdf, 191px 0 0 -8px #e0dfdf, 192px 0 0 -8px #e0dfdf, 193px 0 0 -8px #e0dfdf, 194px 0 0 -8px #e0dfdf, 195px 0 0 -8px #e0dfdf, 196px 0 0 -8px #e0dfdf, 197px 0 0 -8px #e0dfdf, 198px 0 0 -8px #e0dfdf, 199px 0 0 -8px #e0dfdf, 200px 0 0 -8px #e0dfdf, 201px 0 0 -8px #e0dfdf, 202px 0 0 -8px #e0dfdf, 203px 0 0 -8px #e0dfdf, 204px 0 0 -8px #e0dfdf, 205px 0 0 -8px #e0dfdf, 206px 0 0 -8px #e0dfdf, 207px 0 0 -8px #e0dfdf, 208px 0 0 -8px #e0dfdf, 209px 0 0 -8px #e0dfdf, 210px 0 0 -8px #e0dfdf, 211px 0 0 -8px #e0dfdf, 212px 0 0 -8px #e0dfdf, 213px 0 0 -8px #e0dfdf, 214px 0 0 -8px #e0dfdf, 215px 0 0 -8px #e0dfdf, 216px 0 0 -8px #e0dfdf, 217px 0 0 -8px #e0dfdf, 218px 0 0 -8px #e0dfdf, 219px 0 0 -8px #e0dfdf, 220px 0 0 -8px #e0dfdf, 221px 0 0 -8px #e0dfdf, 222px 0 0 -8px #e0dfdf, 223px 0 0 -8px #e0dfdf, 224px 0 0 -8px #e0dfdf, 225px 0 0 -8px #e0dfdf, 226px 0 0 -8px #e0dfdf, 227px 0 0 -8px #e0dfdf, 228px 0 0 -8px #e0dfdf, 229px 0 0 -8px #e0dfdf, 230px 0 0 -8px #e0dfdf, 231px 0 0 -8px #e0dfdf, 232px 0 0 -8px #e0dfdf, 233px 0 0 -8px #e0dfdf, 234px 0 0 -8px #e0dfdf, 235px 0 0 -8px #e0dfdf, 236px 0 0 -8px #e0dfdf, 237px 0 0 -8px #e0dfdf, 238px 0 0 -8px #e0dfdf, 239px 0 0 -8px #e0dfdf, 240px 0 0 -8px #e0dfdf; }
+    input[type='range']:disabled::-moz-range-thumb {
+      border-color: #e0dfdf;
+      box-shadow: 5px 0 0 -8px #e0dfdf, 6px 0 0 -8px #e0dfdf, 7px 0 0 -8px #e0dfdf, 8px 0 0 -8px #e0dfdf, 9px 0 0 -8px #e0dfdf, 10px 0 0 -8px #e0dfdf, 11px 0 0 -8px #e0dfdf, 12px 0 0 -8px #e0dfdf, 13px 0 0 -8px #e0dfdf, 14px 0 0 -8px #e0dfdf, 15px 0 0 -8px #e0dfdf, 16px 0 0 -8px #e0dfdf, 17px 0 0 -8px #e0dfdf, 18px 0 0 -8px #e0dfdf, 19px 0 0 -8px #e0dfdf, 20px 0 0 -8px #e0dfdf, 21px 0 0 -8px #e0dfdf, 22px 0 0 -8px #e0dfdf, 23px 0 0 -8px #e0dfdf, 24px 0 0 -8px #e0dfdf, 25px 0 0 -8px #e0dfdf, 26px 0 0 -8px #e0dfdf, 27px 0 0 -8px #e0dfdf, 28px 0 0 -8px #e0dfdf, 29px 0 0 -8px #e0dfdf, 30px 0 0 -8px #e0dfdf, 31px 0 0 -8px #e0dfdf, 32px 0 0 -8px #e0dfdf, 33px 0 0 -8px #e0dfdf, 34px 0 0 -8px #e0dfdf, 35px 0 0 -8px #e0dfdf, 36px 0 0 -8px #e0dfdf, 37px 0 0 -8px #e0dfdf, 38px 0 0 -8px #e0dfdf, 39px 0 0 -8px #e0dfdf, 40px 0 0 -8px #e0dfdf, 41px 0 0 -8px #e0dfdf, 42px 0 0 -8px #e0dfdf, 43px 0 0 -8px #e0dfdf, 44px 0 0 -8px #e0dfdf, 45px 0 0 -8px #e0dfdf, 46px 0 0 -8px #e0dfdf, 47px 0 0 -8px #e0dfdf, 48px 0 0 -8px #e0dfdf, 49px 0 0 -8px #e0dfdf, 50px 0 0 -8px #e0dfdf, 51px 0 0 -8px #e0dfdf, 52px 0 0 -8px #e0dfdf, 53px 0 0 -8px #e0dfdf, 54px 0 0 -8px #e0dfdf, 55px 0 0 -8px #e0dfdf, 56px 0 0 -8px #e0dfdf, 57px 0 0 -8px #e0dfdf, 58px 0 0 -8px #e0dfdf, 59px 0 0 -8px #e0dfdf, 60px 0 0 -8px #e0dfdf, 61px 0 0 -8px #e0dfdf, 62px 0 0 -8px #e0dfdf, 63px 0 0 -8px #e0dfdf, 64px 0 0 -8px #e0dfdf, 65px 0 0 -8px #e0dfdf, 66px 0 0 -8px #e0dfdf, 67px 0 0 -8px #e0dfdf, 68px 0 0 -8px #e0dfdf, 69px 0 0 -8px #e0dfdf, 70px 0 0 -8px #e0dfdf, 71px 0 0 -8px #e0dfdf, 72px 0 0 -8px #e0dfdf, 73px 0 0 -8px #e0dfdf, 74px 0 0 -8px #e0dfdf, 75px 0 0 -8px #e0dfdf, 76px 0 0 -8px #e0dfdf, 77px 0 0 -8px #e0dfdf, 78px 0 0 -8px #e0dfdf, 79px 0 0 -8px #e0dfdf, 80px 0 0 -8px #e0dfdf, 81px 0 0 -8px #e0dfdf, 82px 0 0 -8px #e0dfdf, 83px 0 0 -8px #e0dfdf, 84px 0 0 -8px #e0dfdf, 85px 0 0 -8px #e0dfdf, 86px 0 0 -8px #e0dfdf, 87px 0 0 -8px #e0dfdf, 88px 0 0 -8px #e0dfdf, 89px 0 0 -8px #e0dfdf, 90px 0 0 -8px #e0dfdf, 91px 0 0 -8px #e0dfdf, 92px 0 0 -8px #e0dfdf, 93px 0 0 -8px #e0dfdf, 94px 0 0 -8px #e0dfdf, 95px 0 0 -8px #e0dfdf, 96px 0 0 -8px #e0dfdf, 97px 0 0 -8px #e0dfdf, 98px 0 0 -8px #e0dfdf, 99px 0 0 -8px #e0dfdf, 100px 0 0 -8px #e0dfdf, 101px 0 0 -8px #e0dfdf, 102px 0 0 -8px #e0dfdf, 103px 0 0 -8px #e0dfdf, 104px 0 0 -8px #e0dfdf, 105px 0 0 -8px #e0dfdf, 106px 0 0 -8px #e0dfdf, 107px 0 0 -8px #e0dfdf, 108px 0 0 -8px #e0dfdf, 109px 0 0 -8px #e0dfdf, 110px 0 0 -8px #e0dfdf, 111px 0 0 -8px #e0dfdf, 112px 0 0 -8px #e0dfdf, 113px 0 0 -8px #e0dfdf, 114px 0 0 -8px #e0dfdf, 115px 0 0 -8px #e0dfdf, 116px 0 0 -8px #e0dfdf, 117px 0 0 -8px #e0dfdf, 118px 0 0 -8px #e0dfdf, 119px 0 0 -8px #e0dfdf, 120px 0 0 -8px #e0dfdf, 121px 0 0 -8px #e0dfdf, 122px 0 0 -8px #e0dfdf, 123px 0 0 -8px #e0dfdf, 124px 0 0 -8px #e0dfdf, 125px 0 0 -8px #e0dfdf, 126px 0 0 -8px #e0dfdf, 127px 0 0 -8px #e0dfdf, 128px 0 0 -8px #e0dfdf, 129px 0 0 -8px #e0dfdf, 130px 0 0 -8px #e0dfdf, 131px 0 0 -8px #e0dfdf, 132px 0 0 -8px #e0dfdf, 133px 0 0 -8px #e0dfdf, 134px 0 0 -8px #e0dfdf, 135px 0 0 -8px #e0dfdf, 136px 0 0 -8px #e0dfdf, 137px 0 0 -8px #e0dfdf, 138px 0 0 -8px #e0dfdf, 139px 0 0 -8px #e0dfdf, 140px 0 0 -8px #e0dfdf, 141px 0 0 -8px #e0dfdf, 142px 0 0 -8px #e0dfdf, 143px 0 0 -8px #e0dfdf, 144px 0 0 -8px #e0dfdf, 145px 0 0 -8px #e0dfdf, 146px 0 0 -8px #e0dfdf, 147px 0 0 -8px #e0dfdf, 148px 0 0 -8px #e0dfdf, 149px 0 0 -8px #e0dfdf, 150px 0 0 -8px #e0dfdf, 151px 0 0 -8px #e0dfdf, 152px 0 0 -8px #e0dfdf, 153px 0 0 -8px #e0dfdf, 154px 0 0 -8px #e0dfdf, 155px 0 0 -8px #e0dfdf, 156px 0 0 -8px #e0dfdf, 157px 0 0 -8px #e0dfdf, 158px 0 0 -8px #e0dfdf, 159px 0 0 -8px #e0dfdf, 160px 0 0 -8px #e0dfdf, 161px 0 0 -8px #e0dfdf, 162px 0 0 -8px #e0dfdf, 163px 0 0 -8px #e0dfdf, 164px 0 0 -8px #e0dfdf, 165px 0 0 -8px #e0dfdf, 166px 0 0 -8px #e0dfdf, 167px 0 0 -8px #e0dfdf, 168px 0 0 -8px #e0dfdf, 169px 0 0 -8px #e0dfdf, 170px 0 0 -8px #e0dfdf, 171px 0 0 -8px #e0dfdf, 172px 0 0 -8px #e0dfdf, 173px 0 0 -8px #e0dfdf, 174px 0 0 -8px #e0dfdf, 175px 0 0 -8px #e0dfdf, 176px 0 0 -8px #e0dfdf, 177px 0 0 -8px #e0dfdf, 178px 0 0 -8px #e0dfdf, 179px 0 0 -8px #e0dfdf, 180px 0 0 -8px #e0dfdf, 181px 0 0 -8px #e0dfdf, 182px 0 0 -8px #e0dfdf, 183px 0 0 -8px #e0dfdf, 184px 0 0 -8px #e0dfdf, 185px 0 0 -8px #e0dfdf, 186px 0 0 -8px #e0dfdf, 187px 0 0 -8px #e0dfdf, 188px 0 0 -8px #e0dfdf, 189px 0 0 -8px #e0dfdf, 190px 0 0 -8px #e0dfdf, 191px 0 0 -8px #e0dfdf, 192px 0 0 -8px #e0dfdf, 193px 0 0 -8px #e0dfdf, 194px 0 0 -8px #e0dfdf, 195px 0 0 -8px #e0dfdf, 196px 0 0 -8px #e0dfdf, 197px 0 0 -8px #e0dfdf, 198px 0 0 -8px #e0dfdf, 199px 0 0 -8px #e0dfdf, 200px 0 0 -8px #e0dfdf, 201px 0 0 -8px #e0dfdf, 202px 0 0 -8px #e0dfdf, 203px 0 0 -8px #e0dfdf, 204px 0 0 -8px #e0dfdf, 205px 0 0 -8px #e0dfdf, 206px 0 0 -8px #e0dfdf, 207px 0 0 -8px #e0dfdf, 208px 0 0 -8px #e0dfdf, 209px 0 0 -8px #e0dfdf, 210px 0 0 -8px #e0dfdf, 211px 0 0 -8px #e0dfdf, 212px 0 0 -8px #e0dfdf, 213px 0 0 -8px #e0dfdf, 214px 0 0 -8px #e0dfdf, 215px 0 0 -8px #e0dfdf, 216px 0 0 -8px #e0dfdf, 217px 0 0 -8px #e0dfdf, 218px 0 0 -8px #e0dfdf, 219px 0 0 -8px #e0dfdf, 220px 0 0 -8px #e0dfdf, 221px 0 0 -8px #e0dfdf, 222px 0 0 -8px #e0dfdf, 223px 0 0 -8px #e0dfdf, 224px 0 0 -8px #e0dfdf, 225px 0 0 -8px #e0dfdf, 226px 0 0 -8px #e0dfdf, 227px 0 0 -8px #e0dfdf, 228px 0 0 -8px #e0dfdf, 229px 0 0 -8px #e0dfdf, 230px 0 0 -8px #e0dfdf, 231px 0 0 -8px #e0dfdf, 232px 0 0 -8px #e0dfdf, 233px 0 0 -8px #e0dfdf, 234px 0 0 -8px #e0dfdf, 235px 0 0 -8px #e0dfdf, 236px 0 0 -8px #e0dfdf, 237px 0 0 -8px #e0dfdf, 238px 0 0 -8px #e0dfdf, 239px 0 0 -8px #e0dfdf, 240px 0 0 -8px #e0dfdf; }
+    input[type='range']:disabled::-ms-thumb {
+      border-color: #e0dfdf;
+      box-shadow: 5px 0 0 -8px #e0dfdf, 6px 0 0 -8px #e0dfdf, 7px 0 0 -8px #e0dfdf, 8px 0 0 -8px #e0dfdf, 9px 0 0 -8px #e0dfdf, 10px 0 0 -8px #e0dfdf, 11px 0 0 -8px #e0dfdf, 12px 0 0 -8px #e0dfdf, 13px 0 0 -8px #e0dfdf, 14px 0 0 -8px #e0dfdf, 15px 0 0 -8px #e0dfdf, 16px 0 0 -8px #e0dfdf, 17px 0 0 -8px #e0dfdf, 18px 0 0 -8px #e0dfdf, 19px 0 0 -8px #e0dfdf, 20px 0 0 -8px #e0dfdf, 21px 0 0 -8px #e0dfdf, 22px 0 0 -8px #e0dfdf, 23px 0 0 -8px #e0dfdf, 24px 0 0 -8px #e0dfdf, 25px 0 0 -8px #e0dfdf, 26px 0 0 -8px #e0dfdf, 27px 0 0 -8px #e0dfdf, 28px 0 0 -8px #e0dfdf, 29px 0 0 -8px #e0dfdf, 30px 0 0 -8px #e0dfdf, 31px 0 0 -8px #e0dfdf, 32px 0 0 -8px #e0dfdf, 33px 0 0 -8px #e0dfdf, 34px 0 0 -8px #e0dfdf, 35px 0 0 -8px #e0dfdf, 36px 0 0 -8px #e0dfdf, 37px 0 0 -8px #e0dfdf, 38px 0 0 -8px #e0dfdf, 39px 0 0 -8px #e0dfdf, 40px 0 0 -8px #e0dfdf, 41px 0 0 -8px #e0dfdf, 42px 0 0 -8px #e0dfdf, 43px 0 0 -8px #e0dfdf, 44px 0 0 -8px #e0dfdf, 45px 0 0 -8px #e0dfdf, 46px 0 0 -8px #e0dfdf, 47px 0 0 -8px #e0dfdf, 48px 0 0 -8px #e0dfdf, 49px 0 0 -8px #e0dfdf, 50px 0 0 -8px #e0dfdf, 51px 0 0 -8px #e0dfdf, 52px 0 0 -8px #e0dfdf, 53px 0 0 -8px #e0dfdf, 54px 0 0 -8px #e0dfdf, 55px 0 0 -8px #e0dfdf, 56px 0 0 -8px #e0dfdf, 57px 0 0 -8px #e0dfdf, 58px 0 0 -8px #e0dfdf, 59px 0 0 -8px #e0dfdf, 60px 0 0 -8px #e0dfdf, 61px 0 0 -8px #e0dfdf, 62px 0 0 -8px #e0dfdf, 63px 0 0 -8px #e0dfdf, 64px 0 0 -8px #e0dfdf, 65px 0 0 -8px #e0dfdf, 66px 0 0 -8px #e0dfdf, 67px 0 0 -8px #e0dfdf, 68px 0 0 -8px #e0dfdf, 69px 0 0 -8px #e0dfdf, 70px 0 0 -8px #e0dfdf, 71px 0 0 -8px #e0dfdf, 72px 0 0 -8px #e0dfdf, 73px 0 0 -8px #e0dfdf, 74px 0 0 -8px #e0dfdf, 75px 0 0 -8px #e0dfdf, 76px 0 0 -8px #e0dfdf, 77px 0 0 -8px #e0dfdf, 78px 0 0 -8px #e0dfdf, 79px 0 0 -8px #e0dfdf, 80px 0 0 -8px #e0dfdf, 81px 0 0 -8px #e0dfdf, 82px 0 0 -8px #e0dfdf, 83px 0 0 -8px #e0dfdf, 84px 0 0 -8px #e0dfdf, 85px 0 0 -8px #e0dfdf, 86px 0 0 -8px #e0dfdf, 87px 0 0 -8px #e0dfdf, 88px 0 0 -8px #e0dfdf, 89px 0 0 -8px #e0dfdf, 90px 0 0 -8px #e0dfdf, 91px 0 0 -8px #e0dfdf, 92px 0 0 -8px #e0dfdf, 93px 0 0 -8px #e0dfdf, 94px 0 0 -8px #e0dfdf, 95px 0 0 -8px #e0dfdf, 96px 0 0 -8px #e0dfdf, 97px 0 0 -8px #e0dfdf, 98px 0 0 -8px #e0dfdf, 99px 0 0 -8px #e0dfdf, 100px 0 0 -8px #e0dfdf, 101px 0 0 -8px #e0dfdf, 102px 0 0 -8px #e0dfdf, 103px 0 0 -8px #e0dfdf, 104px 0 0 -8px #e0dfdf, 105px 0 0 -8px #e0dfdf, 106px 0 0 -8px #e0dfdf, 107px 0 0 -8px #e0dfdf, 108px 0 0 -8px #e0dfdf, 109px 0 0 -8px #e0dfdf, 110px 0 0 -8px #e0dfdf, 111px 0 0 -8px #e0dfdf, 112px 0 0 -8px #e0dfdf, 113px 0 0 -8px #e0dfdf, 114px 0 0 -8px #e0dfdf, 115px 0 0 -8px #e0dfdf, 116px 0 0 -8px #e0dfdf, 117px 0 0 -8px #e0dfdf, 118px 0 0 -8px #e0dfdf, 119px 0 0 -8px #e0dfdf, 120px 0 0 -8px #e0dfdf, 121px 0 0 -8px #e0dfdf, 122px 0 0 -8px #e0dfdf, 123px 0 0 -8px #e0dfdf, 124px 0 0 -8px #e0dfdf, 125px 0 0 -8px #e0dfdf, 126px 0 0 -8px #e0dfdf, 127px 0 0 -8px #e0dfdf, 128px 0 0 -8px #e0dfdf, 129px 0 0 -8px #e0dfdf, 130px 0 0 -8px #e0dfdf, 131px 0 0 -8px #e0dfdf, 132px 0 0 -8px #e0dfdf, 133px 0 0 -8px #e0dfdf, 134px 0 0 -8px #e0dfdf, 135px 0 0 -8px #e0dfdf, 136px 0 0 -8px #e0dfdf, 137px 0 0 -8px #e0dfdf, 138px 0 0 -8px #e0dfdf, 139px 0 0 -8px #e0dfdf, 140px 0 0 -8px #e0dfdf, 141px 0 0 -8px #e0dfdf, 142px 0 0 -8px #e0dfdf, 143px 0 0 -8px #e0dfdf, 144px 0 0 -8px #e0dfdf, 145px 0 0 -8px #e0dfdf, 146px 0 0 -8px #e0dfdf, 147px 0 0 -8px #e0dfdf, 148px 0 0 -8px #e0dfdf, 149px 0 0 -8px #e0dfdf, 150px 0 0 -8px #e0dfdf, 151px 0 0 -8px #e0dfdf, 152px 0 0 -8px #e0dfdf, 153px 0 0 -8px #e0dfdf, 154px 0 0 -8px #e0dfdf, 155px 0 0 -8px #e0dfdf, 156px 0 0 -8px #e0dfdf, 157px 0 0 -8px #e0dfdf, 158px 0 0 -8px #e0dfdf, 159px 0 0 -8px #e0dfdf, 160px 0 0 -8px #e0dfdf, 161px 0 0 -8px #e0dfdf, 162px 0 0 -8px #e0dfdf, 163px 0 0 -8px #e0dfdf, 164px 0 0 -8px #e0dfdf, 165px 0 0 -8px #e0dfdf, 166px 0 0 -8px #e0dfdf, 167px 0 0 -8px #e0dfdf, 168px 0 0 -8px #e0dfdf, 169px 0 0 -8px #e0dfdf, 170px 0 0 -8px #e0dfdf, 171px 0 0 -8px #e0dfdf, 172px 0 0 -8px #e0dfdf, 173px 0 0 -8px #e0dfdf, 174px 0 0 -8px #e0dfdf, 175px 0 0 -8px #e0dfdf, 176px 0 0 -8px #e0dfdf, 177px 0 0 -8px #e0dfdf, 178px 0 0 -8px #e0dfdf, 179px 0 0 -8px #e0dfdf, 180px 0 0 -8px #e0dfdf, 181px 0 0 -8px #e0dfdf, 182px 0 0 -8px #e0dfdf, 183px 0 0 -8px #e0dfdf, 184px 0 0 -8px #e0dfdf, 185px 0 0 -8px #e0dfdf, 186px 0 0 -8px #e0dfdf, 187px 0 0 -8px #e0dfdf, 188px 0 0 -8px #e0dfdf, 189px 0 0 -8px #e0dfdf, 190px 0 0 -8px #e0dfdf, 191px 0 0 -8px #e0dfdf, 192px 0 0 -8px #e0dfdf, 193px 0 0 -8px #e0dfdf, 194px 0 0 -8px #e0dfdf, 195px 0 0 -8px #e0dfdf, 196px 0 0 -8px #e0dfdf, 197px 0 0 -8px #e0dfdf, 198px 0 0 -8px #e0dfdf, 199px 0 0 -8px #e0dfdf, 200px 0 0 -8px #e0dfdf, 201px 0 0 -8px #e0dfdf, 202px 0 0 -8px #e0dfdf, 203px 0 0 -8px #e0dfdf, 204px 0 0 -8px #e0dfdf, 205px 0 0 -8px #e0dfdf, 206px 0 0 -8px #e0dfdf, 207px 0 0 -8px #e0dfdf, 208px 0 0 -8px #e0dfdf, 209px 0 0 -8px #e0dfdf, 210px 0 0 -8px #e0dfdf, 211px 0 0 -8px #e0dfdf, 212px 0 0 -8px #e0dfdf, 213px 0 0 -8px #e0dfdf, 214px 0 0 -8px #e0dfdf, 215px 0 0 -8px #e0dfdf, 216px 0 0 -8px #e0dfdf, 217px 0 0 -8px #e0dfdf, 218px 0 0 -8px #e0dfdf, 219px 0 0 -8px #e0dfdf, 220px 0 0 -8px #e0dfdf, 221px 0 0 -8px #e0dfdf, 222px 0 0 -8px #e0dfdf, 223px 0 0 -8px #e0dfdf, 224px 0 0 -8px #e0dfdf, 225px 0 0 -8px #e0dfdf, 226px 0 0 -8px #e0dfdf, 227px 0 0 -8px #e0dfdf, 228px 0 0 -8px #e0dfdf, 229px 0 0 -8px #e0dfdf, 230px 0 0 -8px #e0dfdf, 231px 0 0 -8px #e0dfdf, 232px 0 0 -8px #e0dfdf, 233px 0 0 -8px #e0dfdf, 234px 0 0 -8px #e0dfdf, 235px 0 0 -8px #e0dfdf, 236px 0 0 -8px #e0dfdf, 237px 0 0 -8px #e0dfdf, 238px 0 0 -8px #e0dfdf, 239px 0 0 -8px #e0dfdf, 240px 0 0 -8px #e0dfdf; }
+
+/* Input-file
+   ========================================================================== */
+/* File input variables
+   ========================================================================== */
+/**
+*
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Input fields
+  ========================================================================== */
+/**
+* These rules overwrite existing Bootstrap rules
+*
+* Variables file: assets/stylesheets/eos-components/input-fields/input-fields.variables.scss
+*/
+.form-control-file {
+  border-bottom: 1px solid #797777;
+  padding: 8px 4px; }
+  .form-control-file:disabled {
+    border-bottom: 1px solid #b6b4b4; }
+  .form-control-file:focus {
+    box-shadow: 0px 1px 0px #00b2e2;
+    outline: none; }
+  .form-control-file.approved {
+    border-bottom: 1px solid #30ba78; }
+  .form-control-file.error {
+    border-bottom: 1px solid #dc3545; }
+
+.custom-file-input:focus ~ label {
+  box-shadow: 0px 1px 0px #00b2e2;
+  outline: none; }
+
+.custom-file-input:disabled ~ label {
+  background-color: transparent;
+  border-bottom: 1px solid #b6b4b4;
+  color: #b6b4b4; }
+  .custom-file-input:disabled ~ label::after {
+    border-color: #b6b4b4;
+    color: #b6b4b4; }
+
+.custom-file-input.approved ~ label {
+  border-bottom: 1px solid #30ba78; }
+
+.custom-file-input.error ~ label {
+  border-bottom: 1px solid #dc3545; }
+
+.custom-file-label {
+  border: 0;
+  border-bottom: 1px solid #797777;
+  border-radius: 0;
+  color: #141823;
+  height: 48px;
+  padding: 0;
+  width: calc(100% - 50px); }
+  .custom-file-label::after {
+    border: 1px solid;
+    cursor: pointer;
+    font-size: 12px;
+    height: 28px;
+    right: -56px;
+    top: 20px; }
+
+/* Input-file
+   ========================================================================== */
+/* Password input variables
+   ========================================================================== */
+/**
+*
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*
+*/
+/* Input fields
+  ========================================================================== */
+/**
+* These rules overwrite existing Bootstrap rules
+*
+* Variables file: assets/stylesheets/eos-components/input-fields/input-password.variables.scss
+*/
+.eos-input-password {
+  position: relative; }
+
+/* Password Strength Meter */
+.password-strength-meter {
+  align-items: center;
+  display: flex;
+  height: 20px;
+  visibility: hidden;
+  width: 100%; }
+  .password-strength-meter .meter {
+    background: #e0dfdf;
+    height: 3px;
+    margin-right: 5px;
+    width: 24%; }
+  .password-strength-meter .meter-text {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: end;
+    width: 25%; }
+  .password-strength-meter.short .meter-text {
+    color: #969494; }
+    .password-strength-meter.short .meter-text:after {
+      content: 'too short'; }
+  .password-strength-meter.weak .meter:nth-child(-n + 1) {
+    background: #dc3545; }
+  .password-strength-meter.weak .meter-text {
+    color: #dc3545; }
+    .password-strength-meter.weak .meter-text:after {
+      content: 'weak'; }
+  .password-strength-meter.medium .meter:nth-child(-n + 2) {
+    background: #ff9e02; }
+  .password-strength-meter.medium .meter-text {
+    color: #ff9e02; }
+    .password-strength-meter.medium .meter-text:after {
+      content: 'Medium'; }
+  .password-strength-meter.strong .meter:nth-child(-n + 3) {
+    background: #30ba78; }
+  .password-strength-meter.strong .meter-text {
+    color: #30ba78; }
+    .password-strength-meter.strong .meter-text:after {
+      content: 'Strong'; }
+
+.toggle-password {
+  color: #797777;
+  cursor: pointer;
+  margin-left: -15px;
+  position: absolute;
+  top: 12px;
+  z-index: 1000; }
+
+/* Radio button
+  ========================================================================== */
+/* Radio button variables
+   ========================================================================== */
+/**
+*
+*  Z-index variables: /assets/stylesheets/eos-base/variables/z-index.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Radio button styles */
+.eos-radio-btn {
+  opacity: 0;
+  position: absolute;
+  z-index: -1; }
+
+.eos-radio-btn ~ .form-check-label {
+  margin-left: 8px; }
+  .eos-radio-btn ~ .form-check-label::before, .eos-radio-btn ~ .form-check-label::after {
+    content: '';
+    display: block;
+    height: 16px;
+    left: 0;
+    position: absolute;
+    top: 0.25rem;
+    width: 16px; }
+  .eos-radio-btn ~ .form-check-label::before {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    background-color: white;
+    border: 1px solid #797777;
+    border-radius: 50%;
+    pointer-events: none;
+    user-select: none; }
+  .eos-radio-btn ~ .form-check-label::after {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 50% 50%;
+    content: ''; }
+
+.eos-radio-btn:checked ~ .form-check-label::before {
+  background-color: #30ba78;
+  border: 0; }
+
+.eos-radio-btn:focus ~ .form-check-label::before {
+  box-shadow: 0px 0px 4px #00b2e2; }
+
+.eos-radio-btn:disabled ~ .form-check-label {
+  color: #b6b4b4; }
+  .eos-radio-btn:disabled ~ .form-check-label::before {
+    background-color: #b6b4b4;
+    border: 1px solid #b6b4b4; }
+
+/* Select
+  ========================================================================== */
+/* Select element variables
+   ========================================================================== */
+/**
+*
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Select css */
+.custom-select, .custom-multiple-select {
+  background: #ffffff url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNy40MSA3Ljg0TDEyIDEyLjQybDQuNTktNC41OEwxOCA5LjI1bC02IDYtNi02eiIvPjwvc3ZnPg==") no-repeat left center;
+  background-size: 18px;
+  border: 0;
+  border-bottom: 1px solid #797777;
+  border-radius: 0;
+  color: #141823;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 8px 8px 24px;
+  width: 100%; }
+  .custom-select option, .custom-multiple-select option {
+    font-weight: bold;
+    padding: 8px; }
+  .custom-select:focus, .custom-multiple-select:focus {
+    border-color: #797777;
+    box-shadow: 0px 1px 0px #00b2e2;
+    outline: 0; }
+  .custom-select:disabled, .custom-multiple-select:disabled {
+    background: #ffffff url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0I2QjRCNCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCI+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0xNi41OSA4LjU5TDEyIDEzLjE3IDcuNDEgOC41OSA2IDEwbDYgNiA2LTZ6Ii8+PC9zdmc+") no-repeat left center;
+    border-color: #b6b4b4;
+    color: #b6b4b4;
+    cursor: not-allowed; }
+  .custom-select.approved, .approved.custom-multiple-select {
+    border: 0;
+    border-bottom: 1px solid #30ba78; }
+  .custom-select.error, .error.custom-multiple-select {
+    border: 0;
+    border-bottom: 1px solid #dc3545; }
+  .custom-select[multiple], .custom-multiple-select[multiple] {
+    background: none;
+    padding: 0; }
+
+.custom-multiple-select {
+  border: 1px solid #797777;
+  border-radius: 2px;
+  overflow: auto; }
+  .custom-multiple-select:focus {
+    box-shadow: 0px 0px 3px #00b2e2; }
+  .custom-multiple-select.approved {
+    border: 1px solid #30ba78; }
+  .custom-multiple-select.error {
+    border: 1px solid #dc3545; }
+    .custom-multiple-select.error + .form-messages {
+      flex-direction: column; }
+
+/* Text area
+  ========================================================================== */
+/* Text area variables
+   ========================================================================== */
+/**
+*
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Text area component
+   ========================================================================== */
+.text-area {
+  border: 1px solid #797777;
+  border-radius: 2px;
+  height: 190px;
+  resize: none; }
+  .text-area:focus {
+    border-color: #797777;
+    box-shadow: 0px 0px 3px #00b2e2;
+    outline: 0; }
+  .text-area:disabled {
+    background: #ffffff;
+    border-color: #b6b4b4;
+    color: #b6b4b4;
+    cursor: not-allowed; }
+  .text-area.approved {
+    border: 1px solid #30ba78; }
+  .text-area.error {
+    border: 1px solid #dc3545; }
+
+/* Toggle
+  ========================================================================== */
+/* Toggle variables
+   ========================================================================== */
+/**
+*
+*  Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss
+*  Color variables: /assets/stylesheets/eos-base/variables/branding.scss
+*
+*/
+/* Toggle component
+   ========================================================================== */
+.custom-switch {
+  padding-left: 50px; }
+  .custom-switch .custom-control-label {
+    margin-bottom: 0;
+    position: relative;
+    vertical-align: top; }
+  .custom-switch .custom-control-label::before {
+    background-color: #797777;
+    border-radius: 10px;
+    content: '';
+    display: block;
+    height: 20px;
+    left: -50px;
+    pointer-events: all;
+    position: absolute;
+    top: 1px;
+    width: 40px; }
+  .custom-switch .custom-control-input:focus ~ .custom-control-label::before {
+    background-color: #797777;
+    box-shadow: 0px 0px 3px #00b2e2; }
+  .custom-switch .custom-control-label::after {
+    background-color: #ffffff;
+    border-radius: 50%;
+    height: 16px;
+    left: -48px;
+    top: 3px;
+    transition: background-color .15s ease-in-out, -webkit-transform .15s ease-in-out;
+    width: 16px; }
+  .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #30ba78;
+    color: #ffffff; }
+  .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+    -webkit-transform: translateX(20px);
+    background-color: #ffffff;
+    transform: translateX(20px); }
+  .custom-switch .custom-control-input:checked:disabled ~ .custom-control-label::before {
+    background-color: #e4f6ee; }
+
+/* Sign in variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacings.scss */
+/* ==========================================================================
+  Sign in style
+========================================================================== */
+.signin-bg {
+  background: url("../images/sign-in-bg.svg") #7AD4AA no-repeat center fixed;
+  background-size: cover; }
+
+.signin-content {
+  align-content: center;
+  display: flex;
+  height: 100%;
+  justify-content: center; }
+
+.sign-in-box {
+  display: flex;
+  margin: auto;
+  overflow: auto;
+  width: 1120px; }
+
+.brand-container {
+  background-color: #0c322c;
+  color: #ffffff;
+  margin: 50px 0;
+  padding: 32px;
+  width: 445px; }
+  .brand-container .sign-in-img {
+    margin: 32px -32px; }
+  .brand-container h1 {
+    color: #30ba78; }
+  .brand-container p {
+    margin: 0; }
+
+.form-container {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 50px 0;
+  width: 675px; }
+  .form-container .sign-in-header {
+    padding: 32px; }
+  .form-container .logo-right {
+    display: none; }
+  .form-container h1 {
+    color: #30ba78; }
+  .form-container .sign-in-form {
+    height: 100%;
+    margin: 0 auto;
+    width: 75%; }
+  .form-container .form-links {
+    display: flex;
+    justify-content: space-between; }
+  .form-container .sign-in-footer {
+    width: 100%; }
+    .form-container .sign-in-footer ul {
+      margin: 24px 32px;
+      padding: 0; }
+      .form-container .sign-in-footer ul li {
+        display: inline-flex;
+        list-style: none;
+        margin-right: 8px;
+        padding: 0 0 4px 0; }
+    .form-container .sign-in-footer .sign-in-cookies {
+      display: none; }
+
+@media only screen and (max-width: 1120px) {
+  .sign-in-box {
+    height: 100%;
+    width: 100%; }
+  .form-container {
+    margin: 0;
+    padding: 0;
+    width: 100%; }
+  .brand-container {
+    margin: 0;
+    width: 335px; } }
+
+@media only screen and (max-width: 768px) {
+  .brand-container {
+    display: none; }
+  .form-container {
+    width: 100%; }
+    .form-container .logo-right {
+      display: inline-flex; }
+    .form-container .sign-in-footer {
+      border-top: 1px solid #e0dfdf; }
+      .form-container .sign-in-footer .sign-in-cookies {
+        box-shadow: 0 0 8px -2px #b6b4b4;
+        display: block;
+        margin: 0;
+        padding: 16px 32px 24px 32px; } }
+
+/* Elements
+   ========================================================================== */
+/**
+*  This folder contains elements that compose the application
+*/
+/* Buttons
+   ========================================================================== */
+/* Buttons variables
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Spacing variables: /assets/stylesheets/eos-base/variables/spacing.scss */
+/* Typography variables: /assets/stylesheets/eos-base/variables/typography.scss */
+/* btn */
+/* secondary button */
+/* secondary button inverse */
+/* Primary button and outline primary button */
+/* Danger button */
+/* Small button */
+/* Small button */
+/* Large button */
+/* Button styling
+   ========================================================================== */
+/* button */
+.btn, .custom-file-label::after {
+  background-color: transparent;
+  border-radius: 20px;
+  font-weight: bold;
+  line-height: 1.5em;
+  padding: 8px 16px; }
+  .btn:not(:disabled):not(.disabled):active, .custom-file-label:not(:disabled):not(.disabled):active::after, .btn:not(:disabled):not(.disabled):active:focus, .custom-file-label:not(:disabled):not(.disabled):active:focus::after, .btn:hover, .custom-file-label:hover::after, .btn:active:hover, .custom-file-label:active:hover::after, .btn:active, .custom-file-label:active::after, .btn.active, .active.custom-file-label::after, .btn:focus, .custom-file-label:focus::after, .btn.focus, .focus.custom-file-label::after, .btn.active.focus, .active.focus.custom-file-label::after, .btn.active:focus, .active.custom-file-label:focus::after, .btn:active:focus, .custom-file-label:active:focus::after, .btn:active.focus, .custom-file-label:active.focus::after {
+    background-color: transparent;
+    box-shadow: none; }
+  .btn .eos-icons, .custom-file-label::after .eos-icons {
+    margin-right: 0;
+    pointer-events: none;
+    vertical-align: text-bottom; }
+
+/* Default button */
+.btn-secondary, .custom-file-label::after {
+  border-color: #141823;
+  color: #141823; }
+  .btn-secondary:hover, .custom-file-label:hover::after, .btn-secondary:active:hover, .custom-file-label:active:hover::after {
+    border-color: #686565;
+    color: #686565; }
+  .btn-secondary:not(:disabled):not(.disabled):active, .custom-file-label:not(:disabled):not(.disabled):active::after, .btn-secondary:not(:disabled):not(.disabled):active:focus, .custom-file-label:not(:disabled):not(.disabled):active:focus::after, .btn-secondary:active, .custom-file-label:active::after, .btn-secondary.active, .active.custom-file-label::after, .btn-secondary:focus, .custom-file-label:focus::after, .btn-secondary.focus, .focus.custom-file-label::after, .btn-secondary.active.focus, .active.focus.custom-file-label::after, .btn-secondary.active:focus, .active.custom-file-label:focus::after, .btn-secondary:active:focus, .custom-file-label:active:focus::after, .btn-secondary:active.focus, .custom-file-label:active.focus::after {
+    border-color: #686565;
+    color: #686565; }
+  .btn-secondary.disabled, .disabled.custom-file-label::after, .btn-secondary.disabled:hover, .disabled.custom-file-label:hover::after, .btn-secondary.disabled:focus, .disabled.custom-file-label:focus::after {
+    background-color: transparent;
+    border-color: #969494;
+    color: #969494;
+    opacity: 0.6; }
+
+/* Default button inverse */
+.btn-secondary-inverse {
+  border-color: #ffffff;
+  color: #ffffff; }
+  .btn-secondary-inverse:hover, .btn-secondary-inverse:active:hover {
+    border-color: #e0dfdf;
+    color: #e0dfdf; }
+  .btn-secondary-inverse:not(:disabled):not(.disabled):active, .btn-secondary-inverse:not(:disabled):not(.disabled):active:focus, .btn-secondary-inverse:active, .btn-secondary-inverse.active, .btn-secondary-inverse:focus, .btn-secondary-inverse.focus, .btn-secondary-inverse.active.focus, .btn-secondary-inverse.active:focus, .btn-secondary-inverse:active:focus, .btn-secondary-inverse:active.focus {
+    border-color: #e0dfdf;
+    color: #e0dfdf; }
+  .btn-secondary-inverse.disabled, .btn-secondary-inverse.disabled:hover, .btn-secondary-inverse.disabled:focus {
+    background-color: transparent;
+    border-color: #ffffff;
+    color: #ffffff;
+    opacity: 0.6; }
+
+/* Primary button */
+.btn-primary {
+  background-color: #30ba78;
+  border-color: #30ba78;
+  color: #ffffff; }
+  .btn-primary:hover, .btn-primary:active:hover {
+    background-color: #139448;
+    border-color: #139448;
+    color: #ffffff; }
+  .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:active, .btn-primary.active, .btn-primary:focus, .btn-primary.focus, .btn-primary.active.focus, .btn-primary.active:focus, .btn-primary:active:focus, .btn-primary:active.focus {
+    background-color: #139448;
+    border-color: #139448;
+    color: #ffffff; }
+  .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary.disabled:focus {
+    background-color: #30ba78;
+    border-color: #30ba78;
+    opacity: 0.6; }
+
+/* Outline primary button */
+.btn-outline-primary {
+  border-color: #30ba78;
+  color: #30ba78; }
+  .btn-outline-primary:hover, .btn-outline-primary:active:hover {
+    border-color: #139448;
+    color: #139448; }
+  .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary:focus, .btn-outline-primary.focus, .btn-outline-primary.active.focus, .btn-outline-primary.active:focus, .btn-outline-primary:active:focus, .btn-outline-primary:active.focus {
+    border-color: #139448;
+    color: #139448; }
+  .btn-outline-primary.disabled, .btn-outline-primary.disabled:hover, .btn-outline-primary.disabled:focus {
+    border-color: #30ba78;
+    color: #30ba78;
+    opacity: 0.6; }
+
+/* Danger button */
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #ffffff; }
+  .btn-danger:hover, .btn-danger:active:hover {
+    background-color: #c5161f;
+    border-color: #c5161f;
+    color: #ffffff; }
+  .btn-danger:not(:disabled):not(.disabled):active, .btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:active, .btn-danger.active, .btn-danger:focus, .btn-danger.focus, .btn-danger.active.focus, .btn-danger.active:focus, .btn-danger:active:focus, .btn-danger:active.focus {
+    background-color: #c5161f;
+    border-color: #c5161f;
+    color: #ffffff; }
+  .btn-danger.disabled, .btn-danger.disabled:hover, .btn-danger.disabled:focus {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #ffffff;
+    opacity: 0.6; }
+
+/* Icon only button */
+.btn-icon i {
+  margin: 0; }
+
+/* Extra small button */
+.btn-xs {
+  padding: 2px 4px; }
+
+/* Small button */
+.btn-sm, .custom-file-label::after {
+  padding: 4px 8px; }
+
+/* Vertical-align icons Extra small and small button */
+.btn-xs .eos-icons,
+.btn-sm .eos-icons,
+.custom-file-label::after .eos-icons {
+  vertical-align: bottom; }
+
+/* Large button */
+.btn-lg {
+  padding: 8px 16px; }
+
+/* Icons
+   ========================================================================== */
+/* Base variables for icons
+   ========================================================================== */
+/* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss */
+/* Icons */
+/* Material icons variables */
+/* Base classes for icons
+   ========================================================================== */
+/**
+* Dependencies:
+*   - helpers/mixins.scss
+*   - components/icons/icons.variables.scss
+*   - base/variables/spacings.scss
+*/
+.eos-icons {
+  margin-right: 8px;
+  vertical-align: bottom;
+  width: 24px; }
+
+/* Rules for sizing the icon. */
+.eos-18 {
+  font-size: 18px;
+  width: 18px; }
+
+.eos-24 {
+  font-size: 24px;
+  width: 24px; }
+
+.eos-36 {
+  font-size: 36px;
+  width: 36px; }
+
+.eos-48 {
+  font-size: 48px;
+  width: 48px; }
+
+/* Allow image icons, like svg, to use the icon size classes */
+img.eos-18 {
+  height: 18px;
+  width: 18px; }
+
+img.eos-24 {
+  height: 24px;
+  width: 24px; }
+
+img.eos-36 {
+  height: 36px;
+  width: 36px; }
+
+img.eos-48 {
+  height: 48px;
+  width: 48px; }
+
+/* Rules for icon colors. */
+.eos-light {
+  color: #ffffff; }
+  .eos-light.eos-inactive {
+    color: #b6b4b4; }
+
+.eos-dark {
+  color: #141823; }
+  .eos-dark.eos-inactive {
+    color: #b6b4b4; }
+
+/* Logo icons style */
+.logo {
+  margin-right: 8px;
+  padding: 6px; }
+  .logo-square {
+    border-radius: 0; }
+  .logo-round {
+    border-radius: 2px; }
+
+/* Wrapper background */
+.eos-dark-wrapper {
+  background: #141823; }
+  .eos-dark-wrapper.eos-inactive {
+    background: #b6b4b4; }
+
+.eos-light-wrapper {
+  background: #ffffff; }
+  .eos-light-wrapper.eos-inactive {
+    background: #b6b4b4; }
+
+/* Icons - general (not eos-icons classes) */
+.main-menu .active .icon-new {
+  color: #ffffff; }
+
+/* Feature Container
+   ========================================================================== */
+/* Dropdown variables
+   ========================================================================== */
+/**
+* Colors
+*
+* Colors variables: /assets/stylesheets/eos-base/variables/branding.scss
+*/
+/* secondary button */
+/* Primary button */
+/* Danger button */
+/* Dropdown
+   ========================================================================== */
+/* Variables file: assets/stylesheets/eos-custom-components/dropdown/dropdown.variables.scss */
+.dropdown-menu.show {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); }
+
+.show .dropdown-toggle.btn-secondary, .show .dropdown-toggle.custom-file-label::after {
+  background-color: transparent;
+  border-color: #141823;
+  color: #141823; }
+  .show .dropdown-toggle.btn-secondary:focus, .show .dropdown-toggle.custom-file-label:focus::after, .show .dropdown-toggle.btn-secondary.focus, .show .dropdown-toggle.focus.custom-file-label::after {
+    background-color: transparent;
+    border-color: #969494;
+    box-shadow: none;
+    color: #969494; }
+
+.show .dropdown-toggle.btn-primary {
+  background-color: #30ba78;
+  border-color: #30ba78;
+  color: #ffffff; }
+  .show .dropdown-toggle.btn-primary:focus, .show .dropdown-toggle.btn-primary.focus {
+    background-color: #139448;
+    border-color: #139448;
+    box-shadow: none;
+    color: #ffffff; }
+
+.show .dropdown-toggle.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #ffffff; }
+  .show .dropdown-toggle.btn-danger:focus, .show .dropdown-toggle.btn-danger.focus {
+    background-color: #c5161f;
+    border-color: #c5161f;
+    box-shadow: none;
+    color: #ffffff; }
+
+.dropdown-toggle:after {
+  content: none; }

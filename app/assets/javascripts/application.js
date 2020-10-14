@@ -16,6 +16,8 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+// EOS
+//= index.js
 // bootstrap-slider
 //= require bootstrap-slider.min
 // Ace editor
