@@ -28,6 +28,8 @@ gem 'cloud-instancetype', '~> 1.1'
 # Bootstrap web framework
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+# EOS Icons https://icons.eosdesignsystem.com
+gem 'eos-icons-font'
 # identify 'active' links
 gem 'active_link_to'
 # Ace editor

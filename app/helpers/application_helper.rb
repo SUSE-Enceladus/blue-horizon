@@ -12,7 +12,7 @@ module ApplicationHelper
     url = "/#{path_key}"
 
     content = [
-      tag.i(icon, class: ['eos-icons', 'md-18']),
+      tag.i(icon, class: ['eos-icons', 'eos-18']),
       tag.span(text, class: 'collapse')
     ].join(' ').html_safe
 
