@@ -29,10 +29,11 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
     gem install bundler
     bundle
     ```
-    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. On (open)SUSE:
+    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. Install also sqlite-devel. On (open)SUSE:
     ```
-    sudo zypper in libxml2-devel libxslt-devel
+    sudo zypper in libxml2-devel libxslt-devel sqlite3-devel
     ```
+    
 
 4.  If you need to use a path _other than_ `./vendor/` for customization, create a dotenv file (e.g. `.env.development`) that defines:
     *   The path to the customization JSON:
