@@ -21,11 +21,12 @@ class KeyValue < ApplicationRecord
 
     kv.save
 
-    # We need to save the value with the final path, that is created after the 1st save
-    if value.is_a?(ActionDispatch::Http::UploadedFile)
-      kv.value = kv.attachment.current_path
-      kv.save
-    end
+    return unless value.is_a?(ActionDispatch::Http::UploadedFile)
+
+    # We need to save the value with the final path, that is created
+    # after the 1st save
+    kv.value = kv.attachment.current_path
+    kv.save
   end
 
   def self.get(key, default_value=nil)

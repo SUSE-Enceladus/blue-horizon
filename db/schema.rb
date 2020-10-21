@@ -16,7 +16,6 @@
 # system.
 
 ActiveRecord::Schema.define(version: 20200622081731) do
-
   create_table 'key_values', force: :cascade do |t|
     t.string 'key', null: false
     t.text 'value'
@@ -33,5 +32,4 @@ ActiveRecord::Schema.define(version: 20200622081731) do
     t.datetime 'updated_at', null: false
     t.index ['filename'], name: 'index_sources_on_filename'
   end
-
 end

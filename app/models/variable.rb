@@ -151,7 +151,7 @@ class Variable
     when 'map'
       Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
     else
-      if self.file_key?(key)
+      if file_key?(key)
         value
       else
         value.to_s
