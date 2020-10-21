@@ -1,6 +1,24 @@
 @import "eos-branding";
 
-#sidebar {
-  background-color: $eos-bc-gray-50;
-  color: $eos-bc-gray-1000;
+li.menu-item.disabled {
+  * {
+    color: $eos-bc-gray-300 !important;
+    cursor: default;
+  }
+
+  .menu-title:hover {
+    border-left: 5px solid transparent;
+  }
 }
+
+footer.footer-side-menu ul.footer-list {
+  color: $eos-bc-gray-900;
+}
+
+dt, dd {
+  display: block;
+  width: auto;
+}
+
+// A placeholder for custom CSS. 
+// This will be loaded last, and overrride other content.

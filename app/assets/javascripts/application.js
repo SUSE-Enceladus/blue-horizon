@@ -17,7 +17,7 @@
 //= require popper
 //= require bootstrap-sprockets
 // EOS
-//= index.js
+//= require index
 // bootstrap-slider
 //= require bootstrap-slider.min
 // Ace editor
