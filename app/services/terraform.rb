@@ -9,10 +9,7 @@ class Terraform
 
   def init_terraform
     in_export_dir do
-      RubyTerraform.init(
-        backend:  false,
-        no_color: true
-      )
+      RubyTerraform.init(backend: false, no_color: true)
     rescue RubyTerraform::Errors::ExecutionError
       @logger.error('Error calling terraform init.')
     end
@@ -32,16 +29,15 @@ class Terraform
   end
 
   def log_file
-    log_path_filename = Rails.configuration.x.terraform_log_filename
-    return Logger::LogDevice.new(log_path_filename)
+    Logger::LogDevice.new(Rails.configuration.x.terraform_log_filename)
   end
 
   def saved_plan_path
-    return Rails.configuration.x.source_export_dir.join('current_plan')
+    Rails.configuration.x.source_export_dir.join('current_plan')
   end
 
   def find_default_binary
-    return `which terraform`.strip
+    `which terraform`.strip
   end
 
   def in_export_dir(path=Rails.configuration.x.source_export_dir)
@@ -110,24 +106,18 @@ class Terraform
     Rails.configuration.x.source_export_dir.join('terraform.tfstate')
   end
 
-  def plan(output_path=saved_plan_path)
+  def plan(args)
     KeyValue.set(:active_terraform_action, 'plan')
-    stdout = StringIO.new
-    stderr = StringIO.new
-    set_output(stdout, stderr)
+    set_output
     in_export_dir do
-      RubyTerraform.plan(
-        directory: Rails.configuration.x.source_export_dir,
-        plan:      output_path,
-        no_color:  true,
-        var_file:  Variable.load.export_path
-      )
+      RubyTerraform.plan(args)
     end
-  rescue RubyTerraform::Errors::ExecutionError
+  rescue RubyTerraform::Errors::ExecutionError => e
+    plan_stderr = RubyTerraform.configuration.stderr.string
+    plan_stderr ||= ''
     return {
       error: {
-        message: 'Plan operation has failed',
-        output:  stderr.string
+        message: e.to_s, output: plan_stderr
       }
     }
   ensure
@@ -151,6 +141,21 @@ class Terraform
     in_export_dir do
       RubyTerraform.show(path: plan_path, json: true)
     end
+  end
+
+  def destroy
+    KeyValue.set(:active_terraform_action, 'destroy')
+    destroy_args = {
+      directory:    Rails.configuration.x.source_export_dir,
+      auto_approve: true
+    }
+    in_export_dir do
+      RubyTerraform.destroy(destroy_args)
+    end
+  rescue RubyTerraform::Errors::ExecutionError
+    return 'Error: Terraform destroy has failed.'
+  ensure
+    KeyValue.set(:active_terraform_action, nil)
   end
 
   def set_output(stdout=StringIO.new, stderr=StringIO.new)

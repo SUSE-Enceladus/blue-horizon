@@ -25,6 +25,14 @@
         },
         "test_options": {
             "description": "Multi Options=[\"option1\", \"option2\"]"
+        },
+        "test_description_comment": {
+            "description": "Some things <!-- are best left unsaid -->",
+            "default": "be quiet"
+        },
+        "region": {
+            "type": "string",
+            "description": "Cloud region where this is running. (Optional)"
         }
     }
 }

@@ -32,7 +32,13 @@ module Helpers
   end
 
   def current_plan_fixture_json
-    File.read(Rails.root.join('spec', 'fixtures', 'current_plan.json'))
+    plan = File.read(Rails.root.join('spec', 'fixtures', 'current_plan.json'))
+    terraform_version = `terraform --version`.match(/v([0-9.]+)/)[1]
+    plan.gsub('$VERSION', terraform_version)
+  end
+
+  def metadata_fixture(name)
+    File.read(Rails.root.join('spec', 'fixtures', 'metadata', name))
   end
 
   def collect_variable_names
@@ -46,9 +52,31 @@ module Helpers
   def random_export_path
     random_path = Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     Rails.configuration.x.source_export_dir = random_path
+    FileUtils.mkdir_p(random_path)
+    return random_path
+  end
+
+  def cleanup_random_export_path
+    FileUtils.rm_rf(Rails.configuration.x.source_export_dir)
+  end
+
+  def working_path
+    Rails.configuration.x.source_export_dir
+  end
+
+  def mock_metadata_location(location)
+    allow_any_instance_of(Metadata).to receive(:location).and_return(location)
   end
 end
 
 RSpec.configure do |config|
   config.include Helpers
+
+  config.before do
+    random_export_path
+  end
+
+  config.after do
+    cleanup_random_export_path
+  end
 end

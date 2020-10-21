@@ -24,7 +24,7 @@ gem 'uglifier', '>= 1.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Collection of instance types
-gem 'cloud-instancetype'
+gem 'cloud-instancetype', '~> 1.1'
 # Bootstrap web framework
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
@@ -60,10 +60,16 @@ group :development, :test do
   gem 'selenium-webdriver'
   # enable capyabara to open test output
   gem 'launchy'
+  gem 'pry', '~> 0.10.4'
+  gem 'pry-doc', '~> 0.6.0'
+  gem 'pry-nav'
+  gem 'pry-remote'
   # code style enforcement
   gem 'rubocop', '~> 0.76.0', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  # Mock external web requests
+  gem 'webmock', require: false
 end
 
 group :development do

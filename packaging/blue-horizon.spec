@@ -17,7 +17,7 @@
 #
 
 Name:      blue-horizon
-Version:   1.1.1
+Version:   1.3.0
 Release:   0
 License:   GPL-3.0
 Summary:   Web server interface for terraforming in a public cloud
@@ -39,7 +39,7 @@ BuildRequires:  %{rubygem activesupport}
 BuildRequires:  %{rubygem addressable}
 BuildRequires:  %{rubygem arel}
 BuildRequires:  %{rubygem builder}
-BuildRequires:  %{rubygem cloud-instancetype}
+BuildRequires:  %{rubygem cloud-instancetype:1.1}
 BuildRequires:  %{rubygem concurrent-ruby}
 BuildRequires:  %{rubygem crass}
 BuildRequires:  %{rubygem erubi}
@@ -99,7 +99,7 @@ Requires:  %{rubygem activesupport}
 Requires:  %{rubygem addressable}
 Requires:  %{rubygem arel}
 Requires:  %{rubygem builder}
-Requires:  %{rubygem cloud-instancetype}
+Requires:  %{rubygem cloud-instancetype:1.1}
 Requires:  %{rubygem concurrent-ruby}
 Requires:  %{rubygem crass}
 Requires:  %{rubygem erubi}
@@ -146,6 +146,7 @@ Requires:  %{rubygem tzinfo}
 Requires:  %{rubygem websocket-driver}
 Requires:  %{rubygem websocket-extensions}
 # end generated requirements
+Requires: terraform = 0.13.4
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch: noarch

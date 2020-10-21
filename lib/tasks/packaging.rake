@@ -74,7 +74,11 @@ def gemspecs(gemfile)
 end
 
 def name_version
-  `rpm -q --specfile --qf '%{NAME}-%{VERSION}' packaging/blue-horizon.spec`
+  "blue-horizon-#{version}"
+end
+
+def version
+  File.read('.bumpversion.cfg').match(/^current_version = (?<v>[0-9.]+)$/)[:v]
 end
 
 def tarball_filename

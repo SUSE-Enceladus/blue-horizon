@@ -24,17 +24,21 @@ class SourcesController < ApplicationController
     @source = Source.new(source_params)
 
     if @source.save
-      terra_validate
+      message = 'Source was successfully created.'
+      flash = { notice: message }
+      redirect_to edit_source_path(@source), flash: flash
     else
       set_sources
-      render :new
+      return render :new
     end
   end
 
   # PATCH/PUT /sources/1
   def update
     if @source.update(source_params)
-      terra_validate
+      message = 'Source was successfully updated.'
+      flash = { notice: message }
+      redirect_to edit_source_path, flash: flash
     else
       set_sources
       render :new
@@ -45,6 +49,18 @@ class SourcesController < ApplicationController
   def destroy
     @source.destroy
     redirect_to(sources_path, notice: 'Source was successfully destroyed.')
+  end
+
+  def validate_terra
+    validation = Source.valid_sources
+
+    if validation
+      flash[:error] = validation
+    else
+      flash[:notice] = 'All sources are valid.'
+    end
+
+    redirect_to request.referer
   end
 
   private
@@ -66,23 +82,5 @@ class SourcesController < ApplicationController
 
   def source_params
     params.require(:source).permit(:filename, :content)
-  end
-
-  def terra_validate
-    Source.all.each(&:export)
-    terra = Terraform.new
-    output = terra.validate(true, true)
-
-    if output
-      flash = { error: output }
-    else
-      message = 'Source was successfully '
-      message += params[:action] == 'create' ? 'created.' : 'updated.'
-      flash = { notice: message }
-    end
-    return redirect_to edit_source_path(@source), flash: flash if
-      params[:action] == 'create'
-
-    redirect_to edit_source_path, flash: flash
   end
 end

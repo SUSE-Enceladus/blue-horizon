@@ -16,6 +16,10 @@
     %pre.pre-scrollable
       = render 'output'
 %p.clearfix
+  %div.float-left.btn-group.steps-container
+    = link_to deploy_path, class: "btn btn-danger disabled", id: "destroy", title: t('tooltips.run'), data: { method: :delete, toggle: 'tooltip', disable_with: t('running') } do
+      %i.eos-icons.md-18 cloud_off
+      = t('rollback')
   %div.float-right.btn-group.steps-container
     = link_to plan_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
       %i.eos-icons.md-18 fast_rewind

@@ -5,6 +5,7 @@ require 'fileutils'
 
 class PlansController < ApplicationController
   include FileUtils
+  before_action :validate_source, only: [:show]
 
   def show
     return unless helpers.can(deploy_path)
@@ -30,7 +31,13 @@ class PlansController < ApplicationController
     return unless @exported_vars
 
     terra = Terraform.new
-    result = terra.plan
+    args = {
+      directory: Rails.configuration.x.source_export_dir,
+      plan:      terra.saved_plan_path,
+      no_color:  true,
+      var_file:  Variable.load.export_path
+    }
+    result = terra.plan(args)
 
     if result.is_a?(Hash)
       flash.now[:error] = result[:error]
@@ -47,6 +54,14 @@ class PlansController < ApplicationController
   end
 
   private
+
+  def validate_source
+    validation = Source.valid_sources if Rails.configuration.x.advanced_mode
+    return unless validation
+
+    flash[:error] = validation
+    redirect_to sources_path
+  end
 
   def export_vars
     variables = Variable.load

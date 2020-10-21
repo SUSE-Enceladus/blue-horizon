@@ -13,7 +13,7 @@ Requirements are based on supported versions from SUSE Linux Enterprise Server 1
 * rails 5.1.7
 * puma 3.11.0
 * sqlite3
-* terraform 0.12
+* terraform 0.13.4
 * any dependencies of your terraform scripts (e.g. `kubectl`, `helm`, etc.)
 
 ## Contributing
@@ -29,18 +29,23 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
     gem install bundler
     bundle
     ```
-    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. On (open)SUSE:
+    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. Install also sqlite-devel. On (open)SUSE:
     ```
-    sudo zypper in libxml2-devel libxslt-devel
+    sudo zypper in libxml2-devel libxslt-devel sqlite3-devel
     ```
 
-4.  Create a dotenv file (e.g. `.env.development`) that defines:
-    *   The cloud framework
+
+4.  If you need to use a path _other than_ `./vendor/` for customization, create a dotenv file (e.g. `.env.development`) that defines:
+    *   The path to the customization JSON:
         ```
-        CLOUD_FRAMEWORK="aws"
+        BLUE_HORIZON_CUSTOMIZER = "./vendor/customization.yml"
+        ```
+    *   The path where _terraform_ sources will be imported from:
+        ```
+        TERRAFORM_SOURCES_PATH = "./vendor/sources"
         ```
 
-5.  Place original _terraform_ scripts in `/vendor/sources`
+5.  Place original _terraform_ scripts in `/vendor/sources` (or your custom `TERRAFORM_SOURCES_PATH`)
 
     💡 _Need a simple script for development? Try this [gist](https://gist.github.com/bear454/96c067ab082f5c6cc9321061f601373f)._
 
@@ -78,8 +83,19 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`. Here some additional tips to customize your variables options:
 - Variables will be _required_ unless the description includes the word "optional".
 - Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
-- Variables with "options=["option1", "option2"]" content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
+- Variables with `options=["option1", "option2"]` content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
+- Variables with `[group:some_group_name]` will be grouped together (but still listed as ordered in the variables file). The group name will be pulled form I18N configuration, or otherwise titleized. (e.g. `[group:important_things] will render as 'Important Things')
 - Variables with "file_type" content will create a file upload input (the file will be uploaded to the server to run the deployment). This keyword value can be changed in the `en.yml` configuration file changing `file_key` entry.
+- Variable descriptions may include a comment that is not displayed. Any content contained in an HTML comment block `<!-- like this -->` will not be included in the UI, but _will_ be parsed for other customization flags.
+- Variable descriptions will be rendered as inline _markdown_ in the UI.
+
+#### Special variables
+
+The following variables will not be displayed on the variable entry form, but will be populated via other application interfaces:
+- `instance_type`: the virtual machine type to be used when starting cloud instances; this will be populated from the _Size Cluster_ page.
+- `instance_count`: the number of virtual machines to be deployed; this will be populate from the _Size Cluster_ page.
+- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).  
+  ⚠ _End users should be notified that the application needs to run in the same region where it will be deployed._
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 

@@ -11,6 +11,7 @@ class Variable
   include Saveable
 
   DEFAULT_EXPORT_FILENAME = 'terraform.tfvars.json'
+  UNGROUPED = 'ungrouped'
 
   def initialize(source_contents)
     source_contents = [source_contents].flatten
@@ -34,6 +35,10 @@ class Variable
     return { error: validation } if validation
 
     new(Source.variables.pluck(:content))
+  end
+
+  def keys
+    @plan.keys
   end
 
   def type(key)
@@ -66,6 +71,22 @@ class Variable
   def file_key?(key)
     file_key_pattern = I18n.t('file_key')
     (/#{file_key_pattern}/i =~ @plan[key]['description'])
+  end
+
+  def group(key)
+    /\[group:(?<group>.+)?\]/.match(@plan[key]['description'])[:group]
+  rescue StandardError
+    UNGROUPED
+  end
+
+  def by_groups
+    result = {}
+    attributes.each do |key, value|
+      group = self.group(key)
+      result[group] ||= {}
+      result[group][key] = value
+    end
+    return result
   end
 
   def attributes

@@ -15,10 +15,14 @@ Rails.application.routes.draw do
   resource :variables, only: [:show, :update]
   # Custom/Advanced
   resources :sources, except: [:show]
+
+  resource :sources do
+    get 'validate_terra', on: :member
+  end
   # Show plan
   resource :plan, only: [:show, :update]
   # Deploy
-  resource :deploy, only: [:show, :update, :create]
+  resource :deploy, only: [:update, :destroy]
 
   resource :deploy do
     get 'send_current_status', on: :member

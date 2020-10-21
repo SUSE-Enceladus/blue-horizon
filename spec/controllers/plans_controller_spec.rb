@@ -4,18 +4,9 @@ require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
   let(:json_instance) { JSON }
-  let!(:random_path) { random_export_path }
   let(:ruby_terraform) { RubyTerraform }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
-
-  before do
-    FileUtils.mkdir_p(random_path)
-  end
-
-  after do
-    FileUtils.rm_rf(random_path)
-  end
 
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('{}') }
@@ -103,15 +94,24 @@ RSpec.describe PlansController, type: :controller do
     it 'handles rubyterraform exception' do
       allow(ruby_terraform).to(
         receive(:plan)
-          .and_raise(RubyTerraform::Errors::ExecutionError)
+          .and_raise(
+            RubyTerraform::Errors::ExecutionError,
+            'Failed while running \'plan\'.'
+          )
+      )
+      allow(ruby_terraform.configuration).to(
+        receive(:stderr)
+          .and_return(
+            StringIO.new('foo')
+          )
       )
 
       put :update, format: :js
 
       expect(flash[:error]).to(
         match(
-          message: /Plan operation has failed/,
-          output:  ''
+          message: /Failed while running 'plan'./,
+          output:  'foo'
         )
       )
     end

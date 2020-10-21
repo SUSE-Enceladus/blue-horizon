@@ -39,6 +39,12 @@ Style/WordArray:
 RSpec/ExampleLength:
   Enabled: false
 
+RSpec/LetSetup:
+  Enabled: false
+  
+RSpec/MessageSpies:
+  Enabled: false
+
 RSpec/MultipleExpectations:
   Enabled: false
 
@@ -97,3 +103,6 @@ Metrics/AbcSize:
   Enabled: false
 
 inherit_from: .rubocop_todo.yml
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false

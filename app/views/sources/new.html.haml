@@ -9,7 +9,8 @@
             %li= message
   %div.form-group.p-2
     = f.label :filename
-    = f.text_field :filename, class: 'form-control'
+    = required
+    = f.text_field :filename, class: 'form-control', required: true
   %div#actions.btn-toolbar.d-flex.flex-row.justify-content-end.w-100
     %div.btn-group.ml-2
       %button#submit-source{type: 'submit', class: 'btn btn-primary'}

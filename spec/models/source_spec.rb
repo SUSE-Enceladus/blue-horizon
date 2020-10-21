@@ -79,22 +79,10 @@ RSpec.describe Source, type: :model do
 
   context 'when exporting' do
     let(:source) { create(:source) }
-    let(:random_path) do
-      Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-    end
-
-    before do
-      Rails.configuration.x.source_export_dir = random_path
-      FileUtils.mkdir_p(random_path)
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
-    end
+    let(:expected_export_path) { File.join(working_path, source.filename) }
 
     it 'writes to a file' do
-      source.export_into(random_path)
-      expected_export_path = File.join(random_path, source.filename)
+      source.export_into(working_path)
       expect(File).to exist(expected_export_path)
       file_content = File.read(expected_export_path)
       expect(file_content).to eq(source.content)
@@ -102,9 +90,6 @@ RSpec.describe Source, type: :model do
 
     it 'writes to the config path unless otherwise specified' do
       source.export
-      expected_export_path = File.join(
-        Rails.configuration.x.source_export_dir, source.filename
-      )
       expect(File).to exist(expected_export_path)
     end
   end
