@@ -41,7 +41,8 @@ describe 'variable editing', type: :feature do
       until random_variable_key &&
             variables.type(random_variable_key) == 'string' &&
             (variables.description(random_variable_key).nil? ||
-            !variables.description(random_variable_key).include?('options'))
+            (!variables.description(random_variable_key).include?('options') &&
+            !variables.description(random_variable_key).include?('file_key')))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
@@ -70,12 +71,33 @@ describe 'variable editing', type: :feature do
       expect(page).not_to have_content 'are best left unsaid'
     end
 
+    it 'stores form data for variables in file upload input' do
+      attach_file(
+        'variables[test_file_key]',
+        Rails.root.join('spec', 'fixtures', 'uploaded_file.txt')
+      )
+      click_on('Save')
+      uploaded_file = Rails.root.join(
+        'public', 'uploads', 'key_value', 'attachment',
+        'tfvars.test_file_key', 'uploaded_file.txt'
+      )
+      expect(uploaded_file).to be_file
+
+      content = File.read(
+        Rails.root.join('spec', 'fixtures', 'uploaded_file.txt')
+      )
+      uploaded_content = File.read(uploaded_file)
+
+      expect(uploaded_content).to have_content(content)
+    end
+
     it 'fails to update and shows error' do
       random_variable_key = nil
       until random_variable_key &&
             variables.type(random_variable_key) == 'string' &&
             (variables.description(random_variable_key).nil? ||
-            !variables.description(random_variable_key).include?('options'))
+            (!variables.description(random_variable_key).include?('options') &&
+            !variables.description(random_variable_key).include?('file_key')))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)

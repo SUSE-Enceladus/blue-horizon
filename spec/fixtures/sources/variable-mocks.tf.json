@@ -30,6 +30,9 @@
             "description": "Some things <!-- are best left unsaid -->",
             "default": "be quiet"
         },
+        "test_file_key": {
+            "description": "Upload a file. (file_key)"
+        },
         "region": {
             "type": "string",
             "description": "Cloud region where this is running. (Optional)"
