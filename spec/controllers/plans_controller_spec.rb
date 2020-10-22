@@ -29,7 +29,7 @@ RSpec.describe PlansController, type: :controller do
 
       ruby_terraform.configure do |config|
         config.logger do |log_device|
-          expect(log_device.targets).to eq([IO::STDOUT, log_file])
+          expect(log_device.targets).to eq([$stdout, log_file])
         end
       end
       expect(File).to exist(Rails.configuration.x.terraform_log_filename)
@@ -39,7 +39,7 @@ RSpec.describe PlansController, type: :controller do
       allow(variable_instance).to receive(:load)
       allow(controller).to receive(:read_exported_sources)
       allow(json_instance).to receive(:parse)
-      allow(instance_terra).to receive(:validate).with(true, true)
+      allow(instance_terra).to receive(:validate).with(true, file: true)
 
       put :update
 
@@ -55,7 +55,7 @@ RSpec.describe PlansController, type: :controller do
     before do
       allow(File).to receive(:exist?).and_return(false)
       allow(terra).to receive(:new).and_return(instance_terra)
-      allow(instance_terra).to receive(:validate).with(true, true)
+      allow(instance_terra).to receive(:validate).with(true, file: true)
     end
 
     it 'no exported variables' do

@@ -141,7 +141,7 @@ RSpec.describe Variable, type: :model do
     end
 
     it 'assumes variables are required unless explicitly optional' do
-      variables.attributes.keys.each do |key|
+      variables.attributes.each_key do |key|
         if /optional/i =~ variables.description(key)
           expect(variables).not_to be_required(key)
         else

@@ -3,26 +3,22 @@
 # View helpers for working with variables
 module VariablesHelper
   def required
-    content_tag(
-      :span,
-      '*',
-      title: t(:required),
-      data:  { toggle: 'tooltip' }
+    tag.span('*', title: t(:required),
+                  data:  { toggle: 'tooltip' }
     )
   end
 
   def formatted_description(description)
     return nil unless description
 
-    content_tag(
-      :small,
-      markdown(description, false),
+    tag.small(
+      markdown(description, escape_html: false),
       class: ['form-text', 'text-muted']
     )
   end
 
   def string_input_type(description)
-    if description.to_s.downcase.match?('.*' + t('options_key') + '=\[(.*)\].*')
+    if description.to_s.downcase.match?(".*#{t('options_key')}=\\[(.*)\\].*")
       'select'
     elsif description.to_s.downcase.include?(t('password_key'))
       'password'
@@ -39,7 +35,7 @@ module VariablesHelper
     end
     key_regular_expression = key_regular_expression.join('')
     options = description.to_s.match(
-      '.*' + key_regular_expression + '=\[(.*)\].*'
+      ".*#{key_regular_expression}=\\[(.*)\\].*"
     ).captures
     options[0].split(',').map { |option| option.tr('\'\"', '').strip }
   end

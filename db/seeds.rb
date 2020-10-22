@@ -5,7 +5,7 @@
 # The data can then be loaded with the rails db:seed command
 # (or created alongside the database with db:setup).
 
-Rails.logger = Logger.new(STDOUT)
+Rails.logger = Logger.new($stdout)
 Rails.logger.level = Logger::INFO
 
 # Populate editable sources from the static documents

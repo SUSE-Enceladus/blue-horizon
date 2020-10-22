@@ -14,5 +14,5 @@
       %a.btn.btn-lg.btn-primary{ href: simple_path }
         = t('sidebar.simple')
         %i.eos-icons fast_forward
-= markdown(t('description'), false)
+= markdown(t('description'), escape_html: false)
 %p.clearfix

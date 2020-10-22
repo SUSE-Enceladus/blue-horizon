@@ -15,7 +15,7 @@ class DownloadController < ApplicationController
       Rails.configuration.x.source_export_dir.join('**/*')
     )
     if File.exist?(DEFAULT_LOG_FILENAME) &&
-       !files.include?(DEFAULT_LOG_FILENAME.to_s)
+       files.exclude?(DEFAULT_LOG_FILENAME.to_s)
       files.push DEFAULT_LOG_FILENAME.to_s
     end
     files
@@ -28,7 +28,7 @@ class DownloadController < ApplicationController
         next if File.directory?(file)
 
         zipped_filename = file.delete_prefix(
-          Rails.configuration.x.source_export_dir.to_s + '/'
+          "#{Rails.configuration.x.source_export_dir}/"
         )
         if zipped_filename[0] == '/'
           zipped_filename = File.basename(zipped_filename)

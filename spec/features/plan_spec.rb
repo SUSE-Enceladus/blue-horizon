@@ -6,7 +6,7 @@ describe 'planning', type: :feature do
   let(:plan_button) { I18n.t('plan') }
 
   before do
-    populate_sources(false, false)
+    populate_sources(include_mocks: false)
   end
 
   context 'without a current plan' do

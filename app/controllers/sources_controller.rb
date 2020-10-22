@@ -67,7 +67,7 @@ class SourcesController < ApplicationController
 
   def set_sources
     terra = Terraform.new
-    validation = terra.validate(true, true)
+    validation = terra.validate(true, file: true)
     flash.now[:error] = validation if validation
 
     @sources = Source.all.order(:filename)
@@ -75,7 +75,7 @@ class SourcesController < ApplicationController
 
   def set_source
     terra = Terraform.new
-    validation = terra.validate(true, true)
+    validation = terra.validate(true, file: true)
     flash.now[:error] = validation if validation
     @source = Source.find(params[:id])
   end

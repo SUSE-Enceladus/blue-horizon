@@ -41,7 +41,7 @@ describe 'variable editing', type: :feature do
       until random_variable_key &&
             variables.type(random_variable_key) == 'string' &&
             (variables.description(random_variable_key).nil? ||
-            !variables.description(random_variable_key).include?('options'))
+            variables.description(random_variable_key).exclude?('options'))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
@@ -75,7 +75,7 @@ describe 'variable editing', type: :feature do
       until random_variable_key &&
             variables.type(random_variable_key) == 'string' &&
             (variables.description(random_variable_key).nil? ||
-            !variables.description(random_variable_key).include?('options'))
+            variables.description(random_variable_key).exclude?('options'))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
@@ -99,7 +99,7 @@ describe 'variable editing', type: :feature do
     let(:instance_var_controller) { instance_double(VariablesController) }
 
     before do
-      populate_sources(true)
+      populate_sources(auth_plan: true)
       visit('/variables')
     end
 

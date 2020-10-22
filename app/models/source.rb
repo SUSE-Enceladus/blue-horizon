@@ -33,13 +33,13 @@ class Source < ApplicationRecord
   end
 
   def terraform_validation
-    Terraform.new.validate(true, false)
+    Terraform.new.validate(true)
   end
 
   def self.valid_sources
     Source.all.find_each(&:export)
     terra = Terraform.new
-    validation = terra.validate(true, true)
+    validation = terra.validate(true, file: true)
     return validation
   end
 end

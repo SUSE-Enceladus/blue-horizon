@@ -12,8 +12,8 @@ module ApplicationHelper
     url = "/#{path_key}"
 
     content = [
-      content_tag(:i, icon, class: ['eos-icons', 'md-18']),
-      content_tag(:span, text, class: 'collapse')
+      tag.i(icon, class: ['eos-icons', 'md-18']),
+      tag.span(text, class: 'collapse')
     ].join(' ').html_safe
 
     classes = 'list-group-item'
@@ -52,16 +52,13 @@ module ApplicationHelper
   end
 
   def tip_icon
-    content_tag(
-      :i,
-      'lightbulb_outline',
-      class: ['eos-icons', 'text-warning', 'align-middle'],
-      title: 'Tip',
-      data:  { toggle: 'tooltip' }
+    tag.i('lightbulb_outline', class: 'eos-icons text-warning align-middle',
+                               title: 'Tip',
+                               data:  { toggle: 'tooltip' }
     )
   end
 
-  def markdown(text, escape_html=true)
+  def markdown(text, escape_html: true)
     return '' if text.blank?
 
     markdown_options = {

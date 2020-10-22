@@ -3,7 +3,7 @@
 require 'ruby_terraform'
 
 module Helpers
-  def populate_sources(auth_plan=false, include_mocks=true)
+  def populate_sources(auth_plan: false, include_mocks: true)
     sources_dir =
       if auth_plan
         'sources_auth'

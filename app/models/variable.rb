@@ -20,7 +20,7 @@ class Variable
       variables = JSON.parse(source_content)['variable']
       @plan.merge!(variables) if variables
     end
-    @plan.keys.each do |key|
+    @plan.each_key do |key|
       self.class.send(:attr_accessor, key)
       instance_variable_set(
         "@#{key}",
@@ -31,7 +31,7 @@ class Variable
 
   def self.load
     terra = Terraform.new
-    validation = terra.validate(true, true)
+    validation = terra.validate(true, file: true)
     return { error: validation } if validation
 
     new(Source.variables.pluck(:content))
@@ -120,7 +120,7 @@ class Variable
   end
 
   def save!
-    @plan.keys.each do |key|
+    @plan.each_key do |key|
       prefixed_set(key, instance_variable_get("@#{key}"))
     end
   end

@@ -17,7 +17,7 @@ class Terraform
 
   def config_terraform
     @logger = Logger.new(
-      RubyTerraform::MultiIO.new(STDOUT, log_file),
+      RubyTerraform::MultiIO.new($stdout, log_file),
       level: :debug
     )
     RubyTerraform.configure do |config|
@@ -50,7 +50,7 @@ class Terraform
     Dir.chdir(current_working_dir)
   end
 
-  def validate(parse_output, file=false)
+  def validate(parse_output, file: false)
     validate_params = {
       directory: Rails.configuration.x.source_export_dir
     }
@@ -66,7 +66,7 @@ class Terraform
       error_output = RubyTerraform.configuration.stderr.string
       Rails.logger.error error_output
       Terraform.write_log_output(error_output)
-      return parse_error_output(error_output, file)
+      return parse_error_output(error_output, file: file)
     end
   ensure
     RubyTerraform.configuration.stderr = RubyTerraform.configuration.logger if
@@ -79,7 +79,7 @@ class Terraform
     f.flush
   end
 
-  def parse_error_output(message, file=false)
+  def parse_error_output(message, file: false)
     start = message.index('Error: ')
     start += 'Error: '.length
     limit = message[start, message.length].index("\n")
@@ -94,7 +94,7 @@ class Terraform
   end
 
   def add_filename(error_message)
-    source_files = Dir[Rails.configuration.x.source_export_dir.to_s + '/*']
+    source_files = Dir["#{Rails.configuration.x.source_export_dir}/*"]
     i = 0
     i += 1 until error_message.index(File.basename(source_files[i])) ||
                  i >= error_message.length
