@@ -83,7 +83,7 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`. Here some additional tips to customize your variables options:
 - Variables will be _required_ unless the description includes the word "optional".
 - Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
-- Variables with `options=["option1", "option2"]` content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
+- Variables with `options=[option1,option2]` content in the description will create a multi option input. Options are comma-separated, but may include any other punctuation, or spaces. The keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
 - Variables with `[group:some_group_name]` will be grouped together (but still listed as ordered in the variables file). The group name will be pulled form I18N configuration, or otherwise titleized. (e.g. `[group:important_things] will render as 'Important Things')
 - Variable descriptions may include a comment that is not displayed. Any content contained in an HTML comment block `<!-- like this -->` will not be included in the UI, but _will_ be parsed for other customization flags.
 - Variable descriptions will be rendered as inline _markdown_ in the UI.
