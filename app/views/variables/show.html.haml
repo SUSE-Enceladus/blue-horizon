@@ -9,12 +9,12 @@
     %p.clearfix
   %div.float-right.btn-group.steps-container
     = link_to cluster_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
-      %i.eos-icons.eos-18 fast_rewind
+      %i.eos-icons fast_rewind
       = t('sidebar.cluster')
-    %button.btn.btn-primary#submit-cluster{ type: 'submit', title: t('tooltips.save'), data: { toggle: 'tooltip' } }
-      %i.eos-icons.eos-18 save
+    %button.btn.btn-outline-primary#submit-cluster{ type: 'submit', title: t('tooltips.save'), data: { toggle: 'tooltip' } }
+      %i.eos-icons save
       = t('save')
-    = button_tag variables_path, method: :put, class: "btn btn-warning", title: t('tooltips.start_action'), data: { toggle: 'tooltip' }, id: 'next' do
+    = button_tag variables_path, method: :put, class: "btn btn-primary", title: t('tooltips.start_action'), data: { toggle: 'tooltip' }, id: 'next' do
+      %i.eos-icons fast_forward
       = t('sidebar.plan')
-      %i.eos-icons.eos-18 fast_forward
 %p.clearfix
