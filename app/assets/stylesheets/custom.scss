@@ -1,5 +1,17 @@
 @import "eos-branding";
 
+#title {
+  color: $eos-bc-green-900;
+
+  h1, #deploy {
+    color: $eos-bc-pine-500;
+  }  
+}
+
+.mm-navigation-container header {
+  color: white;
+}
+
 li.menu-item.disabled {
   * {
     color: $eos-bc-gray-300 !important;
@@ -18,6 +30,10 @@ footer.footer-side-menu ul.footer-list {
 dt, dd {
   display: block;
   width: auto;
+}
+
+hr {
+  margin: 1em 0;
 }
 
 // A placeholder for custom CSS. 

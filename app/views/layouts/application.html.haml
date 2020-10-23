@@ -16,8 +16,10 @@
       %div.mm-navigation-container
         %header
           %div.hide-collapsed
-            - if custom_image_exists? 'logo'
-              %img#menu-logo.eos-24{ src: asset_path('logo'), alt: t('short_title') }
+            %b
+              %i.eos-icons.align-middle{alt: t('deploy'), title: t('deploy') } deploy
+              &nbsp;
+              = t('short_title')
           %div.mm-navigation-close.js-sidebar-toggle
             %i.eos-icons.js-sidebar-tooltip.js-tooltip{ data: { placement: 'bottom' } } menu
         %div.nav-wrap
