@@ -48,9 +48,7 @@ function fetch_output(finished, intervalId) {
         // show terraform error message in output section
         $("#output").text($("#output").text() + data.error);
         clearTimeout(intervalId);
-        $(".steps-container .btn").removeClass("disabled");
-        $(".list-group-flush a").removeClass("disabled");
-	$(".btn-danger").removeClass("disabled");
+        $(".steps-container .btn.disabled").removeClass("disabled");
         $(".eos-icon-loading").addClass("hide");
       } else {
         $(".pre-scrollable").html(data.new_html);
@@ -63,10 +61,8 @@ function fetch_output(finished, intervalId) {
             fetch_output();
           }, 5000);
         } else {
-          $(".float-right .steps-container .btn").removeClass("disabled");
-          $(".list-group-flush a").removeClass("disabled");
+          $(".steps-container .btn.disabled").removeClass("disabled");
           $(".eos-icon-loading").addClass("hide");
-	  $(".btn-danger").addClass("disabled");
         }
       }
     },
@@ -75,10 +71,8 @@ function fetch_output(finished, intervalId) {
       if (endIndex == -1) endIndex = data.responseText.indexOf("\n");
       $("#error_message").text(data.responseText.substring(0, endIndex));
       $("#flash").show();
-      $(".steps-container .btn").removeClass("disabled");
-      $(".list-group-flush a").removeClass("disabled");
+      $(".steps-container .btn.disabled").removeClass("disabled");
       $(".eos-icon-loading").addClass("hide");
-      $(".btn-danger").removeClass("disabled");
     }
   });
 
