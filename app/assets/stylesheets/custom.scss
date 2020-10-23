@@ -5,7 +5,7 @@
 
   h1, #deploy {
     color: $eos-bc-pine-500;
-  }  
+  }
 }
 
 .mm-navigation-container header {
@@ -23,6 +23,11 @@ li.menu-item.disabled {
   }
 }
 
+.btn.btn-outline-danger:hover {
+  color: $eos-bc-red-900;
+  border-color: $eos-bc-red-900;
+}
+
 footer.footer-side-menu ul.footer-list {
   color: $eos-bc-gray-900;
 }
@@ -36,5 +41,5 @@ hr {
   margin: 1em 0;
 }
 
-// A placeholder for custom CSS. 
+// A placeholder for custom CSS.
 // This will be loaded last, and overrride other content.
