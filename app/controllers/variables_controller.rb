@@ -12,23 +12,12 @@ class VariablesController < ApplicationController
   end
 
   def update
-    params[:variables][:cluster_labels] ||= {}
-
     @variables.attributes = variables_params
-    if @variables.save
-      flash_message = {}
-      if params[:button]
-        target_path = plan_path
-      else
-        flash_message = { notice: 'Variables were successfully updated.' }
-        target_path = variables_path
-      end
-      redirect_to target_path, flash: flash_message
-    else
-      redirect_to variables_path, flash: {
-        error: @variables.errors.full_messages
-      }
-    end
+    redirect_to plan_path and return if @variables.save
+
+    redirect_to variables_path, flash: {
+      error: @variables.errors.full_messages
+    }
   end
 
   private
@@ -54,6 +43,7 @@ class VariablesController < ApplicationController
   end
 
   def variables_params
+    params[:variables][:cluster_labels] ||= {}
     params.require(:variables).permit(@variables.strong_params)
   end
 end

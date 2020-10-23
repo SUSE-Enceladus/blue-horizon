@@ -45,23 +45,24 @@ describe 'variable editing', type: :feature do
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
-      click_on('Save')
+      find('#next').click
 
       expect(KeyValue.get(variables.storage_key(random_variable_key)))
         .to eq(fake_data)
-      expect(page).to have_content('Variables were successfully updated.')
     end
 
     it 'stores form data for variables in multi options input' do
-      expect(page).to have_select 'variables[test_options]',
-        with_options: ['option1', 'option2']
       ['option1', 'option2'].each do |option_value|
+        visit('/variables')
+        expect(page).to have_select(
+          'variables[test_options]',
+          with_options: ['option1', 'option2']
+        )
         select(option_value, from: 'variables[test_options]')
-        click_on('Save')
+        find('#next').click
 
         expect(KeyValue.get(variables.storage_key('test_options')))
           .to eq(option_value)
-        expect(page).to have_content('Variables were successfully updated.')
       end
     end
 
@@ -85,7 +86,7 @@ describe 'variable editing', type: :feature do
         e.add(:variable, 'is wrong')
       end
       allow(variables).to receive(:errors).and_return(active_model_errors)
-      click_on('Save')
+      find('#next').click
 
       expect(page).not_to have_content('Variables were successfully updated.')
       expect(page).to have_content('Variable is wrong')
