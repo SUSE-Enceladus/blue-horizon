@@ -10,11 +10,11 @@
     %p.clearfix
   %div.float-right.btn-group.steps-container
     = link_to welcome_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
-      %i.eos-icons.md-18 fast_rewind
+      %i.eos-icons fast_rewind
       = t('sidebar.welcome')
     %button.btn.btn-primary#submit-cluster{ type: 'submit', title: t('tooltips.next_step'), data: { toggle: 'tooltip' } }
+      %i.eos-icons fast_forward
       = t('sidebar.variables')
-      %i.eos-icons.md-18 fast_forward
 %p.clearfix
 
 - content_for :page_javascript do

@@ -6,25 +6,6 @@ module ApplicationHelper
     Rails.configuration.x.menu_items[advanced]
   end
 
-  def sidebar_menu_item(path_key)
-    text = t("sidebar.#{path_key}")
-    icon = Rails.configuration.x.sidebar_icons[path_key]
-    url = "/#{path_key}"
-
-    content = [
-      tag.i(icon, class: ['eos-icons', 'md-18']),
-      tag.span(text, class: 'collapse')
-    ].join(' ').html_safe
-
-    classes = 'list-group-item'
-    classes += ' disabled' unless can(url)
-
-    active_link_to(content, url,
-      class: classes,
-      data:  { toggle: 'tooltip', placement: 'right', original_title: text }
-    )
-  end
-
   def bootstrap_flash
     flash.collect do |type, message|
       # Skip empty messages
@@ -56,6 +37,13 @@ module ApplicationHelper
                                title: 'Tip',
                                data:  { toggle: 'tooltip' }
     )
+  end
+
+  def source_footer
+    render('layouts/source_footer')
+      .gsub("\n", ' ').strip
+      .gsub("'", '"')
+      .html_safe
   end
 
   def markdown(text, escape_html: true)

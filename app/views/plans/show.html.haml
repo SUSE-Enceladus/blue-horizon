@@ -9,24 +9,24 @@
     %hr
     %pre.pre-scrollable
       %code.output= @show_output
-      %i.eos-icon-loading.md-48.centered{style: 'display: none;' }
+      %i.eos-icon-loading.eos-48.centered{style: 'display: none;' }
 %p.clearfix
   %div.float-right.btn-group.steps-container
     - if Rails.configuration.x.advanced_mode
       = link_to sources_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
-        %i.eos-icons.md-18 fast_rewind
+        %i.eos-icons.eos-18 fast_rewind
         = t('sidebar.variables')
     - else
       = link_to variables_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
-        %i.eos-icons.md-18 fast_rewind
+        %i.eos-icons fast_rewind
         = t('sidebar.variables')
-    = link_to plan_path, class: "btn btn-primary", id: "submit-plan", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
-      %i.eos-icons.md-18 build
+    = link_to plan_path, class: "btn btn-outline-primary", id: "submit-plan", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
+      %i.eos-icons build
       = t('plan')
-    = link_to plan_path(format: :json), class: "btn btn-info #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
-      %i.eos-icons.md-18  get_app
+    = link_to plan_path(format: :json), class: "btn btn-outline-primary #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
+      %i.eos-icons  get_app
       = t('sidebar.download_plan')
-    = link_to deploy_path, class: "btn btn-warning #{'disabled' unless can(deploy_path)}", title: t('tooltips.start_action') do
+    = link_to deploy_path, class: "btn btn-primary #{'disabled' unless can(deploy_path)}", title: t('tooltips.start_action') do
+      %i.eos-icons fast_forward
       = t('sidebar.deploy')
-      %i.eos-icons.md-18 fast_forward
 %p.clearfix

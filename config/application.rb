@@ -30,5 +30,8 @@ module BlueHorizon
 
     # SQLite databases have used 't' and 'f' to serialize boolean values
     config.active_record.sqlite3.represent_boolean_as_integer = true
+
+    # Let sprockets handle fonts in the asset pipeline
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
   end
 end

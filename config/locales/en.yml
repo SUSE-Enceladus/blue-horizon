@@ -33,6 +33,7 @@ en:
   hello: "Hello world"
   save: "Save"
   required: "Required"
+  deploy: "Deploy"
   terraform_files: "terraform scripts and log"
   non_active_session: "Duplicate session!"
   session_reset: "The active session has been reset."

@@ -10,6 +10,18 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ * Framework
+ *= require framework
+ *= require eos-style
+ *= require eos-icons-font
+ *= require bootstrap-slider.min
+ * Application
+ *= require instance_type
+ *= require sources
+ *= require plans
+ *= require deploys
+ * Custom/override
+ *= require custom
+ * this
  *= require_self
  */
