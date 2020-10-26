@@ -69,7 +69,7 @@ class Variable
   end
 
   def pattern(key)
-    /\[pattern:(?<pattern>.+):endpattern?\]/.match(
+    %r{\[pattern:/(?<pattern>.+):?/\]}.match(
       @plan[key]['description']
     )[:pattern]
   rescue StandardError
