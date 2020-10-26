@@ -33,7 +33,7 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
     ```
     sudo zypper in libxml2-devel libxslt-devel sqlite3-devel
     ```
-    
+
 
 4.  If you need to use a path _other than_ `./vendor/` for customization, create a dotenv file (e.g. `.env.development`) that defines:
     *   The path to the customization JSON:
@@ -84,7 +84,9 @@ Variables **must** be defined in terraform JSON format, and named `variable*.tf.
 - Variables will be _required_ unless the description includes the word "optional".
 - Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
 - Variables with `options=[option1,option2]` content in the description will create a multi option input. Options are comma-separated, but may include any other punctuation, or spaces. The keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
-- Variables with `[group:some_group_name]` will be grouped together (but still listed as ordered in the variables file). The group name will be pulled form I18N configuration, or otherwise titleized. (e.g. `[group:important_things] will render as 'Important Things')
+- Variables with `[group:some_group_name]` will be grouped together (but still listed as ordered in the variables file). The group name will be pulled form I18N configuration, or otherwise titleized. (e.g. `[group:important_things]` will render as 'Important Things')
+- Variables with `[pattern:[a-zA-Z]{3}:endpattern]` will have a client side validation to check if the input string is valid.
+- Variables with `[title:my variable title]` will have the provided content as input title. This option combines together with the pattern option to display the error message if the pattern validation fails.
 - Variable descriptions may include a comment that is not displayed. Any content contained in an HTML comment block `<!-- like this -->` will not be included in the UI, but _will_ be parsed for other customization flags.
 - Variable descriptions will be rendered as inline _markdown_ in the UI.
 
