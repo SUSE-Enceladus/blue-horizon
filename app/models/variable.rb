@@ -77,7 +77,9 @@ class Variable
   end
 
   def title(key)
-    /\[title:(?<title>.+?)\]/.match(@plan[key]['description'])[:title]
+    /\[extra_information:(?<title>.+?)\]/.match(
+      @plan[key]['description']
+    )[:title]
   rescue StandardError
     ''
   end
