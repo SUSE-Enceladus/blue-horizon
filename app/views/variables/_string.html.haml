@@ -10,7 +10,7 @@
         - @options.each do |option|
           %option{value: option, selected: value == option}= option
     - else
-      %input.form-control{ type: fieldtype, name: "variables[#{key}]", value: value, required: @variables.required?(key) }
+      %input.form-control{ type: fieldtype, name: "variables[#{key}]", value: value, required: @variables.required?(key), pattern: @variables.pattern(key), title: @variables.title(key) }
     - if fieldtype == 'password'
       %button.btn.btn-sm.btn-secondary.peek{ id: "peek_#{key}", type: 'button', data: { toggle: 'tooltip' }, title: t(:password_show) }
         &nbsp;

@@ -71,6 +71,12 @@ describe 'variable editing', type: :feature do
       expect(page).not_to have_content 'are best left unsaid'
     end
 
+    it 'stores from data for variables validating the pattern' do
+      pattern_input = page.find("[name|='variables[test_pattern]']")
+      expect(pattern_input[:title]).to eq('2 digits string')
+      expect(pattern_input[:pattern]).to eq('[0-9]{2}')
+    end
+
     it 'fails to update and shows error' do
       random_variable_key = nil
       until random_variable_key &&

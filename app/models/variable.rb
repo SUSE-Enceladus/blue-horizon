@@ -68,8 +68,24 @@ class Variable
     !(/optional/i =~ @plan[key]['description'])
   end
 
+  def pattern(key)
+    %r{\[pattern:/(?<pattern>.+):?/\]}.match(
+      @plan[key]['description']
+    )[:pattern]
+  rescue StandardError
+    '.*'
+  end
+
+  def title(key)
+    /\[extra_information:(?<title>.+?)\]/.match(
+      @plan[key]['description']
+    )[:title]
+  rescue StandardError
+    ''
+  end
+
   def group(key)
-    /\[group:(?<group>.+)?\]/.match(@plan[key]['description'])[:group]
+    /\[group:(?<group>.+?)\]/.match(@plan[key]['description'])[:group]
   rescue StandardError
     UNGROUPED
   end

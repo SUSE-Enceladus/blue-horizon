@@ -17,6 +17,7 @@ RSpec.describe Variable, type: :model do
       'test_map'         => { foo: 'bar' },
       'test_password'    => 'Superman123!',
       'test_options'     => 'option1',
+      'test_pattern'     => '00',
       'fake_key'         => 'fake_value',
       'region'           => random_string
     }
@@ -34,6 +35,7 @@ RSpec.describe Variable, type: :model do
       'test_description',
       'test_password',
       'test_options',
+      'test_pattern',
       'test_description_comment',
       'region'
     ]
@@ -114,6 +116,7 @@ RSpec.describe Variable, type: :model do
         'test_description',
         'test_password',
         'test_options',
+        'test_pattern',
         'test_description_comment',
         'region',
         'name',

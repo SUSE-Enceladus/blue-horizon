@@ -16,7 +16,8 @@ describe AuthorizationHelper do
       'test_list'        => ['one', 'two', 'three'],
       'test_map'         => { foo: 'bar' },
       'test_string'      => random_string,
-      'test_options'     => 'option2'
+      'test_options'     => 'option2',
+      'test_pattern'     => '00'
     }
   end
   let(:terra) { Terraform }

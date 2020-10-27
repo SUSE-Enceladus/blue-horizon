@@ -30,6 +30,9 @@
             "description": "Some things <!-- are best left unsaid -->",
             "default": "be quiet"
         },
+        "test_pattern": {
+            "description": "Variable with pattern [pattern:/[0-9]{2}/] [extra_information:2 digits string]"
+        },
         "region": {
             "type": "string",
             "description": "Cloud region where this is running. (Optional)"
