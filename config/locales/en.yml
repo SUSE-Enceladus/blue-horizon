@@ -84,6 +84,8 @@ en:
     wrapup: "Next steps after deployment"
 
   page_subtitle:
+    hana_ha_enabled_info: |
+      Enable HA clustering and System Replication
     plan_info: |
       In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ deploys.
     deploy_info: |
