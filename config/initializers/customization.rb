@@ -37,6 +37,10 @@ Rails.application.configure do
 
   # URL of terraform sources
   # config.x.terraform_sources_url = "https://github.com/SUSE-Enceladus/blue-horizon"
+
+  # Terraform plan view template.
+  # available choices are `plans/dynamic`, `plans/json` and `plans/custom`
+  config.x.terraform_plan_view ||= "plans/dynamic"
 end
 
 # The following performs required actions based on custom configuration above

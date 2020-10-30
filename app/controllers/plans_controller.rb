@@ -11,13 +11,12 @@ class PlansController < ApplicationController
 
     Terraform.new.show
     @show_output = Terraform.stdout.string
-    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
 
     respond_to do |format|
       format.html
       format.json do
         send_data(
-          @show_output,
+          JSON.pretty_generate(JSON.parse(@show_output)),
           disposition: 'attachment',
           filename:    'terraform_plan.json'
         )

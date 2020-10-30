@@ -1,0 +1,100 @@
+%div.row
+
+  %div.col-sm
+
+    %h4 Resource group
+    %dl.row
+      %dt.col-sm-4 Name
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.azurerm_resource_group.myrg[0]", "values", "name")
+      %dt.col-sm-4 Region
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.azurerm_resource_group.myrg[0]", "values", "location")
+
+  %div.col-sm
+
+    %h4 System settings
+    %dl.row
+      %dt.col-sm-4 System identifier
+      %dd.col-sm-8= @plan.dig("variables", "system_identifier", "value").upcase
+      %dt.col-sm-4 Instance number
+      %dd.col-sm-8= @plan.dig("variables", "instance_number", "value")
+      %dt.col-sm-4 Admin user
+      %dd.col-sm-8= @plan.dig("variables", "system_identifier", "value").downcase.concat("adm")
+      %dt.col-sm-4 Admin password
+      %dd.col-sm-8= @plan.dig("variables", "sap_admin_password", "value")
+
+%div.row
+
+  %div.col-sm
+
+    %h4 HANA nodes
+    - @resources.select { |address| address =~ /module\.bluehorizon\.module\.hana_node\.azurerm_virtual_machine\.hana/ }.each_with_index do |(address, vm_resource),index|
+      %dl.row{id: address}
+        %dt.col-sm-4 Name
+        %dd.col-sm-8= vm_resource.dig("values", "name")
+        %dt.col-sm-4 Private IP address
+        %dd.col-sm-8= @resources.dig("module.bluehorizon.module.hana_node.azurerm_network_interface.hana[#{index}]", "values", "ip_configuration", 0, "private_ip_address")
+        %dt.col-sm-4 OS Image
+        %dd.col-sm-8= vm_resource.dig("values", "storage_image_reference", 0, "offer")
+        %dt.col-sm-4 Disks
+        %dd.col-sm-8
+          - (vm_resource.dig("values", "storage_data_disk")||[]).each do |disk|
+            %li.pt-0
+              %span= disk.dig("name")
+              %span= "(#{disk.dig("disk_size_gb")}GB)"
+
+  %div.col-sm
+
+    %h4 Virtual networks
+    %dl.row
+      %dt.col-sm-4 Name
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.azurerm_virtual_network.mynet[0]", "values", "name")
+      %dt.col-sm-4 Address range
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.azurerm_virtual_network.mynet[0]", "values", "address_space", 0)
+    %dl.row
+      %dt.col-sm-4 Name
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.azurerm_subnet.mysubnet[0]", "values", "name")
+      %dt.col-sm-4 Address range
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.azurerm_subnet.mysubnet[0]", "values", "address_prefix")
+
+    %h4 Monitoring server
+    %dl.row
+      %dt.col-sm-4 Name
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.module.monitoring.azurerm_virtual_machine.monitoring[0]","values", "name")
+      %dt.col-sm-4 Private IP address
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.module.monitoring.azurerm_network_interface.monitoring[0]", "values", "ip_configuration", 0, "private_ip_address")
+      %dt.col-sm-4 OS Image
+      %dd.col-sm-8= @resources.dig("module.bluehorizon.module.monitoring.azurerm_virtual_machine.monitoring[0]", "values", "storage_image_reference", 0, "offer")
+      %dt.col-sm-4 Disks
+      %dd.col-sm-8
+        - (@resources.dig("module.bluehorizon.module.monitoring.azurerm_virtual_machine.monitoring[0]", "values", "storage_data_disk")||[]).each do |disk|
+          %li.pt-0
+            %span= disk.dig("name")
+            %span= "(#{disk.dig("disk_size_gb")}GB)"
+
+%h4 Security group
+%dl.row
+  %dt.col-sm-2 Name
+  %dd.col-sm-10= @resources.dig("module.bluehorizon.azurerm_network_security_group.mysecgroup","values", "name")
+  %dt.col-sm-2 Rules
+  %dd.col-sm-10
+    %table.table.table-sm
+      %thead
+        %th Name
+        %th Access
+        %th Direction
+        %th Source addresses
+        %th Source ports
+        %th Destination addresses
+        %th Destination ports
+        %th Protocol
+      %tbody
+        - (@resources.dig("module.bluehorizon.azurerm_network_security_group.mysecgroup", "values", "security_rule")||[]).each do |rule|
+          %tr
+            %td= rule.dig("name")
+            %td= rule.dig("access")
+            %td= rule.dig("direction")
+            %td= "#{rule.dig("source_address_prefix")} #{rule.dig("source_address_prefixes").join(",")}"
+            %td= "#{rule.dig("source_port_range")} #{rule.dig("source_port_ranges").join(",")}"
+            %td= "#{rule.dig("destination_address_prefix")} #{rule.dig("destination_address_prefixes").join(",")}"
+            %td= "#{rule.dig("destination_port_range")} #{rule.dig("destination_port_ranges").join(",")}"
+            %td= rule.dig("protocol")

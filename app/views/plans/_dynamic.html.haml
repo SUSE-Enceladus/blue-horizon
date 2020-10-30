@@ -1,0 +1,19 @@
+%table.table
+  %thead
+    %tr
+      %th Type
+      %th Name
+      %th Details
+  %tbody
+    - @resources.each do |address, resource|
+      %tr{id: address}
+        %td
+          %i.eos-icons= resource_icon(resource)
+          %span= resource["type"]
+        %td
+          %pre= resource["name"]
+        %td
+          %details
+            %summary Show details
+            %pre.pre-scrollable
+              %code= JSON.pretty_generate(resource)
