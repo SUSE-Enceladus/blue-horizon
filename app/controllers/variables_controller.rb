@@ -43,7 +43,6 @@ class VariablesController < ApplicationController
   end
 
   def variables_params
-    params[:variables][:cluster_labels] ||= {}
     params.require(:variables).permit(@variables.strong_params)
   end
 end
