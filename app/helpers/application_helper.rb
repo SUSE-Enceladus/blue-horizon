@@ -61,7 +61,7 @@ module ApplicationHelper
       quote:               true
     }
     render_options = {
-      filter_html: true,
+      filter_html: false,
       no_images:   true,
       no_styles:   true
     }
