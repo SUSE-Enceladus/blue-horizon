@@ -7,9 +7,9 @@
   %div.card-body
     %p= markdown(t('page_subtitle.plan_info'))
     %hr
+    = loading_icon
     %pre.pre-scrollable
       %code.output= @show_output
-      %i.eos-icon-loading.eos-48.centered{style: 'display: none;' }
 %p.clearfix
   %div.float-right.btn-group.steps-container
     - if Rails.configuration.x.advanced_mode

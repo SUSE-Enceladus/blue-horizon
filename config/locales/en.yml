@@ -78,6 +78,7 @@ en:
     run: "Execute the terraform action"
     download_plan: "Get the current plan"
     attached: "File attached"
+    loading: "Loading..."
 
   page_title:
     plan: "Plan your deployment"
