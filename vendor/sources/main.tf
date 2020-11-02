@@ -147,7 +147,7 @@ module "bluehorizon" {
   authorized_keys                    = [var.ssh_authorized_key]
   cluster_ssh_pub                    = "salt://sshkeys/cluster.id_rsa.pub"
   cluster_ssh_key                    = "salt://sshkeys/cluster.id_rsa"
-  hana_count                         = var.deployment_type == "HA" ? 2 : 1
+  hana_count                         = var.hana_ha_enabled ? 2 : 1
   os_image                           = local.os_image
   hana_vm_size                       = local.hana_sizes[var.instance_type]["vm_size"]
   hana_data_disks_configuration      = local.hana_sizes[var.instance_type]["data_disks_configuration"]
@@ -158,7 +158,7 @@ module "bluehorizon" {
   hana_primary_site                  = "${var.deployment_name}-siteA"
   hana_secondary_site                = "${var.deployment_name}-siteB"
   hana_cluster_fencing_mechanism     = "sbd"
-  hana_ha_enabled                    = var.deployment_type == "HA" ? true : false
+  hana_ha_enabled                    = var.hana_ha_enabled
   hana_inst_master                   = "${local.storage_account_path}${local.hana_inst_master}"
   hana_archive_file                  = local.hana_archive_file
   storage_account_name               = var.storage_account_name
