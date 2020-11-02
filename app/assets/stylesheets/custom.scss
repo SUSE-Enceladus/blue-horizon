@@ -41,5 +41,10 @@ hr {
   margin: 1em 0;
 }
 
+input[type=file] {
+  padding-top: 4px;
+  padding-bottom: 12px;
+}
+
 // A placeholder for custom CSS.
 // This will be loaded last, and overrride other content.

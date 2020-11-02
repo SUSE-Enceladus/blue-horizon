@@ -87,6 +87,7 @@ Variables **must** be defined in terraform JSON format, and named `variable*.tf.
 - Variables with `[group:some_group_name]` will be grouped together (but still listed as ordered in the variables file). The group name will be pulled form I18N configuration, or otherwise titleized. (e.g. `[group:important_things]` will render as 'Important Things')
 - Variables with `[pattern:/my expression/]` will have a client side validation to check if the input string is valid.
 - Variables with `[extra_information:my variable information]` will have the provided content in the input title attribute, which creates a tooltip text when the mouse moves over the element. This option combines together with the pattern option to display the error message if the pattern validation fails.
+- Variables of type `string` with a name ending in `_file` (e.g. `key_file`) will be presented as a file upload form field. The file contents will be appended to sources, and written back to disk with the full terraform source set. The file name will be stored in the variable. Inside _terraform_ scripts the file can be accessed via `file(var.key_file)`.
 - Variable descriptions may include a comment that is not displayed. Any content contained in an HTML comment block `<!-- like this -->` will not be included in the UI, but _will_ be parsed for other customization flags.
 - Variable descriptions will be rendered as inline _markdown_ in the UI.
 
@@ -95,7 +96,7 @@ Variables **must** be defined in terraform JSON format, and named `variable*.tf.
 The following variables will not be displayed on the variable entry form, but will be populated via other application interfaces:
 - `instance_type`: the virtual machine type to be used when starting cloud instances; this will be populated from the _Size Cluster_ page.
 - `instance_count`: the number of virtual machines to be deployed; this will be populate from the _Size Cluster_ page.
-- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).  
+- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).
   ⚠ _End users should be notified that the application needs to run in the same region where it will be deployed._
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.

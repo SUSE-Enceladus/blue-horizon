@@ -1,4 +1,4 @@
-= form_for(@variables, url: variables_path, method: :put) do |form|
+= form_for(@variables, url: variables_path, method: :put, html: { multipart: true }) do |form|
   - @variables.by_groups.each do |group, grouped_vars|
     %div.card
       %h3.card-header= t("variable_groups.#{group}")
