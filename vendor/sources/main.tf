@@ -138,7 +138,7 @@ resource "tls_private_key" "salt_execution_ssh_keys" {
 }
 
 module "bluehorizon" {
-  source                             = "git::https://github.com/SUSE/ha-sap-terraform-deployments.git///azure?ref=develop"
+  source                             = "git::https://github.com/SUSE/ha-sap-terraform-deployments.git///azure?ref=sap-blue-horizon"
   az_region                          = var.azure_region
   admin_user                         = var.os_admnistrator_name
   deployment_name                    = var.deployment_name
