@@ -36,6 +36,10 @@
         "region": {
             "type": "string",
             "description": "Cloud region where this is running. (Optional)"
+        },
+        "test_file": {
+            "type": "string",
+            "description": "optional file upload"
         }
     }
 }

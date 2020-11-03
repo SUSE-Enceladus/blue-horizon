@@ -1,0 +1,13 @@
+- is_required = (@variables.required?(key) && value.blank?)
+- # if we have a value, then a file is already uploaded, so don't require it
+%div.form-group{ class: key }
+  %label{ for: "variables[#{key}]" }
+    = key.titleize
+    = required if @variables.required?(key)
+  %div.input-group
+    %input.form-control{ type: 'file', name: "variables[#{key}]", required: is_required }
+    - if value.present?
+      %span.input-group-text
+        %i.eos-icons.eos-18{title: t('tooltips.attached') } attach_file
+        = value
+  = formatted_description(description)
