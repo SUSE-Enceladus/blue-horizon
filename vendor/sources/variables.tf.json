@@ -28,6 +28,7 @@
     },
     "instance_type": {
       "type": "string",
+      "default": "sap_hana_demo",
       "description": "<!-- [group:HANA_configuration] -->"
     },
     "system_identifier": {
@@ -44,10 +45,10 @@
       "type": "string",
       "description": "SAP administrator password. It is used to access to the sidadm user<!-- password_key [group:HANA_configuration] [pattern:/^[A-Za-z0-9.]{1}(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9]{7,}$/] [extra_information:The password must contain, at least 8 characters, 1 digit, 1 upper-case character, 1 lower-case character and does not accept special characters]-->"
     },
-    "deployment_type": {
-      "type": "string",
-      "default": "HA",
-      "description": "Select whether the deployment creates a Cluster with HANA system replication and HA capabilities or not<!-- Options=[HA,non HA] [group:HANA_configuration] -->"
+    "hana_ha_enabled": {
+      "type": "bool",
+      "default": true,
+      "description": "<!-- [group:HANA_configuration] -->"
     },
     "hana_installation_software_path": {
       "type": "string",
