@@ -1,0 +1,13 @@
+%div.modal#source{ tabindex: '-1', role: 'dialog' }
+  %div.modal-dialog{ role: 'document' }
+    %div.modal-content
+      %div.modal-header
+        %h5.modal-title= t('page_title.source')
+        %button.close{ data: { dismiss: 'modal' } }
+          %i.eos-icons close
+      %div.modal-body
+        = markdown(t('content.using_source'))
+        %p
+          =link_to Rails.configuration.x.terraform_sources_url, target: '_blank'
+      %div.modal-footer
+        %button.btn.btn-primary{ data: { dismiss: 'modal' } }= t('action.affirm')

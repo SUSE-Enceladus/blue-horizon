@@ -8,8 +8,11 @@
 %p.clearfix
 %hr
 %div.btn-group.float-right
-  %a.btn.btn-lg.btn-secondary{ href: advanced_path , data: { toggle: 'tooltip'}, title: t('sidebar.sources') }
-    %i.eos-icons edit
-  %a.btn.btn-lg.btn-primary{ href: simple_path }
+  - if Rails.configuration.x.terraform_sources_url.present?
+    %button.btn.btn-lg.btn-secondary{ type: 'button', data: { toggle: 'modal', target: '#source' } }
+      %i.eos-icons.no-trailing-space edit
+  %a.btn.btn-lg.btn-primary{ href: cluster_path }
     %i.eos-icons fast_forward
     = t('sidebar.simple')
+- if Rails.configuration.x.terraform_sources_url.present?
+  = render 'welcome/source'

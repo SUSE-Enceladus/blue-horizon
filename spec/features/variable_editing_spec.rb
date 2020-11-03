@@ -144,29 +144,6 @@ describe 'variable editing', type: :feature do
     end
   end
 
-  context 'with sources visit plan' do
-    let(:variable_names) { collect_variable_names }
-    let(:variables) { Variable.new(Source.variables.pluck(:content)) }
-    let(:instance_var) { instance_double(Variable) }
-    let(:instance_var_controller) { instance_double(VariablesController) }
-
-    before do
-      populate_sources(auth_plan: true)
-      visit('/variables')
-    end
-
-    it 'stores form data for variables and redirects to plan' do
-      allow(Variable).to receive(:load).and_return(variables)
-      fill_in('variables[test_password]', with: fake_data)
-      find('#next').click
-      expect(KeyValue.get(variables.storage_key('test_password')))
-        .to eq(fake_data)
-
-      expect(page).not_to have_content('Variables were successfully updated.')
-      expect(page).to have_current_path(plan_path)
-    end
-  end
-
   it 'notifies that no variables are defined' do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
@@ -177,10 +154,9 @@ describe 'variable editing', type: :feature do
 
   it 'shows script error on page' do
     allow(Variable).to receive(:load).and_return(error: 'wrong')
-    warning_message = 'Please, edit the scripts'
+    warning_message = I18n.t('flash.invalid_variables')
     visit('/variables')
     expect(page).not_to have_content('No variables are defined!')
     expect(page).to have_content('wrong').and have_content(warning_message)
-    expect(page).to have_current_path(sources_path)
   end
 end

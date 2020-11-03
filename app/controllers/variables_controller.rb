@@ -26,8 +26,8 @@ class VariablesController < ApplicationController
   def set_variables
     @variables = Variable.load
     if @variables.is_a?(Hash) && @variables[:error]
-      redirect_to sources_path, flash: {
-        error: @variables[:error], warning: 'Please, edit the scripts'
+      redirect_to welcome_path, flash: {
+        error: @variables[:error], warning: t('flash.invalid_variables')
       }
     end
     # exclude variables handled by cluster sizing
