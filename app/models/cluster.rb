@@ -7,8 +7,8 @@ class Cluster
   include Saveable
   extend KeyPrefixable
 
-  attr_accessor :cloud_framework,
-    :instance_count, :instance_type_custom
+  attr_accessor :cloud_framework, :instance_count,
+    :instance_type_custom, :hana_ha_enabled
   attr_writer :instance_type
 
   def initialize(*args)
@@ -24,15 +24,21 @@ class Cluster
     new(
       cloud_framework:      Rails.configuration.x.cloud_framework,
       instance_count:       prefixed_get(:instance_count),
-      instance_type:        prefixed_get(:instance_type),
-      instance_type_custom: prefixed_get(:instance_type_custom)
+      instance_type:        prefixed_get(
+          :instance_type, Variable.load.attributes['instance_type']
+      ),
+      instance_type_custom: prefixed_get(:instance_type_custom),
+      hana_ha_enabled:      prefixed_get(
+        :hana_ha_enabled, Variable.load.attributes['hana_ha_enabled']
+      )
     )
   end
 
   def self.variable_handlers
     [
       'instance_type',
-      'instance_count'
+      'instance_count',
+      'hana_ha_enabled'
     ]
   end
 
@@ -81,5 +87,8 @@ class Cluster
     prefixed_set(:instance_type, @instance_type)
     prefixed_set(:instance_type_custom, @instance_type)
     prefixed_set(:instance_count, @instance_count)
+    prefixed_set(
+      :hana_ha_enabled, ActiveModel::Type::Boolean.new.cast(@hana_ha_enabled)
+    )
   end
 end

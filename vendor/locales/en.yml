@@ -33,7 +33,6 @@ en:
   hello: "Hello world"
   save: "Save"
   required: "Required"
-  deploy: "Deploy"
   terraform_files: "terraform scripts and log"
   non_active_session: "Duplicate session!"
   session_reset: "The active session has been reset."
@@ -44,8 +43,6 @@ en:
   #password key is used to check whether a form field should be of type
   # "password" rather than "text"
   password_key: "password"
-  #options key is used to create a multi select input rather than normal "text"
-  options_key: "options"
 
   plan: "Plan"
   apply: "Apply"
@@ -77,7 +74,6 @@ en:
     start_action: "Use your saved data to trigger the next action"
     run: "Execute the terraform action"
     download_plan: "Get the current plan"
-    attached: "File attached"
 
   page_title:
     plan: "Plan your deployment"
@@ -85,8 +81,9 @@ en:
     wrapup: "Next steps after deployment"
 
   page_subtitle:
-    hana_ha_enabled_info: |
-      Enable HA clustering and System Replication
+    workspace_info: |
+      Set a workspace for your terraform deployment. The workspace might be used to generate different deployments and populate the created the resources with the used workspace name.
+      In this particular case, the workspace is used to generate the Azure resource group name as **rg-ha-sap-${terraform.workspace}**.
     plan_info: |
       In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ deploys.
     deploy_info: |
@@ -102,6 +99,3 @@ en:
       Please switch back to the active session if possible. If not, you may reset the active session.
     label_active_session_ip: |
       Active session IP address: `%{ip}`
-
-  variable_groups:
-    ungrouped: Additional data

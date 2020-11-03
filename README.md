@@ -95,9 +95,10 @@ Variables **must** be defined in terraform JSON format, and named `variable*.tf.
 
 The following variables will not be displayed on the variable entry form, but will be populated via other application interfaces:
 - `instance_type`: the virtual machine type to be used when starting cloud instances; this will be populated from the _Size Cluster_ page.
-- `instance_count`: the number of virtual machines to be deployed; this will be populate from the _Size Cluster_ page.
-- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).
+- `instance_count`: the number of virtual machines to be deployed; this will be populated from the _Size Cluster_ page.
+- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).  
   ⚠ _End users should be notified that the application needs to run in the same region where it will be deployed._
+- `hana_ha_enabled`: checkbox to enable/disable HA capabilities in the HANA cluster; this will be populated from the _Size Cluster_ page. If a `default` value is not set in the `variables.tf.json` file for `hana_ha_enabled` the default value will be false.
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 
