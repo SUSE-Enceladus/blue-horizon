@@ -144,7 +144,7 @@ module "bluehorizon" {
   deployment_name                    = var.deployment_name
   public_key                         = tls_private_key.salt_execution_ssh_keys.public_key_openssh
   private_key                        = tls_private_key.salt_execution_ssh_keys.private_key_pem
-  authorized_keys                    = [var.ssh_authorized_key]
+  authorized_keys                    = [var.ssh_authorized_key_file]
   cluster_ssh_pub                    = "salt://sshkeys/cluster.id_rsa.pub"
   cluster_ssh_key                    = "salt://sshkeys/cluster.id_rsa"
   hana_count                         = var.hana_ha_enabled ? 2 : 1
