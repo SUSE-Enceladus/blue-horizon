@@ -84,7 +84,7 @@ describe 'authorization', type: :feature do
     end
 
     it 'only allows access to welcome page' do
-      Rails.configuration.x.simple_sidebar_menu_items.each do |path|
+      Rails.configuration.x.menu_items.each do |path|
         visit("/#{path}")
         expect(page).to have_current_path(welcome_path)
         expect(page).to have_content(session_lock_message)
@@ -118,7 +118,7 @@ describe 'authorization', type: :feature do
     end
 
     it 'only allows access to welcome page' do
-      paths = Rails.configuration.x.simple_sidebar_menu_items.collect do |path|
+      paths = Rails.configuration.x.menu_items.collect do |path|
         visit("/#{path}")
       end
       paths.each do |path|

@@ -34,6 +34,9 @@ Rails.application.configure do
   # _cloud_framework_ should be one of "AWS", "Azure", "GCP"
   config.x.cloud_framework ||= ENV['CLOUD_FRAMEWORK']
   config.x.cloud_framework = config.x.cloud_framework.downcase if config.x.cloud_framework.present?
+
+  # URL of terraform sources
+  # config.x.terraform_sources_url = "https://github.com/SUSE-Enceladus/blue-horizon"
 end
 
 # The following performs required actions based on custom configuration above
