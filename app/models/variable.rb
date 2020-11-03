@@ -37,6 +37,10 @@ class Variable
     new(Source.variables.pluck(:content))
   end
 
+  def self.file_regex
+    /_file$/i
+  end
+
   def keys
     @plan.keys
   end
@@ -162,7 +166,17 @@ class Variable
     when 'map'
       Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
     else
-      value.to_s
+      handle_upload(key, value)
     end
+  end
+
+  def handle_upload(key, value)
+    return value.to_s unless value.is_a?(ActionDispatch::Http::UploadedFile)
+
+    Source.where(filename: instance_variable_get("@#{key}")).destroy_all
+    source = Source.find_or_create_by(filename: value.original_filename)
+    source.content = value.read
+    source.save!
+    value.original_filename
   end
 end

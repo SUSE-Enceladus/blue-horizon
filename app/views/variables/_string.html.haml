@@ -1,21 +1,24 @@
-- fieldtype = string_input_type(description)
-%div.form-group{ class: key }
-  %label{ for: "variables[#{key}]" }
-    = key.titleize
-    = required if @variables.required?(key)
-  %div.input-group
-    - if fieldtype == 'select'
-      - @options = get_select_options(description)
-      %select.form-control{ name: "variables[#{key}]" }
-        - @options.each do |option|
-          %option{value: option, selected: value == option}= option
-    - else
-      %input.form-control{ type: fieldtype, name: "variables[#{key}]", value: value, required: @variables.required?(key), pattern: @variables.pattern(key), title: @variables.title(key) }
-    - if fieldtype == 'password'
-      %button.btn.btn-sm.btn-secondary.peek{ id: "peek_#{key}", type: 'button', data: { toggle: 'tooltip' }, title: t(:password_show) }
-        &nbsp;
-        %i.eos-icons.eos-24 visibility
-      %button.btn.btn-sm.btn-secondary.unpeek{ id: "unpeek_#{key}",type: 'button', data: { toggle: 'tooltip' }, title: t(:password_hide), style: "display: none;"}
-        &nbsp;
-        %i.eos-icons.eos-24 visibility_off
-  = formatted_description(description)
+- fieldtype = string_input_type(key, description)
+- if fieldtype == 'file'
+  = render(fieldtype, key: key, value: value, description: @variables.description(key))
+- else
+  %div.form-group{ class: key }
+    %label{ for: "variables[#{key}]" }
+      = key.titleize
+      = required if @variables.required?(key)
+    %div.input-group
+      - if fieldtype == 'select'
+        - @options = get_select_options(description)
+        %select.form-control{ name: "variables[#{key}]" }
+          - @options.each do |option|
+            %option{value: option, selected: value == option}= option
+      - else
+        %input.form-control{ type: fieldtype, name: "variables[#{key}]", value: value, required: @variables.required?(key), pattern: @variables.pattern(key), title: @variables.title(key) }
+      - if fieldtype == 'password'
+        %button.btn.btn-sm.btn-secondary.peek{ id: "peek_#{key}", type: 'button', data: { toggle: 'tooltip' }, title: t(:password_show) }
+          &nbsp;
+          %i.eos-icons.eos-24 visibility
+        %button.btn.btn-sm.btn-secondary.unpeek{ id: "unpeek_#{key}",type: 'button', data: { toggle: 'tooltip' }, title: t(:password_hide), style: "display: none;"}
+          &nbsp;
+          %i.eos-icons.eos-24 visibility_off
+    = formatted_description(description)

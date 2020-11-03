@@ -21,13 +21,15 @@ module VariablesHelper
     /#{t('options_key')}=\[(?<options>.*?)\]/i
   end
 
-  def string_input_type(description)
-    return 'text' unless description
+  def string_input_type(key, description)
+    description ||= ''
 
     if description.match?(options_regex)
       'select'
     elsif description.match?(/#{t('password_key')}/i)
       'password'
+    elsif key.match?(Variable.file_regex)
+      'file'
     else
       'text'
     end

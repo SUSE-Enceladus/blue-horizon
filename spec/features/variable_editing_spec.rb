@@ -7,7 +7,8 @@ describe 'variable editing', type: :feature do
     [
       *Cluster.variable_handlers,
       *Region.variable_handlers,
-      'test_options'
+      'test_options',
+      'test_file'
     ]
   end
   let(:fake_data) { Faker::Crypto.sha256 }
@@ -63,6 +64,50 @@ describe 'variable editing', type: :feature do
 
         expect(KeyValue.get(variables.storage_key('test_options')))
           .to eq(option_value)
+      end
+    end
+
+    context 'when handling files' do
+      let(:test_file_name) { 'testfile.txt' }
+      let(:test_file_path) do
+        Rails.root.join('spec', 'fixtures', test_file_name)
+      end
+      let(:test_file_contents) { File.read(test_file_path) }
+
+      let(:replacement_file_name) { 'testfile2.txt' }
+      let(:replacement_file_path) do
+        Rails.root.join('spec', 'fixtures', replacement_file_name)
+      end
+
+      before do
+        attach_file('variables[test_file]', test_file_path)
+        find('#next').click
+      end
+
+      it 'stores the file as a source' do
+        stored_source = Source.where(filename: test_file_name).first
+        expect(stored_source.content).to eq(test_file_contents)
+      end
+
+      it 'saves the file name as the value' do
+        expect(Variable.load.test_file).to eq(test_file_name)
+      end
+
+      it 'does not destroy uploaded files on subsequent submits' do
+        visit('/variables')
+        find('#next').click
+        stored_source = Source.where(filename: test_file_name).first
+        expect(stored_source.content).to eq(test_file_contents)
+        expect(Variable.load.test_file).to eq(test_file_name)
+      end
+
+      it 'replaces uploaded file if a new file is uploaded' do
+        visit('/variables')
+        attach_file('variables[test_file]', replacement_file_path)
+        find('#next').click
+        expect(Source.where(filename: test_file_name)).to be_empty
+        expect(Variable.load.test_file).to eq(replacement_file_name)
+        expect(Source.where(filename: replacement_file_name)).not_to be_empty
       end
     end
 
