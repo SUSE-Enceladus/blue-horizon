@@ -1,3 +1,9 @@
+# Configure the Azure Provider
+provider "azurerm" {
+  version = "~> 2.32.0"
+  features {}
+}
+
 locals {
   hana_sizes = {
     demo_sap_hana = {
