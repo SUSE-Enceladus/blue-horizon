@@ -47,12 +47,12 @@ en:
   #options key is used to create a multi select input rather than normal "text"
   options_key: "options"
 
-  plan: "Plan"
   apply: "Apply"
   running: "Running..."
   action:
     reset_session: "Reset session"
     affirm: "OK"
+    plan: "Update plan"
 
   sidebar:
     welcome: "Welcome"
@@ -90,9 +90,9 @@ en:
 
   page_subtitle:
     plan_info: |
-      In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ deploys.
+      In this step an execution plan is generated. The plan shows what *terraform* will do when you deploy, so you know exactly what to expect.
     deploy_info: |
-      In this step you can apply your plan. This may take some time. The `terraform` log will display below as it is generated.
+      In this step you can apply your plan. This may take some time. The *terraform* log will display below as it is generated.
     wrapup_info: |
       Your application has been deployed, here's how to use it.
       [Download](/download) your results and follow the instructions below.
