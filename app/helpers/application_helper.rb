@@ -69,4 +69,15 @@ module ApplicationHelper
     )
     markdown.render(uncommented_text).html_safe
   end
+
+  def loading_icon(hide: true)
+    tag.img(
+      src:   asset_path('bubble_loading.svg'),
+      alt:   t('tooltips.loading'),
+      title: t('tooltips.loading'),
+      class: 'eos-48 centered',
+      style: ('display: none;' if hide),
+      id:    'loading'
+    )
+  end
 end

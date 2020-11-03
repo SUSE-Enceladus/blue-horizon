@@ -65,11 +65,6 @@ RSpec.describe DeploysController, type: :controller do
           )
       )
 
-      expected_html = "<code id='output'>hello world! " \
-                      "Apply complete!</code>\n<i class=" \
-                      "'eos-icon-loading eos-48 centered hide'></i>\n"
-      expected_json = { new_html: expected_html, success: true, error: nil }
-      allow(controller).to receive(:render).with(json: expected_json)
       allow(ruby_terraform).to receive(:apply)
 
       get :send_current_status, format: :json
@@ -78,16 +73,8 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'can show error output when deploy fails' do
-      allow(File).to receive(:exist?).and_return(true)
-      allow(File).to receive(:read)
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
 
-      expected_html = "<code id='output'></code>\n<i class=" \
-                      "'eos-icon-loading eos-48 centered hide'></i>\n"
-      expected_json = { new_html: expected_html, success: false,
-                        error: "Error\n" }
-
-      allow(controller).to receive(:render).with(json: expected_json)
       allow(Terraform).to receive(:stderr).and_return(StringIO.new("Error\n"))
       allow(Terraform).to receive(:stdout).and_return(StringIO.new)
 

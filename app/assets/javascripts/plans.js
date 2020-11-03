@@ -3,7 +3,7 @@ $(function() {
     .bind("ajax:beforeSend", function() {
       $("code.output").text("");
       $(this).addClass("no-hover");
-      $(".eos-icon-loading").show();
+      $("#loading").show();
       $("a[data-toggle]").tooltip("hide");
       $(".steps-container .btn").addClass("disabled");
     })
@@ -20,7 +20,7 @@ $(function() {
     })
     .bind("ajax:complete", function() {
       $(this).removeClass("no-hover");
-      $(".eos-icon-loading").addClass("hide");
+      $("#loading").addClass("hide");
       $(".steps-container .btn").removeClass("disabled");
       $('a[data-original-title="Next steps"]').addClass("disabled");
     });
