@@ -24,4 +24,3 @@
 //= require utility.js
 //= require layout.js
 //= require variables.js
-//= require plans.js
