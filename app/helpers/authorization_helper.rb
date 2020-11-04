@@ -61,9 +61,7 @@ module AuthorizationHelper
   def flow_restriction_checks(path)
     case path
     when plan_path
-      return all_variables_are_set? unless Rails.configuration.x.advanced_mode
-
-      true
+      return all_variables_are_set?
     when deploy_path
       plan_exists?
     when wrapup_path, download_path

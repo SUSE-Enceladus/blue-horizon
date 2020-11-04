@@ -32,8 +32,6 @@ gem 'jquery-rails'
 gem 'eos-icons-font'
 # identify 'active' links
 gem 'active_link_to'
-# Ace editor
-gem 'ace-rails-ap'
 # Terraform wrapper
 gem 'ruby-terraform'
 # Zip files

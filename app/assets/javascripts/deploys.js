@@ -8,7 +8,7 @@ $(function() {
       $(this).addClass("no-hover");
       $(".float-right .steps-container .btn").addClass("disabled");
       $(".list-group-flush a").addClass("disabled");
-      $(".eos-icon-loading").removeClass("hide");
+      $("#loading").show();
       $("a[data-toggle]").tooltip("hide");
       intervalId = setTimeout(function() {
         fetch_output(finished, intervalId);
@@ -29,7 +29,7 @@ $(function() {
       }
     })
     .bind("ajax:error", function() {
-      $(".eos-icons-loading").addClass("hide");
+      $("#loading").hide();
       clearTimeout(intervalId);
     });
 });
@@ -41,7 +41,7 @@ function fetch_output(finished, intervalId) {
     dataType: "json",
     success: function(data) {
       if (data.error !== null) {
-        $(".eos-icon-loading").addClass("hide");
+        $("#loading").hide();
         // show rails flash message
         $("#error_message").text("Deploy operation has failed.");
         $("#flash").show();
@@ -49,7 +49,7 @@ function fetch_output(finished, intervalId) {
         $("#output").text($("#output").text() + data.error);
         clearTimeout(intervalId);
         $(".steps-container .btn.disabled").removeClass("disabled");
-        $(".eos-icon-loading").addClass("hide");
+        $("#loading").hide();
       } else {
         $(".pre-scrollable").html(data.new_html);
         var autoscroll = $("#deploy_log_autoscroll").prop("checked");
@@ -62,7 +62,7 @@ function fetch_output(finished, intervalId) {
           }, 5000);
         } else {
           $(".steps-container .btn.disabled").removeClass("disabled");
-          $(".eos-icon-loading").addClass("hide");
+          $("#loading").hide();
         }
       }
     },
@@ -72,7 +72,7 @@ function fetch_output(finished, intervalId) {
       $("#error_message").text(data.responseText.substring(0, endIndex));
       $("#flash").show();
       $(".steps-container .btn.disabled").removeClass("disabled");
-      $(".eos-icon-loading").addClass("hide");
+      $("#loading").hide();
     }
   });
 

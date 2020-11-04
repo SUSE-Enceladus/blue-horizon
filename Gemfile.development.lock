@@ -9,7 +9,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    ace-rails-ap (4.4)
     actioncable (5.2.4.4)
       actionpack (= 5.2.4.4)
       nio4r (~> 2.0)
@@ -314,7 +313,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ace-rails-ap
   active_link_to
   bootstrap (~> 4.3.1)
   byebug

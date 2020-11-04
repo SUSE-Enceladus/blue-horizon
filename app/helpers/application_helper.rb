@@ -2,8 +2,8 @@
 
 # General view helpers
 module ApplicationHelper
-  def sidebar_menu_items(advanced=Rails.configuration.x.advanced_mode)
-    Rails.configuration.x.menu_items[advanced]
+  def sidebar_menu_items
+    Rails.configuration.x.menu_items
   end
 
   def bootstrap_flash
@@ -11,17 +11,9 @@ module ApplicationHelper
       # Skip empty messages
       next if message.blank?
 
-      context = case type.to_sym
-      when :notice
-        :success
-      when :alert
-        :warning
-      when :error
-        :danger
-      else
-        :secondary
-      end
-      render 'layouts/flash', context: context, message: message
+      render 'layouts/flash',
+        context: Rails.configuration.x.flash_context[type.to_sym],
+        message: message
     end.join.html_safe
   end
 
@@ -76,5 +68,16 @@ module ApplicationHelper
       markdown_options
     )
     markdown.render(uncommented_text).html_safe
+  end
+
+  def loading_icon(hide: true)
+    tag.img(
+      src:   asset_path('bubble_loading.svg'),
+      alt:   t('tooltips.loading'),
+      title: t('tooltips.loading'),
+      class: 'eos-48 centered',
+      style: ('display: none;' if hide),
+      id:    'loading'
+    )
   end
 end
