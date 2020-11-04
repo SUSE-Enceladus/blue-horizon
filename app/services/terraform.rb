@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'ruby_terraform'
+require 'json'
+
 # Class to wrap all Terraform operations
 class Terraform
   def initialize
@@ -141,6 +144,19 @@ class Terraform
     in_export_dir do
       RubyTerraform.show(path: plan_path, json: true)
     end
+  end
+
+  def outputs
+    set_output
+    in_export_dir do
+      RubyTerraform.show(json: true)
+    end
+    raw_outputs = JSON.parse(
+      RubyTerraform.configuration.stdout.string
+    )['values']['outputs']
+    Hash[
+      raw_outputs.collect { |k, v| [k.to_sym, v['value']] }
+    ]
   end
 
   def destroy

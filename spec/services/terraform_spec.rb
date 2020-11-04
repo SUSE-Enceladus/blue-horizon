@@ -12,6 +12,11 @@ RSpec.describe Terraform, type: :service do
     "on #{working_path}/foo.tf.json line 42, in foo.tf.json:\n"\
     "42:     }\nThis error is highly illogical."
   end
+  let(:expected_output_hash) do
+    {
+      greeting: 'Hello, World.'
+    }
+  end
 
   it 'raise terraform exception when validating' do
     allow(RubyTerraform).to(
@@ -50,5 +55,10 @@ RSpec.describe Terraform, type: :service do
     expect(
       file_content.include?('Error calling terraform init.')
     ).to be true
+  end
+
+  it 'returns a hash of outputs' do
+    terraform = terraform_apply(include_mocks: false)
+    expect(terraform.outputs).to eq(expected_output_hash)
   end
 end
