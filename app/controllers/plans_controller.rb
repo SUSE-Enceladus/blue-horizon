@@ -40,15 +40,9 @@ class PlansController < ApplicationController
 
     if result.is_a?(Hash)
       flash.now[:error] = result[:error]
-      return render json: flash.to_hash
-    end
-    terra.show
-    @show_output = Terraform.stdout.string
-    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
-
-    respond_to do |format|
-      format.html { render :show }
-      format.js   { render json: @show_output }
+      return render(json: flash.to_hash)
+    else
+      redirect_to(action: 'show')
     end
   end
 

@@ -21,7 +21,7 @@ describe 'planning', type: :feature do
     end
 
     it 'generates a new plan' do
-      click_on(id: 'submit-plan')
+      click_on(id: 'update-plan')
 
       expect(JSON.parse(find('code.output').text))
         .to eq(JSON.parse(expected_plan_json))
