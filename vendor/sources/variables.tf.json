@@ -14,9 +14,9 @@
       "description": "Name of the OS user created in the machines<!-- [group:Azure_configuration] -->",
       "default": "cloudadmin"
     },
-    "ssh_authorized_key": {
+    "ssh_authorized_key_file": {
       "type": "string",
-      "description": "SSH public key content that will be authorized to access the machines with  OS admin username<!-- file_key [group:Azure_configuration] -->"
+      "description": "SSH public key file that will be authorized to access the machines with OS admin username<!-- file_key [group:Azure_configuration] -->"
     },
     "storage_account_name": {
       "type": "string",
