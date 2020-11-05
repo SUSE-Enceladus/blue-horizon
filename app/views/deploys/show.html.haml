@@ -7,14 +7,11 @@
   %div.card-body
     %p= markdown(t('page_subtitle.deploy_info'))
     %hr
-    %div.float-right
-      %label.form-check-label
-        = check_box('deploy_log', 'autoscroll', class: 'form-check-input', checked: true)
-        = t('autoscroll')
-    %p.clearfix
+    = render 'progress_bar'
     %hr
-    %pre.pre-scrollable
-      = render 'output'
+    %details
+      %summary= t('deploy.details')
+      = render 'details'
 %p.clearfix
   %div.float-left.btn-group.steps-container
     = link_to deploy_path, class: "btn btn-danger disabled", id: "destroy", title: t('tooltips.run'), data: { method: :delete, toggle: 'tooltip', disable_with: t('running') } do

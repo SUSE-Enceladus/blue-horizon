@@ -111,3 +111,7 @@ en:
 
   variable_groups:
     ungrouped: Additional data
+
+  deploy:
+    details: "Installation details"
+    infra_label: "Infrastructure creation"

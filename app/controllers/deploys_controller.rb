@@ -3,6 +3,9 @@
 require 'ruby_terraform'
 
 class DeploysController < ApplicationController
+
+  class_attribute :planned_resources
+
   def update
     logger.info('Calling run_deploy')
     @apply_args = {
@@ -10,6 +13,7 @@ class DeploysController < ApplicationController
       auto_approve: true,
       no_color:     true
     }
+    DeploysController.planned_resources = get_planned_resources().count()
     Terraform.new.apply(@apply_args)
     logger.info('Deploy finished.')
   end
@@ -23,17 +27,27 @@ class DeploysController < ApplicationController
     elsif Terraform.stdout.is_a?(StringIO)
       @apply_output = Terraform.stdout.string
       content = @apply_output
-      success = Terraform.stdout.string.include? 'Apply complete!'
+      success = content.include? 'Apply complete!'
     end
+
+    complete_count = content.scan(/Creation complete after/).size
+    progress = {
+      'infra-bar': {
+        progress: complete_count*100/DeploysController.planned_resources,
+        success:  error.nil? ? true : false
+      }
+    }
+
     if success
       write_output(content, success)
       set_default_logger_config
     end
     html = (render_to_string partial: 'output.html.haml')
+
     respond_to do |format|
       format.json do
-        render json: { new_html: html, success: success,
-                       error: error }
+        render json: { new_html: html, progress: progress,
+                       success: success, error: error }
       end
     end
     return
@@ -65,5 +79,35 @@ class DeploysController < ApplicationController
     else
       logger.error content
     end
+  end
+
+  def get_planned_resources
+    resources = []
+    Terraform.new.show
+    show_output = Terraform.stdout.string
+    show_output = JSON.parse(show_output)
+    show_output['planned_values'].each { |key, value|
+      if key == 'root_module'
+        resources |= value['resources']
+        if value.key? 'child_modules'
+          resources |= get_child_resources(value['child_modules'])
+        end
+      end
+    }
+    resources
+  end
+
+  def get_child_resources(child_resources)
+    resources = []
+    child_resources.each { |value|
+      if value.key? 'resources'
+        resources |= value['resources'].filter_map {|resource| resource if resource['mode'] == 'managed'}
+
+      end
+      if value.key? 'child_modules'
+        resources |= get_child_resources(value['child_modules'])
+      end
+    }
+    resources
   end
 end

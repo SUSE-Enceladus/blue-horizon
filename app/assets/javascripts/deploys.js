@@ -34,6 +34,25 @@ $(function() {
     });
 });
 
+function update_progress_bar(progress_data) {
+  Object.entries(progress_data).forEach(entry=>{
+    const [id, bar_data] = entry;
+    const bar_id = '#' + id;
+    $(bar_id).css("width", bar_data.progress + "%");
+    $(bar_id).html(bar_data.progress + "%");
+    if (bar_data.success) {
+      if (bar_data.progress < 100) {
+        $(bar_id).addClass("progress-bar-striped progress-bar-animated");
+      } else {
+        $(bar_id).removeClass("progress-bar-striped progress-bar-animated");
+      }
+    } else {
+      $(bar_id).removeClass("progress-bar-striped progress-bar-animated");
+      $(bar_id).addClass("bg-danger");
+    }
+  });
+}
+
 function fetch_output(finished, intervalId) {
   $.ajax({
     type: "GET",
@@ -51,6 +70,7 @@ function fetch_output(finished, intervalId) {
         $(".steps-container .btn.disabled").removeClass("disabled");
         $("#loading").hide();
       } else {
+        // update scrollable
         $(".pre-scrollable").html(data.new_html);
         var autoscroll = $("#deploy_log_autoscroll").prop("checked");
         if (autoscroll) {
@@ -64,6 +84,10 @@ function fetch_output(finished, intervalId) {
           $(".steps-container .btn.disabled").removeClass("disabled");
           $("#loading").hide();
         }
+      }
+      // update progress bar
+      if ("progress" in data) {
+        update_progress_bar(data.progress)
       }
     },
     error: function(data) {
