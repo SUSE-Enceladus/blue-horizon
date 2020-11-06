@@ -113,6 +113,28 @@ See `config/locales/custom-en.yml` for a sample/template with keys defined.
 
 To use a different path, set the environment variable `BLUE_HORIZON_LOCALIZERS` with the directory where custom internationalization files are stored.
 
+#### Including *terraform* output in *Next steps*
+
+The `next_steps` content, presented on the last page after deployment, can include terraform outputs. Put a placeholder in the content in the format `%{OUTPUT_NAME}`.
+
+For example, if your terraform scripts include:
+
+```
+output "greeting" {
+    value = "Hello, World."
+}
+```
+
+... and your `next_steps` translation includes:
+
+```
+**%{greeting}**
+```
+
+It would render as:
+
+> **Hello, World.**
+
 ### Application customization
 
 `vendor/customization.json` defines configuration keys that can be modified to alter the behavior of the application.

@@ -26,10 +26,11 @@ module Helpers
     Source.all.each(&:export)
     terraform = Terraform.new
     terraform.apply({
-      directory:    Rails.configuration.x.source_export_dir,
-      auto_approve: true,
-      no_color:     true
-    })
+                      directory:    Rails.configuration.x.source_export_dir,
+                      auto_approve: true,
+                      no_color:     true
+                    }
+                   )
     return terraform
   end
 
