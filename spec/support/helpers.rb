@@ -70,15 +70,16 @@ module Helpers
     end.flatten
   end
 
-  def random_export_path
-    random_path = Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-    Rails.configuration.x.source_export_dir = random_path
-    FileUtils.mkdir_p(random_path)
-    return random_path
+  def set_export_path
+    Rails.configuration.x.source_export_dir = Rails.root.join('tmp', 'test-run')
   end
 
-  def cleanup_random_export_path
+  def cleanup_export_path
     FileUtils.rm_rf(Rails.configuration.x.source_export_dir)
+  end
+
+  def make_export_path
+    FileUtils.mkdir_p(Rails.configuration.x.source_export_dir)
   end
 
   def working_path
@@ -94,10 +95,8 @@ RSpec.configure do |config|
   config.include Helpers
 
   config.before do
-    random_export_path
-  end
-
-  config.after do
-    cleanup_random_export_path
+    set_export_path
+    cleanup_export_path
+    make_export_path
   end
 end
