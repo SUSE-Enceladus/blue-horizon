@@ -20,6 +20,27 @@ module Helpers
     Source.all
   end
 
+  def terraform_apply(auth_plan: false, include_mocks: true)
+    populate_sources(auth_plan: auth_plan, include_mocks: include_mocks)
+    yield if block_given?
+    Source.all.each(&:export)
+    terraform = Terraform.new
+    terraform.apply({
+                      directory:    Rails.configuration.x.source_export_dir,
+                      auto_approve: true,
+                      no_color:     true
+                    }
+                   )
+    return terraform
+  end
+
+  def authorize!
+    allow_any_instance_of(AuthorizationHelper)
+      .to receive(:check_and_alert).and_return(true)
+    allow_any_instance_of(AuthorizationHelper)
+      .to receive(:can).and_return(true)
+  end
+
   def current_plan_fixture
     # place the binary plan file
     source_path =

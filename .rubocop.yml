@@ -36,6 +36,9 @@ Layout/SpaceAroundEqualsInParameterDefault:
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: new_line
 
+Style/FormatStringToken:
+  Enabled: false
+
 Style/SymbolArray:
   EnforcedStyle: brackets
 
@@ -47,10 +50,10 @@ RSpec/ExampleLength:
 
 RSpec/FactoryBot/CreateList:
   Enabled: false
-  
+
 RSpec/LetSetup:
   Enabled: false
-  
+
 RSpec/MessageSpies:
   Enabled: false
 
@@ -98,10 +101,6 @@ Metrics/MethodLength:
 
 Metrics/ClassLength:
   Max: 150
-
-Style/FormatStringToken:
-  Exclude:
-    - "lib/tasks/packaging.rake"
 
 Metrics/AbcSize:
   Enabled: false

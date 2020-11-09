@@ -3,7 +3,7 @@
   %div.card-body
     %p= markdown(t('page_subtitle.wrapup_info'))
     %hr
-    = markdown(t('next_steps'), escape_html: false)
+    = markdown(@content, escape_html: false)
 
 %p.clearfix
   %div.float-right.btn-group.steps-container
