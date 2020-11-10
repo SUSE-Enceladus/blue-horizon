@@ -80,4 +80,10 @@ module ApplicationHelper
       id:    'loading'
     )
   end
+
+  def pretty_json(raw_json_string)
+    JSON.pretty_generate(JSON.parse(raw_json_string))
+  rescue StandardError
+    ''
+  end
 end

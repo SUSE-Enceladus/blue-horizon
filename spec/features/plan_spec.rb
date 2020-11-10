@@ -17,7 +17,7 @@ describe 'planning', type: :feature do
     end
 
     it 'loads without a pre-generated plan' do
-      expect(find('code.output')).to have_no_content
+      expect(page).not_to have_selector('code.output')
     end
 
     it 'generates a new plan' do
