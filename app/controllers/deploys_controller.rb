@@ -3,9 +3,6 @@
 require 'ruby_terraform'
 
 class DeploysController < ApplicationController
-
-  class_attribute :planned_resources, :created_resources
-
   def update
     logger.info('Calling run_deploy')
     @apply_args = {
@@ -14,8 +11,9 @@ class DeploysController < ApplicationController
       no_color:     true
     }
     terra = Terraform.new
-    DeploysController.planned_resources = terra.get_planned_resources().count()
-    DeploysController.created_resources = 0
+    # rubocop:disable Style/ClassVars
+    @@planned_resources = terra.get_planned_resources.count
+    # rubocop:enable Style/ClassVars
     terra.apply(@apply_args)
     logger.info('Deploy finished.')
   end
@@ -79,17 +77,17 @@ class DeploysController < ApplicationController
 
   def update_terraform_progress(content, error)
     progress = {}
-    DeploysController.created_resources = content.scan(/Creation complete after/).size
-    if DeploysController.created_resources == DeploysController.planned_resources
-      text = t('deploy.finished')
+    created_resources = content.scan(/Creation complete after/).size
+    text = if created_resources == @@planned_resources
+      t('deploy.finished')
     else
-      text = t('deploy.creating')
+      t('deploy.creating')
     end
     progress['infra-bar'] = {
-      progress: DeploysController.created_resources*100/DeploysController.planned_resources,
-      text: text,
-      success: error.nil? ? true : false
+      progress: created_resources * 100 / @@planned_resources,
+      text:     text,
+      success:  error.nil? ? true : false
     }
-  return progress
+    return progress
   end
 end

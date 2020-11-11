@@ -192,16 +192,18 @@ class Terraform
     show
     show_output = Terraform.stdout.string
     show_output = JSON.parse(show_output)
-    show_output['planned_values'].each { |key, value|
-      if key == 'root_module'
-        resources |= value['resources']
-        if value.key? 'child_modules'
-          resources |= get_child_resources(value['child_modules'])
-        end
+    show_output['planned_values'].each do |key, value|
+      next unless key == 'root_module'
+
+      resources |= value['resources']
+      if value.key? 'child_modules'
+        resources |= get_child_resources(value['child_modules'])
       end
-    }
-    if !excluded.nil?
-      resources.select! { |resource| !excluded.match?resource['address'] }
+    end
+    unless excluded.nil?
+      resources.reject! do |resource|
+        excluded.match? resource['address']
+      end
     end
     return resources
   end
@@ -210,17 +212,16 @@ class Terraform
 
   def get_child_resources(child_resources)
     resources = []
-    child_resources.each { |value|
+    child_resources.each do |value|
       if value.key? 'resources'
-        resources |= value['resources'].filter_map {|resource| resource if resource['mode'] == 'managed'}
-
+        resources |= value['resources'].filter_map do |resource|
+          resource if resource['mode'] == 'managed'
+        end
       end
       if value.key? 'child_modules'
         resources |= get_child_resources(value['child_modules'])
       end
-    }
+    end
     return resources
   end
-
-
 end
