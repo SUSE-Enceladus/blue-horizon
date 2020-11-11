@@ -12,7 +12,7 @@
   color: white;
 }
 
-li.menu-item.disabled {
+li.menu-item.disabled, a.disabled {
   * {
     color: $eos-bc-gray-300 !important;
     cursor: default;

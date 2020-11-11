@@ -147,6 +147,32 @@ To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` 
 
 Any view or partial view (see `app/views`) can be overridden with an application-specific view. Set the configuration option `"override_views": true`, then copy the original to `vendor/views`, (e.g. `app/views/plans/_plan.haml` to `vendor/views/plans/_plan.haml`) and make your customizations in the copy.
 
+#### Top menu items
+
+A a group of custom top-menu links can be added to application views. If the links use *terraform* outputs, they will only be enabled on the `/wrapup` (*Next steps*) page. Links may open in the same browser context, or request a new tab/window.
+
+The following example custom configuration will provide a static link that opens in a new tab, as well as an output-driven link that will only be enabled on *next steps*:
+
+```
+"top_menu_items": [
+    {
+        "key": "more-info",
+        "url": "https://github.com/SUSE-Enceladus/blue-horizon",
+        "target_new_window": true
+    },
+    {
+        "key": "monitor",
+        "url": "%{monitoring_url}"
+    }
+]
+```
+
+The `"key"` must match a translation value in the `menu` scope (e.g. `menu.more-info`, `menu.monitor`). Some common values are provided for convenience, but may be overriden or extended via localization.
+
+`"target_new_window"` only needs to be set if the value is `true`; `false` is otherwise assumed.
+
+A "*Deploy*" menu entry will be set, first, if any custom menu items are included.
+
 ## Packaging
 
 _blue-horizon_ includes supporting tools and documents to build on an open build service (OBS) instance, such as https://build.opensuse.org
