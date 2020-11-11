@@ -22,6 +22,12 @@ end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# Avoid local customizations to interfere with testing runs.
+# You can put common customizations for all tests in the following file, or
+# change the Rails.configuration.x hash within single tests
+ENV['BLUE_HORIZON_CUSTOMIZER'] =
+  Rails.root.join('spec', 'customization.test.json').to_s
+
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'webmock/rspec'
