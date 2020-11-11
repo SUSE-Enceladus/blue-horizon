@@ -4,7 +4,8 @@
     %p= markdown(t('page_subtitle.plan_info'))
     %hr
     = loading_icon(hide: @plan.present?)
-    = render('plans/plan', plan: @plan) if @plan.present?
+    %div#plan
+      = render('plans/plan', plan: @plan) if @plan.present?
 %p.clearfix
   %div.float-right.btn-group.steps-container
     = link_to variables_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
@@ -25,7 +26,7 @@
   :javascript
     $(function(){
       $("#update-plan").on("click", function(){
-        $("code.output").hide({
+        $("#plan").hide({
           complete: function(){
             $("#loading").show();
           }
