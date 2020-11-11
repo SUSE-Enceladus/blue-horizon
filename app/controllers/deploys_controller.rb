@@ -4,7 +4,7 @@ require 'ruby_terraform'
 
 class DeploysController < ApplicationController
 
-  class_attribute :planned_resources
+  class_attribute :planned_resources, :created_resources
 
   def update
     logger.info('Calling run_deploy')
@@ -13,8 +13,10 @@ class DeploysController < ApplicationController
       auto_approve: true,
       no_color:     true
     }
-    DeploysController.planned_resources = get_planned_resources().count()
-    Terraform.new.apply(@apply_args)
+    terra = Terraform.new
+    DeploysController.planned_resources = terra.get_planned_resources().count()
+    DeploysController.created_resources = 0
+    terra.apply(@apply_args)
     logger.info('Deploy finished.')
   end
 
@@ -30,13 +32,7 @@ class DeploysController < ApplicationController
       success = content.include? 'Apply complete!'
     end
 
-    complete_count = content.scan(/Creation complete after/).size
-    progress = {
-      'infra-bar': {
-        progress: complete_count*100/DeploysController.planned_resources,
-        success:  error.nil? ? true : false
-      }
-    }
+    progress = update_terraform_progress(content, error)
 
     if success
       write_output(content, success)
@@ -81,33 +77,19 @@ class DeploysController < ApplicationController
     end
   end
 
-  def get_planned_resources
-    resources = []
-    Terraform.new.show
-    show_output = Terraform.stdout.string
-    show_output = JSON.parse(show_output)
-    show_output['planned_values'].each { |key, value|
-      if key == 'root_module'
-        resources |= value['resources']
-        if value.key? 'child_modules'
-          resources |= get_child_resources(value['child_modules'])
-        end
-      end
+  def update_terraform_progress(content, error)
+    progress = {}
+    DeploysController.created_resources = content.scan(/Creation complete after/).size
+    if DeploysController.created_resources == DeploysController.planned_resources
+      text = t('deploy.finished')
+    else
+      text = t('deploy.creating')
+    end
+    progress['infra-bar'] = {
+      progress: DeploysController.created_resources*100/DeploysController.planned_resources,
+      text: text,
+      success: error.nil? ? true : false
     }
-    resources
-  end
-
-  def get_child_resources(child_resources)
-    resources = []
-    child_resources.each { |value|
-      if value.key? 'resources'
-        resources |= value['resources'].filter_map {|resource| resource if resource['mode'] == 'managed'}
-
-      end
-      if value.key? 'child_modules'
-        resources |= get_child_resources(value['child_modules'])
-      end
-    }
-    resources
+  return progress
   end
 end

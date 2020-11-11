@@ -37,9 +37,14 @@ $(function() {
 function update_progress_bar(progress_data) {
   Object.entries(progress_data).forEach(entry=>{
     const [id, bar_data] = entry;
-    const bar_id = '#' + id;
+    const bar_id = "#" + id;
+    if ("text" in bar_data) {
+      progress_text = bar_data.progress + "% - " + bar_data.text;
+    } else {
+      progress_text = bar_data.progress + "%";
+    }
     $(bar_id).css("width", bar_data.progress + "%");
-    $(bar_id).html(bar_data.progress + "%");
+    $(bar_id).find("span").html(progress_text);
     if (bar_data.success) {
       if (bar_data.progress < 100) {
         $(bar_id).addClass("progress-bar-striped progress-bar-animated");

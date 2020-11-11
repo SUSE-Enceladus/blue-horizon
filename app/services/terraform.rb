@@ -186,4 +186,41 @@ class Terraform
   def self.stderr
     RubyTerraform.configuration.stderr
   end
+
+  def get_planned_resources(excluded=nil)
+    resources = []
+    show
+    show_output = Terraform.stdout.string
+    show_output = JSON.parse(show_output)
+    show_output['planned_values'].each { |key, value|
+      if key == 'root_module'
+        resources |= value['resources']
+        if value.key? 'child_modules'
+          resources |= get_child_resources(value['child_modules'])
+        end
+      end
+    }
+    if !excluded.nil?
+      resources.select! { |resource| !excluded.match?resource['address'] }
+    end
+    return resources
+  end
+
+  private
+
+  def get_child_resources(child_resources)
+    resources = []
+    child_resources.each { |value|
+      if value.key? 'resources'
+        resources |= value['resources'].filter_map {|resource| resource if resource['mode'] == 'managed'}
+
+      end
+      if value.key? 'child_modules'
+        resources |= get_child_resources(value['child_modules'])
+      end
+    }
+    return resources
+  end
+
+
 end

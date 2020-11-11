@@ -115,3 +115,5 @@ en:
   deploy:
     details: "Installation details"
     infra_label: "Infrastructure creation"
+    creating: "Creating resources..."
+    finished: "Finished"
