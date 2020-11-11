@@ -17,13 +17,13 @@ describe 'planning', type: :feature do
     end
 
     it 'loads without a pre-generated plan' do
-      expect(find('code.output')).to have_no_content
+      expect(find('#plan')).to have_no_content
     end
 
     it 'generates a new plan' do
       click_on(id: 'update-plan')
 
-      expect(JSON.parse(find('code.output').text))
+      expect(JSON.parse(find('#plan code.output').text))
         .to eq(JSON.parse(expected_plan_json))
       expect(File.exist?(
                working_path.join('current_plan')
@@ -37,7 +37,7 @@ describe 'planning', type: :feature do
 
     it 'displays the current plan' do
       visit(plan_path)
-      expect(find('code.output')).to have_content(current_plan)
+      expect(find('#plan code.output')).to have_content(current_plan)
     end
   end
 end

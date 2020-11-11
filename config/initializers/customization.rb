@@ -37,6 +37,11 @@ Rails.application.configure do
 
   # URL of terraform sources
   # config.x.terraform_sources_url = "https://github.com/SUSE-Enceladus/blue-horizon"
+
+  # Override views
+  # set `"override_views": true` in customization.json
+  # views in vendor/views/... will override the defaults in app/views
+  config.x.override_views ||= false
 end
 
 # The following performs required actions based on custom configuration above

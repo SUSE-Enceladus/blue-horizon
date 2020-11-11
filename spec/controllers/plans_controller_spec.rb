@@ -76,8 +76,8 @@ RSpec.describe PlansController, type: :controller do
     before do
       allow(Logger::LogDevice).to receive(:new)
       allow(controller).to receive(:cleanup)
-      allow(JSON).to receive(:pretty_generate)
-      allow(JSON).to receive(:parse).and_return(blue: 'horizon')
+
+      allow(JSON).to receive(:parse).and_return(OpenStruct.new(blue: 'horizon'))
     end
 
     it 'allows to download the plan' do

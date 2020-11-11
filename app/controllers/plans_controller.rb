@@ -10,14 +10,15 @@ class PlansController < ApplicationController
     return unless helpers.can(deploy_path)
 
     Terraform.new.show
-    @show_output = Terraform.stdout.string
-    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
+    plan_raw_json = Terraform.stdout.string
+    @plan = JSON.parse(plan_raw_json, object_class: OpenStruct)
+    @plan.raw_json = plan_raw_json
 
     respond_to do |format|
       format.html
       format.json do
         send_data(
-          @show_output,
+          plan_raw_json,
           disposition: 'attachment',
           filename:    'terraform_plan.json'
         )
