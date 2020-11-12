@@ -80,4 +80,24 @@ module ApplicationHelper
       id:    'loading'
     )
   end
+
+  def pretty_json(raw_json_string)
+    JSON.pretty_generate(JSON.parse(raw_json_string))
+  rescue StandardError
+    ''
+  end
+
+  def top_menu_items(format_values=nil)
+    tags = Rails.configuration.x.top_menu_items.collect do |menu_item|
+      (url = menu_item['url'] % format_values) if format_values
+      link_to(
+        t("menu_item.#{menu_item['key']}"),
+        (url || '#'),
+        id:     menu_item['key'],
+        class:  "submenu-item#{' disabled' unless url}",
+        target: ('_blank' if menu_item['target_new_window'])
+      )
+    end
+    tags.join.html_safe
+  end
 end

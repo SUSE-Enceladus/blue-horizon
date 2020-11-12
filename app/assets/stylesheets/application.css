@@ -21,7 +21,7 @@
  *= require plans
  *= require deploys
  * Custom/override
- *= require custom
+ *= require override
  * this
  *= require_self
  */

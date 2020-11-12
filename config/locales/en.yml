@@ -66,6 +66,12 @@ en:
     download: "Download"
     simple: "Start setup"
 
+  menu:
+    deploy: "Deploy"
+    monitor: "Monitor"
+    maintain: "Maintain"
+    tune: "Tune"
+
   flash:
     export_failure: "One or more sources or variables failed to export!"
     unauthorized: "Sorry, you can't do that, yet."
