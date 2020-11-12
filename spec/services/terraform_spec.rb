@@ -18,6 +18,15 @@ RSpec.describe Terraform, type: :service do
     }
   end
 
+  it 'raise terraform exception during apply' do
+    allow(ruby_terraform).to(
+      receive(:apply)
+        .and_raise(RubyTerraform::Errors::ExecutionError)
+    )
+
+    described_class.new.apply(nil)
+  end
+
   it 'raise terraform exception when validating' do
     allow(RubyTerraform).to(
       receive(:validate)
@@ -60,5 +69,28 @@ RSpec.describe Terraform, type: :service do
   it 'returns a hash of outputs' do
     terraform = terraform_apply(include_mocks: false)
     expect(terraform.outputs).to eq(expected_output_hash)
+  end
+
+  it 'gets the planned resources' do
+    allow(RubyTerraform).to receive(:init)
+    allow(RubyTerraform).to receive(:show)
+    allow(described_class).to(
+      receive(:stdout)
+        .and_return(StringIO.new(nested_plan_fixture_json))
+    )
+    planned_resources = described_class.new.get_planned_resources
+    expect(planned_resources.count).to eq(54)
+  end
+
+  it 'gets the planned resources with excluded' do
+    allow(RubyTerraform).to receive(:init)
+    allow(RubyTerraform).to receive(:show)
+    allow(described_class).to(
+      receive(:stdout)
+        .and_return(StringIO.new(nested_plan_fixture_json))
+    )
+    excluded = /.*\..*_provision.*\.provision(\[\d+\])?/
+    planned_resources = described_class.new.get_planned_resources(excluded)
+    expect(planned_resources.count).to eq(49)
   end
 end

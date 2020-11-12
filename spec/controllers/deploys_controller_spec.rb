@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe DeploysController, type: :controller do
   render_views
+  let(:example) { described_class.new }
 
   context 'when deploying terraform plan' do
     let(:ruby_terraform) { RubyTerraform }
@@ -12,17 +13,26 @@ RSpec.describe DeploysController, type: :controller do
 
     let(:terraform_tfvars) { 'terraform.tfvars' }
     let(:terra) { Terraform }
-    let(:instance_terra) { instance_doube(terra) }
+    let(:instance_terra) { instance_double(Terraform) }
+
+    before do
+      allow(terra).to receive(:new).and_return(instance_terra)
+    end
 
     it 'deploys a plan successfully' do
       allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:read)
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
-      allow(ruby_terraform).to receive(:apply)
+      allow(instance_terra).to receive(:apply)
+      allow(instance_terra).to(
+        receive(:get_planned_resources)
+          .and_return(['1', '2', '3'])
+      )
 
       get :update, format: :json
 
-      expect(ruby_terraform).to(
+      expect(KeyValue.get(:planned_resources_count)).to eq(3)
+      expect(instance_terra).to(
         have_received(:apply)
           .with(
             directory:    working_path,
@@ -33,18 +43,27 @@ RSpec.describe DeploysController, type: :controller do
     end
 
     it 'raise exception' do
-      allow(ruby_terraform).to(
+      allow(instance_terra).to(
+        receive(:get_planned_resources)
+          .and_return(['1', '2', '3'])
+      )
+      allow(instance_terra).to(
         receive(:apply)
           .and_raise(RubyTerraform::Errors::ExecutionError)
       )
-
-      get :update, format: :json
+      expect do
+        get :update, format: :json
+      end.to raise_exception(RubyTerraform::Errors::ExecutionError)
     end
 
     it 'writes error in the log' do
       allow(ruby_terraform.configuration).to(
         receive(:stderr)
           .and_return(StringIO.new('Something went wrong'))
+      )
+      allow(controller).to(
+        receive(:update_terraform_progress)
+          .and_return('progress')
       )
 
       get :send_current_status, format: :json
@@ -65,6 +84,11 @@ RSpec.describe DeploysController, type: :controller do
           )
       )
 
+      allow(controller).to(
+        receive(:update_terraform_progress)
+          .and_return('progress')
+      )
+
       allow(ruby_terraform).to receive(:apply)
 
       get :send_current_status, format: :json
@@ -77,6 +101,11 @@ RSpec.describe DeploysController, type: :controller do
 
       allow(Terraform).to receive(:stderr).and_return(StringIO.new("Error\n"))
       allow(Terraform).to receive(:stdout).and_return(StringIO.new)
+
+      allow(controller).to(
+        receive(:update_terraform_progress)
+          .and_return('progress')
+      )
 
       get :send_current_status, format: :json
 
@@ -115,5 +144,31 @@ RSpec.describe DeploysController, type: :controller do
         include('Error: Terraform destroy has failed.')
       )
     end
+  end
+
+  it 'updates the terraform progress' do
+    KeyValue.set(:planned_resources_count, 10)
+    progress = example.send(:update_terraform_progress, deploy_output, nil)
+
+    expect(progress).to eq(
+      'infra-bar' => {
+        progress: 50,
+        text:     'Creating resources...',
+        success:  true
+      }
+    )
+  end
+
+  it 'updates the terraform progress with finished' do
+    KeyValue.set(:planned_resources_count, 5)
+    progress = example.send(:update_terraform_progress, deploy_output, nil)
+
+    expect(progress).to eq(
+      'infra-bar' => {
+        progress: 100,
+        text:     'Finished',
+        success:  true
+      }
+    )
   end
 end

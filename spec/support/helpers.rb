@@ -58,6 +58,14 @@ module Helpers
     plan.gsub('$VERSION', terraform_version)
   end
 
+  def nested_plan_fixture_json
+    File.read(Rails.root.join('spec', 'fixtures', 'nested_plan.json'))
+  end
+
+  def deploy_output
+    File.read(Rails.root.join('spec', 'fixtures', 'deploy.txt'))
+  end
+
   def metadata_fixture(name)
     File.read(Rails.root.join('spec', 'fixtures', 'metadata', name))
   end
