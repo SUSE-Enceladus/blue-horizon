@@ -214,9 +214,9 @@ class Terraform
     resources = []
     child_resources.each do |value|
       if value.key? 'resources'
-        resources |= value['resources'].filter_map do |resource|
+        resources |= value['resources'].map do |resource|
           resource if resource['mode'] == 'managed'
-        end
+        end.compact
       end
       if value.key? 'child_modules'
         resources |= get_child_resources(value['child_modules'])
