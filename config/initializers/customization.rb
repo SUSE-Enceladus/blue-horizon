@@ -49,3 +49,9 @@ end
 require 'fileutils'
 
 FileUtils.mkdir_p(Rails.configuration.x.source_export_dir)
+
+helpers_filepath = Rails.root.join('vendor', 'lib', 'custom_helpers.rb')
+if File.exist?(helpers_filepath)
+  require helpers_filepath
+  ActiveSupport.on_load(:action_view) { include CustomHelpers }
+end

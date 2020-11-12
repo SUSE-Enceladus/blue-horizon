@@ -147,6 +147,12 @@ To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` 
 
 Any view or partial view (see `app/views`) can be overridden with an application-specific view. Set the configuration option `"override_views": true`, then copy the original to `vendor/views`, (e.g. `app/views/plans/_plan.haml` to `vendor/views/plans/_plan.haml`) and make your customizations in the copy.
 
+#### View helpers
+
+Any custom helper methods required by custom views should be defined as methods of the `CustomHelpers` module, in the file `vendor/lib/custom_helpers.rb`. If this file is present, the helpers will be loaded and available to the view rendering pipeline.
+
+⚠ *Please be careful of naming conflicts, as all helpers are effectively in the same namespace.*
+
 #### Top menu items
 
 A a group of custom top-menu links can be added to application views. If the links use *terraform* outputs, they will only be enabled on the `/wrapup` (*Next steps*) page. Links may open in the same browser context, or request a new tab/window.
