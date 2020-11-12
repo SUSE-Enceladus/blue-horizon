@@ -11,9 +11,8 @@ class DeploysController < ApplicationController
       no_color:     true
     }
     terra = Terraform.new
-    # rubocop:disable Style/ClassVars
-    @@planned_resources = terra.get_planned_resources.count
-    # rubocop:enable Style/ClassVars
+    planned_resources = terra.get_planned_resources.count
+    KeyValue.set(:planned_resources_count, planned_resources)
     terra.apply(@apply_args)
     logger.info('Deploy finished.')
   end
@@ -78,13 +77,14 @@ class DeploysController < ApplicationController
   def update_terraform_progress(content, error)
     progress = {}
     created_resources = content.scan(/Creation complete after/).size
-    text = if created_resources == @@planned_resources
+    planned_resources_count = KeyValue.get(:planned_resources_count)
+    text = if created_resources == planned_resources_count
       t('deploy.finished')
     else
       t('deploy.creating')
     end
     progress['infra-bar'] = {
-      progress: created_resources * 100 / @@planned_resources,
+      progress: created_resources * 100 / planned_resources_count,
       text:     text,
       success:  error.nil? ? true : false
     }
