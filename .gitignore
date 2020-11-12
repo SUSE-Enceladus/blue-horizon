@@ -17,6 +17,8 @@ public/dev-assets/*
 vendor/customization.json
 vendor/data/*
 !vendor/data/.keep
+vendor/lib/*
+!vendor/lib/.keep
 vendor/locales/*
 !vendor/locales/.keep
 vendor/sources/*
