@@ -54,14 +54,19 @@ module ApplicationHelper
     }
     render_options = {
       filter_html: true,
-      no_images:   true,
+      no_images:   false,
       no_styles:   true
     }
     render_options[:escape_html] = true if escape_html
 
+    # Get assets path
+    text_with_assets = text.gsub(/"asset_path=(.*?)"/) do
+      asset_path("#{$1}")
+    end
+
     # Redcarpet doesn't remove HTML comments even with `filter_html: true`
     # https://github.com/vmg/redcarpet/issues/692
-    uncommented_text = text.gsub(/<!--(.*?)-->/, '')
+    uncommented_text = text_with_assets.gsub(/<!--(.*?)-->/, '')
 
     markdown = Redcarpet::Markdown.new(
       Redcarpet::Render::HTML.new(render_options),

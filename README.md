@@ -147,6 +147,18 @@ To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` 
 
 Any view or partial view (see `app/views`) can be overridden with an application-specific view. Set the configuration option `"override_views": true`, then copy the original to `vendor/views`, (e.g. `app/views/plans/_plan.haml` to `vendor/views/plans/_plan.haml`) and make your customizations in the copy.
 
+### Images in markdown
+
+To add local images in markdown, follow the next syntax (in the `custom-en.yml` for example):
+
+```
+# Image in vendor/assets/images/local.png
+![image]("asset_path=local.png")
+
+# Or in html tags
+<img src="asset_path=local.png" width="100" heigh="100">
+```
+
 #### Top menu items
 
 A a group of custom top-menu links can be added to application views. If the links use *terraform* outputs, they will only be enabled on the `/wrapup` (*Next steps*) page. Links may open in the same browser context, or request a new tab/window.
