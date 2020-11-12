@@ -45,6 +45,11 @@
             - sidebar_menu_items.each do |key|
               = render('layouts/sidebar_menu_item', path_key: key)
     %section.content#content
+      - if Rails.configuration.x.top_menu_items.present?
+        %div.submenu
+          %nav.main-submenu.visible
+            %a.submenu-item.selected{ href: '#' }= t('menu.deploy')
+            = top_menu_items(@outputs)
       %div.container
         = bootstrap_flash
         = yield

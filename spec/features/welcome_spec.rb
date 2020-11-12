@@ -22,4 +22,32 @@ describe 'welcome', type: :feature do
     visit('/')
     expect(page).to have_current_path(welcome_path)
   end
+
+  context 'with customized top menu items' do
+    before do
+      Rails.configuration.x.top_menu_items = [
+        {
+          key: 'monitor',
+          url: '%{monitoring_url}'
+        }.with_indifferent_access
+      ]
+
+      visit('/welcome')
+    end
+
+    after do
+      Rails.configuration.x.top_menu_items = nil
+    end
+
+    it 'shows the `deploy` menu' do
+      selector = '.submenu .main-submenu.visible a.submenu-item.selected'
+      expect(page).to have_selector(selector)
+      expect(find(selector)).to have_content('Deploy')
+    end
+
+    it 'includes disabled custom menu items' do
+      expect(find('a.submenu-item.disabled#monitor')).to have_content('Monitor')
+      expect(page).to have_link('Monitor', href: '#')
+    end
+  end
 end
