@@ -147,6 +147,10 @@ To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` 
 
 Any view or partial view (see `app/views`) can be overridden with an application-specific view. Set the configuration option `"override_views": true`, then copy the original to `vendor/views`, (e.g. `app/views/plans/_plan.haml` to `vendor/views/plans/_plan.haml`) and make your customizations in the copy.
 
+### Styles customization
+
+`vendor/assets/stylesheets/custom.[s]css` can be modified to add customized styles to the application.
+
 #### Top menu items
 
 A a group of custom top-menu links can be added to application views. If the links use *terraform* outputs, they will only be enabled on the `/wrapup` (*Next steps*) page. Links may open in the same browser context, or request a new tab/window.

@@ -21,6 +21,9 @@ vendor/locales/*
 !vendor/locales/.keep
 vendor/sources/*
 !vendor/sources/.keep
+vendor/assets/stylesheets/*
+!vendor/assets/stylesheets/custom.css
+!vendor/assets/stylesheets/custom.scss
 vendor/assets/images/*
 !vendor/assets/images/.keep
 vendor/views/*
