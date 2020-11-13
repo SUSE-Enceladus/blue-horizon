@@ -1,0 +1,330 @@
+{
+  "format_version": "0.1",
+  "terraform_version": "0.13.4",
+  "variables": {
+  },
+  "planned_values": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "tls_private_key.salt_execution_ssh_keys",
+          "mode": "managed"
+        }
+      ],
+      "child_modules": [
+        {
+          "resources": [
+            {
+              "address": "module.bluehorizon.azurerm_network_security_group.mysecgroup",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_resource_group.myrg[0]",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_route_table.myroutes",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_storage_account.mytfstorageacc",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_subnet.mysubnet[0]",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_subnet_network_security_group_association.mysubnet",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_subnet_route_table_association.mysubnet",
+              "mode": "managed"
+            },
+            {
+              "address": "module.bluehorizon.azurerm_virtual_network.mynet[0]",
+              "mode": "managed"
+            }
+          ],
+          "address": "module.bluehorizon",
+          "child_modules": [
+            {
+              "resources": [
+                {
+                  "address": "module.bluehorizon.module.local_execution.null_resource.pre_execution[0]",
+                  "mode": "managed"
+                }
+              ],
+              "address": "module.bluehorizon.module.local_execution"
+            },
+            {
+              "resources": [
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_availability_set.hana-availability-set[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb.hana-load-balancer[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_backend_address_pool.hana-load-balancer[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_probe.hana-load-balancer[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30013\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30014\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30015\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30017\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30040\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30041\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hana-lb-rules[\"30042\"]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_lb_rule.hanadb_exporter[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_network_interface.hana[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_network_interface.hana[1]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_network_interface_backend_address_pool_association.hana[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_network_interface_backend_address_pool_association.hana[1]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_virtual_machine.hana[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.azurerm_virtual_machine.hana[1]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.data.azurerm_network_interface.hana[0]",
+                  "mode": "data"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.data.azurerm_network_interface.hana[1]",
+                  "mode": "data"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.null_resource.hana_node_provisioner[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.hana_node.null_resource.hana_node_provisioner[1]",
+                  "mode": "managed"
+                }
+              ],
+              "address": "module.bluehorizon.module.hana_node",
+              "child_modules": [
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.hana_node.module.hana_on_destroy.null_resource.on_destroy[0]",
+                      "mode": "managed"
+                    },
+                    {
+                      "address": "module.bluehorizon.module.hana_node.module.hana_on_destroy.null_resource.on_destroy[1]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.hana_node.module.hana_on_destroy"
+                },
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.hana_node.module.hana_provision.null_resource.provision[0]",
+                      "mode": "managed"
+                    },
+                    {
+                      "address": "module.bluehorizon.module.hana_node.module.hana_provision.null_resource.provision[1]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.hana_node.module.hana_provision"
+                }
+              ]
+            },
+            {
+              "resources": [
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_network_interface.bastion[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_network_security_group.bastion[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_network_security_rule.grafana[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_public_ip.bastion[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_subnet.bastion[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_subnet_network_security_group_association.bastion[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.azurerm_virtual_machine.bastion[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.data.azurerm_public_ip.bastion[0]",
+                  "mode": "data"
+                },
+                {
+                  "address": "module.bluehorizon.module.bastion.null_resource.bastion_provisioner[0]",
+                  "mode": "managed"
+                }
+              ],
+              "address": "module.bluehorizon.module.bastion",
+              "child_modules": [
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.bastion.module.bastion_provision.null_resource.provision[0]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.bastion.module.bastion_provision"
+                },
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.bastion.module.bastion_on_destroy.null_resource.on_destroy[0]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.bastion.module.bastion_on_destroy"
+                }
+              ]
+            },
+            {
+              "resources": [
+                {
+                  "address": "module.bluehorizon.module.iscsi_server.azurerm_network_interface.iscsisrv[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.iscsi_server.azurerm_virtual_machine.iscsisrv[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.iscsi_server.data.azurerm_network_interface.iscsisrv[0]",
+                  "mode": "data"
+                },
+                {
+                  "address": "module.bluehorizon.module.iscsi_server.null_resource.iscsi_provisioner[0]",
+                  "mode": "managed"
+                }
+              ],
+              "address": "module.bluehorizon.module.iscsi_server",
+              "child_modules": [
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.iscsi_server.module.iscsi_on_destroy.null_resource.on_destroy[0]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.iscsi_server.module.iscsi_on_destroy"
+                },
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.iscsi_server.module.iscsi_provision.null_resource.provision[0]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.iscsi_server.module.iscsi_provision"
+                }
+              ]
+            },
+            {
+              "resources": [
+                {
+                  "address": "module.bluehorizon.module.monitoring.azurerm_network_interface.monitoring[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.monitoring.azurerm_virtual_machine.monitoring[0]",
+                  "mode": "managed"
+                },
+                {
+                  "address": "module.bluehorizon.module.monitoring.data.azurerm_network_interface.monitoring[0]",
+                  "mode": "data"
+                },
+                {
+                  "address": "module.bluehorizon.module.monitoring.null_resource.monitoring_provisioner[0]",
+                  "mode": "managed"
+                }
+              ],
+              "address": "module.bluehorizon.module.monitoring",
+              "child_modules": [
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.monitoring.module.monitoring_on_destroy.null_resource.on_destroy[0]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.monitoring.module.monitoring_on_destroy"
+                },
+                {
+                  "resources": [
+                    {
+                      "address": "module.bluehorizon.module.monitoring.module.monitoring_provision.null_resource.provision[0]",
+                      "mode": "managed"
+                    }
+                  ],
+                  "address": "module.bluehorizon.module.monitoring.module.monitoring_provision"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

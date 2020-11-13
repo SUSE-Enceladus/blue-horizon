@@ -50,5 +50,12 @@ i.eos-icons.no-trailing-space {
   margin-right: 0;
 }
 
+.progress span{
+    display: block;
+    position: absolute;
+    width: 90%;
+    color: black;
+}
+
 // A placeholder for custom CSS.
 // This will be loaded last, and overrride other content.
