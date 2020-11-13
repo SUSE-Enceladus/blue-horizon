@@ -25,6 +25,8 @@ vendor/sources/*
 !vendor/sources/.keep
 vendor/assets/images/*
 !vendor/assets/images/.keep
+vendor/assets/stylesheets/*
+!vendor/assets/stylesheets/.keep
 vendor/views/*
 !vendor/views/.keep
 
