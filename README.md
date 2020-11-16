@@ -143,6 +143,12 @@ See `config/initializers/customization.rb` for an explanation of the available k
 
 To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` with the full path of the customization JSON file to load.
 
+#### Style
+
+`vendor/assets/stylesheets/custom.scss` can be added to provide custom styles (CSS, SCSS) to the application.
+
+💡 *[SCSS](https://sass-lang.com/guide) is a supercet of CSS, so valid CSS is valid SCSS.*
+
 #### View overrides
 
 Any view or partial view (see `app/views`) can be overridden with an application-specific view. Set the configuration option `"override_views": true`, then copy the original to `vendor/views`, (e.g. `app/views/plans/_plan.haml` to `vendor/views/plans/_plan.haml`) and make your customizations in the copy.
