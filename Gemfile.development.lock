@@ -89,8 +89,6 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
-    eos-icons-font (4.3.1)
-      railties (>= 3.1)
     erubi (1.9.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -320,7 +318,6 @@ DEPENDENCIES
   cloud-instancetype (~> 1.1)
   codecov
   dotenv-rails
-  eos-icons-font
   factory_bot_rails
   faker!
   haml-rails (~> 2.0)
