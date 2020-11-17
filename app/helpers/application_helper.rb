@@ -54,7 +54,7 @@ module ApplicationHelper
     }
     render_options = {
       filter_html: false,
-      no_images:   true,
+      no_images:   false,
       no_styles:   true
     }
     render_options[:escape_html] = true if escape_html
