@@ -123,3 +123,4 @@ en:
     infra_label: "Infrastructure creation"
     creating: "Creating resources..."
     finished: "Finished"
+    failed: "Failed"

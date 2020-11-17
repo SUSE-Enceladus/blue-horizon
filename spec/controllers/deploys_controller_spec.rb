@@ -159,6 +159,28 @@ RSpec.describe DeploysController, type: :controller do
     )
   end
 
+  it 'updates the terraform progress blank content' do
+    KeyValue.set(:planned_resources_count, 10)
+    progress = example.send(:update_terraform_progress, '', nil)
+    expect(progress).to eq({})
+
+    progress = example.send(:update_terraform_progress, nil, nil)
+    expect(progress).to eq({})
+  end
+
+  it 'updates the terraform progress with failed' do
+    KeyValue.set(:planned_resources_count, 5)
+    progress = example.send(:update_terraform_progress, deploy_output, 'error')
+
+    expect(progress).to eq(
+      'infra-bar' => {
+        progress: 100,
+        text:     'Failed',
+        success:  false
+      }
+    )
+  end
+
   it 'updates the terraform progress with finished' do
     KeyValue.set(:planned_resources_count, 5)
     progress = example.send(:update_terraform_progress, deploy_output, nil)
