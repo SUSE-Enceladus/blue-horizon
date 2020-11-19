@@ -83,7 +83,7 @@ class DeploysController < ApplicationController
 
     created_resources = content.scan(/Creation complete after/).size
     planned_resources_count = KeyValue.get(:planned_resources_count)
-    text = if !error.nil?
+    text = if error.present?
       t('deploy.failed')
     elsif created_resources == planned_resources_count
       t('deploy.finished')

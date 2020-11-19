@@ -93,14 +93,20 @@ RSpec.describe DeploysController, type: :controller do
 
       get :send_current_status, format: :json
 
+      expect(controller).to(
+        have_received(:update_terraform_progress)
+          .with('hello world! Apply complete!', nil)
+            .at_least(:once)
+      )
+
       expect(response).to be_success
     end
 
     it 'can show error output when deploy fails' do
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
 
-      allow(Terraform).to receive(:stderr).and_return(StringIO.new("Error\n"))
-      allow(Terraform).to receive(:stdout).and_return(StringIO.new)
+      allow(Terraform).to receive(:stderr).and_return(StringIO.new('Error'))
+      allow(Terraform).to receive(:stdout).and_return(StringIO.new('Creating'))
 
       allow(controller).to(
         receive(:update_terraform_progress)
@@ -108,6 +114,12 @@ RSpec.describe DeploysController, type: :controller do
       )
 
       get :send_current_status, format: :json
+
+      expect(controller).to(
+        have_received(:update_terraform_progress)
+          .with('Creating', 'Error')
+            .at_least(:once)
+      )
 
       expect(response).to be_success
     end
