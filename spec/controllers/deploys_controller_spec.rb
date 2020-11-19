@@ -93,14 +93,20 @@ RSpec.describe DeploysController, type: :controller do
 
       get :send_current_status, format: :json
 
+      expect(controller).to(
+        have_received(:update_terraform_progress)
+          .with('hello world! Apply complete!', nil)
+            .at_least(:once)
+      )
+
       expect(response).to be_success
     end
 
     it 'can show error output when deploy fails' do
       allow(JSON).to receive(:parse).and_return(foo: 'bar')
 
-      allow(Terraform).to receive(:stderr).and_return(StringIO.new("Error\n"))
-      allow(Terraform).to receive(:stdout).and_return(StringIO.new)
+      allow(Terraform).to receive(:stderr).and_return(StringIO.new('Error'))
+      allow(Terraform).to receive(:stdout).and_return(StringIO.new('Creating'))
 
       allow(controller).to(
         receive(:update_terraform_progress)
@@ -108,6 +114,12 @@ RSpec.describe DeploysController, type: :controller do
       )
 
       get :send_current_status, format: :json
+
+      expect(controller).to(
+        have_received(:update_terraform_progress)
+          .with('Creating', 'Error')
+            .at_least(:once)
+      )
 
       expect(response).to be_success
     end
@@ -155,6 +167,28 @@ RSpec.describe DeploysController, type: :controller do
         progress: 50,
         text:     'Creating resources...',
         success:  true
+      }
+    )
+  end
+
+  it 'updates the terraform progress blank content' do
+    KeyValue.set(:planned_resources_count, 10)
+    progress = example.send(:update_terraform_progress, '', nil)
+    expect(progress).to eq({})
+
+    progress = example.send(:update_terraform_progress, nil, nil)
+    expect(progress).to eq({})
+  end
+
+  it 'updates the terraform progress with failed' do
+    KeyValue.set(:planned_resources_count, 5)
+    progress = example.send(:update_terraform_progress, deploy_output, 'error')
+
+    expect(progress).to eq(
+      'infra-bar' => {
+        progress: 100,
+        text:     'Failed',
+        success:  false
       }
     )
   end

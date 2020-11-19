@@ -29,7 +29,10 @@ class DeploysController < ApplicationController
       success = content.include? 'Apply complete!'
     end
 
-    progress = update_terraform_progress(content, error)
+    progress = {}
+    if Terraform.stdout.is_a?(StringIO)
+      progress = update_terraform_progress(Terraform.stdout.string, error)
+    end
 
     if success
       write_output(content, success)
@@ -76,9 +79,13 @@ class DeploysController < ApplicationController
 
   def update_terraform_progress(content, error)
     progress = {}
+    return progress if content.blank?
+
     created_resources = content.scan(/Creation complete after/).size
     planned_resources_count = KeyValue.get(:planned_resources_count)
-    text = if created_resources == planned_resources_count
+    text = if error.present?
+      t('deploy.failed')
+    elsif created_resources == planned_resources_count
       t('deploy.finished')
     else
       t('deploy.creating')
