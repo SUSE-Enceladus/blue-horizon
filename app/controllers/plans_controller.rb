@@ -5,14 +5,21 @@ require 'fileutils'
 
 class PlansController < ApplicationController
   include FileUtils
+  before_action :variables
 
   def show
     return unless helpers.can(deploy_path)
 
-    Terraform.new.show
-    plan_raw_json = Terraform.stdout.string
-    @plan = JSON.parse(plan_raw_json, object_class: OpenStruct)
-    @plan.raw_json = plan_raw_json
+    @trigger_update = (@variables.updated_at > Terraform.last_action_at)
+    @plan = ''
+
+    unless @trigger_update
+      Terraform.new.show
+      plan_raw_json = Terraform.stdout.string
+      @plan = JSON.parse(plan_raw_json, object_class: OpenStruct)
+      @plan.raw_json = plan_raw_json
+      @trigger_update = @plan.blank?
+    end
 
     respond_to do |format|
       format.html
@@ -49,9 +56,8 @@ class PlansController < ApplicationController
 
   private
 
-  def export_vars
-    variables = Variable.load
-    variables.export
+  def variables
+    @variables ||= Variable.load
   end
 
   def export_path
@@ -61,7 +67,7 @@ class PlansController < ApplicationController
   end
 
   def read_exported_vars
-    export_vars
+    @variables.export
     export_var_path = export_path
     @exported_vars = nil
     if File.exist?(export_var_path)

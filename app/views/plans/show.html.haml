@@ -11,9 +11,6 @@
     = link_to variables_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
       %i.eos-icons fast_rewind
       = t('sidebar.variables')
-    = link_to(plan_path, id: 'update-plan', class: "btn btn-outline-primary", data: { method: :put } ) do
-      %i.eos-icons refresh
-      = t('action.plan')
     = link_to plan_path(format: :json), class: "btn btn-outline-primary #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
       %i.eos-icons  get_app
       = t('sidebar.download_plan')
@@ -25,15 +22,13 @@
 - content_for :page_javascript do
   :javascript
     $(function(){
-      $("#update-plan").on("click", function(){
+      if (#{ @trigger_update }) {
         $("#plan").hide({
           complete: function(){
             $("#loading").show();
           }
         });
-      });
-
-      if (#{ @plan.blank? }) {
-        $('#update-plan')[0].click();
+        var token = $('meta[name=csrf-token]').attr('content');
+        $.form('/plan', { 'authenticity_token': token, '_method': 'put' }).submit();
       }
     });
