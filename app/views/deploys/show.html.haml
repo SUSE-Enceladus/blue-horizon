@@ -19,7 +19,6 @@
       = t('rollback')
   %div.float-right.btn-group.steps-container
     = link_to plan_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do
-      %i.eos-icons fast_rewind
       = t('sidebar.plan')
     = link_to deploy_path, class: "btn btn-outline-primary", id: "submit-deploy", title: t('tooltips.run'), data: { method: :put, remote: true, toggle: 'tooltip', disable_with: t('running') } do
       %i.eos-icons cloud_upload
