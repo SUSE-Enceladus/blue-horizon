@@ -50,6 +50,14 @@ i.eos-icons.no-trailing-space {
   margin-right: 0;
 }
 
+.input-group-append.peek, .input-group-append.unpeek {
+    cursor: pointer;
+    position: absolute;
+    top: 6px;
+    z-index: 1000;
+    right: -6px;
+}
+
 .progress span{
     display: block;
     position: absolute;

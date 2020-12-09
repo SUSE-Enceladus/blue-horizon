@@ -15,10 +15,8 @@
       - else
         %input.form-control{ type: fieldtype, name: "variables[#{key}]", value: value, required: @variables.required?(key), pattern: @variables.pattern(key), title: @variables.title(key) }
       - if fieldtype == 'password'
-        %button.btn.btn-sm.btn-secondary.peek{ id: "peek_#{key}", type: 'button', data: { toggle: 'tooltip' }, title: t(:password_show) }
-          &nbsp;
+        %div.input-group-append.peek{ id: "peek_#{key}", data: { toggle: 'tooltip' }, title: t(:password_show) }
           %i.eos-icons.eos-24 visibility
-        %button.btn.btn-sm.btn-secondary.unpeek{ id: "unpeek_#{key}",type: 'button', data: { toggle: 'tooltip' }, title: t(:password_hide), style: "display: none;"}
-          &nbsp;
+        %div.input-group-append.unpeek{ id: "unpeek_#{key}",data: { toggle: 'tooltip' }, title: t(:password_hide), style: "display: none;"}
           %i.eos-icons.eos-24 visibility_off
     = formatted_description(description)
