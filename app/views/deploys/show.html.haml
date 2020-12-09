@@ -24,7 +24,6 @@
       %i.eos-icons cloud_upload
       = t('apply')
     = link_to wrapup_path, class: "btn btn-primary #{'disabled' unless can(wrapup_path)}", data: { toggle: 'tooltip' } do
-      %i.eos-icons fast_forward
       = t('sidebar.wrapup')
 %p.clearfix
 - content_for :page_javascript do
