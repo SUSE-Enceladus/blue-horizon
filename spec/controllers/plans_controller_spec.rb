@@ -48,10 +48,6 @@ RSpec.describe PlansController, type: :controller do
   end
 
   context 'when not exporting' do
-    let(:ruby_terraform) { RubyTerraform }
-    let(:terra) { Terraform }
-    let(:instance_terra) { instance_double(Terraform) }
-
     before do
       allow(File).to receive(:exist?).and_return(false)
       allow(terra).to receive(:new).and_return(instance_terra)
@@ -65,12 +61,27 @@ RSpec.describe PlansController, type: :controller do
     end
   end
 
+  context 'when generating the plan' do
+    let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
+
+    before do
+      allow(terra).to receive(:new).and_return(instance_terra)
+      allow(instance_terra).to receive(:validate)
+      allow(instance_terra).to receive(:saved_plan_path)
+      allow(instance_terra).to receive(:plan).and_return('')
+    end
+
+    it 'redirects to showing the plan' do
+      put :update
+
+      expect(controller).to redirect_to action: :show
+    end
+  end
+
   context 'when showing the plan' do
     let(:file) { File }
     let(:file_write) { File }
     let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
-    let(:terra) { Terraform }
-    let(:instance_terra) { instance_double(Terraform) }
     let(:tfvars_file) { Variable.load.export_path }
 
     before do

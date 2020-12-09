@@ -208,6 +208,12 @@ class Terraform
     return resources
   end
 
+  def self.last_action_at
+    KeyValue.find('active_terraform_action')&.updated_at
+  rescue ActiveRecord::RecordNotFound
+    0
+  end
+
   private
 
   def get_child_resources(child_resources)
