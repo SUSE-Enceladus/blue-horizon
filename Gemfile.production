@@ -3,7 +3,6 @@
 source 'https://rubygems.org'
 
 gem 'active_link_to'
-gem 'eos-icons-font'
 gem 'cloud-instancetype', '~> 1.1'
 gem 'haml-rails', '~> 2.0'
 gem 'jbuilder', '~> 2.5'
