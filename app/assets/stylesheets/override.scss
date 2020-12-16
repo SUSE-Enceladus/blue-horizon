@@ -58,11 +58,15 @@ i.eos-icons.no-trailing-space {
     right: -6px;
 }
 
-.progress span{
+.progress span {
     display: block;
     position: absolute;
     width: 90%;
     color: black;
+}
+
+.steps-container .btn {
+  min-width: 8em;
 }
 
 // A placeholder for custom CSS.
