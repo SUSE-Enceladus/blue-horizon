@@ -8,7 +8,7 @@ class PlansController < ApplicationController
   before_action :variables
 
   def show
-    return unless helpers.can(deploy_path)
+    return unless helpers.can(plan_path)
 
     @trigger_update = (@variables.updated_at > Terraform.last_action_at)
     @plan = ''

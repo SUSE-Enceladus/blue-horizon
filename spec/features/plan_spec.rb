@@ -11,13 +11,16 @@ describe 'planning', type: :feature do
 
   context 'without a current plan' do
     let(:expected_plan_json) { current_plan_fixture_json }
+    let(:terra) { Terraform }
 
     before do
+      allow(terra).to receive(:last_action_at).and_return(-1)
       visit(plan_path)
     end
 
     it 'loads without a pre-generated plan' do
       expect(find('#plan')).to have_no_content
+      expect(page).to have_selector('#loading')
     end
   end
 
