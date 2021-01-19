@@ -117,14 +117,13 @@ RSpec.describe PlansController, type: :controller do
           )
       )
 
-      put :update, format: :js
+      put :update, format: :html
 
       expect(flash[:error]).to(
-        match(
-          message: /Failed while running 'plan'./,
-          output:  'foo'
-        )
+        match('Failed while running \'plan\'')
       )
+
+      expect(response.body).to have_content('foo')
     end
   end
 end
