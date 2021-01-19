@@ -147,10 +147,12 @@ RSpec.describe PlansController, type: :controller do
                      'created\\\\nby Terraform v0.12.26, which is newer than ' \
                      'current v0.12.24; upgrade to\\\\nTerraform v0.12.26 or ' \
                      'greater to work with this state.\\\\n\\\\n'
+      # rubocop:disable Style/StringLiterals
       error_message = "{\"error\":{\"message\":\"Show plan " \
                       "operation has failed\",\"output\":" \
                       "\"#{parsed_error}\"}}"
 
+      # rubocop:enable Style/StringLiterals
       allow(ruby_terraform.configuration).to(
         receive(:stderr)
           .and_return(
