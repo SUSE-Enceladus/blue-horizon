@@ -33,6 +33,7 @@ en:
   hello: "Hello world"
   save: "Save"
   required: "Required"
+  deploy: "Deploy"
   terraform_files: "terraform scripts and log"
   non_active_session: "Duplicate session!"
   session_reset: "The active session has been reset."
@@ -46,11 +47,12 @@ en:
   #options key is used to create a multi select input rather than normal "text"
   options_key: "options"
 
-  plan: "Plan"
   apply: "Apply"
   running: "Running..."
   action:
     reset_session: "Reset session"
+    affirm: "OK"
+    plan: "Update plan"
 
   sidebar:
     welcome: "Welcome"
@@ -64,10 +66,17 @@ en:
     download: "Download"
     simple: "Start setup"
 
+  menu:
+    deploy: "Deploy"
+    monitor: "Monitor"
+    maintain: "Maintain"
+    tune: "Tune"
+
   flash:
     export_failure: "One or more sources or variables failed to export!"
     unauthorized: "Sorry, you can't do that, yet."
     terraform_is_running: "You cannot make any changes while terraform is running."
+    invalid_variables: "Variable definitions are invalid! Please check the deployment scripts."
 
   tooltips:
     prior_step: "Go back without saving changes"
@@ -76,17 +85,20 @@ en:
     start_action: "Use your saved data to trigger the next action"
     run: "Execute the terraform action"
     download_plan: "Get the current plan"
+    attached: "File attached"
+    loading: "Loading..."
 
   page_title:
     plan: "Plan your deployment"
     deploy: "Deploy your cluster"
     wrapup: "Next steps after deployment"
+    source: "Working directly with deployment source scripts"
 
   page_subtitle:
     plan_info: |
-      In this step you can generate an execution plan. The execution plan shows what _terraform_ will do when you call deploy. This lets you avoid any surprises when _terraform_ deploys.
+      In this step an execution plan is generated. The plan shows what *terraform* will do when you deploy, so you know exactly what to expect.
     deploy_info: |
-      In this step you can apply your plan. This may take some time. The `terraform` log will display below as it is generated.
+      In this step you can apply your plan. This may take some time. The *terraform* log will display below as it is generated.
     wrapup_info: |
       Your application has been deployed, here's how to use it.
       [Download](/download) your results and follow the instructions below.
@@ -98,3 +110,17 @@ en:
       Please switch back to the active session if possible. If not, you may reset the active session.
     label_active_session_ip: |
       Active session IP address: `%{ip}`
+    using_source: |
+      While this deployment application is designed to quickly get you up and running, we understand that sometimes more flexibility is required.
+
+      The *terraform* source scripts, for performing this deployment locally, are available to you at the following repository:
+
+  variable_groups:
+    ungrouped: Additional data
+
+  deploy:
+    details: "Installation details"
+    infra_label: "Infrastructure creation"
+    creating: "Creating resources..."
+    finished: "Finished"
+    failed: "Failed"

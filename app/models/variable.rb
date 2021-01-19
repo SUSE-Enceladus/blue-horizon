@@ -11,6 +11,7 @@ class Variable
   include Saveable
 
   DEFAULT_EXPORT_FILENAME = 'terraform.tfvars.json'
+  UNGROUPED = 'ungrouped'
 
   def initialize(source_contents)
     source_contents = [source_contents].flatten
@@ -19,7 +20,7 @@ class Variable
       variables = JSON.parse(source_content)['variable']
       @plan.merge!(variables) if variables
     end
-    @plan.keys.each do |key|
+    @plan.each_key do |key|
       self.class.send(:attr_accessor, key)
       instance_variable_set(
         "@#{key}",
@@ -30,10 +31,18 @@ class Variable
 
   def self.load
     terra = Terraform.new
-    validation = terra.validate(true, true)
+    validation = terra.validate(true, file: true)
     return { error: validation } if validation
 
     new(Source.variables.pluck(:content))
+  end
+
+  def self.file_regex
+    /_file$/i
+  end
+
+  def keys
+    @plan.keys
   end
 
   def type(key)
@@ -61,6 +70,38 @@ class Variable
 
   def required?(key)
     !(/optional/i =~ @plan[key]['description'])
+  end
+
+  def pattern(key)
+    %r{\[pattern:/(?<pattern>.+):?/\]}.match(
+      @plan[key]['description']
+    )[:pattern]
+  rescue StandardError
+    '.*'
+  end
+
+  def title(key)
+    /\[extra_information:(?<title>.+?)\]/.match(
+      @plan[key]['description']
+    )[:title]
+  rescue StandardError
+    ''
+  end
+
+  def group(key)
+    /\[group:(?<group>.+?)\]/.match(@plan[key]['description'])[:group]
+  rescue StandardError
+    UNGROUPED
+  end
+
+  def by_groups
+    result = {}
+    attributes.each do |key, value|
+      group = self.group(key)
+      result[group] ||= {}
+      result[group][key] = value
+    end
+    return result
   end
 
   def attributes
@@ -99,7 +140,7 @@ class Variable
   end
 
   def save!
-    @plan.keys.each do |key|
+    @plan.each_key do |key|
       prefixed_set(key, instance_variable_get("@#{key}"))
     end
   end
@@ -125,7 +166,17 @@ class Variable
     when 'map'
       Hash[value.collect { |k, v| [k.to_s, v.to_s] }]
     else
-      value.to_s
+      handle_upload(key, value)
     end
+  end
+
+  def handle_upload(key, value)
+    return value.to_s unless value.is_a?(ActionDispatch::Http::UploadedFile)
+
+    Source.where(filename: instance_variable_get("@#{key}")).destroy_all
+    source = Source.find_or_create_by(filename: value.original_filename)
+    source.content = value.read
+    source.save!
+    value.original_filename
   end
 end

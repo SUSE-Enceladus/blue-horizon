@@ -4,18 +4,9 @@ require 'rails_helper'
 
 RSpec.describe PlansController, type: :controller do
   let(:json_instance) { JSON }
-  let!(:random_path) { random_export_path }
   let(:ruby_terraform) { RubyTerraform }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
-
-  before do
-    FileUtils.mkdir_p(random_path)
-  end
-
-  after do
-    FileUtils.rm_rf(random_path)
-  end
 
   context 'when preparing terraform' do
     let(:variable_instance) { Variable.new('{}') }
@@ -38,7 +29,7 @@ RSpec.describe PlansController, type: :controller do
 
       ruby_terraform.configure do |config|
         config.logger do |log_device|
-          expect(log_device.targets).to eq([IO::STDOUT, log_file])
+          expect(log_device.targets).to eq([$stdout, log_file])
         end
       end
       expect(File).to exist(Rails.configuration.x.terraform_log_filename)
@@ -48,7 +39,7 @@ RSpec.describe PlansController, type: :controller do
       allow(variable_instance).to receive(:load)
       allow(controller).to receive(:read_exported_sources)
       allow(json_instance).to receive(:parse)
-      allow(instance_terra).to receive(:validate).with(true, true)
+      allow(instance_terra).to receive(:validate).with(true, file: true)
 
       put :update
 
@@ -57,14 +48,10 @@ RSpec.describe PlansController, type: :controller do
   end
 
   context 'when not exporting' do
-    let(:ruby_terraform) { RubyTerraform }
-    let(:terra) { Terraform }
-    let(:instance_terra) { instance_double(Terraform) }
-
     before do
       allow(File).to receive(:exist?).and_return(false)
       allow(terra).to receive(:new).and_return(instance_terra)
-      allow(instance_terra).to receive(:validate).with(true, true)
+      allow(instance_terra).to receive(:validate).with(true, file: true)
     end
 
     it 'no exported variables' do
@@ -74,19 +61,34 @@ RSpec.describe PlansController, type: :controller do
     end
   end
 
+  context 'when generating the plan' do
+    let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
+
+    before do
+      allow(terra).to receive(:new).and_return(instance_terra)
+      allow(instance_terra).to receive(:validate)
+      allow(instance_terra).to receive(:saved_plan_path)
+      allow(instance_terra).to receive(:plan).and_return('')
+    end
+
+    it 'redirects to showing the plan' do
+      put :update
+
+      expect(controller).to redirect_to action: :show
+    end
+  end
+
   context 'when showing the plan' do
     let(:file) { File }
     let(:file_write) { File }
     let(:plan_file) { Rails.root.join(random_path, 'current_plan') }
-    let(:terra) { Terraform }
-    let(:instance_terra) { instance_double(Terraform) }
     let(:tfvars_file) { Variable.load.export_path }
 
     before do
       allow(Logger::LogDevice).to receive(:new)
       allow(controller).to receive(:cleanup)
-      allow(JSON).to receive(:pretty_generate)
-      allow(JSON).to receive(:parse).and_return(blue: 'horizon')
+
+      allow(JSON).to receive(:parse).and_return(OpenStruct.new(blue: 'horizon'))
     end
 
     it 'allows to download the plan' do
@@ -103,7 +105,10 @@ RSpec.describe PlansController, type: :controller do
     it 'handles rubyterraform exception' do
       allow(ruby_terraform).to(
         receive(:plan)
-          .and_raise(RubyTerraform::Errors::ExecutionError)
+          .and_raise(
+            RubyTerraform::Errors::ExecutionError,
+            'Failed while running \'plan\'.'
+          )
       )
       allow(ruby_terraform.configuration).to(
         receive(:stderr)
@@ -116,7 +121,7 @@ RSpec.describe PlansController, type: :controller do
 
       expect(flash[:error]).to(
         match(
-          message: /Plan operation has failed/,
+          message: /Failed while running 'plan'./,
           output:  'foo'
         )
       )
@@ -142,9 +147,9 @@ RSpec.describe PlansController, type: :controller do
                      'created\\\\nby Terraform v0.12.26, which is newer than ' \
                      'current v0.12.24; upgrade to\\\\nTerraform v0.12.26 or ' \
                      'greater to work with this state.\\\\n\\\\n'
-      error_message = "{\n  \"error\": {\n    \"message\": \"Show plan " \
-                      "operation has failed\",\n    \"output\": " \
-                      "\"#{parsed_error}\"\n  }\n}"
+      error_message = "{\"error\":{\"message\":\"Show plan " \
+                      "operation has failed\",\"output\":" \
+                      "\"#{parsed_error}\"}}"
 
       allow(ruby_terraform.configuration).to(
         receive(:stderr)

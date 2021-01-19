@@ -8,7 +8,7 @@ $(function() {
       $(this).addClass("no-hover");
       $(".float-right .steps-container .btn").addClass("disabled");
       $(".list-group-flush a").addClass("disabled");
-      $(".eos-icon-loading").removeClass("hide");
+      $("#loading").show();
       $("a[data-toggle]").tooltip("hide");
       intervalId = setTimeout(function() {
         fetch_output(finished, intervalId);
@@ -29,10 +29,34 @@ $(function() {
       }
     })
     .bind("ajax:error", function() {
-      $(".eos-icons-loading").addClass("hide");
+      $("#loading").hide();
       clearTimeout(intervalId);
     });
 });
+
+function update_progress_bar(progress_data) {
+  Object.entries(progress_data).forEach(entry=>{
+    const [id, bar_data] = entry;
+    const bar_id = "#" + id;
+    if ("text" in bar_data) {
+      progress_text = bar_data.progress + "% - " + bar_data.text;
+    } else {
+      progress_text = bar_data.progress + "%";
+    }
+    $(bar_id).css("width", bar_data.progress + "%");
+    $(bar_id).find("span").html(progress_text);
+    if (bar_data.success) {
+      if (bar_data.progress < 100) {
+        $(bar_id).addClass("progress-bar-striped progress-bar-animated");
+      } else {
+        $(bar_id).removeClass("progress-bar-striped progress-bar-animated");
+      }
+    } else {
+      $(bar_id).removeClass("progress-bar-striped progress-bar-animated");
+      $(bar_id).addClass("bg-danger");
+    }
+  });
+}
 
 function fetch_output(finished, intervalId) {
   $.ajax({
@@ -41,18 +65,17 @@ function fetch_output(finished, intervalId) {
     dataType: "json",
     success: function(data) {
       if (data.error !== null) {
-        $(".eos-icon-loading").addClass("hide");
+        $("#loading").hide();
         // show rails flash message
         $("#error_message").text("Deploy operation has failed.");
         $("#flash").show();
         // show terraform error message in output section
         $("#output").text($("#output").text() + data.error);
         clearTimeout(intervalId);
-        $(".steps-container .btn").removeClass("disabled");
-        $(".list-group-flush a").removeClass("disabled");
-	$(".btn-danger").removeClass("disabled");
-        $(".eos-icon-loading").addClass("hide");
+        $(".steps-container .btn.disabled").removeClass("disabled");
+        $("#loading").hide();
       } else {
+        // update scrollable
         $(".pre-scrollable").html(data.new_html);
         var autoscroll = $("#deploy_log_autoscroll").prop("checked");
         if (autoscroll) {
@@ -63,11 +86,13 @@ function fetch_output(finished, intervalId) {
             fetch_output();
           }, 5000);
         } else {
-          $(".float-right .steps-container .btn").removeClass("disabled");
-          $(".list-group-flush a").removeClass("disabled");
-          $(".eos-icon-loading").addClass("hide");
-	  $(".btn-danger").addClass("disabled");
+          $(".steps-container .btn.disabled").removeClass("disabled");
+          $("#loading").hide();
         }
+      }
+      // update progress bar
+      if ("progress" in data) {
+        update_progress_bar(data.progress)
       }
     },
     error: function(data) {
@@ -75,10 +100,8 @@ function fetch_output(finished, intervalId) {
       if (endIndex == -1) endIndex = data.responseText.indexOf("\n");
       $("#error_message").text(data.responseText.substring(0, endIndex));
       $("#flash").show();
-      $(".steps-container .btn").removeClass("disabled");
-      $(".list-group-flush a").removeClass("disabled");
-      $(".eos-icon-loading").addClass("hide");
-      $(".btn-danger").removeClass("disabled");
+      $(".steps-container .btn.disabled").removeClass("disabled");
+      $("#loading").hide();
     }
   });
 

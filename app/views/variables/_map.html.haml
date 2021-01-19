@@ -6,30 +6,29 @@
     = required if @variables.required?(key)
   - map.each do |map_key, map_value|
     %div.input-group.mb-2
-      %div.input-group-prepend
-        %span.input-group-text
-          = map_key
-          \=
+      %span.input-group-text
+        = map_key
+        \=
       %input.form-control{ type: 'text', name: "variables[#{key}][#{map_key}]", value: map_value, required: true }
-      %div.input-group-append
-        %button.btn.btn-outline-danger.remove{ type: 'button', data: { toggle: 'tooltip' }, title: 'Remove' }
-          %i.eos-icons.md-18 remove
+      %button.btn.btn-sm.btn-outline-danger.remove{ type: 'button', data: { toggle: 'tooltip' }, title: 'Remove' }
+        &nbsp;
+        %i.eos-icons.eos-24 remove
   %div.input-group.mb-2{ id: "#{key}_new_form" }
     %input.form-control{ type: 'text', id: "#{key}_new_key", placeholder: 'key' }
+    %span.input-group-text =
     %input.form-control{ type: 'text', id: "#{key}_new_value", placeholder: 'value' }
-    %div.input-group-append
-      %button.btn.btn-outline-primary{ id: "#{key}_add_map", type: 'button', data: { toggle: 'tooltip' }, title: 'Add' }
-        %i.eos-icons.md-18 add
+    %button.btn.btn-sm.btn-outline-primary{ id: "#{key}_add_map", type: 'button', data: { toggle: 'tooltip' }, title: 'Add' }
+      &nbsp;
+      %i.eos-icons.eos-24 add
   = formatted_description(description)
   %div{id: "#{key}_template", style: 'display: none;' }
     %div.input-group.mb-2
-      %div.input-group-prepend
-        %span.input-group-text
-          {{map_key}} =
-      %input.form-control{ type: 'text', name: "variables[#{key}][{{map_key}}]", value: '{{map_value}}' }
-      %div.input-group-append
-        %button.btn.btn-outline-danger.remove{ type: 'button', data: { toggle: 'tooltip' }, title: 'Remove' }
-          %i.eos-icons.md-18 remove
+      %span.input-group-text
+        {{map_key}} =
+      %input.form-control{ type: 'text', name: "variables[#{key}][{{map_key}}]", required: true, value: '{{map_value}}' }
+      %button.btn.btn-sm.btn-outline-danger.remove{ type: 'button', data: { toggle: 'tooltip' }, title: 'Remove' }
+        &nbsp;
+        %i.eos-icons.eos-24 remove
 
 - content_for :page_javascript do
   :javascript
@@ -41,13 +40,24 @@
       $("##{key}_add_map").click(function(event){
         var new_key = $("##{key}_new_key");
         var new_value = $("##{key}_new_value");
-        var form = $("##{key}_new_form");
-        var new_entry = template.replace(/{{map_key}}/g, new_key.val());
-        new_entry = new_entry.replace(/{{map_value}}/g, new_value.val());
-        form.before(new_entry);
-        new_key.val('');
-        new_value.val('');
-        $("##{key}_new_key").focus();
+        new_key.prop('required', true);
+        new_value.prop('required', true);
+        if (new_key[0].validity.valid && new_value[0].validity.valid) {
+          var form = $("##{key}_new_form");
+          var new_entry = template.replace(/{{map_key}}/g, new_key.val());
+          new_entry = new_entry.replace(/{{map_value}}/g, new_value.val());
+          form.before(new_entry);
+          new_key.val('');
+          new_value.val('');
+          new_key.prop('required', false);
+          new_value.prop('required', false);
+          $("##{key}_new_key").focus();
+        } else {
+          setTimeout(function(){
+            new_key.prop('required', false);
+            new_value.prop('required', false);
+          }, 1500);
+        }
       });
       $("##{key}_new_key").on("keydown", function(event) {
         if (event.key == "Enter") {

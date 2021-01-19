@@ -1,7 +1,7 @@
 {
     "categories": {
         "General Purpose: D": {
-            "key": "General Purpose: D",
+            "name": "General Purpose: D",
             "description": "D-series VMs provide 2.4 GHz Intel Xeon® E5-2673 v3 (Haswell) processors, a higher memory-to-vCPU ratio, and a solid-state drive (SSD) for the temporary disk.",
             "features": [
                 "ACU: 210-250",
@@ -9,7 +9,7 @@
             ]
         },
         "Compute Optimized: F": {
-            "key": "Compute Optimized: F",
+            "name": "Compute Optimized: F",
             "description": "F-series VMs are an excellent choice for workloads that demand faster CPUs but do not need as much memory or temporary storage per vCPU; featuring 2.4 GHz Intel Xeon® E5-2673 v3 (Haswell) processors.",
             "features": [
                 "ACU: 210 - 250",
@@ -17,7 +17,7 @@
             ]
         },
         "General Purpose: A": {
-            "key": "General Purpose: A",
+            "name": "General Purpose: A",
             "description": "The A-series VM size is throttled, based upon the hardware, to offer consistent processor performance for the running instance, regardless of the hardware it is deployed on.",
             "features": [
                 "ACU: 100"
@@ -27,7 +27,7 @@
     "instance_types": {
         "Standard_DS3_v2": {
             "sort_value": "00",
-            "key": "Standard_DS3_v2",
+            "name": "Standard_DS3_v2",
             "category": "General Purpose: D",
             "vcpu_count": 4,
             "ram_bytes": 15032385536,
@@ -42,7 +42,7 @@
         },
         "Standard_DS4_v2": {
             "sort_value": "01",
-            "key": "Standard_DS4_v2",
+            "name": "Standard_DS4_v2",
             "category": "General Purpose: D",
             "vcpu_count": 8,
             "ram_bytes": 30064771072,
@@ -57,7 +57,7 @@
         },
         "Standard_F4s": {
             "sort_value": "10",
-            "key": "Standard_F4s",
+            "name": "Standard_F4s",
             "category": "Compute Optimized: F",
             "vcpu_count": 4,
             "ram_bytes": 8589934592,
@@ -72,7 +72,7 @@
         },
         "Standard_F8s": {
             "sort_value": "11",
-            "key": "Standard_F8s",
+            "name": "Standard_F8s",
             "category": "Compute Optimized: F",
             "vcpu_count": 8,
             "ram_bytes": 17179869184,
@@ -87,7 +87,7 @@
         },
         "Standard_A4_v2": {
             "sort_value": "20",
-            "key": "Standard_A4_v2",
+            "name": "Standard_A4_v2",
             "category": "General Purpose: A",
             "vcpu_count": 4,
             "ram_bytes": 8589934592,
@@ -102,7 +102,7 @@
         },
         "Standard_A8_v2": {
             "sort_value": "21",
-            "key": "Standard_A8_v2",
+            "name": "Standard_A8_v2",
             "category": "General Purpose: A",
             "vcpu_count": 8,
             "ram_bytes": 17179869184,

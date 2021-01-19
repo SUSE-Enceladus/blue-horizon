@@ -1,0 +1,15 @@
+- text = t("sidebar.#{path_key}")
+- icon = Rails.configuration.x.sidebar_icons[path_key]
+- url = "/#{path_key}"
+%li.menu-item{ class: ('disabled' unless can(url)) }
+  %div.menu-element
+    %span.main-collapsed-title= text
+  - if can(url)
+    %a.menu-title.js-select-current-parent.js-feature-flag{ href: url }
+      %i.eos-icons= icon
+      %span.menu-title-content= text
+  - else
+    %div.menu-title.js-select-current-parent.js-feature-flag
+      %i.eos-icons= icon
+      %span.menu-title-content= text
+     

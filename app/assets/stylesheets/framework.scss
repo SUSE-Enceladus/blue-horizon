@@ -6,7 +6,10 @@ $danger:    $eos-bc-red-500;
 $success:   $eos-bc-green-500;
 $warning:   $eos-bc-yellow-500;
 $light:     $eos-bc-gray-100;
-$dark:      $eos-bc-gray-800;
+$dark:      $eos-bc-gray-900;
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
+// Override with EOS styles
+@import "eos-style";

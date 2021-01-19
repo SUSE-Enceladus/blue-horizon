@@ -1,0 +1,73 @@
+@import "eos-branding";
+
+#title {
+  color: $eos-bc-green-900;
+
+  h1, #deploy {
+    color: $eos-bc-pine-500;
+  }
+}
+
+.mm-navigation-container header {
+  color: white;
+}
+
+li.menu-item.disabled, a.disabled {
+  * {
+    color: $eos-bc-gray-300 !important;
+    cursor: default;
+  }
+
+  .menu-title:hover {
+    border-left: 5px solid transparent;
+  }
+}
+
+.btn.btn-outline-danger:hover {
+  color: $eos-bc-red-900;
+  border-color: $eos-bc-red-900;
+}
+
+footer.footer-side-menu ul.footer-list {
+  color: $eos-bc-gray-900;
+}
+
+dt, dd {
+  display: block;
+  width: auto;
+}
+
+hr {
+  margin: 1em 0;
+}
+
+input[type=file] {
+  padding-top: 4px;
+  padding-bottom: 12px;
+}
+
+i.eos-icons.no-trailing-space {
+  margin-right: 0;
+}
+
+.input-group-append.peek, .input-group-append.unpeek {
+    cursor: pointer;
+    position: absolute;
+    top: 6px;
+    z-index: 1000;
+    right: -6px;
+}
+
+.progress span {
+    display: block;
+    position: absolute;
+    width: 90%;
+    color: black;
+}
+
+.steps-container .btn {
+  min-width: 8em;
+}
+
+// A placeholder for custom CSS.
+// This will be loaded last, and overrride other content.

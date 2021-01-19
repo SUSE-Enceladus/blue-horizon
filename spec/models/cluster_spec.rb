@@ -114,7 +114,7 @@ RSpec.describe Cluster, type: :model do
 
     it 'stores instance type as prefixed :instance_type KeyValue' do
       expect(cluster.save).to be(true)
-      expect(KeyValue.get(KeyPrefixable::PREFIX + 'instance_type'))
+      expect(KeyValue.get("#{KeyPrefixable::PREFIX}instance_type"))
         .to eq(custom_instance_type)
     end
 

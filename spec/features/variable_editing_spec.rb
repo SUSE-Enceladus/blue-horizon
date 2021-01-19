@@ -3,10 +3,20 @@
 require 'rails_helper'
 
 describe 'variable editing', type: :feature do
-  let(:exclusions) { Cluster.variable_handlers << 'test_options' }
+  let(:exclusions) do
+    [
+      *Cluster.variable_handlers,
+      *Region.variable_handlers,
+      'test_options',
+      'test_file'
+    ]
+  end
   let(:fake_data) { Faker::Crypto.sha256 }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
+  let(:mock_location) { Faker::Internet.slug }
+
+  before { mock_metadata_location(mock_location) }
 
   context 'with sources' do
     let(:variable_names) { collect_variable_names }
@@ -32,27 +42,72 @@ describe 'variable editing', type: :feature do
       until random_variable_key &&
             variables.type(random_variable_key) == 'string' &&
             (variables.description(random_variable_key).nil? ||
-            !variables.description(random_variable_key).include?('options'))
+            variables.description(random_variable_key).exclude?('options'))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
-      click_on('Save')
+      find('#next').click
 
       expect(KeyValue.get(variables.storage_key(random_variable_key)))
         .to eq(fake_data)
-      expect(page).to have_content('Variables were successfully updated.')
     end
 
     it 'stores form data for variables in multi options input' do
-      expect(page).to have_select 'variables[test_options]',
-        with_options: ['option1', 'option2']
       ['option1', 'option2'].each do |option_value|
+        visit('/variables')
+        expect(page).to have_select(
+          'variables[test_options]',
+          with_options: ['option1', 'option2']
+        )
         select(option_value, from: 'variables[test_options]')
-        click_on('Save')
+        find('#next').click
 
         expect(KeyValue.get(variables.storage_key('test_options')))
           .to eq(option_value)
-        expect(page).to have_content('Variables were successfully updated.')
+      end
+    end
+
+    context 'when handling files' do
+      let(:test_file_name) { 'testfile.txt' }
+      let(:test_file_path) do
+        Rails.root.join('spec', 'fixtures', test_file_name)
+      end
+      let(:test_file_contents) { File.read(test_file_path) }
+
+      let(:replacement_file_name) { 'testfile2.txt' }
+      let(:replacement_file_path) do
+        Rails.root.join('spec', 'fixtures', replacement_file_name)
+      end
+
+      before do
+        attach_file('variables[test_file]', test_file_path)
+        find('#next').click
+      end
+
+      it 'stores the file as a source' do
+        stored_source = Source.where(filename: test_file_name).first
+        expect(stored_source.content).to eq(test_file_contents)
+      end
+
+      it 'saves the file name as the value' do
+        expect(Variable.load.test_file).to eq(test_file_name)
+      end
+
+      it 'does not destroy uploaded files on subsequent submits' do
+        visit('/variables')
+        find('#next').click
+        stored_source = Source.where(filename: test_file_name).first
+        expect(stored_source.content).to eq(test_file_contents)
+        expect(Variable.load.test_file).to eq(test_file_name)
+      end
+
+      it 'replaces uploaded file if a new file is uploaded' do
+        visit('/variables')
+        attach_file('variables[test_file]', replacement_file_path)
+        find('#next').click
+        expect(Source.where(filename: test_file_name)).to be_empty
+        expect(Variable.load.test_file).to eq(replacement_file_name)
+        expect(Source.where(filename: replacement_file_name)).not_to be_empty
       end
     end
 
@@ -61,12 +116,18 @@ describe 'variable editing', type: :feature do
       expect(page).not_to have_content 'are best left unsaid'
     end
 
+    it 'stores from data for variables validating the pattern' do
+      pattern_input = page.find("[name|='variables[test_pattern]']")
+      expect(pattern_input[:title]).to eq('2 digits string')
+      expect(pattern_input[:pattern]).to eq('[0-9]{2}')
+    end
+
     it 'fails to update and shows error' do
       random_variable_key = nil
       until random_variable_key &&
             variables.type(random_variable_key) == 'string' &&
             (variables.description(random_variable_key).nil? ||
-            !variables.description(random_variable_key).include?('options'))
+            variables.description(random_variable_key).exclude?('options'))
         random_variable_key = (variable_names - exclusions).sample
       end
       fill_in("variables[#{random_variable_key}]", with: fake_data)
@@ -76,39 +137,10 @@ describe 'variable editing', type: :feature do
         e.add(:variable, 'is wrong')
       end
       allow(variables).to receive(:errors).and_return(active_model_errors)
-      click_on('Save')
+      find('#next').click
 
       expect(page).not_to have_content('Variables were successfully updated.')
       expect(page).to have_content('Variable is wrong')
-    end
-  end
-
-  context 'with sources visit plan' do
-    let(:variable_names) { collect_variable_names }
-    let(:variables) { Variable.new(Source.variables.pluck(:content)) }
-    let(:instance_var) { instance_double(Variable) }
-    let(:instance_var_controller) { instance_double(VariablesController) }
-    let!(:random_path) { random_export_path }
-
-    before do
-      FileUtils.mkdir_p(random_path)
-      populate_sources(true)
-      visit('/variables')
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
-    end
-
-    it 'stores form data for variables and redirects to plan' do
-      allow(Variable).to receive(:load).and_return(variables)
-      fill_in('variables[test_password]', with: fake_data)
-      find('#next').click
-      expect(KeyValue.get(variables.storage_key('test_password')))
-        .to eq(fake_data)
-
-      expect(page).not_to have_content('Variables were successfully updated.')
-      expect(page).to have_current_path(plan_path)
     end
   end
 
@@ -122,10 +154,9 @@ describe 'variable editing', type: :feature do
 
   it 'shows script error on page' do
     allow(Variable).to receive(:load).and_return(error: 'wrong')
-    warning_message = 'Please, edit the scripts'
+    warning_message = I18n.t('flash.invalid_variables')
     visit('/variables')
     expect(page).not_to have_content('No variables are defined!')
     expect(page).to have_content('wrong').and have_content(warning_message)
-    expect(page).to have_current_path(sources_path)
   end
 end

@@ -17,8 +17,29 @@ RSpec.describe Variable, type: :model do
       'test_map'         => { foo: 'bar' },
       'test_password'    => 'Superman123!',
       'test_options'     => 'option1',
-      'fake_key'         => 'fake_value'
+      'test_pattern'     => '00',
+      'fake_key'         => 'fake_value',
+      'region'           => random_string
     }
+  end
+  let(:expected_keys) do
+    [
+      'name',
+      'instance_count',
+      'instance_type',
+      'test_string',
+      'are_you_sure',
+      'test_list',
+      'test_map',
+      'empty_number',
+      'test_description',
+      'test_file',
+      'test_password',
+      'test_options',
+      'test_pattern',
+      'test_description_comment',
+      'region'
+    ]
   end
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
@@ -44,6 +65,11 @@ RSpec.describe Variable, type: :model do
     variable_names.each do |key|
       expect(variables.send(key)).to eq(variables.default(key))
     end
+  end
+
+  it 'has a list of variable keys' do
+    expect(variables.keys).to be_an(Array)
+    expect(variables.keys.sort).to eq(expected_keys.sort)
   end
 
   context 'when loading' do
@@ -89,10 +115,15 @@ RSpec.describe Variable, type: :model do
         { 'test_map' => {} },
         'empty_number',
         'test_description',
+        'test_file',
         'test_password',
         'test_options',
+        'test_pattern',
         'test_description_comment',
-        'name'
+        'region',
+        'name',
+        'instance_count',
+        'instance_type'
       ]
     end
 
@@ -115,7 +146,7 @@ RSpec.describe Variable, type: :model do
     end
 
     it 'assumes variables are required unless explicitly optional' do
-      variables.attributes.keys.each do |key|
+      variables.attributes.each_key do |key|
         if /optional/i =~ variables.description(key)
           expect(variables).not_to be_required(key)
         else
@@ -197,38 +228,29 @@ RSpec.describe Variable, type: :model do
     let(:random_path) do
       Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
     end
-    let(:expected_random_export_path) do
-      File.join(random_path, export_filename)
-    end
-    let(:expected_config_export_path) do
-      File.join(Rails.configuration.x.source_export_dir, export_filename)
+    let(:expected_export) do
+      File.join(working_path, export_filename)
     end
     let(:json) { JSON.dump(variables.attributes) }
 
     before do
-      Rails.configuration.x.source_export_dir = random_path
-      FileUtils.mkdir_p(random_path)
       variables.attributes = attributes_hash
     end
 
-    after do
-      FileUtils.rm_rf(random_path)
-    end
-
     it 'writes to a file' do
-      variables.export_into(random_path)
-      expect(File).to exist(expected_random_export_path)
+      variables.export_into(working_path)
+      expect(File).to exist(expected_export)
     end
 
     it 'writes variable values' do
       variables.export
-      exported = File.read(expected_config_export_path)
+      exported = File.read(expected_export)
       expect(exported).to eq(json)
     end
 
     it 'writes to the config path unless otherwise specified' do
       variables.export
-      expect(File).to exist(expected_config_export_path)
+      expect(File).to exist(expected_export)
     end
   end
 end

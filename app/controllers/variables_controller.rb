@@ -12,23 +12,12 @@ class VariablesController < ApplicationController
   end
 
   def update
-    params[:variables][:cluster_labels] ||= {}
-
     @variables.attributes = variables_params
-    if @variables.save
-      flash_message = {}
-      if params[:button]
-        target_path = plan_path
-      else
-        flash_message = { notice: 'Variables were successfully updated.' }
-        target_path = variables_path
-      end
-      redirect_to target_path, flash: flash_message
-    else
-      redirect_to variables_path, flash: {
-        error: @variables.errors.full_messages
-      }
-    end
+    redirect_to plan_path and return if @variables.save
+
+    redirect_to variables_path, flash: {
+      error: @variables.errors.full_messages
+    }
   end
 
   private
@@ -37,12 +26,20 @@ class VariablesController < ApplicationController
   def set_variables
     @variables = Variable.load
     if @variables.is_a?(Hash) && @variables[:error]
-      redirect_to sources_path, flash: {
-        error: @variables[:error], warning: 'Please, edit the scripts'
+      redirect_to welcome_path, flash: {
+        error: @variables[:error], warning: t('flash.invalid_variables')
       }
     end
     # exclude variables handled by cluster sizing
     @excluded = Cluster.variable_handlers
+    # set region automatically, if possibe
+    return unless @variables.respond_to? :region
+
+    region = Region.load
+    return unless region.set_by_metadata
+
+    region.save
+    @excluded += Region.variable_handlers
   end
 
   def variables_params

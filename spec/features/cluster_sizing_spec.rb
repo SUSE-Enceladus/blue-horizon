@@ -5,6 +5,7 @@ require 'rails_helper'
 describe 'cluster sizing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
+  let(:mock_location) { Faker::Internet.slug }
 
   before do
     allow(terra).to receive(:new).and_return(instance_terra)
@@ -14,7 +15,11 @@ describe 'cluster sizing', type: :feature do
 
   describe 'in Azure' do
     let(:cloud_framework) { 'azure' }
-    let(:instance_types) { Cloud::InstanceType.for(cloud_framework) }
+    let(:instance_types) do
+      Cloud::InstanceType.load(
+        Rails.root.join('config', 'data', "#{cloud_framework}-types.json")
+      )
+    end
     let(:random_instance_type_key) { instance_types.sample.key }
     let(:cluster_size_config) { Rails.configuration.x.cluster_size }
     let(:random_cluster_size) do
@@ -25,16 +30,24 @@ describe 'cluster sizing', type: :feature do
 
     before do
       Rails.configuration.x.cloud_framework = cloud_framework
+      Rails.configuration.x.allow_custom_instance_type = true
+      Rails.configuration.x.show_instance_type_tip = true
+      allow(Cloud::InstanceType)
+        .to receive(:for)
+        .with(cloud_framework)
+        .and_return(instance_types)
       visit '/cluster'
     end
 
     it 'lists the instance types' do
       instance_types.each do |instance_type|
-        expect(page).to have_content(instance_type.key)
+        expect(page).to have_content(instance_type.name)
       end
     end
 
     it 'stores cluster sizing' do
+      mock_metadata_location(mock_location)
+
       choose(random_instance_type_key)
       fill_in('cluster_instance_count', with: random_cluster_size)
       click_on(id: 'submit-cluster')

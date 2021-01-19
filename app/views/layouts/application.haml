@@ -1,0 +1,63 @@
+!!!
+%html
+  %head
+    %meta{ charset: "UTF-8" }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
+    %meta{ 'http-equiv' => "X-UA-Compatible", content: "ie=edge" }
+    %title= t('short_title')
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    - if custom_image_exists? 'logo'
+      %link{ rel: "shortcut icon", href: asset_path('logo') }
+    - else
+      %link{ rel: "shortcut icon", href: asset_path('blue-horizon.svg') }
+  %body
+    %aside.main-menu.js-main-menu
+      %div.mm-navigation-container
+        %header
+          %div.hide-collapsed
+            %b
+              %i.eos-icons.align-middle{alt: t('deploy'), title: t('deploy') } deploy
+              &nbsp;
+              = t('short_title')
+          %div.mm-navigation-close.js-sidebar-toggle
+            %i.eos-icons.js-sidebar-tooltip.js-tooltip{ data: { placement: 'bottom' } } menu
+        %div.nav-wrap
+          %ul.menu-togglable.no-list-style
+            - sidebar_menu_items.each do |key|
+              = render('layouts/sidebar_menu_item', path_key: key)
+      %footer.footer-side-menu
+        %ul.footer-list
+          %li.footer-list-item
+            %i.eos-icons{ data: { toggle: 'tooltip', html: 'true', trigger: 'hover click', title: source_footer } } find_in_page
+          %li.footer-list-item
+            %i.eos-icons{ data: { toggle: 'tooltip', html: 'true', trigger: 'hover click', title: t('footer') } } info
+    %div.mobile-menu.js-mobile-menu
+      %header
+        - if custom_image_exists? 'logo'
+          %a.hide-collapsed{ href: root_path }
+            %img.eos-24{ src: asset_path('logo'), alt: t('short_title') }
+        %div.burger-menu.js-burger-menu
+          %i.eos-icons menu
+      %nav.display-nav
+        %div.nav-wrap
+          %ul.menu-togglable.no-list-style
+            - sidebar_menu_items.each do |key|
+              = render('layouts/sidebar_menu_item', path_key: key)
+    %section.content#content
+      - if Rails.configuration.x.top_menu_items.present?
+        %div.submenu
+          %nav.main-submenu.visible
+            %a.submenu-item.selected{ href: '#' }= t('menu.deploy')
+            = top_menu_items(@outputs)
+      %div.container
+        = bootstrap_flash
+        = yield
+    %footer.footer-content.js-footer-content
+      %ul.footer-list
+        %li.footer-list-item= source_footer
+        %li.footer-list-item= t('footer')
+    - if @active_session_ip
+      = render 'layouts/locked_session', ip_address: @active_session_ip
+    = javascript_include_tag 'application'
+    = yield :page_javascript

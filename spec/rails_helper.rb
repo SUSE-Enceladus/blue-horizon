@@ -22,8 +22,16 @@ end
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# Avoid local customizations to interfere with testing runs.
+# You can put common customizations for all tests in the following file, or
+# change the Rails.configuration.x hash within single tests
+ENV['BLUE_HORIZON_CUSTOMIZER'] =
+  Rails.root.join('spec', 'customization.test.json').to_s
+
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'webmock/rspec'
+require Rails.root.join('lib', 'metadata')
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -38,7 +46,8 @@ require 'capybara/rspec'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')]
+  .sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.

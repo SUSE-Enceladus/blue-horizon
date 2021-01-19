@@ -3,44 +3,41 @@
 # View helpers for working with variables
 module VariablesHelper
   def required
-    content_tag(
-      :span,
-      '*',
-      title: t(:required),
-      data:  { toggle: 'tooltip' }
+    tag.span('*', title: t(:required),
+                  data:  { toggle: 'tooltip' }
     )
   end
 
   def formatted_description(description)
     return nil unless description
 
-    content_tag(
-      :small,
-      markdown(description, false),
+    tag.small(
+      markdown(description, escape_html: false),
       class: ['form-text', 'text-muted']
     )
   end
 
-  def string_input_type(description)
-    if description.to_s.downcase.match?('.*' + t('options_key') + '=\[(.*)\].*')
+  def options_regex
+    /#{t('options_key')}=\[(?<options>.*?)\]/i
+  end
+
+  def string_input_type(key, description)
+    description ||= ''
+
+    if description.match?(options_regex)
       'select'
-    elsif description.to_s.downcase.include?(t('password_key'))
+    elsif description.match?(/#{t('password_key')}/i)
       'password'
+    elsif key.match?(Variable.file_regex)
+      'file'
     else
       'text'
     end
   end
 
   def get_select_options(description)
-    # We cannot downcase the string as this would change the options string
-    # The next operation converts the options_key in a lower/upper case regex
-    key_regular_expression = t('options_key').split('').map do |char|
-      format('[%<up>s|%<down>s]', up: char.upcase, down: char.downcase)
-    end
-    key_regular_expression = key_regular_expression.join('')
-    options = description.to_s.match(
-      '.*' + key_regular_expression + '=\[(.*)\].*'
-    ).captures
-    options[0].split(',').map { |option| option.tr('\'\"', '').strip }
+    description.match(options_regex)[:options].split(',')
+  rescue StandardError
+    []
   end
 end

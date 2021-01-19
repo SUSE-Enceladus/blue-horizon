@@ -16,13 +16,11 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+// EOS
+//= require index
 // bootstrap-slider
 //= require bootstrap-slider.min
-// Ace editor
-//= require ace-rails-ap
 // BlueHorizon
 //= require utility.js
 //= require layout.js
-//= require sources.js
 //= require variables.js
-//= require plans.js

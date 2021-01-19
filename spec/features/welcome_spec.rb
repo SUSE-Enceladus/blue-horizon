@@ -23,37 +23,31 @@ describe 'welcome', type: :feature do
     expect(page).to have_current_path(welcome_path)
   end
 
-  describe 'on the simple path' do
+  context 'with customized top menu items' do
     before do
+      Rails.configuration.x.top_menu_items = [
+        {
+          key: 'monitor',
+          url: '%{monitoring_url}'
+        }.with_indifferent_access
+      ]
+
       visit('/welcome')
-      within('#content') do
-        click_on('Start setup')
-      end
     end
 
-    it 'has a trigger link' do
-      expect(Rails.configuration.x.advanced_mode).to be_falsey
+    after do
+      Rails.configuration.x.top_menu_items = nil
     end
 
-    it 'redirects to the next step' do
-      expect(page).to have_current_path(cluster_path)
-    end
-  end
-
-  describe 'on the advanced path' do
-    before do
-      visit('/welcome')
-      within('#content') do
-        click_on('Edit sources')
-      end
+    it 'shows the `deploy` menu' do
+      selector = '.submenu .main-submenu.visible a.submenu-item.selected'
+      expect(page).to have_selector(selector)
+      expect(find(selector)).to have_content('Deploy')
     end
 
-    it 'has a trigger link' do
-      expect(Rails.configuration.x.advanced_mode).to be_truthy
-    end
-
-    it 'redirects to the next step' do
-      expect(page).to have_current_path(sources_path)
+    it 'includes disabled custom menu items' do
+      expect(find('a.submenu-item.disabled#monitor')).to have_content('Monitor')
+      expect(page).to have_link('Monitor', href: '#')
     end
   end
 end

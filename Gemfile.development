@@ -18,20 +18,18 @@ gem 'sassc-rails'
 # Use HAML for views
 gem 'haml-rails', '~> 2.0'
 # Allow markdown to be selectively rendered
-gem 'redcarpet'
+gem 'redcarpet', '>= 3.5.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Collection of instance types
-gem 'cloud-instancetype'
+gem 'cloud-instancetype', '~> 1.1'
 # Bootstrap web framework
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 # identify 'active' links
 gem 'active_link_to'
-# Ace editor
-gem 'ace-rails-ap'
 # Terraform wrapper
 gem 'ruby-terraform'
 # Zip files
@@ -59,9 +57,11 @@ group :development, :test do
   # enable capyabara to open test output
   gem 'launchy'
   # code style enforcement
-  gem 'rubocop', '~> 0.76.0', require: false
+  gem 'rubocop', '~> 1.0', require: false
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  # Mock external web requests
+  gem 'webmock', require: false
 end
 
 group :development do

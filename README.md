@@ -13,7 +13,7 @@ Requirements are based on supported versions from SUSE Linux Enterprise Server 1
 * rails 5.1.7
 * puma 3.11.0
 * sqlite3
-* terraform 0.12
+* terraform 0.13.4
 * any dependencies of your terraform scripts (e.g. `kubectl`, `helm`, etc.)
 
 ## Contributing
@@ -29,10 +29,11 @@ The Ruby project uses [rvm](http://rvm.io/rvm/basics) to manage a virtual enviro
     gem install bundler
     bundle
     ```
-    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. On (open)SUSE:
+    If you have trouble with _nokogiri_, make sure you have development versions of _libxml2_ & _libxslt_ installed. Install also sqlite-devel. On (open)SUSE:
     ```
-    sudo zypper in libxml2-devel libxslt-devel
+    sudo zypper in libxml2-devel libxslt-devel sqlite3-devel
     ```
+
 
 4.  If you need to use a path _other than_ `./vendor/` for customization, create a dotenv file (e.g. `.env.development`) that defines:
     *   The path to the customization JSON:
@@ -82,9 +83,21 @@ _blue-horizon_ is pointless, without a set of terraform scripts to work from, an
 Variables **must** be defined in terraform JSON format, and named `variable*.tf.json`. Here some additional tips to customize your variables options:
 - Variables will be _required_ unless the description includes the word "optional".
 - Variables with "password" word in the description will be configured as password inputs hiding the content. This keyword value can be changed in the `en.yml` configuration file changing `password_key` entry.
-- Variables with "options=["option1", "option2"]" content in the description will create a multi option input. This keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
+- Variables with `options=[option1,option2]` content in the description will create a multi option input. Options are comma-separated, but may include any other punctuation, or spaces. The keyword value can be changed in the `en.yml` configuration file changing `options_key` entry.
+- Variables with `[group:some_group_name]` will be grouped together (but still listed as ordered in the variables file). The group name will be pulled form I18N configuration, or otherwise titleized. (e.g. `[group:important_things]` will render as 'Important Things')
+- Variables with `[pattern:/my expression/]` will have a client side validation to check if the input string is valid.
+- Variables with `[extra_information:my variable information]` will have the provided content in the input title attribute, which creates a tooltip text when the mouse moves over the element. This option combines together with the pattern option to display the error message if the pattern validation fails.
+- Variables of type `string` with a name ending in `_file` (e.g. `key_file`) will be presented as a file upload form field. The file contents will be appended to sources, and written back to disk with the full terraform source set. The file name will be stored in the variable. Inside _terraform_ scripts the file can be accessed via `file(var.key_file)`.
 - Variable descriptions may include a comment that is not displayed. Any content contained in an HTML comment block `<!-- like this -->` will not be included in the UI, but _will_ be parsed for other customization flags.
-- Variable descriptions will be rendered as inline _markdown_ in the UI. 
+- Variable descriptions will be rendered as inline _markdown_ in the UI.
+
+#### Special variables
+
+The following variables will not be displayed on the variable entry form, but will be populated via other application interfaces:
+- `instance_type`: the virtual machine type to be used when starting cloud instances; this will be populated from the _Size Cluster_ page.
+- `instance_count`: the number of virtual machines to be deployed; this will be populate from the _Size Cluster_ page.
+- `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).
+  ⚠ _End users should be notified that the application needs to run in the same region where it will be deployed._
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 
@@ -100,6 +113,43 @@ See `config/locales/custom-en.yml` for a sample/template with keys defined.
 
 To use a different path, set the environment variable `BLUE_HORIZON_LOCALIZERS` with the directory where custom internationalization files are stored.
 
+#### Markdown
+
+The internationalization content `description` and `next_steps`, shown on the first and last pages, respectively, allow _markdown_ content. It is recommended for readability and maintenance, to define these as multiline YAML. The following special features are supported:
+
+* **inline HTML**: in the event that _markdown_ is insufficient for content, raw HTML may be defined. Please be sure to parse any inline HTML as valid with an external parser.
+* **images**: images may be included using the standard _markdown_ format. Image files should be placed in `vendor/assets/images` and referred to in _mardown_ with the path `/vendor/NAME_OF_IMAGE`. For example, given an image stored as `vendor/assets/images/design.png`, the _markdown_ syntax to include it is:
+
+  ```
+  ![design](/vendor/design.png)
+  ```
+
+  ⚠ *Images included in markdown will not be versioned by the Rails asset pipeline, so be aware of possible caching issues.*
+
+Please see https://www.markdownguide.org/basic-syntax for more _markdown_ examples.
+
+#### Including *terraform* output in *Next steps*
+
+The `next_steps` content, presented on the last page after deployment, can include terraform outputs. Put a placeholder in the content in the format `%{OUTPUT_NAME}`.
+
+For example, if your terraform scripts include:
+
+```
+output "greeting" {
+    value = "Hello, World."
+}
+```
+
+... and your `next_steps` translation includes:
+
+```
+**%{greeting}**
+```
+
+It would render as:
+
+> **Hello, World.**
+
 ### Application customization
 
 `vendor/customization.json` defines configuration keys that can be modified to alter the behavior of the application.
@@ -107,6 +157,48 @@ To use a different path, set the environment variable `BLUE_HORIZON_LOCALIZERS` 
 See `config/initializers/customization.rb` for an explanation of the available keys and options.
 
 To use a different path, set the environment variable `BLUE_HORIZON_CUSTOMIZER` with the full path of the customization JSON file to load.
+
+#### Style
+
+`vendor/assets/stylesheets/custom.scss` can be added to provide custom styles (CSS, SCSS) to the application.
+
+💡 *[SCSS](https://sass-lang.com/guide) is a supercet of CSS, so valid CSS is valid SCSS.*
+
+#### View overrides
+
+Any view or partial view (see `app/views`) can be overridden with an application-specific view. Set the configuration option `"override_views": true`, then copy the original to `vendor/views`, (e.g. `app/views/plans/_plan.haml` to `vendor/views/plans/_plan.haml`) and make your customizations in the copy.
+
+#### View helpers
+
+Any custom helper methods required by custom views should be defined as methods of the `CustomHelpers` module, in the file `vendor/lib/custom_helpers.rb`. If this file is present, the helpers will be loaded and available to the view rendering pipeline.
+
+⚠ *Please be careful of naming conflicts, as all helpers are effectively in the same namespace.*
+
+#### Top menu items
+
+A a group of custom top-menu links can be added to application views. If the links use *terraform* outputs, they will only be enabled on the `/wrapup` (*Next steps*) page. Links may open in the same browser context, or request a new tab/window.
+
+The following example custom configuration will provide a static link that opens in a new tab, as well as an output-driven link that will only be enabled on *next steps*:
+
+```
+"top_menu_items": [
+    {
+        "key": "more-info",
+        "url": "https://github.com/SUSE-Enceladus/blue-horizon",
+        "target_new_window": true
+    },
+    {
+        "key": "monitor",
+        "url": "%{monitoring_url}"
+    }
+]
+```
+
+The `"key"` must match a translation value in the `menu` scope (e.g. `menu.more-info`, `menu.monitor`). Some common values are provided for convenience, but may be overriden or extended via localization.
+
+`"target_new_window"` only needs to be set if the value is `true`; `false` is otherwise assumed.
+
+A "*Deploy*" menu entry will be set, first, if any custom menu items are included.
 
 ## Packaging
 

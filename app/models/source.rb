@@ -21,7 +21,7 @@ class Source < ApplicationRecord
   end
 
   def self.extensions
-    Rails.configuration.x.supported_source_extensions.keys
+    Rails.configuration.x.supported_source_extensions
   end
 
   def self.import_dir(source_dir, save_options={})
@@ -33,13 +33,6 @@ class Source < ApplicationRecord
   end
 
   def terraform_validation
-    Terraform.new.validate(true, false)
-  end
-
-  def self.valid_sources
-    Source.all.find_each(&:export)
-    terra = Terraform.new
-    validation = terra.validate(true, true)
-    return validation
+    Terraform.new.validate(true)
   end
 end

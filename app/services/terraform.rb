@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'ruby_terraform'
+require 'json'
+
 # Class to wrap all Terraform operations
 class Terraform
   def initialize
@@ -17,7 +20,7 @@ class Terraform
 
   def config_terraform
     @logger = Logger.new(
-      RubyTerraform::MultiIO.new(STDOUT, log_file),
+      RubyTerraform::MultiIO.new($stdout, log_file),
       level: :debug
     )
     RubyTerraform.configure do |config|
@@ -50,7 +53,7 @@ class Terraform
     Dir.chdir(current_working_dir)
   end
 
-  def validate(parse_output, file=false)
+  def validate(parse_output, file: false)
     validate_params = {
       directory: Rails.configuration.x.source_export_dir
     }
@@ -66,7 +69,7 @@ class Terraform
       error_output = RubyTerraform.configuration.stderr.string
       Rails.logger.error error_output
       Terraform.write_log_output(error_output)
-      return parse_error_output(error_output, file)
+      return parse_error_output(error_output, file: file)
     end
   ensure
     RubyTerraform.configuration.stderr = RubyTerraform.configuration.logger if
@@ -79,7 +82,7 @@ class Terraform
     f.flush
   end
 
-  def parse_error_output(message, file=false)
+  def parse_error_output(message, file: false)
     start = message.index('Error: ')
     start += 'Error: '.length
     limit = message[start, message.length].index("\n")
@@ -94,7 +97,7 @@ class Terraform
   end
 
   def add_filename(error_message)
-    source_files = Dir[Rails.configuration.x.source_export_dir.to_s + '/*']
+    source_files = Dir["#{Rails.configuration.x.source_export_dir}/*"]
     i = 0
     i += 1 until error_message.index(File.basename(source_files[i])) ||
                  i >= error_message.length
@@ -112,11 +115,12 @@ class Terraform
     in_export_dir do
       RubyTerraform.plan(args)
     end
-  rescue RubyTerraform::Errors::ExecutionError
+  rescue RubyTerraform::Errors::ExecutionError => e
+    plan_stderr = RubyTerraform.configuration.stderr.string
+    plan_stderr ||= ''
     return {
       error: {
-        message: 'Plan operation has failed',
-        output:  RubyTerraform.configuration.stderr.string
+        message: e.to_s, output: plan_stderr
       }
     }
   ensure
@@ -150,6 +154,19 @@ class Terraform
     end
   end
 
+  def outputs
+    set_output
+    in_export_dir do
+      RubyTerraform.show(json: true)
+    end
+    raw_outputs = JSON.parse(
+      RubyTerraform.configuration.stdout.string
+    )['values']['outputs']
+    Hash[
+      raw_outputs.collect { |k, v| [k.to_sym, v['value']] }
+    ]
+  end
+
   def destroy
     KeyValue.set(:active_terraform_action, 'destroy')
     destroy_args = {
@@ -176,5 +193,49 @@ class Terraform
 
   def self.stderr
     RubyTerraform.configuration.stderr
+  end
+
+  def get_planned_resources(excluded=nil)
+    resources = []
+    show
+    show_output = Terraform.stdout.string
+    show_output = JSON.parse(show_output)
+    show_output['planned_values'].each do |key, value|
+      next unless key == 'root_module'
+
+      resources |= value['resources']
+      if value.key? 'child_modules'
+        resources |= get_child_resources(value['child_modules'])
+      end
+    end
+    unless excluded.nil?
+      resources.reject! do |resource|
+        excluded.match? resource['address']
+      end
+    end
+    return resources
+  end
+
+  def self.last_action_at
+    KeyValue.find('active_terraform_action')&.updated_at
+  rescue ActiveRecord::RecordNotFound
+    0
+  end
+
+  private
+
+  def get_child_resources(child_resources)
+    resources = []
+    child_resources.each do |value|
+      if value.key? 'resources'
+        resources |= value['resources'].map do |resource|
+          resource if resource['mode'] == 'managed'
+        end.compact
+      end
+      if value.key? 'child_modules'
+        resources |= get_child_resources(value['child_modules'])
+      end
+    end
+    return resources
   end
 end

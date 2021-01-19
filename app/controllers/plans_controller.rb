@@ -5,21 +5,29 @@ require 'fileutils'
 
 class PlansController < ApplicationController
   include FileUtils
-  before_action :validate_source, only: [:show]
+  before_action :variables
 
   def show
-    return unless helpers.can(deploy_path)
+    return unless helpers.can(plan_path)
 
-    @show_output = Terraform.new.show
-    @show_output = @show_output.to_json unless @show_output.nil?
-    @show_output ||= Terraform.stdout.string
-    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
+    @trigger_update = (@variables.updated_at > Terraform.last_action_at)
+    @plan = ''
+
+    unless @trigger_update
+      plan_raw_json = Terraform.new.show
+      plan_raw_json = plan_raw_json.to_json unless plan_raw_json.nil?
+      plan_raw_json ||= Terraform.stdout.string
+
+      @plan = JSON.parse(plan_raw_json, object_class: OpenStruct)
+      @plan.raw_json = plan_raw_json
+      @trigger_update = @plan.blank?
+    end
 
     respond_to do |format|
       format.html
       format.json do
         send_data(
-          @show_output,
+          plan_raw_json,
           disposition: 'attachment',
           filename:    'terraform_plan.json'
         )
@@ -42,31 +50,16 @@ class PlansController < ApplicationController
 
     if result.is_a?(Hash)
       flash.now[:error] = result[:error]
-      return render json: flash.to_hash
-    end
-    terra.show
-    @show_output = Terraform.stdout.string
-    @show_output = JSON.pretty_generate(JSON.parse(@show_output))
-
-    respond_to do |format|
-      format.html { render :show }
-      format.js   { render json: @show_output }
+      return render(json: flash.to_hash)
+    else
+      redirect_to(action: 'show')
     end
   end
 
   private
 
-  def validate_source
-    validation = Source.valid_sources if Rails.configuration.x.advanced_mode
-    return unless validation
-
-    flash[:error] = validation
-    redirect_to sources_path
-  end
-
-  def export_vars
-    variables = Variable.load
-    variables.export
+  def variables
+    @variables ||= Variable.load
   end
 
   def export_path
@@ -76,7 +69,7 @@ class PlansController < ApplicationController
   end
 
   def read_exported_vars
-    export_vars
+    @variables.export
     export_var_path = export_path
     @exported_vars = nil
     if File.exist?(export_var_path)

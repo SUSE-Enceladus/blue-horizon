@@ -10,7 +10,10 @@ class DeploysController < ApplicationController
       auto_approve: true,
       no_color:     true
     }
-    Terraform.new.apply(@apply_args)
+    terra = Terraform.new
+    planned_resources = terra.get_planned_resources.count
+    KeyValue.set(:planned_resources_count, planned_resources)
+    terra.apply(@apply_args)
     logger.info('Deploy finished.')
   end
 
@@ -23,17 +26,24 @@ class DeploysController < ApplicationController
     elsif Terraform.stdout.is_a?(StringIO)
       @apply_output = Terraform.stdout.string
       content = @apply_output
-      success = Terraform.stdout.string.include? 'Apply complete!'
+      success = content.include? 'Apply complete!'
     end
+
+    progress = {}
+    if Terraform.stdout.is_a?(StringIO)
+      progress = update_terraform_progress(Terraform.stdout.string, error)
+    end
+
     if success
       write_output(content, success)
       set_default_logger_config
     end
     html = (render_to_string partial: 'output.html.haml')
+
     respond_to do |format|
       format.json do
-        render json: { new_html: html, success: success,
-                       error: error }
+        render json: { new_html: html, progress: progress,
+                       success: success, error: error }
       end
     end
     return
@@ -65,5 +75,26 @@ class DeploysController < ApplicationController
     else
       logger.error content
     end
+  end
+
+  def update_terraform_progress(content, error)
+    progress = {}
+    return progress if content.blank?
+
+    created_resources = content.scan(/Creation complete after/).size
+    planned_resources_count = KeyValue.get(:planned_resources_count)
+    text = if error.present?
+      t('deploy.failed')
+    elsif created_resources == planned_resources_count
+      t('deploy.finished')
+    else
+      t('deploy.creating')
+    end
+    progress['infra-bar'] = {
+      progress: created_resources * 100 / planned_resources_count,
+      text:     text,
+      success:  error.nil? ? true : false
+    }
+    return progress
   end
 end

@@ -23,11 +23,25 @@ Rails.application.configure do
   config.x.cluster_size ||= OpenStruct.new
   config.x.cluster_size.min ||= 3
   config.x.cluster_size.max ||= 250
+  # custom instance type option can be removed:
+  # set `"allow_custom_instance_type": false` in customization.json
+  config.x.allow_custom_instance_type = true if config.x.allow_custom_instance_type.nil?
+  # Instance type tip can be removed (for example, when using non-standard cluster sizing)
+  # set `"show_instance_type_tip": false` in customization.json
+  config.x.show_instance_type_tip = true if config.x.show_instance_type_tip.nil?
 
   # fallback to ENV var if not defined in custom config
   # _cloud_framework_ should be one of "AWS", "Azure", "GCP"
   config.x.cloud_framework ||= ENV['CLOUD_FRAMEWORK']
   config.x.cloud_framework = config.x.cloud_framework.downcase if config.x.cloud_framework.present?
+
+  # URL of terraform sources
+  # config.x.terraform_sources_url = "https://github.com/SUSE-Enceladus/blue-horizon"
+
+  # Override views
+  # set `"override_views": true` in customization.json
+  # views in vendor/views/... will override the defaults in app/views
+  config.x.override_views ||= false
 end
 
 # The following performs required actions based on custom configuration above
@@ -35,3 +49,9 @@ end
 require 'fileutils'
 
 FileUtils.mkdir_p(Rails.configuration.x.source_export_dir)
+
+helpers_filepath = Rails.root.join('vendor', 'lib', 'custom_helpers.rb')
+if File.exist?(helpers_filepath)
+  require helpers_filepath
+  ActiveSupport.on_load(:action_view) { include CustomHelpers }
+end

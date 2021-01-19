@@ -4,9 +4,6 @@ require 'rails_helper'
 
 describe 'authorization', type: :feature do
   let(:cloud_framework) { 'azure' }
-  let(:random_path) do
-    Rails.root.join('tmp', Faker::File.dir(segment_count: 1))
-  end
   let(:auth_message) { I18n.t('flash.unauthorized') }
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
@@ -44,14 +41,8 @@ describe 'authorization', type: :feature do
 
   describe 'after planning' do
     before do
-      FileUtils.mkdir_p(random_path)
-      Rails.configuration.x.source_export_dir = random_path
-      artifact = Rails.configuration.x.source_export_dir.join('current_plan')
+      artifact = working_path.join('current_plan')
       File.open(artifact, 'w') {}
-    end
-
-    after do
-      FileUtils.rm_rf(random_path)
     end
 
     it 'allows access to deploy' do
@@ -61,7 +52,7 @@ describe 'authorization', type: :feature do
     end
 
     it 'raises StandardError while checking access to deploy' do
-      allow(Rails.configuration.x.source_export_dir).to(
+      allow(working_path).to(
         receive(:join)
           .and_raise(StandardError)
       )
@@ -93,7 +84,7 @@ describe 'authorization', type: :feature do
     end
 
     it 'only allows access to welcome page' do
-      Rails.configuration.x.simple_sidebar_menu_items.each do |path|
+      Rails.configuration.x.menu_items.each do |path|
         visit("/#{path}")
         expect(page).to have_current_path(welcome_path)
         expect(page).to have_content(session_lock_message)
@@ -127,7 +118,7 @@ describe 'authorization', type: :feature do
     end
 
     it 'only allows access to welcome page' do
-      paths = Rails.configuration.x.simple_sidebar_menu_items.collect do |path|
+      paths = Rails.configuration.x.menu_items.collect do |path|
         visit("/#{path}")
       end
       paths.each do |path|

@@ -10,16 +10,25 @@ capybara-*.html
 /spec/tmp
 *.orig
 rerun.txt
+.vscode
 packaging/*.tar*
 public/assets/*
 public/dev-assets/*
 vendor/customization.json
+vendor/data/*
+!vendor/data/.keep
+vendor/lib/*
+!vendor/lib/.keep
 vendor/locales/*
 !vendor/locales/.keep
 vendor/sources/*
 !vendor/sources/.keep
 vendor/assets/images/*
 !vendor/assets/images/.keep
+vendor/assets/stylesheets/*
+!vendor/assets/stylesheets/.keep
+vendor/views/*
+!vendor/views/.keep
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb

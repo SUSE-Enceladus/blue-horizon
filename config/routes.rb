@@ -5,20 +5,13 @@ Rails.application.routes.draw do
   root to: redirect('/welcome')
   get '/welcome', to: 'welcome#index'
   # switch paths
-  get '/welcome/simple', to: 'welcome#simple', as: 'simple'
-  get '/welcome/advanced', to: 'welcome#advanced', as: 'advanced'
   put '/welcome/reset-session', to: 'welcome#reset_session', as: 'reset_session'
 
   # Cluster size
   resource :cluster, only: [:show, :update]
   # Additional data
   resource :variables, only: [:show, :update]
-  # Custom/Advanced
-  resources :sources, except: [:show]
 
-  resource :sources do
-    get 'validate_terra', on: :member
-  end
   # Show plan
   resource :plan, only: [:show, :update]
   # Deploy
