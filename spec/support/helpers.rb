@@ -2,6 +2,8 @@
 
 require 'ruby_terraform'
 
+PLAN_NAME = 'current_plan'
+
 module Helpers
   def populate_sources(auth_plan: false, include_mocks: true)
     sources_dir =
@@ -42,16 +44,15 @@ module Helpers
   end
 
   def current_plan_fixture
-    plan_name = 'current_plan'
     plan_path = Rails.root.join('spec', 'fixtures', 'sources_show_plan')
     Dir.chdir(plan_path)
     # generate a mock plan with local $VERSION of terraform
-    `terraform plan -out=#{plan_name}`
+    `terraform plan -out=#{PLAN_NAME}`
     # place the binary plan file
     source_path =
-      Rails.root.join(plan_path, plan_name)
+      Rails.root.join(plan_path, PLAN_NAME)
     dest_path =
-      Rails.configuration.x.source_export_dir.join(plan_name)
+      Rails.configuration.x.source_export_dir.join(PLAN_NAME)
     FileUtils.cp source_path, dest_path
 
     current_plan_fixture_json
