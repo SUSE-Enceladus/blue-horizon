@@ -68,6 +68,8 @@ rubocop
 
 Please be sure to include a screenshot with any view or style changes.
 
+**⚠ NOTE:**  ES6 is not currently usable with this application; please write any JS/ES conforming to ES2015.
+
 ## Customization
 
 _blue-horizon_ is pointless, without a set of terraform scripts to work from, and those scripts represent a "target application", which _blue-horizon_ can adapt to support. The `vendor` path is used by default to host content about the target application.
