@@ -3,14 +3,17 @@
   %div.card-body
     %p= markdown(t('page_subtitle.plan_info'))
     %hr
-    = loading_icon(hide: @plan.present?)
-    %div#plan
-      = render('plans/plan', plan: @plan) if @plan.present?
-  - if @plan.present?
-    %div.card-footer
-      = link_to plan_path(format: :json), class: "btn btn-outline-primary #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
-        %i.eos-icons get_app
-        = t('sidebar.download_plan')
+    - if @error.present?
+      = render('plans/error')
+    - else
+      = loading_icon(hide: @plan.present?)
+      %div#plan
+        = render('plans/plan', plan: @plan) if @plan.present?
+    - if @plan.present?
+      %div.card-footer
+        = link_to plan_path(format: :json), class: "btn btn-outline-primary #{'disabled' unless can(deploy_path)}", title: t('tooltips.download_plan'), data: { toggle: 'tooltip' }  do
+          %i.eos-icons get_app
+          = t('sidebar.download_plan')
 %p.clearfix
   %div.float-right.btn-group.steps-container
     = link_to variables_path, class: "btn btn-secondary", title: t('tooltips.prior_step'), data: { toggle: 'tooltip' } do

@@ -10,11 +10,13 @@ class PlansController < ApplicationController
   def show
     return unless helpers.can(plan_path)
 
-    @trigger_update = (@variables.updated_at > Terraform.last_action_at)
+    terra = Terraform.new
+    @trigger_update = (@variables.updated_at > Terraform.last_action_at) ||
+                      !File.file?(terra.saved_plan_path)
     @plan = ''
 
     unless @trigger_update
-      Terraform.new.show
+      terra.show
       plan_raw_json = Terraform.stdout.string
       @plan = JSON.parse(plan_raw_json, object_class: OpenStruct)
       @plan.raw_json = plan_raw_json
@@ -47,8 +49,15 @@ class PlansController < ApplicationController
     result = terra.plan(args)
 
     if result.is_a?(Hash)
-      flash.now[:error] = result[:error]
-      return render(json: flash.to_hash)
+      @trigger_update = false
+      @error = result[:error]
+      File.delete(path_to_file) if File.exist?(terra.saved_plan_path)
+      respond_to do |format|
+        format.html do
+          flash[:error] = result[:error][:message]
+          render 'show'
+        end
+      end
     else
       redirect_to(action: 'show')
     end
