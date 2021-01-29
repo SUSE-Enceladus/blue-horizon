@@ -51,7 +51,6 @@ class PlansController < ApplicationController
     if result.is_a?(Hash)
       @trigger_update = false
       @error = result[:error]
-      File.delete(path_to_file) if File.exist?(terra.saved_plan_path)
       respond_to do |format|
         format.html do
           flash[:error] = result[:error][:message]
