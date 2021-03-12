@@ -1,0 +1,21 @@
+name: Linter
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.5
+    - name: Install dependencies
+      run: bundle install
+    - name: Show version
+      run: bundle exec rubocop -v
+    - name: Run tests
+      run: bundle exec rubocop
