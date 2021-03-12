@@ -21,3 +21,7 @@ jobs:
       run: bundle install
     - name: Run tests
       run: bundle exec rails spec
+    - name: Sent test coverage to codecov.io
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage/.resultset.json
