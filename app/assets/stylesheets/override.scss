@@ -1,5 +1,13 @@
 @import "eos-branding";
 
+#product-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13pt;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 #title {
   color: $eos-bc-green-900;
 
