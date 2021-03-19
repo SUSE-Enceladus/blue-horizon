@@ -17,7 +17,7 @@
 //= require popper
 //= require bootstrap-sprockets
 // EOS
-//= require index
+//= require babel-eos-index
 // bootstrap-slider
 //= require bootstrap-slider.min
 // BlueHorizon
