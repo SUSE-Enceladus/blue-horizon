@@ -97,6 +97,10 @@ module Helpers
   def mock_metadata_location(location)
     allow_any_instance_of(Metadata).to receive(:location).and_return(location)
   end
+
+  def mock_k8s_version(version)
+    allow_any_instance_of(K8sVersion).to receive(:run).and_return(version)
+  end
 end
 
 RSpec.configure do |config|

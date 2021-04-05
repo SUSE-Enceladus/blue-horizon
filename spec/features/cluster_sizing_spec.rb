@@ -6,10 +6,12 @@ describe 'cluster sizing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
   let(:mock_location) { Faker::Internet.slug }
+  let(:random_version) { Faker::App.semantic_version }
 
   before do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
+    mock_k8s_version(random_version)
     populate_sources
   end
 

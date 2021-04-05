@@ -38,7 +38,8 @@ RSpec.describe Variable, type: :model do
       'test_options',
       'test_pattern',
       'test_description_comment',
-      'region'
+      'region',
+      'k8s_version'
     ]
   end
   let(:terra) { Terraform }
@@ -47,7 +48,6 @@ RSpec.describe Variable, type: :model do
   before do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
-
     populate_sources
   end
 
@@ -123,7 +123,8 @@ RSpec.describe Variable, type: :model do
         'region',
         'name',
         'instance_count',
-        'instance_type'
+        'instance_type',
+        'k8s_version'
       ]
     end
 

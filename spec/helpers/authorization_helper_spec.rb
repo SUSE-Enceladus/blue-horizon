@@ -7,6 +7,7 @@ describe AuthorizationHelper do
   let(:random_name) { Faker::Name.first_name }
   let(:random_string) { Faker::Lorem.word }
   let(:random_number) { Faker::Number.number(digits: 3) }
+  let(:random_version) { Faker::App.semantic_version }
   let(:attributes_hash) do
     {
       'name'             => random_name,
@@ -17,7 +18,8 @@ describe AuthorizationHelper do
       'test_map'         => { foo: 'bar' },
       'test_string'      => random_string,
       'test_options'     => 'option2',
-      'test_pattern'     => '00'
+      'test_pattern'     => '00',
+      'k8s_version'      => random_version
     }
   end
   let(:terra) { Terraform }
@@ -26,7 +28,6 @@ describe AuthorizationHelper do
   before do
     allow(terra).to receive(:new).and_return(instance_terra)
     allow(instance_terra).to receive(:validate)
-
     populate_sources
   end
 
