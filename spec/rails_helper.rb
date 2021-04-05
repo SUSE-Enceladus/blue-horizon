@@ -6,7 +6,9 @@ if ENV['TRAVIS']
   require 'codecov'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
-SimpleCov.start 'rails'
+SimpleCov.start :rails do
+  add_filter "/vendor/"
+end
 
 # Previous content of test helper now starts here
 # This file is copied to spec/ when you run 'rails generate rspec:install'
