@@ -100,6 +100,8 @@ The following variables will not be displayed on the variable entry form, but wi
 - `instance_count`: the number of virtual machines to be deployed; this will be populate from the _Size Cluster_ page.
 - `region`: the cloud provider's region where services will be established. If _blue-horizon_ is run in a cloud environment; the location will be autodetected via Instance Meta Data Services (IMDS).
   ⚠ _End users should be notified that the application needs to run in the same region where it will be deployed._
+- `k8s_version`: the highest available kubernetes version available in the current region of the current cloud provider will be automatically selected.
+  ⚠ _The external script [get-framework-k8s-api-version](https://github.com/SUSE-Enceladus/get-framework-k8s-api-version) must be installed and executable within the $PATH._
 
 To use a different path, set the environment variable `TERRAFORM_SOURCES_PATH` before seeding the database.
 
