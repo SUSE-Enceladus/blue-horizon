@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe K8sVersion, type: :model do
   let(:location) { 'fake-region-1' }
   let(:expected_version) { 'latest' }
-  let(:subject) { described_class.load() }
+  let(:auto_k8s_version) { described_class.load }
 
   before do
     described_class.prefixed_set(:location, location)
@@ -22,17 +22,17 @@ RSpec.describe K8sVersion, type: :model do
     end
 
     it 'calls the external script with a proper command' do
-      expected_script = "get-framework-k8s-api-version ec2 "\
+      expected_script = 'get-framework-k8s-api-version ec2 '\
       "--aws-access-key-id #{access_key_id} "\
       "--aws-secret-access-key #{secret_access_key} "\
       "--region-name #{location}"
       expect(Open3).to receive(:capture3).with(expected_script)
-      subject.save!
+      auto_k8s_version.save!
     end
 
     it 'sets the k8s_version variable' do
       expect(Open3).to receive(:capture3).and_return(expected_version)
-      subject.save!
+      auto_k8s_version.save!
       expect(described_class.prefixed_get(:k8s_version)).to eq(expected_version)
     end
   end
@@ -52,19 +52,19 @@ RSpec.describe K8sVersion, type: :model do
     end
 
     it 'calls the external script with a proper command' do
-      expected_script = "get-framework-k8s-api-version az "\
+      expected_script = 'get-framework-k8s-api-version az '\
         "--client-id #{client_id} "\
         "--client-secret #{client_secret} "\
         "--tenant-id #{tenant_id} "\
         "--subscription-id #{subscription_id} "\
         "--location #{location}"
       expect(Open3).to receive(:capture3).with(expected_script)
-      subject.save!
+      auto_k8s_version.save!
     end
 
     it 'sets the k8s_version variable' do
       expect(Open3).to receive(:capture3).and_return(expected_version)
-      subject.save!
+      auto_k8s_version.save!
       expect(described_class.prefixed_get(:k8s_version)).to eq(expected_version)
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe K8sVersion, type: :model do
     end
 
     it 'sets the k8s_version variable' do
-      subject.save!
+      auto_k8s_version.save!
       expect(described_class.prefixed_get(:k8s_version)).to eq(expected_version)
     end
   end

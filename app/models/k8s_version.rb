@@ -14,21 +14,21 @@ class K8sVersion
   def initialize(*args)
     super
     credentials = case @cloud_framework
-      when 'aws'
-        {
-          access_key_id:     prefixed_get(:access_key_id),
-          secret_access_key: prefixed_get(:secret_access_key)
-        }
-      when 'azure'
-        {
-          client_id:       prefixed_get(:client_id),
-          client_secret:   prefixed_get(:client_secret),
-          tenant_id:       prefixed_get(:tenant_id),
-          subscription_id: prefixed_get(:subscription_id)
-        }
-      else
-        {}
-      end
+    when 'aws'
+      {
+        access_key_id:     prefixed_get(:access_key_id),
+        secret_access_key: prefixed_get(:secret_access_key)
+      }
+    when 'azure'
+      {
+        client_id:       prefixed_get(:client_id),
+        client_secret:   prefixed_get(:client_secret),
+        tenant_id:       prefixed_get(:tenant_id),
+        subscription_id: prefixed_get(:subscription_id)
+      }
+    else
+      {}
+    end
     @value ||= get_framework_k8s_version(credentials)
   end
 
@@ -49,7 +49,7 @@ class K8sVersion
   def get_aws_k8s_api_version(
     access_key_id:, secret_access_key:
   )
-    cmd = "get-framework-k8s-api-version ec2 "\
+    cmd = 'get-framework-k8s-api-version ec2 '\
       "--aws-access-key-id #{access_key_id} "\
       "--aws-secret-access-key #{secret_access_key} "\
       "--region-name #{@location}"
@@ -59,7 +59,7 @@ class K8sVersion
   def get_azure_k8s_api_version(
     client_id:, client_secret:, tenant_id:, subscription_id:
   )
-    cmd = "get-framework-k8s-api-version az "\
+    cmd = 'get-framework-k8s-api-version az '\
       "--client-id #{client_id} "\
       "--client-secret #{client_secret} "\
       "--tenant-id #{tenant_id} "\
@@ -68,17 +68,17 @@ class K8sVersion
     run(cmd)
   end
 
-  def get_gcp_k8s_api_version(*args)
+  def get_gcp_k8s_api_version(*_args)
     'latest'
   end
 
   def run(cmd)
     Rails.logger.debug("Running:\n#{cmd}")
-    stdout, stderr, status = Open3.capture3(cmd)
+    stdout, _stderr, _status = Open3.capture3(cmd)
     return stdout
   end
 
-  def get_framework_k8s_version(credentials = {})
+  def get_framework_k8s_version(credentials={})
     send("get_#{@cloud_framework}_k8s_api_version", credentials)
   end
 
