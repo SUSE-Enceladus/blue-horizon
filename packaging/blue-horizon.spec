@@ -147,6 +147,7 @@ Requires:  %{rubygem websocket-driver}
 Requires:  %{rubygem websocket-extensions}
 # end generated requirements
 Requires: terraform = 0.13.4
+Requires:  get-framework-k8s-api-version
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch: noarch
