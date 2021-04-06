@@ -40,6 +40,10 @@
         "test_file": {
             "type": "string",
             "description": "optional file upload"
+        },
+        "k8s_version": {
+            "type": "string",
+            "descroption": "Kubernetes version to apply"
         }
     }
 }

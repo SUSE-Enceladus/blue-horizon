@@ -40,6 +40,15 @@ class VariablesController < ApplicationController
 
     region.save
     @excluded += Region.variable_handlers
+
+    # set k8s version automatically, if possible
+    return unless @variables.respond_to? :k8s_version
+
+    k8s_version = K8sVersion.load
+    return unless k8s_version.value
+
+    k8s_version.save
+    @excluded += K8sVersion.variable_handlers
   end
 
   def variables_params

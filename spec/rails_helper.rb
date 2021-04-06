@@ -7,7 +7,7 @@ if ENV['TRAVIS']
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 SimpleCov.start :rails do
-  add_filter "/vendor/"
+  add_filter '/vendor/'
 end
 
 # Previous content of test helper now starts here

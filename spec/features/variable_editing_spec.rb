@@ -7,6 +7,7 @@ describe 'variable editing', type: :feature do
     [
       *Cluster.variable_handlers,
       *Region.variable_handlers,
+      *K8sVersion.variable_handlers,
       'test_options',
       'test_file'
     ]
@@ -15,8 +16,12 @@ describe 'variable editing', type: :feature do
   let(:terra) { Terraform }
   let(:instance_terra) { instance_double(Terraform) }
   let(:mock_location) { Faker::Internet.slug }
+  let(:k8s_version) { Faker::App.version }
 
-  before { mock_metadata_location(mock_location) }
+  before do
+    mock_metadata_location(mock_location)
+    mock_k8s_version(k8s_version)
+  end
 
   context 'with sources' do
     let(:variable_names) { collect_variable_names }
