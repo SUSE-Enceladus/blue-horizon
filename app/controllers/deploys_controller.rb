@@ -90,8 +90,13 @@ class DeploysController < ApplicationController
     else
       t('deploy.creating')
     end
+    progress_percentage = begin
+      created_resources * 100 / planned_resources_count
+    rescue ZeroDivisionError
+      100
+    end
     progress['infra-bar'] = {
-      progress: created_resources * 100 / planned_resources_count,
+      progress: progress_percentage,
       text:     text,
       success:  error.nil? ? true : false
     }
