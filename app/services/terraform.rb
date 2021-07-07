@@ -195,7 +195,7 @@ class Terraform
     show_output['planned_values'].each do |key, value|
       next unless key == 'root_module'
 
-      resources |= value['resources']
+      resources ||= value['resources']
       if value.key? 'child_modules'
         resources |= get_child_resources(value['child_modules'])
       end
