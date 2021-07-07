@@ -79,7 +79,7 @@ RSpec.describe Terraform, type: :service do
         .and_return(StringIO.new(nested_plan_fixture_json))
     )
     planned_resources = described_class.new.get_planned_resources
-    expect(planned_resources.count).to eq(54)
+    expect(planned_resources.count).to eq(53)
   end
 
   it 'gets the planned resources with excluded' do
@@ -91,6 +91,6 @@ RSpec.describe Terraform, type: :service do
     )
     excluded = /.*\..*_provision.*\.provision(\[\d+\])?/
     planned_resources = described_class.new.get_planned_resources(excluded)
-    expect(planned_resources.count).to eq(49)
+    expect(planned_resources.count).to eq(48)
   end
 end
